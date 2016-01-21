@@ -1,17 +1,1 @@
-{{#frost-scroll }}
-  <div class="guide-introduction">
-      <div class="header">
-          {{frost-svg class='frost-logo' path='guide/frost'}}
-          <span class="project">
-              <div class="title">
-                  Frost
-              </div>
-            <div class="sub-title">
-                UI styles, conventions, patterns and code for Ciena
-            </div>
-          </span>
-      </div>
-
-      {{markdown-to-html markdown=(fr-markdown-file 'overview/vision')}}
-  </div>
-{{/frost-scroll}}
+{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file 'overview/vision')}}

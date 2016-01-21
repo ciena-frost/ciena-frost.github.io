@@ -28,32 +28,31 @@ with open('crap.txt', 'r') as myfile:
         if mutex > 1:
           directory = parentPath + "/" + line.split("'")[1]
           if not os.path.exists(directory):
-            os.makedirs(directory)
+            # os.makedirs(directory)
             print directory
         elif mutex == 1:
-          directory = "public/md-files/" + line.split("'")[1]
+          directory = "markdown/" + line.split("'")[1]
           if not os.path.exists(directory):
-            os.makedirs(directory)
+            # os.makedirs(directory)
             print "First", directory
           parentPath = directory
       elif "]}" in line:
         mutex = mutex - 1
         isParent = False
       else:
-        filepath = directory + "/" + line.split("'")[1] + ".md"
-        print "Make File: " +  directory + "/" + line.split("'")[1] + ".md"
+        filepath = directory + "/" + line.split("'")[1]
+        print "Make File: " +  directory + "/" + line.split("'")[1]
         #contents of file
         podDir = "app/pods/"
-        HbsDirpath = directory.replace("public/md-files","app/pods") +"/" + line.split("'")[1] + "/template.hbs"
+        HbsDirpath = directory.replace("markdown","app/pods") +"/" + line.split("'")[1] + "/template.hbs"
         print "Opening this path: " + HbsDirpath
         try:
-          with open(HbsDirpath) as hbsfile:
-            data = hbsfile.read()
-            output = pypandoc.convert(data, 'md', format='html')
+          with open(HbsDirpath, "w+") as hbsfile:
+            hbsfile.write("{{markdown-to-html class=\"guide-markdown\" markdown=(fr-markdown-file '" + filepath.replace("markdown/","") + "')}}")
             # print output
-            with open(filepath,"w+") as f:
-              f.write(output)
-              f.close()
+            # with open(filepath,"w+") as f:
+            #   f.write(output)
+            #   f.close()
         except:
           pass
     # print filenames
