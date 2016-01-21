@@ -1,0 +1,46 @@
+{{#if media.isMobile}}
+    <div class="guide-sidebar-mobile">
+		{{#frost-sidebar}}
+			{{#frost-scroll}}
+				{{frost-navigation-sidebar-menu items=applicationMenuItems}}
+			{{/frost-scroll}}
+		{{/frost-sidebar}}
+    </div>
+{{/if}}
+<div class="guide {{media.classNames}}">
+	{{#frost-scroll class='guide-sidebar' }}
+		{{#liquid-unless media.isMobile }}
+            <div class="content media-desktop">
+				{{frost-navigation-sidebar-menu items=applicationMenuItems routeCategory=routeCategory}}
+            </div>
+		{{else}}
+            <div class="content media-mobile">
+                <div style="width: 50px;"></div>
+            </div>
+		{{/liquid-unless}}
+	{{/frost-scroll}}
+
+    <div class='guide-content'>
+        <div class='frost-info-bar'>
+            <div class='title'>
+				{{#bread-crumbs tagName="ul" outputStyle="foundation" linkable=false crumbClass='breadcrumb-item' as |component route|}}
+					{{#bread-crumb route=route breadCrumbs=component}}
+						{{route-breadcrumb route}}
+					{{/bread-crumb}}
+				{{/bread-crumbs}}
+            </div>
+            <div class='action'>
+				{{#if versions}}
+					{{#frost-select id='version' on-change=(action 'changeVersion') value=selectedVersion}}
+						{{#each versions as |version|}}
+							{{#frost-select-option value=version}}
+								{{version}}
+							{{/frost-select-option}}
+						{{/each}}
+					{{/frost-select}}
+				{{/if}}
+            </div>
+        </div>
+		{{outlet}}
+    </div>
+</div>

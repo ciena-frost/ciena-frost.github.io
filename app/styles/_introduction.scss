@@ -1,0 +1,25 @@
+.guide-introduction {
+  padding: 20px;
+  
+  .header {
+    @include display(flex);
+    @include flex-direction(column);
+    @include align-items(center);
+    text-align: center;
+  }
+  
+  .frost-logo {
+    height: 200px;
+  }
+  
+  .title {
+    margin-top: 20px;
+    font-size: $frost-font-size-5;
+    color: $frost-color-blue-1;
+  }
+  
+  .sub-title {
+    margin: 10px 0 20px 0;
+    font-size: $frost-font-size-2;
+  }
+}

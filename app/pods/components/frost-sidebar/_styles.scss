@@ -1,0 +1,40 @@
+.frost-sidebar {
+	position: relative;
+	height: 100%;
+}
+
+.frost-sidebar .frost-button.icon.menu {
+	padding: 0 5px;
+	fill: $frost-color-white;
+}
+
+.frost-sidebar .liquid-container.menu {
+	z-index: 2;
+	height: 100%;
+}
+
+.frost-sidebar .liquid-container.menu > .liquid-child {
+	height: 100%;
+}
+
+.frost-sidebar .liquid-container.menu > .liquid-child > .menu {
+	width: 300px;
+	height: 100%;
+	background-color: $frost-color-lgrey-2;
+	@include display(flex);
+	@include flex-direction(column);
+}
+
+.frost-sidebar .liquid-container.menu > .liquid-child > .menu.collapsed {
+	width: 50px;
+}
+
+.frost-sidebar .underlay {
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba($frost-color-white, 0.25f);
+}

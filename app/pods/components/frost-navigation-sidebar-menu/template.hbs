@@ -1,0 +1,16 @@
+<div class='title'>
+	{{#link-to 'overview.vision'}}{{frost-svg path='guide/frost'}}{{/link-to}}
+</div>
+<div class='search'>
+	{{frost-text on-input=(action 'search')}}
+	{{frost-svg path='frost/search'}}
+</div>
+{{#each filteredItems as |item|}}
+	{{#if (eq item.type 'category')}}
+		{{frost-navigation-sidebar-category category=item selectedCategory=selectedCategory on-click=(action 'categorySelected' item.route)}}
+	{{else if (eq item.type 'route')}}
+		{{#frost-link item.route class='route'}}
+			{{item.alias}}
+		{{/frost-link}}
+	{{/if}}
+{{/each}}
