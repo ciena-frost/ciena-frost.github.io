@@ -21,7 +21,6 @@ install:
   - bower install
 
 script:
-  - jshint .
   - npm test
 
 notifications:
