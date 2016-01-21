@@ -1,24 +1,3 @@
-{{\#frost-scroll }}
-<div class="guide-introduction">
-
-<div class="header">
-
-{{frost-svg class='frost-logo' path='guide/frost'}} <span
-class="project"> </span>
-<div class="title">
-
-Frost
-
-</div>
-
-<div class="sub-title">
-
-UI styles, conventions, patterns and code for Ciena
-
-</div>
-
-</div>
-
 ### What is Frost?
 
 An initiative to establish common styles, conventions and code for Ciena
