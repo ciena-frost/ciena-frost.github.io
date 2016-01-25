@@ -46,22 +46,41 @@ function dive(dir) {
     // console.log(stat);
     // If the file is a directory
     if (stat && stat.isDirectory()) {
+
       // Dive into the directory
       console.log(chalk.red.bold("Directory: " + path.replace(mark_dir + "/", "app/pods/")));
+
       // uncomment when ready
       // mkdirpSync(path.replace(mark_dir + "/","app/pods/"));
       // id: 'overview', alias: 'Overview', type: 'category', route: 'overview',
+
       var filename = file.replace(".md", "");
+
       console.log(list);
-      routing_string += "{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'category', route: '" + path.replace(mark_dir + "/", "").replaceAll("/", ".") + "', items: [ \n";
+
+      routing_string += "{id: '" + filename.replaceAll("[0-9][0-9][-]", "") +
+            "', alias: '" + toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
+            "', type: 'category', route: '" +
+            path.replace(mark_dir + "/", "").replaceAll("/", ".").replaceAll("[0-9][0-9][-]", "") +
+            "', items: [ \n";
       //write items: [
       dive(path);
 
-      routing_string += "\n]}, // " + filename+ "\n";
-    } else {
+      routing_string += "\n]}, // " + filename+ "\n"
+    }
+
+    else {
+
       // id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment',
+
       var filename = file.replace(".md", "");
-      routing_string += "\t{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'route', route: '" + path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md","") + "'},\n";
+
+      routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
+            toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
+            "', type: 'route', route: '" +
+            path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md","").replaceAll("[0-9][0-9][-]", "") +
+            "'},\n";
+
       // Call the action
       var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
 
@@ -71,13 +90,15 @@ function dive(dir) {
       console.log(chalk.green.bold("Create Folder page: " + pagePath));
 
       console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
+
       if (!directoryExistsSync(pagePath + "/index")){
               mkdirpSync(pagePath + "/index");
       }
 
 
       console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
-      var route_js_string = "import Ember from'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'"+ filename +"'\n\t}\n});"
+      var route_js_string = "import Ember from'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'"+
+            filename.replaceAll("[0-9][0-9][-]", "") +"'\n\t}\n});"
       //  import Ember from 'ember';
       // export default Ember.Route.extend({
       // 	breadCrumb: {
@@ -87,11 +108,16 @@ function dive(dir) {
 
       fs.writeFileSync(pagePath + "/index" + "/route.js", route_js_string);
       // console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
-      // var controllerString = "import Ember from'ember';\nexport default Ember.Controller.extend({queryParams:['selectedTab'],selectedTab:'description',actions:{tabSelected(tab){this.set('selectedTab',tab)}}});"
+      // var controllerString = "import Ember from'ember';
+      // \nexport default Ember.Controller.extend({queryParams:['selectedTab'],selectedTab:
+      // 'description',actions:{tabSelected(tab){this.set('selectedTab',tab)}}});"
 
       console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
       //{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file 'design-patterns/filtering')}}
-      fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" markdown=(fr-markdown-file '" + path.replace(".md", "").replace(mark_dir + "/", "") + "')}}");
+      fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" " +
+            "markdown=(fr-markdown-file '" +
+            path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
+            "')}}");
     }
 
   });
