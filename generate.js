@@ -36,8 +36,12 @@ function dive(dir) {
   // Read the directory
   list = fs.readdirSync(dir);
   list.forEach(function(file) {
-    if(file.charAt(2) != "-")
+    if(file.charAt(2) != "-"){
+      console.log("\nFile: " + file + " does not have a proper page order prefix in its name. " +
+            "The page will not be generated.\n")
       return;
+    }
+
 
     // Full path of that file
     var path = dir + "/" + file;

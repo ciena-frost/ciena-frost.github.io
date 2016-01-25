@@ -46,6 +46,10 @@ module.exports = [
 	{id: 'navigation', alias: 'Navigation', type: 'route', route: 'design-patterns.navigation'},
 	{id: 'notifications', alias: 'Notifications', type: 'route', route: 'design-patterns.notifications'},
 {id: 'object-browser', alias: 'Object Browser', type: 'category', route: 'design-patterns.object-browser', items: [ 
+	{id: 'overview', alias: 'Overview', type: 'route', route: 'design-patterns.object-browser.overview'},
+	{id: 'list', alias: 'List', type: 'route', route: 'design-patterns.object-browser.list'},
+	{id: 'list-samples', alias: 'List Samples', type: 'route', route: 'design-patterns.object-browser.list-samples'},
+	{id: 'table', alias: 'Table', type: 'route', route: 'design-patterns.object-browser.table'},
 
 ]}, // 14-object-browser
 	{id: 'object-details', alias: 'Object Details', type: 'route', route: 'design-patterns.object-details'},
