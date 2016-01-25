@@ -65,7 +65,7 @@ function dive(dir) {
       var filename = file.replace(".md", "");
       routing_string += "\t{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'route', route: '" + path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md","") + "'},\n";
       // Call the action
-      var pagePath = dir.replace(mark_dir + "/", "app/pods/") + "/" + file.replace(".md", "");
+      var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
       console.log(chalk.green.bold("Create Folder page: " + pagePath));
 
       console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
@@ -76,6 +76,8 @@ function dive(dir) {
       console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
 
       console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
+      //{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file 'design-patterns/filtering')}}
+      fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" markdown=(fr-markdown-file '" + path.replace(".md", "").replace(mark_dir + "/", "") + "')}}");
     }
 
   });
