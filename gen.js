@@ -7,6 +7,14 @@ var files = [];
 
 var routing_string = "module.exports = [ \n";
 
+
+console.log("Hello");
+dive(mark_dir);
+routing_string += "];";
+debugger;
+console.log(routing_string);
+
+
 function dive(dir){
   // Read the directory
 
@@ -29,18 +37,19 @@ function dive(dir){
           console.log(chalk.red.bold("Directory: " + path.replace(mark_dir + "/","app/pods/")));
           // uncomment when ready
           // mkdirpSync(path.replace(mark_dir + "/","app/pods/"));
-          // {id: 'overview', alias: 'Overview', type: 'category', route: 'overview',
+          // id: 'overview', alias: 'Overview', type: 'category', route: 'overview',
           var filename = file.replace(".md","");
           console.log(list);
           routing_string += "{id: '"+ filename +"', alias: '" + toTitleCase(filename) + "', type: 'category', route: '" + path.replace(mark_dir + "/","").replace("/",".") + "', items: [ \n";
           //write items: [
           dive(path);
+          callback();
 
           routing_string += "]},\n";
         }else{
-          // {id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment'},
+          // id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment',
           var filename = file.replace(".md","");
-          routing_string += "{id: '"+ filename +"', alias: '" + toTitleCase(filename) + "', type: 'category', route: '" + path.replace(mark_dir + "/","").replace("/",".") + "'},"
+          routing_string += "{id: '"+ filename +"', alias: '" + toTitleCase(filename) + "', type: 'category', route: '" + path.replace(mark_dir + "/","").replace("/",".") + "'},";
           // Call the action
           var pagePath = dir.replace(mark_dir+ "/", "app/pods/") + "/" + file.replace(".md","");
           console.log(chalk.green.bold("Create Folder page: " + pagePath));
@@ -78,8 +87,3 @@ function toTitleCase(str)
     console.log(str);
     return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
-console.log("Hello");
-dive(mark_dir);
-routing_string += "];";
-debugger;
-console.log(routing_string);

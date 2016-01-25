@@ -1,149 +1,81 @@
-#!/usr/bin/env node
- //Written By Seena Rowhani (& Stackoverflow ;) )
-//With Love <3
-(function (fs, exec, chalk, _dir, _args) {
-  "use strict";
-  var fileTree = {};
-	var routes = [];
-  var _arguments = {};
+var fs = require('fs');
+var child_process = require('child_process');
+var chalk = require('chalk');
+var path = require('path');
+var mark_dir = "markdown"
+var files = [];
 
-  (function parseArguments(_arguments){
-    _args.forEach(function(e) {
-      var map = e.toLowerCase().replace(/ /g, '').split('=');
-      _arguments[map[0]] = map[1];
-    });
-  })(_arguments);
+var routing_string = "module.exports = [ \n";
 
-	var walk = function(path, obj) {
-		var dir = fs.readdirSync(path);
-		for (var i = 0; i < dir.length; i++) {
-			var name = dir[i];
-			var target = path + '/' + name;
-			var stats = fs.statSync(target);
-			var s = target.substring(_dir.length, target.length);
-			var c = s.replace(/\//g, '.').substr(1);
-			var o = {
-				route: c,
-				url: s
-			}
-			if (stats.isDirectory()) {
-				routes.push(o);
 
-				walk(target, obj[o.route] = {
-					route: o.route,
-					relative: c.substr(c.lastIndexOf('.') + 1),
-					items: []
-				});
-			} else if (stats.isFile()) {
-				try {
-					var config = require(path + '/config');
-					Object.keys(config).forEach(function(e) {
-						routes[routes.length - 1][e] = obj[e] = config[e];
-					});
-				} catch (e) {
-					console.log(chalk.red.bold(e));
-				}
-			}
-		}
-	};
-	walk(_dir, fileTree);
-	var itemify = function(obj) {
-		if (!(obj instanceof Object) || obj instanceof Array) return;
-		var item = obj;
-		var keys = Object.keys(item);
-		keys.forEach(function(key) {
-			itemify(item[key]);
-			item.alias = item.alias || item.relative.replace(/\-/g, ' ');
-			item.type = item.type || 'route';
+console.log("Hello");
+dive(mark_dir);
+routing_string += "];";
+debugger;
+console.log(routing_string);
+var list = [];
+var stat = "";
+function dive(dir) {
+  // Read the directory
+  list = fs.readdirSync(dir);
+  list.forEach(function(file) {
+    // Full path of that file
+    var path = dir + "/" + file;
+    // Get the file's stats
+    stat = fs.statSync(path);
+    // console.log(stat);
+    // If the file is a directory
+    if (stat && stat.isDirectory()) {
+      // Dive into the directory
+      console.log(chalk.red.bold("Directory: " + path.replace(mark_dir + "/", "app/pods/")));
+      // uncomment when ready
+      // mkdirpSync(path.replace(mark_dir + "/","app/pods/"));
+      // id: 'overview', alias: 'Overview', type: 'category', route: 'overview',
+      var filename = file.replace(".md", "");
+      console.log(list);
+      routing_string += "{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'category', route: '" + path.replace(mark_dir + "/", "").replace("/", ".") + "', items: [ \n";
+      //write items: [
+      dive(path);
 
-			if (['route', 'type', 'alias', 'items', 'keywords', 'relative'].reduce(function(b, c) {
-					return b && c !== key
-				}, true)) {
+      routing_string += "\n]},\n";
+    } else {
+      // id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment',
+      var filename = file.replace(".md", "");
+      routing_string += "\t{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'route', route: '" + path.replace(mark_dir + "/", "").replace("/", ".").replace(".md","") + "'},\n";
+      // Call the action
+      var pagePath = dir.replace(mark_dir + "/", "app/pods/") + "/" + file.replace(".md", "");
+      console.log(chalk.green.bold("Create Folder page: " + pagePath));
 
-				if (item.items instanceof Array) {
-					item.type = 'category';
-					item['items'].push(item[key]);
-					delete item[key];
-				}
-			}
-		});
-	}
-	var x = Object.keys(fileTree).map(function(e) {
-		itemify(fileTree[e]);
-		fileTree[e].type = 'category';
-		return fileTree[e];
-	});
+      console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
 
-  (function writeConfig(){
-    [{
-  		path: './config/routing.js',
-  		prefix: 'module.exports = '
-  	}, {
-  		path: './app/pods/application/menu.js',
-  		prefix: 'export default '
-  	}].forEach(function(e) {
-  		fs.writeFile(e.path, e.prefix + JSON.stringify(x, null, 2), function(e) {
-  			if (e) {
-  				console.log(chalk.red.bold(e));
-  			}
-  		});
-  	});
-  })();
+      console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
 
-	routes.forEach(function(route) {
-		var podsDir = 'app/pods';
-		var mkdir = 'mkdir ' + podsDir + route.url;
-		if (route.route.indexOf('frost-components') > -1) return;
-	// 	exec(mkdir, function(a, b, c) {
-	// 		if (c) {
-	// 			throw c;
-	// 		}
-	// 		exec(mkdir + "/index", function(d, e, f) {
-	// 			fs.writeFile(
-	// 				podsDir + route.url + '/index/route.js',
-	// 				"import Ember from 'ember';\n" +
-	// 				"export default Ember.Route.extend({" +
-	// 				"\n\tbreadCrumb: {\n\t\t" +
-	// 				"title: '".concat(route.alias || route.url.split('/')[1]) +
-	// 				"'\n\t}" +
-	// 				"\n});",
-	// 				function(e) {
-	// 					if (e) {
-	// 						console.log(chalk.red.bold(e));
-	// 					}
-	// 				}
-	// 			);
-	// 			fs.writeFile(
-	// 				podsDir + route.url + '/template.hbs',
-	// 				route.type === 'route' ? "{{mark-down file=file}}\n{{outlet}}" : "{{outlet}}",
-	// 				function(e) {
-	// 					if (e) {
-	// 						console.log(chalk.red.bold(e));
-	// 					}
-	// 				}
-	// 			);
-	// 			fs.writeFile(
-	// 				podsDir + route.url + '/controller.js',
-	// 				"import Ember from 'ember';\n" +
-	// 				"export default Ember.Controller.extend({" +
-	// 				"\n\tfile: {\n\t\t" +
-	// 				"name: '".concat(route.alias || route.url.split('/')[1]) + "',\n\t\t" +
-	// 				"path: '".concat("docs" + route.url + "/description.md") +
-	// 				"'\n\t}" +
-	// 				"\n});",
-	// 				function(e) {
-	// 					if (e) {
-	// 						console.log(chalk.red.bold(e));
-	// 					}
-	// 				}
-	// 			);
-	// 		})
-	// 	});
-	});
-})(
-	require('fs'),
-	require('child_process').exec,
-	require('chalk'),
-	'./public/docs',
-	process.argv.slice(2)
-);
+      console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
+
+      console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
+    }
+
+  });
+};
+
+var mkdirSync = function(path) {
+  try {
+    fs.mkdirSync(path);
+  } catch (e) {
+    if (e.code != 'EEXIST') throw e;
+  }
+}
+
+var mkdirpSync = function(dirpath) {
+  var parts = dirpath.split(path.sep);
+  for (var i = 1; i <= parts.length; i++) {
+    mkdirSync(path.join.apply(null, parts.slice(0, i)));
+  }
+}
+
+function toTitleCase(str) {
+  console.log(str);
+  return str.replace(/\w\S*/g, function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
