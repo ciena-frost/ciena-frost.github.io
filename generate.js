@@ -3,19 +3,21 @@ var child_process = require('child_process');
 var chalk = require('chalk');
 var path = require('path');
 var mark_dir = "markdown"
-var files = [];
 
-var routing_string = "module.exports = [ \n";
+
 String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
-
-console.log("Hello");
+var routing_string = "module.exports = [ \n";
 dive(mark_dir);
 routing_string += "];";
-debugger;
 console.log(routing_string);
+
+var overIndexStart = routing_string.indexOf("{id: 'overview', alias: 'Overview', type: 'category', route: 'overview', items: [");
+var overviewIndexEnd = routing_string.indexOf("]},//overview",overIndexStart) + 13;
+var overviewString = routing_string.substring(overIndexStart, overviewIndexEnd);
+console.log(chalk.red.bold(overviewString));
 var list = [];
 var stat = "";
 function dive(dir) {
@@ -40,7 +42,7 @@ function dive(dir) {
       //write items: [
       dive(path);
 
-      routing_string += "\n]},\n";
+      routing_string += "\n]},//" + filename+ "\n";
     } else {
       // id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment',
       var filename = file.replace(".md", "");
@@ -50,6 +52,7 @@ function dive(dir) {
       console.log(chalk.green.bold("Create Folder page: " + pagePath));
 
       console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
+      // mkdirSync(pagePath + "/index");
 
       console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
 
