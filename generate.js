@@ -101,6 +101,8 @@ function dive(dir) {
       // var controllerString = "import Ember from'ember';\nexport default Ember.Controller.extend({queryParams:['selectedTab'],selectedTab:'description',actions:{tabSelected(tab){this.set('selectedTab',tab)}}});"
 
       console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
+      //{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file 'design-patterns/filtering')}}
+      fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" markdown=(fr-markdown-file '" + path.replace(".md", "").replace(mark_dir + "/", "") + "')}}");
     }
 
   });
