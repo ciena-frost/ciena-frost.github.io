@@ -9,15 +9,32 @@ String.prototype.replaceAll = function(search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
+
 var routing_string = "module.exports = [ \n";
 dive(mark_dir);
 routing_string += "];";
-console.log(routing_string);
 
-var overIndexStart = routing_string.indexOf("{id: 'overview', alias: 'Overview', type: 'category', route: 'overview', items: [");
-var overviewIndexEnd = routing_string.indexOf("]},//overview",overIndexStart) + 13;
-var overviewString = routing_string.substring(overIndexStart, overviewIndexEnd);
-console.log(chalk.red.bold(overviewString));
+var overviewIndexStart = routing_string.indexOf("{id: 'overview', alias: 'Overview', type: 'category', route: 'overview', items: [");
+var overviewIndexEnd = routing_string.indexOf("]},//overview",overviewIndexStart) + 14;
+var overviewString = routing_string.substring(overviewIndexStart, overviewIndexEnd);
+
+var developmentIndexStart = routing_string.indexOf("{id: 'development', alias: 'Development', type: 'category', route: 'development', items: [");
+var developmentIndexEnd = routing_string.indexOf("]},//development",developmentIndexStart) + 17;
+var developmentString = routing_string.substring(developmentIndexStart, developmentIndexEnd);
+console.log(developmentString);
+
+routing_string = routing_string.replace(overviewString, "");
+routing_string = routing_string.replace(developmentString, "");
+
+
+var routingStartIndex = routing_string.indexOf("[") + 3;
+
+var routing_string = [routing_string.slice(0, routingStartIndex), overviewString.concat(developmentString), routing_string.slice(routingStartIndex)].join('');
+
+console.log(routing_string);
+fs.writeFileSync("config/routing.js", routing_string);
+
+
 var list = [];
 var stat = "";
 function dive(dir) {
@@ -42,7 +59,7 @@ function dive(dir) {
       //write items: [
       dive(path);
 
-      routing_string += "\n]},//" + filename+ "\n";
+      routing_string += "]},//" + filename+ "\n";
     } else {
       // id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment',
       var filename = file.replace(".md", "");
