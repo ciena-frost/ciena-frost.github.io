@@ -1,17 +1,4 @@
 module.exports = [ 
-{id: 'overview', alias: 'Overview', type: 'category', route: 'overview', items: [ 
-	{id: 'changelog', alias: 'Changelog', type: 'route', route: 'overview.changelog'},
-	{id: 'defects', alias: 'Defects', type: 'route', route: 'overview.defects'},
-	{id: 'roadmap', alias: 'Roadmap', type: 'route', route: 'overview.roadmap'},
-	{id: 'vision', alias: 'Vision', type: 'route', route: 'overview.vision'},
-]},//overview
-{id: 'development', alias: 'Development', type: 'category', route: 'development', items: [ 
-	{id: 'addon', alias: 'Addon', type: 'route', route: 'development.addon'},
-	{id: 'app', alias: 'App', type: 'route', route: 'development.app'},
-	{id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment'},
-	{id: 'learning', alias: 'Learning', type: 'route', route: 'development.learning'},
-	{id: 'notes', alias: 'Notes', type: 'route', route: 'development.notes'},
-]},//development
 {id: 'data-visualization', alias: 'Data-visualization', type: 'category', route: 'data-visualization', items: [ 
 	{id: 'charts', alias: 'Charts', type: 'route', route: 'data-visualization.charts'},
 	{id: 'defender-view', alias: 'Defender-view', type: 'route', route: 'data-visualization.defender-view'},
@@ -21,6 +8,7 @@ module.exports = [
 	{id: 'subway-line', alias: 'Subway-line', type: 'route', route: 'data-visualization.subway-line'},
 	{id: 'subway-map', alias: 'Subway-map', type: 'route', route: 'data-visualization.subway-map'},
 	{id: 'trail-analyzer', alias: 'Trail-analyzer', type: 'route', route: 'data-visualization.trail-analyzer'},
+
 ]},//data-visualization
 {id: 'design-conventions', alias: 'Design-conventions', type: 'category', route: 'design-conventions', items: [ 
 	{id: 'animation', alias: 'Animation', type: 'route', route: 'design-conventions.animation'},
@@ -29,6 +17,7 @@ module.exports = [
 	{id: 'selection-indication', alias: 'Selection-indication', type: 'route', route: 'design-conventions.selection-indication'},
 	{id: 'spacing', alias: 'Spacing', type: 'route', route: 'design-conventions.spacing'},
 	{id: 'typography', alias: 'Typography', type: 'route', route: 'design-conventions.typography'},
+
 ]},//design-conventions
 {id: 'design-patterns', alias: 'Design-patterns', type: 'category', route: 'design-patterns', items: [ 
 	{id: 'about', alias: 'About', type: 'route', route: 'design-patterns.about'},
@@ -48,8 +37,10 @@ module.exports = [
 	{id: 'list', alias: 'List', type: 'route', route: 'design-patterns.object-browser.list'},
 	{id: 'overview', alias: 'Overview', type: 'route', route: 'design-patterns.object-browser.overview'},
 	{id: 'table', alias: 'Table', type: 'route', route: 'design-patterns.object-browser.table'},
+
 ]},//object-browser
 	{id: 'screen-architecture', alias: 'Screen-architecture', type: 'route', route: 'design-patterns.screen-architecture'},
+
 ]},//design-patterns
 {id: 'design-strategy', alias: 'Design-strategy', type: 'category', route: 'design-strategy', items: [ 
 	{id: 'branding', alias: 'Branding', type: 'route', route: 'design-strategy.branding'},
@@ -57,7 +48,23 @@ module.exports = [
 	{id: 'design-principles', alias: 'Design-principles', type: 'route', route: 'design-strategy.design-principles'},
 	{id: 'personas', alias: 'Personas', type: 'route', route: 'design-strategy.personas'},
 	{id: 'usability-myths', alias: 'Usability-myths', type: 'route', route: 'design-strategy.usability-myths'},
+
 ]},//design-strategy
+{id: 'development', alias: 'Development', type: 'category', route: 'development', items: [ 
+	{id: 'addon', alias: 'Addon', type: 'route', route: 'development.addon'},
+	{id: 'app', alias: 'App', type: 'route', route: 'development.app'},
+	{id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment'},
+	{id: 'learning', alias: 'Learning', type: 'route', route: 'development.learning'},
+	{id: 'notes', alias: 'Notes', type: 'route', route: 'development.notes'},
+
+]},//development
+{id: 'overview', alias: 'Overview', type: 'category', route: 'overview', items: [ 
+	{id: 'changelog', alias: 'Changelog', type: 'route', route: 'overview.changelog'},
+	{id: 'defects', alias: 'Defects', type: 'route', route: 'overview.defects'},
+	{id: 'roadmap', alias: 'Roadmap', type: 'route', route: 'overview.roadmap'},
+	{id: 'vision', alias: 'Vision', type: 'route', route: 'overview.vision'},
+
+]},//overview
 	{id: 'terminology', alias: 'Terminology', type: 'route', route: 'terminology'},
 {id: 'ui-components', alias: 'Ui-components', type: 'category', route: 'ui-components', items: [ 
 {id: 'button-controls', alias: 'Button-controls', type: 'category', route: 'ui-components.button-controls', items: [ 
@@ -69,6 +76,7 @@ module.exports = [
 	{id: 'radio-button-group', alias: 'Radio-button-group', type: 'route', route: 'ui-components.button-controls.radio-button-group'},
 	{id: 'radio-button', alias: 'Radio-button', type: 'route', route: 'ui-components.button-controls.radio-button'},
 	{id: 'toggle', alias: 'Toggle', type: 'route', route: 'ui-components.button-controls.toggle'},
+
 ]},//button-controls
 {id: 'content-views', alias: 'Content-views', type: 'category', route: 'ui-components.content-views', items: [ 
 	{id: 'accordion', alias: 'Accordion', type: 'route', route: 'ui-components.content-views.accordion'},
@@ -79,10 +87,12 @@ module.exports = [
 	{id: 'scrollbar', alias: 'Scrollbar', type: 'route', route: 'ui-components.content-views.scrollbar'},
 	{id: 'table', alias: 'Table', type: 'route', route: 'ui-components.content-views.table'},
 	{id: 'tabs', alias: 'Tabs', type: 'route', route: 'ui-components.content-views.tabs'},
+
 ]},//content-views
 {id: 'indicator-controls', alias: 'Indicator-controls', type: 'category', route: 'ui-components.indicator-controls', items: [ 
 	{id: 'notifications', alias: 'Notifications', type: 'route', route: 'ui-components.indicator-controls.notifications'},
 	{id: 'progress-indicators', alias: 'Progress-indicators', type: 'route', route: 'ui-components.indicator-controls.progress-indicators'},
+
 ]},//indicator-controls
 {id: 'input-controls', alias: 'Input-controls', type: 'category', route: 'ui-components.input-controls', items: [ 
 	{id: 'file-chooser', alias: 'File-chooser', type: 'route', route: 'ui-components.input-controls.file-chooser'},
@@ -91,11 +101,13 @@ module.exports = [
 	{id: 'slider', alias: 'Slider', type: 'route', route: 'ui-components.input-controls.slider'},
 	{id: 'text-area', alias: 'Text-area', type: 'route', route: 'ui-components.input-controls.text-area'},
 	{id: 'text', alias: 'Text', type: 'route', route: 'ui-components.input-controls.text'},
+
 ]},//input-controls
 {id: 'menu-controls', alias: 'Menu-controls', type: 'category', route: 'ui-components.menu-controls', items: [ 
 	{id: 'command-menu', alias: 'Command-menu', type: 'route', route: 'ui-components.menu-controls.command-menu'},
 	{id: 'context-menu', alias: 'Context-menu', type: 'route', route: 'ui-components.menu-controls.context-menu'},
 	{id: 'disclosure-tab', alias: 'Disclosure-tab', type: 'route', route: 'ui-components.menu-controls.disclosure-tab'},
+
 ]},//menu-controls
 {id: 'text', alias: 'Text', type: 'category', route: 'ui-components.text', items: [ 
 	{id: 'capitalization', alias: 'Capitalization', type: 'route', route: 'ui-components.text.capitalization'},
@@ -104,6 +116,8 @@ module.exports = [
 	{id: 'tone', alias: 'Tone', type: 'route', route: 'ui-components.text.tone'},
 	{id: 'truncation', alias: 'Truncation', type: 'route', route: 'ui-components.text.truncation'},
 	{id: 'units', alias: 'Units', type: 'route', route: 'ui-components.text.units'},
+
 ]},//text
+
 ]},//ui-components
 ];
