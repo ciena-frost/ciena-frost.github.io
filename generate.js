@@ -96,7 +96,7 @@ function dive(dir) {
       console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
 
       if (!directoryExistsSync(pagePath + "/index")){
-              mkdirpSync(pagePath + "/index");
+              mkdirpSync((pagePath + "/index").toLowerCase());
       }
 
 
