@@ -6,7 +6,10 @@ var mark_dir = "markdown"
 var files = [];
 
 var routing_string = "module.exports = [ \n";
-
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 console.log("Hello");
 dive(mark_dir);
@@ -33,7 +36,7 @@ function dive(dir) {
       // id: 'overview', alias: 'Overview', type: 'category', route: 'overview',
       var filename = file.replace(".md", "");
       console.log(list);
-      routing_string += "{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'category', route: '" + path.replace(mark_dir + "/", "").replace("/", ".") + "', items: [ \n";
+      routing_string += "{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'category', route: '" + path.replace(mark_dir + "/", "").replaceAll("/", ".") + "', items: [ \n";
       //write items: [
       dive(path);
 
@@ -41,7 +44,7 @@ function dive(dir) {
     } else {
       // id: 'environment', alias: 'Environment', type: 'route', route: 'development.environment',
       var filename = file.replace(".md", "");
-      routing_string += "\t{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'route', route: '" + path.replace(mark_dir + "/", "").replace("/", ".").replace(".md","") + "'},\n";
+      routing_string += "\t{id: '" + filename + "', alias: '" + toTitleCase(filename) + "', type: 'route', route: '" + path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md","") + "'},\n";
       // Call the action
       var pagePath = dir.replace(mark_dir + "/", "app/pods/") + "/" + file.replace(".md", "");
       console.log(chalk.green.bold("Create Folder page: " + pagePath));
@@ -72,7 +75,10 @@ var mkdirpSync = function(dirpath) {
     mkdirSync(path.join.apply(null, parts.slice(0, i)));
   }
 }
-
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 function toTitleCase(str) {
   console.log(str);
   return str.replace(/\w\S*/g, function(txt) {
