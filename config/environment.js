@@ -8,7 +8,7 @@ module.exports = function(environment) {
 		podModulePrefix: 'frost-guide/pods',
 		environment: environment,
 		baseURL: '/',
-		locationType: 'auto',
+		locationType: 'hash',
 		EmberENV: {
 			FEATURES: {
 				// Here you can enable experimental features on an ember canary build
@@ -53,7 +53,7 @@ module.exports = function(environment) {
 	}
 
 	if (environment === 'production') {
-		
+
 	}
 
 	return ENV;
