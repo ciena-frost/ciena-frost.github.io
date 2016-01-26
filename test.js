@@ -1,3 +1,4 @@
+var npm = require('npm');
 var http = require('http');
 var fs = require('fs');
 var request = require('sync-request');
@@ -10,13 +11,27 @@ var options = {
 
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
 var body = JSON.parse(res.getBody());
+
 body.forEach(function(repo) {
   console.log(repo.name);
-  console.log("Last Push: " + repo.pushed_at);
-  if (repo.name != "ciena-frost.github.io") {
-    // package_url = repo.contents_url.replace("{+path}","package.json?ref=dev");
+  if (repo.name.startsWith("ember-")){
+    //ember install this package
+    console.log("Doing Ember Install of : " + repo.name);
+    npm.load({
+      loaded: false
+          // package_url = repo.contents_url.replace("{+path}","package.json?ref=dev");
     // packageJSON = getPackageJSON(package_url);
     // console.log(packageJSON);
+    }, function (err) {
+      // catch errors
+      npm.commands.install([repo.name], function (er, data) {
+        console.log(er);
+      });
+      npm.on("log", function (message) {
+        // log the progress of the installation
+        console.log(message);
+      });
+    });
   }
 });
 
