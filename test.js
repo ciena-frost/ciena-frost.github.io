@@ -34,7 +34,7 @@ body.forEach(function(repo) {
 
     if (demoParentDirectory !== undefined && directoryExistsSync("/app/pods/" + demoParentDirectory)){
       demo_content_url = repo.contents_url.replace("{+path}", "/app/pods/" + demoParentDirectory);
-      getDemoContent(demo_content_url);
+      content = getDemoContent(demo_content_url);
       //create controller filePath
 
       //create template.hbs
