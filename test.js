@@ -30,10 +30,14 @@ body.forEach(function(repo) {
     console.log(packageJSON);
 
     readme_url = repo.contents_url.replace("{+path}", "README.md");
-    readme_content = getREADME(readme_url);
+    readme_content = getFile(readme_url);
 
     if (demoParentDirectory !== undefined && directoryExistsSync("/app/pods/" + demoParentDirectory)){
-      
+      demo_content_url = repo.contents_url.replace("{+path}", "/app/pods/" + demoParentDirectory);
+      getDemoContent(demo_content_url);
+      //create controller filePath
+
+      //create template.hbs
     }else{
       console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
     }
@@ -53,13 +57,27 @@ function getPackageJSON(url) {
 
 }
 
-function getREADME(url) {
+function getFile(url) {
   //get api file request
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   var buf = new Buffer(body.content, 'base64')
   return buf.toString("ascii");
 
+}
+function getDemoContent(url){
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  var content;
+
+  body.forEach(function(item){
+    if (item.name == 'template.hbs'){
+      content.template_hbs = getFile(item.url);
+    } else if(item.name == 'route.js'){
+      content.route_js = getFile(item.url);
+    }
+  });
+  return content;
 }
 
 function npmInstall(repo) {
