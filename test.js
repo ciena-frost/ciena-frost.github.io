@@ -1,26 +1,37 @@
+var npm = require('npm');
 var http = require('http');
 var fs = require('fs');
-// var httpclient = require('httpclient')
-// var res = get('https://api.github.com/orgs/ciena-frost/repos');
-// console.log(res);
-
 var request = require('sync-request');
+
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', {
   'headers': {
     'user-agent': 'ciena-frost'
   }
 });
-var body = JSON.parse(res.getBody());
-body.forEach(function(repo){
-      console.log(repo.name);
-      console.log("Last Push: " + repo.pushed_at);
-      if (repo.name != "ciena-frost.github.io"){
-        content_url = repo.contents_url.replace("{+path}","");
-        flag = true;
-      }
-    });
 
-    
+var body = JSON.parse(res.getBody());
+
+body.forEach(function(repo){
+  console.log(repo.name);
+  if (repo.name.startsWith("ember-")){
+    //ember install this package
+    console.log("Doing Ember Install of : " + repo.name);
+    npm.load({
+      loaded: false
+    }, function (err) {
+      // catch errors
+      npm.commands.install([repo.name], function (er, data) {
+        console.log(er);
+      });
+      npm.on("log", function (message) {
+        // log the progress of the installation
+        console.log(message);
+      });
+    });
+  }
+});
+
+
 // requestify.get('https://api.github.com/repos/ciena-frost/ember-frost-button/readme').then(function(response) {
 //     // Get the response body
 //     var body = response.getBody();

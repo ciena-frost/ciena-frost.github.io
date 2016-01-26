@@ -67,6 +67,7 @@
     "frost-svg": "~1.1.0",
     "frost-tabs": "~2.1.0",
     "frost-text": "~1.1.0",
-    "liquid-fire": "0.22.0"
+    "liquid-fire": "0.22.0",
+    "sync-request": "^3.0.0"
   }
 }
