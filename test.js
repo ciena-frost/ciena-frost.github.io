@@ -19,9 +19,6 @@ body.forEach(function(repo) {
     console.log("Doing Ember Install of : " + repo.name);
     npm.load({
       loaded: false
-          // package_url = repo.contents_url.replace("{+path}","package.json?ref=dev");
-    // packageJSON = getPackageJSON(package_url);
-    // console.log(packageJSON);
     }, function (err) {
       // catch errors
       npm.commands.install([repo.name], function (er, data) {
@@ -32,6 +29,16 @@ body.forEach(function(repo) {
         console.log(message);
       });
     });
+
+
+
+    //get Package JSON un comment when needed
+
+
+    // package_url = repo.contents_url.replace("{+path}","package.json?ref=dev");
+    // packageJSON = getPackageJSON(package_url);
+    // console.log(packageJSON);
+
   }
 });
 
