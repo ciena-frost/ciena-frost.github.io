@@ -1,0 +1,15 @@
+{{#if isLoaded}}
+  {{#if hasFailed}}
+    <h2>Failed to load the requested resource</h2>
+    <p>Most likely the resource does not yet exist.</p>
+    <code>{{text.status}}: {{text.responseText}}</code>
+  {{else}}
+    {{md-text text=text html=true}}
+  {{/if}}
+{{else}}
+  <div class='whirly-centered'>
+    <div class='whirly-loader'>
+      Loading...
+    </div>
+  </div>
+{{/if}}

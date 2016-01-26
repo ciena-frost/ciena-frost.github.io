@@ -1,0 +1,119 @@
+.guide {
+  height: 100%;
+  @include display(flex);
+  @include flex-direction(row);
+
+  font-family: 'Roboto', sans-serif;
+}
+
+.guide .frost-button,
+.guide .frost-link {
+  font-family: 'Roboto', sans-serif;
+}
+
+.guide-sidebar {
+  min-height: 100%;
+  height: 1px;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+
+  > .liquid-child {
+	height: 100%;
+
+	> .content {
+	  width: 100%;
+	  height: 100%;
+	  background-color: $frost-color-white;
+	}
+
+	> .content.media-desktop {
+	  width: 250px;
+	}
+  }
+}
+
+.guide-sidebar-mobile {
+  position: absolute;
+  height: 100%;
+  z-index: 2;
+  background-color: $frost-color-white;
+}
+
+.guide-content {
+  position: relative;
+  z-index: 1;
+  @include flex(1);
+  @include display(flex);
+  @include flex-direction(column);
+}
+
+.guide-content .frost-info-bar {
+  background-color: $frost-color-blue-1;
+}
+
+.guide-content .frost-info-bar .title .primary-title {
+  color: $frost-color-white;
+}
+
+.guide-content .frost-info-bar .title .sub-title {
+  color: $frost-color-white;
+  font-size: 90%;
+  text-transform: capitalize;
+}
+
+.guide-content .frost-info-bar .action .frost-select {
+  width: 100px;
+}
+
+.guide-content > .frost-scroll {
+  @include flex(1);
+}
+
+.guide-content .content {
+  height: 100%;
+}
+
+.guide-content .guide-markdown {
+  margin-left: 20px;
+}
+
+.tabs__bar--justified {
+  margin-top:3px;
+}
+.guide.media-mobile {
+
+}
+
+.breadcrumbs {
+  padding-left: 0;
+  list-style: none;
+}
+
+.breadcrumb-item {
+  color: $frost-color-white;
+
+  &:nth-child(1) {
+	display: inline-block;
+	margin-bottom: 10px;
+	font-size: $frost-font-size-1;
+  }
+
+  &:nth-child(2) {
+	display: inline-block;
+	margin: 0 0 10px 10px;
+	padding-left: 10px;
+	border-left: 1px solid $frost-color-lgrey-2;
+	font-size: $frost-font-size-1;
+  }
+
+  &:last-child {
+	display: block;
+	margin: 0 0 20px 0;
+	padding: 0;
+	border: none;
+	font-size: $frost-font-size-4;
+  }
+}
+
+.frost-tabs--active {
+  min-height:500px;
+}

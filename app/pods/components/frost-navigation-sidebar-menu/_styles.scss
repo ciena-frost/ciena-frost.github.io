@@ -1,0 +1,66 @@
+.frost-navigation-sidebar-menu {
+}
+
+.frost-navigation-sidebar-menu .title {
+  padding: 28px 0 20px 0;
+  @include display(flex);
+  @include flex-direction(row);
+  @include justify-content(center);
+  @include align-items(center);
+}
+
+.frost-navigation-sidebar-menu .title .frost-svg {
+  width: 80px;
+  height: 80px;
+}
+
+.frost-navigation-sidebar-menu .search {
+  position: relative;
+  margin: 0 15px 10px 15px;
+}
+
+.frost-navigation-sidebar-menu .search .frost-text {
+  width: 100%;
+}
+
+.frost-navigation-sidebar-menu .search .frost-svg {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 0;
+  bottom: 0;
+}
+
+.frost-navigation-sidebar-menu .search .frost-svg .base {
+  fill: $frost-color-grey-3;
+  stroke: $frost-color-grey-3;
+}
+
+.frost-navigation-sidebar-menu .frost-button.category,
+.frost-navigation-sidebar-menu .frost-link.route {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  margin: 0;
+  padding: 0 0 0 25px;
+  border-radius: 0;
+  line-height: 40px;
+  font-weight: 500;
+  font-size: $frost-font-size-1;
+  color: $frost-color-grey-1;
+}
+
+.frost-navigation-sidebar-menu .frost-link.route {
+  font-weight: 300;
+}
+
+.frost-navigation-sidebar-menu .frost-button.category:hover,
+.frost-navigation-sidebar-menu .frost-link.route:hover {
+  background-color: $frost-color-lgrey-3;
+}
+
+.frost-navigation-sidebar-menu .divider {
+  margin: 5px 20px 5px 40px;
+  border-top: 1px solid $frost-color-lgrey-2;
+}
