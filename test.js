@@ -1,26 +1,34 @@
 var http = require('http');
 var fs = require('fs');
-// var httpclient = require('httpclient')
-// var res = get('https://api.github.com/orgs/ciena-frost/repos');
-// console.log(res);
-
 var request = require('sync-request');
-var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', {
+
+var options = {
   'headers': {
     'user-agent': 'ciena-frost'
   }
-});
-var body = JSON.parse(res.getBody());
-body.forEach(function(repo){
-      console.log(repo.name);
-      console.log("Last Push: " + repo.pushed_at);
-      if (repo.name != "ciena-frost.github.io"){
-        content_url = repo.contents_url.replace("{+path}","");
-        flag = true;
-      }
-    });
+};
 
-    
+var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
+var body = JSON.parse(res.getBody());
+body.forEach(function(repo) {
+  console.log(repo.name);
+  console.log("Last Push: " + repo.pushed_at);
+  if (repo.name != "ciena-frost.github.io") {
+    // package_url = repo.contents_url.replace("{+path}","package.json?ref=dev");
+    // packageJSON = getPackageJSON(package_url);
+    // console.log(packageJSON);
+  }
+});
+
+function getPackageJSON(url){
+  //get api file request
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  res = request('GET',body.download_url,options);
+  return JSON.parse(res.getBody());
+  //get download url
+
+}
 // requestify.get('https://api.github.com/repos/ciena-frost/ember-frost-button/readme').then(function(response) {
 //     // Get the response body
 //     var body = response.getBody();
@@ -60,22 +68,22 @@ body.forEach(function(repo){
 //   }
 
 
-  // requestify.get(url).then(function(response) {
-  //     // Get the response body
-  //     var body = response.getBody();
-  //     body.forEach(function(repo){
-  //       console.log(repo.name);
-  //       console.log("Last Push: " + repo.pushed_at);
-  //       if (repo.name != "ciena-frost.github.io"){
-  //         content_url = repo.contents_url.replace("{+path}","");
-  //         flag = true;
-  //       }
-  //     });
-  // });
-  //
-  // while(flag==false)
-  // {}
-  // getRepo(content_url);
+// requestify.get(url).then(function(response) {
+//     // Get the response body
+//     var body = response.getBody();
+//     body.forEach(function(repo){
+//       console.log(repo.name);
+//       console.log("Last Push: " + repo.pushed_at);
+//       if (repo.name != "ciena-frost.github.io"){
+//         content_url = repo.contents_url.replace("{+path}","");
+//         flag = true;
+//       }
+//     });
+// });
+//
+// while(flag==false)
+// {}
+// getRepo(content_url);
 
 
 function get(url) {
@@ -86,6 +94,7 @@ function get(url) {
     console.log(err);
   });
 }
+
 function getRepo(url) {
   console.log(url);
   debugger;
