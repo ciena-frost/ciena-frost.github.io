@@ -36,11 +36,23 @@ body.forEach(function(repo) {
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)){
       demo_content_url = repo.contents_url.replace("{+path}", "/app/pods/" + demoParentDirectory);
       content = getDemoContent(demo_content_url);
-      //create controller filePath
 
+      //create route.js
+      f (!directoryExistsSync("app/pods/" + demoParentDirectory  + "/index")) {
+          mkdirpSync(("app/pods/" + demoParentDirectory  + "/index").toLowerCase());
+      }
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js",
+        content.route_js;
+      );
+
+      //controller
+      if (content.controller_js !== undefined) {
+        fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
+          "import ApiController from 'frost-guide/utils/ApiController';\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend");
+        );
+      }
       //create template.hbs
             //insert tabs
-
       var descriptionContent = fs.readFileSync("app/pods/" + demoParentDirectory + "/template.hbs", encoding='utf8');
 
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
@@ -52,7 +64,7 @@ body.forEach(function(repo) {
         "\n\t\t {{md-text class='guide-markdown' text=\" \n" readme_content +"\n \"}}"  +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
-        "\n\t\tI need to come from the demo dir of my corresponding component" +
+        "\n\t\t" content.template_hbs +"\n" +
         "\n\t{{/frost-tab}}" +
         "\n{{/frost-tabs}}"
       );
@@ -93,6 +105,8 @@ function getDemoContent(url){
       content.template_hbs = getFile(item.url);
     } else if(item.name == 'route.js'){
       content.route_js = getFile(item.url);
+    } else if(item.name == 'controller.js'){
+      content.controller_js = getFile(item.url);
     }
   });
   return content;
@@ -142,4 +156,27 @@ function getRepo(url) {
     console.log(err);
   });
 
+}
+
+function mkdirSync(path) {
+    try {
+        fs.mkdirSync(path);
+    } catch (e) {
+        if (e.code != 'EEXIST') throw e;
+    }
+}
+
+function mkdirpSync(dirpath) {
+    var parts = dirpath.split(path.sep);
+    for (var i = 1; i <= parts.length; i++) {
+        mkdirSync(path.join.apply(null, parts.slice(0, i)));
+    }
+}
+
+function directoryExistsSync(filePath) {
+    try {
+        return fs.statSync(filePath).isDirectory();
+    } catch (err) {
+        return false;
+    }
 }
