@@ -125,7 +125,7 @@ function npmInstall(repo) {
   }, function(err) {
     // catch errors
     npm.commands.install([repo.name], function(er, data) {
-      console.log(er);
+      console.log("Npm install error: " + er);
     });
     npm.on("log", function(message) {
       // log the progress of the installation
