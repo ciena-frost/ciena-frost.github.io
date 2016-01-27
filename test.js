@@ -24,20 +24,38 @@ body.forEach(function(repo) {
 
 
     //get Package JSON un comment when needed
-    package_url = repo.contents_url.replace("{+path}","package.json");
-    packageJSON = getPackageJSON(package_url);
-    demoParentDirectory = packageJSON.frost_guide_directory;
-    console.log(packageJSON);
+    //package_url = repo.contents_url.replace("{+path}","package.json");
+    //packageJSON = getPackageJSON(package_url);
+    //demoParentDirectory = packageJSON.frost_guide_directory;
+    demoParentDirectory = "ui-components/button-controls/button";
+    //console.log(packageJSON);
 
     readme_url = repo.contents_url.replace("{+path}", "README.md");
     readme_content = getFile(readme_url);
 
-    if (demoParentDirectory !== undefined && directoryExistsSync("/app/pods/" + demoParentDirectory)){
+    if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)){
       demo_content_url = repo.contents_url.replace("{+path}", "/app/pods/" + demoParentDirectory);
       content = getDemoContent(demo_content_url);
       //create controller filePath
 
       //create template.hbs
+            //insert tabs
+
+      var descriptionContent = fs.readFileSync("app/pods/" + demoParentDirectory + "/template.hbs", encoding='utf8');
+
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
+        "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
+        "\n\t{{#frost-tab alias='Description' class='description' id='description'}}" +
+        "\n\t\t" + descriptionContent +
+        "\n\t{{/frost-tab}}" +
+        "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
+        "\n\t\tI need to come from readme.md of my corresponding component" +
+        "\n\t{{/frost-tab}}" +
+        "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
+        "\n\t\tI need to come from the demo dir of my corresponding component" +
+        "\n\t{{/frost-tab}}" +
+        "\n{{/frost-tabs}}"
+      );
     }else{
       console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
     }
