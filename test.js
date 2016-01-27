@@ -35,7 +35,7 @@ body.forEach(function(repo) {
 
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)){
       demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
-      content = getDemoContent(demo_content_url);
+      var content = getDemoContent(demo_content_url);
 
       //create route.js
       if (!directoryExistsSync("app/pods/" + demoParentDirectory  + "/index")) {
@@ -53,7 +53,11 @@ body.forEach(function(repo) {
       }
       //create template.hbs
             //insert tabs
-      var descriptionContent = fs.readFileSync("app/pods/" + demoParentDirectory + "/template.hbs", encoding='utf8');
+      //need to redo this
+      var descriptionContent = "{{markdown-to-html class=\"guide-markdown\" " +
+          "markdown=(fr-markdown-file '" +
+          demoParentDirectory +
+          "')}}";
 
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
         "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
@@ -104,7 +108,9 @@ function getDemoContent(url){
 
   body.forEach(function(item){
     if (item.name == 'template.hbs'){
-      var template_hbs = getFile(item.url);
+      template_hbs = getFile(item.url);
+      console.log(template_hbs);
+      console.log("Template file: " + item.url );
     } else if(item.name == 'route.js'){
       route_js = getFile(item.url);
     } else if(item.name == 'controller.js'){

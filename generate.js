@@ -86,7 +86,7 @@ function dive(dir) {
 
             fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" " +
                 "markdown=(fr-markdown-file '" +
-                path.replace(".md", "").replace(mark_dir + "/", "") +
+                path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
                 "')}}");
         }
 
