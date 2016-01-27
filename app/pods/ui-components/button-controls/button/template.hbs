@@ -1,6 +1,6 @@
 {{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
-		{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file 'ui-components/button-controls/button')}}
+		{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/button')}}
 	{{/frost-tab}}
 	{{#frost-tab alias='API' class='api' id='api'}}
 		 {{md-text class='guide-markdown' text=" 
