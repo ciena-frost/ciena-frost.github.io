@@ -49,7 +49,7 @@ body.forEach(function(repo) {
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\tI need to come from readme.md of my corresponding component" +
+        "\n\t\t {{md-text class='guide-markdown' text=\" \n" readme_content +"\n \"}}"  +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
         "\n\t\tI need to come from the demo dir of my corresponding component" +
