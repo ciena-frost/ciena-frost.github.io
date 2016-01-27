@@ -34,21 +34,21 @@ body.forEach(function(repo) {
     readme_content = getFile(readme_url);
 
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)){
-      demo_content_url = repo.contents_url.replace("{+path}", "/app/pods/" + demoParentDirectory);
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
       content = getDemoContent(demo_content_url);
 
       //create route.js
-      f (!directoryExistsSync("app/pods/" + demoParentDirectory  + "/index")) {
+      if (!directoryExistsSync("app/pods/" + demoParentDirectory  + "/index")) {
           mkdirpSync(("app/pods/" + demoParentDirectory  + "/index").toLowerCase());
       }
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js",
-        content.route_js;
+        content.route_js
       );
 
       //controller
       if (content.controller_js !== undefined) {
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
-          "import ApiController from 'frost-guide/utils/ApiController';\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend");
+          "import ApiController from 'frost-guide/utils/ApiController';\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend")
         );
       }
       //create template.hbs
@@ -61,10 +61,10 @@ body.forEach(function(repo) {
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\t {{md-text class='guide-markdown' text=\" \n" readme_content +"\n \"}}"  +
+        "\n\t\t {{md-text class='guide-markdown' text=\" \n" + readme_content +"\n \"}}"  +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
-        "\n\t\t" content.template_hbs +"\n" +
+        "\n\t\t" + content.template_hbs +"\n" +
         "\n\t{{/frost-tab}}" +
         "\n{{/frost-tabs}}"
       );
@@ -98,18 +98,24 @@ function getFile(url) {
 function getDemoContent(url){
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
-  var content;
+  var template_hbs;
+  var route_js;
+  var controller_js;
 
   body.forEach(function(item){
     if (item.name == 'template.hbs'){
-      content.template_hbs = getFile(item.url);
+      var template_hbs = getFile(item.url);
     } else if(item.name == 'route.js'){
-      content.route_js = getFile(item.url);
+      route_js = getFile(item.url);
     } else if(item.name == 'controller.js'){
-      content.controller_js = getFile(item.url);
+      controller_js = getFile(item.url);
     }
   });
-  return content;
+  return {
+    template_hbs: template_hbs,
+    route_js: route_js,
+    controller_js: controller_js
+  };
 }
 
 function npmInstall(repo) {
