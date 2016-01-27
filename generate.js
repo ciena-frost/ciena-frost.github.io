@@ -85,7 +85,7 @@ function dive(dir) {
             //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
 
             fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" " +
-                "markdown=(fr-markdown-file '" +
+                "markdown=(fr-markdown-file-strip-number-prefix '" +
                 path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
                 "')}}");
         }

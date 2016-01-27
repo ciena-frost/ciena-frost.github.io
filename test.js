@@ -55,7 +55,7 @@ body.forEach(function(repo) {
             //insert tabs
       //need to redo this
       var descriptionContent = "{{markdown-to-html class=\"guide-markdown\" " +
-          "markdown=(fr-markdown-file '" +
+          "markdown=(fr-markdown-file-strip-number-prefix '" +
           demoParentDirectory +
           "')}}";
 
