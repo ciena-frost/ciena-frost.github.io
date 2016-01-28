@@ -17,6 +17,10 @@ install:
 - npm install path
 - npm install bower
 - npm install sync-request
+- npm install npm
+
+script:
+- npm --version
 
 after_success:
 - chmod +x .travis/push.sh
