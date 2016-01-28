@@ -24,10 +24,10 @@ body.forEach(function(repo) {
 
 
     //get Package JSON un comment when needed
-    //package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
-    //packageJSON = getPackageJSON(package_url);
-    //demoParentDirectory = packageJSON.frost_guide_directory;
-    demoParentDirectory = "ui-components/button-controls/button";
+    package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
+    packageJSON = getPackageJSON(package_url);
+    demoParentDirectory = packageJSON.frostGuideDirectory;
+    // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
 
     readme_url = repo.contents_url.replace("{+path}", "README.md");
