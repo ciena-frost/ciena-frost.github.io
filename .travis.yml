@@ -25,6 +25,7 @@ install:
   - npm install path
   - npm install bower
   - npm install sync-request
+  - npm install npm
 
 script:
   # - npm test
