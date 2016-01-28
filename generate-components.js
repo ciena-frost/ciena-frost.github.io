@@ -20,7 +20,7 @@ body.forEach(function(repo) {
   if (repo.name.startsWith("ember-")) {
     //ember install this package
 
-    npmInstall(repo);
+    npmInstall(repo.name.replace("ember-", ""));
 
 
     //get Package JSON un comment when needed
@@ -125,13 +125,14 @@ function getDemoContent(url){
 }
 
 function npmInstall(repo) {
-  console.log("Doing Ember Install of : " + repo.name);
+  console.log("Doing Ember Install of : " + repo);
   npm.load({
     loaded: false
   }, function(err) {
     // catch errors
-    npm.commands.install([repo.name], function(er, data) {
-      console.log("Npm install error: " + er);
+    npm.commands.install([repo], function(er, data) {
+      if(er !== null)
+        console.log("Npm install error: " + er);
     });
     npm.on("log", function(message) {
       // log the progress of the installation
