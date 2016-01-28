@@ -25,11 +25,11 @@ install:
   - npm install path
   - npm install bower
   - npm install sync-request
+  - npm install npm
 
 script:
   # - npm test
   - node generate-pages-from-markdown.js
-  - node generate-components.js
 
 notifications:
     email: false
