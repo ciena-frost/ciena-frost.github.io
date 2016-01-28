@@ -8,7 +8,7 @@ var fs = require('fs');
 var child_process = require('child_process');
 var chalk = require('chalk');
 var path = require('path');
-var mark_dir = "markdown"
+var mark_dir = "markdown";
 var routing_string = "module.exports = [ \n";
 
 dive(mark_dir);
