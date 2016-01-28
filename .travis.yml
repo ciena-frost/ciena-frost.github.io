@@ -1,39 +1,33 @@
----
 language: node_js
 node_js:
-  - "0.12"
-
+- '0.12'
 sudo: false
-
 cache:
   directories:
-    - node_modules
-
+  - node_modules
 before_install:
-  - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
-  - "npm install -g jshint@^2.5"
-
+- export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
+- npm config set spin false
+- npm install -g npm@^2
+- npm install -g jshint@^2.5
 install:
-  - npm install -g bower
-  # - npm install
-  - bower install
-  
-  #content generation scripts dependancies
-  - npm install chalk
-  - npm install path
-  - npm install bower
-  - npm install sync-request
-  - npm install npm
-
+- npm install -g bower
+- bower install
+- npm install chalk
+- npm install path
+- npm install bower
+- npm install sync-request
+- npm install npm
 script:
-  # - npm test
-  - node generate-pages-from-markdown.js
-
+- node generate-pages-from-markdown.js
+after_success:
+- .travis/push.sh
+env:
+  global:
+  - secure: TWE3BCClahkLm32E1s8v2ArOUCfAVXz4p7IuHc2habNhtGL0FOzu0KdqVeytc619OoRJG9KFTtfbVnvFTNY6yP1MzLxvdePS2RKvqyMJuIciKmOAI2WjbDLv+eN2Zpa8kvbHkB3es7Hrl1czKRfHsuNTLlG+uraFh4j6vcXGwyoPLNnBtAap1gJvFLs/EaTarRvn4LRMAfhHhu0lwwpat4PO4LBFdcj/muTTCevHMbAL1BTCSNcRZjvXbkJBC+jy1q9zcUWPVF2/VgzMEJi/rLkyKqrdcRJemkEKHJGpR1TNL44xRRL9TxFtoP3Y8msbzuvnCOMKbIX0rS5UaUKRNa6/+/KPDh80uBjke8zYJuMjZsO/bjYwoc8bEy25kZhUN+yGZy9t0sc1IFkOUVNQ9s8m8v7Be9msJxxk4Fu8QO2r1G2nxRvzQUMScESqRjafRFWZzPYC2gIPnB3Bjbo92Gpihh7FbpKaZ++2nsAUXJDDsNxzp/4TAwlpN+WALuz6+V6uy9/OwXuXOIce1Q5ps+N6dKUMowtQ8X3QhnrJ4Me1q7k7o3ou2c61qm1/Ch82y6WSQzFDgCRS3UjzmznzQxzVJhU31ZFrU0aqg2uZu0eGznmeVns58ynSrrb6izWuCiWmTANgAXF+064Mael4LvW4pL3H+ONNEeB+LgY0cGw=
 notifications:
-    email: false
+  email: false
 matrix:
-    fast_finish: true
-    allow_failures:
-        - node_js: "iojs"
+  fast_finish: true
+  allow_failures:
+  - node_js: iojs
