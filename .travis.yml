@@ -21,6 +21,7 @@ install:
 script:
 - node generate-pages-from-markdown.js
 after_success:
+- chmod +x .travis
 - .travis/push.sh
 notifications:
   email: false
