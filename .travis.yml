@@ -19,7 +19,7 @@ install:
 - npm install sync-request
 - npm install npm
 script:
-- node generate-pages-from-markdown.js
+
 after_success:
 - chmod +x .travis/push.sh
 - git config credential.helper "store --file=.git/credentials"
