@@ -21,10 +21,10 @@ install:
   - bower install
   
   #content generation scripts dependancies
-  - npm install -g chalk
-  - npm install -g path
-  - npm install -g bower
-  - npm install -g sync-request
+  - npm install chalk
+  - npm install path
+  - npm install bower
+  - npm install sync-request
 
 script:
   # - npm test
