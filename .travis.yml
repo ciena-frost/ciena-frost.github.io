@@ -19,10 +19,17 @@ install:
   - npm install -g bower
   # - npm install
   - bower install
+  
+  #content generation scripts dependancies
+  - npm install chalk
+  - npm install path
+  - npm install bower
+  - npm install sync-request
 
 script:
   # - npm test
   - node generate-pages-from-markdown.js
+  - node generate-components.js
 
 notifications:
     email: false
