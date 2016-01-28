@@ -120,9 +120,9 @@ module.exports = [
 	{id: 'trail-analyzer', alias: 'trail analyzer', type: 'route', route: 'data-visualization.trail-analyzer'},
 
 ]}, // 07-data-visualization
-{id: 'Contributing', alias: 'Contributing', type: 'category', route: 'Contributing', items: [ 
-	{id: 'Frost-Guide', alias: 'Frost Guide', type: 'route', route: 'Contributing.Frost-Guide'},
+{id: 'contributing', alias: 'Contributing', type: 'category', route: 'contributing', items: [ 
+	{id: 'frost-guide', alias: 'frost guide', type: 'route', route: 'contributing.frost-guide'},
 
-]}, // 08-Contributing
+]}, // 08-contributing
 	{id: 'terminology', alias: 'terminology', type: 'route', route: 'terminology'},
 ];
