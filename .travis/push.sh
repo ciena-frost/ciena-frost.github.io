@@ -6,6 +6,7 @@ setup_git() {
 }
 
 commit_website_files() {
+  git branch
   git add .
   git commit --message "[ci skip]"
   git push
