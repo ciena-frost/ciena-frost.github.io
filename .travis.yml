@@ -30,7 +30,6 @@ install:
 script:
   # - npm test
   - node generate-pages-from-markdown.js
-  - node generate-components.js
 
 notifications:
     email: false
