@@ -18,6 +18,8 @@ install:
 - npm install bower
 - npm install sync-request
 - npm install npm
+- npm install -g ember-cli
+- ember install ember-cli-github-pages
 
 script:
 - npm --version
