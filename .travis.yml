@@ -18,7 +18,7 @@ install:
 - npm install bower
 - npm install sync-request
 - npm install npm
-- npm install -g ember-cli
+- npm install -g ember-cli@1.13.13
 - npm install
 - bower install
 

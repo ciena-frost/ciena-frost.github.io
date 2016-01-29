@@ -14,10 +14,12 @@ commit_website_files() {
   git push
 }
 
-#upload_files() {
-#  
-#}
+publish_gh_pages() {
+  ember install:addon ember-cli-github-pages
+  ember github-pages:commit --message "Update gh-pages [ci skip]"
+  git push
+}
 
 setup_git
 commit_website_files
-#upload_files
+publish_gh_pages
