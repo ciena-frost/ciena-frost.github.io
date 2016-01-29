@@ -9,7 +9,7 @@ commit_website_files() {
   git checkout dev
   node generate-pages-from-markdown.js
   git add --all
-  git commit --message "[ci skip]"
+  git commit --message "[ci skip] Generating files/folders"
   git push
 }
 
