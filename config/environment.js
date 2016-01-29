@@ -7,7 +7,7 @@ module.exports = function(environment) {
 		modulePrefix: 'frost-guide',
 		podModulePrefix: 'frost-guide/pods',
 		environment: environment,
-		baseURL: '/frost-guide',
+		baseURL: '/',
 		locationType: 'hash',
 		EmberENV: {
 			FEATURES: {

@@ -58,7 +58,7 @@ function dive(dir) {
             var filename = file.replace(".md", "");
 
             routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
-                filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ") +
+                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
                 "', type: 'route', route: '" +
                 path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
                 "'},\n";
