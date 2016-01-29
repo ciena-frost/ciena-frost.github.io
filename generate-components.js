@@ -18,7 +18,7 @@ var body = JSON.parse(res.getBody());
 
 body.forEach(function(repo) {
   console.log(repo.name);
-  if (repo.name.stringStartsWith("ember-")) {
+  if (stringStartsWith(repo.name,"ember-")) {
     //ember install this package
 
     npmInstall(repo.name.replace("ember-", ""));
