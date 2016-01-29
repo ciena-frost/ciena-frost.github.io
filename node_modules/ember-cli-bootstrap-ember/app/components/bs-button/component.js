@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-bootstrap-ember/components/bs-button/component';
