@@ -17,7 +17,7 @@ commit_website_files() {
 publish_gh_pages() {
   echo "I AM NOW ABOUT TO EXECUTE THE GH_PAGES SHELL COMMANDS"
   ember install:addon ember-cli-github-pages
-  npm install
+  echo "I AM NOW ABOUT TO EXECUTE THE PUBLISH COMMAND"
   ember github-pages:commit --message "[ci skip] Update gh-pages"
   git push
 }
