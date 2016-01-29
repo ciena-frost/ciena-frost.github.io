@@ -15,6 +15,8 @@ var options = {
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
 var body = JSON.parse(res.getBody());
 
+console.log(body);
+
 body.forEach(function(repo) {
   console.log(repo.name);
   if (repo.name.startsWith("ember-")) {
