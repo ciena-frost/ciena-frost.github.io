@@ -23,6 +23,7 @@ install:
 - npm install path-posix
 - npm install walk-sync
 - bower install
+- ember install ember-cli-github-pages
 
 script:
 - npm --version
