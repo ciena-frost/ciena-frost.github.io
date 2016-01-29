@@ -18,6 +18,30 @@ publish_gh_pages() {
   echo "I AM NOW ABOUT TO EXECUTE THE GH_PAGES SHELL COMMANDS"
   ember install:addon ember-cli-github-pages
   echo "I AM NOW ABOUT TO EXECUTE THE PUBLISH COMMAND"
+  cd node_modules
+  cd frost-button/ 
+  npm link
+  cd ..
+  cd frost-css/
+  npm link
+  cd ..
+  cd frost-link/
+  npm link
+  cd ..
+  cd frost-scroll/
+  npm link
+  cd ..
+  cd frost-svg/
+  npm link
+  cd ..
+  cd frost-tabs/
+  npm link
+  cd ..
+  cd frost-text/
+  npm link
+  cd ..
+  cd ..
+  npm install
   ember github-pages:commit --message "[ci skip] Update gh-pages"
   git push
 }
