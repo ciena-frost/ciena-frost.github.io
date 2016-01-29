@@ -15,11 +15,10 @@ var options = {
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
 var body = JSON.parse(res.getBody());
 
-console.log(body);
 
 body.forEach(function(repo) {
   console.log(repo.name);
-  if (repo.name.startsWith("ember-")) {
+  if (repo.name.stringStartsWith("ember-")) {
     //ember install this package
 
     npmInstall(repo.name.replace("ember-", ""));
@@ -194,4 +193,8 @@ function directoryExistsSync(filePath) {
     } catch (err) {
         return false;
     }
+}
+
+function stringStartsWith (string, prefix) {
+    return string.slice(0, prefix.length) == prefix;
 }
