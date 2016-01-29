@@ -12,7 +12,6 @@ commit_website_files() {
   git add --all
   git commit --message "[ci skip] Generating files/folders"
   git push
-  ember github-pages:commit --message "Generate page off build"
 }
 
 #upload_files() {

@@ -21,7 +21,6 @@ install:
 - npm install -g ember-cli
 - npm install
 - bower install
-- ember install ember-cli-github-pages
 
 script:
 - npm --version
