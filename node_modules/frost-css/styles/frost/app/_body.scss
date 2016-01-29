@@ -1,0 +1,8 @@
+html, body {
+	margin: 0; // Ember includes a 20px margin by default
+	height: 100%; // 100% height is used for vertical flexbox
+}
+
+body > .ember-view {
+	height: 100%; // 100% height is used for vertical flexbox
+}

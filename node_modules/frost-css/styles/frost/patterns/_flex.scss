@@ -1,0 +1,5 @@
+@for $x from 1 through 11 {
+	.frost-flex-#{$x} {
+		@include flex(#{$x});
+	}
+}
