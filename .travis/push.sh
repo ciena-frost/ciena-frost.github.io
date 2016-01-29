@@ -19,10 +19,10 @@ publish_gh_pages() {
   ember install:addon ember-cli-github-pages
   echo "I AM NOW ABOUT TO EXECUTE THE PUBLISH COMMAND"
   cd node_modules
-  cd frost-button/ 
+  cd frost-css/
   npm link
   cd ..
-  cd frost-css/
+  cd frost-button/ 
   npm link
   cd ..
   cd frost-link/
