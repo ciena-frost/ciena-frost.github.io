@@ -1,6 +1,6 @@
-import Ember from'ember';
+import Ember from 'ember';
 export default Ember.Route.extend({
 	breadCrumb:{
-		title:'map-data-pods'
+		title:'Map Data Pods'
 	}
 });
