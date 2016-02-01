@@ -1,2 +1,12 @@
-
-{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'contributing/frost-guide')}}
+<div class="markdown">
+    <div class="content">
+        {{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'contributing/frost-guide')}}
+    </div>
+    <div class="right-col">
+        <div id="markdown-sidenav">
+            <h1 {{action "goTo" "#generation"}}> "generation"</h1>
+            <h1 {{action "goTo" "#links"}}> "links"</h1>
+            <h1 {{action "goTo" "#third-example"}}> "third-example"</h1>
+        </div>
+    </div>
+</div>

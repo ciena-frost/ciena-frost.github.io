@@ -30,11 +30,7 @@
 	}
   }
 }
-.markdown-sidebar{
-  display: inline-block;
-  position: fixed;
-  right: 0px;
-}
+
 .guide-sidebar-mobile {
   position: absolute;
   height: 100%;
@@ -120,4 +116,24 @@
 
 .frost-tabs--active {
   min-height:500px;
+}
+
+
+.markdown {
+    float:left;
+    width:100%;
+}
+.markdown .content{
+    float:left;
+    width:80%;
+}
+.markdown .sidenav {
+    float:left;
+    width:20%;
+}
+
+#markdown-sidenav{
+  display: inline-block;
+  position: fixed;
+  right: 0px;
 }
