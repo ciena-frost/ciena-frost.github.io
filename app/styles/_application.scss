@@ -30,7 +30,11 @@
 	}
   }
 }
-
+.markdown-sidebar{
+  display: inline-block;
+  position: absolute;
+  right: 0px;
+}
 .guide-sidebar-mobile {
   position: absolute;
   height: 100%;

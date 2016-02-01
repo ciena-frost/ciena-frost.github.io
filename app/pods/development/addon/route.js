@@ -1,7 +1,6 @@
 import Ember from 'ember';
-
 export default Ember.Route.extend({
-  breadCrumb: {
-    title: 'Addon Development'
-  }
+	breadCrumb:{
+		title:'Addon'
+	}
 });

@@ -41,7 +41,7 @@ app.get('/resources/:name', function(req, res, next) {
 			sendImmediately: true
 		}
 	}, function(error, response, body) {
-		if (!error && response.statusCode == 200) {
+		if (!error && response.statusCode === 200) {
 			res.send(body);
 		}
 		else {

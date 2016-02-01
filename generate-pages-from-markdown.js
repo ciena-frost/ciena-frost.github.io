@@ -71,15 +71,15 @@ function dive(dir) {
             //debug console.log(chalk.green.bold("Create Folder page: " + pagePath));
             //debug console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
 
-            if (!directoryExistsSync(pagePath + "/index")) {
-                mkdirpSync((pagePath + "/index").toLowerCase());
+            if (!directoryExistsSync(pagePath)) {
+                mkdirpSync((pagePath).toLowerCase());
             }
 
             //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
-            var route_js_string = "import Ember from'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
-                filename.replaceAll("[0-9][0-9][-]", "") + "'\n\t}\n});"
+            var route_js_string = "import Ember from 'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
+                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t}\n});"
 
-            fs.writeFileSync(pagePath + "/index" + "/route.js", route_js_string);
+            fs.writeFileSync(pagePath + "/route.js", route_js_string);
 
             //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
             //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
