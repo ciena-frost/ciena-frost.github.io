@@ -4,5 +4,5 @@ export default Ember.Route.extend({
 		title:'Password'
 	},
 	actions: { 
- 		 goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500)}}
+ 		 goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500);}}
 });
