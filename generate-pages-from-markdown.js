@@ -77,7 +77,7 @@ function dive(dir) {
 
             //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
             var route_js_string = "import Ember from 'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
-                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t},\n\tactions: { \n \t\t goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},2000)}}});"
+                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t},\n\tactions: { \n \t\t goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500)}}\n});"
 
             fs.writeFileSync(pagePath +"/route.js", route_js_string);
 
@@ -96,7 +96,7 @@ function dive(dir) {
               console.log(contents);
               contents.forEach(function(ref){
                 ref = ref.replace(/\((.*)\)/, '"$1"');
-                sidebar += '\n <h1 {{action "goTo" ' +ref.toLowerCase() +'}}> ' + ref.replace('#','') + '</h1>';
+                sidebar += '\n <p {{action "goTo" ' +ref.toLowerCase().replace('-','') +'}}> ' + toTitleCase(ref.replace('#','').replaceAll('"','').replaceAll('-',' ')) + '</p>';
               });
               sidebar += '\n{{/frost-sidebar}} \n </div>\n';
             }
