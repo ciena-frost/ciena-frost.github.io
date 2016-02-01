@@ -77,13 +77,13 @@ function dive(dir) {
 
             //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
             var route_js_string = "import Ember from 'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
-                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t}\n});"
+                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t},\n\tactions: { \n \t\t goTo:goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},2000)}});"
 
             fs.writeFileSync(pagePath +"/route.js", route_js_string);
 
             //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
             //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
-
+            
             fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" " +
                 "markdown=(fr-markdown-file-strip-number-prefix '" +
                 path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
