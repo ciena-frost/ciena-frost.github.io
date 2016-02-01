@@ -1,2 +1,8 @@
-
+<div class="markdown-sidebar"> 
+ {{#frost-sidebar}}
+ <h1 {{action "goTo" "#generation"}}> "generation"</h1>
+ <h1 {{action "goTo" "#links"}}> "links"</h1>
+ <h1 {{action "goTo" "#third-example"}}> "third-example"</h1>
+{{/frost-sidebar}} 
+ </div>
 {{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'contributing/frost-guide')}}
