@@ -77,16 +77,21 @@ function dive(dir) {
 
             //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
             var route_js_string = "import Ember from 'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
-                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t},\n\tactions: { \n \t\t goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500)}}\n});"
+                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t},\n\tactions: { \n \t\t goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500);}}\n});"
 
             fs.writeFileSync(pagePath +"/route.js", route_js_string);
 
             //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
             //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
-            var sidebar = "";
+            
+            var template_content = "";
             var content = fs.readFileSync(path, 'utf8');
             if (content.indexOf("<!--Table of Contents-->") > -1){
-              sidebar = '<div class="markdown-sidebar"> \n {{#frost-sidebar}}';
+              template_content = '<div class="markdown">\n\t<div class="content">\n' + "\t\t{{markdown-to-html class=\"guide-markdown\" " +
+                "markdown=(fr-markdown-file-strip-number-prefix '" +
+                path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
+                "')}} \n \t</div>\n\t <div class='right-col'> \n\t\t<div id='markdown-sidenav'>\n";
+             
               content = content.substring(content.indexOf("<!--Table of Contents-->"),content.indexOf("<!---End Table of Contents-->") + "<!---End Table of Contents-->".length);
               content = content.replaceAll("<!--Table of Contents-->|<!---End Table of Contents-->|<!--|-->|","");
               
@@ -96,15 +101,17 @@ function dive(dir) {
               console.log(contents);
               contents.forEach(function(ref){
                 ref = ref.replace(/\((.*)\)/, '"$1"');
-                sidebar += '\n <p {{action "goTo" ' +ref.toLowerCase().replace('-','') +'}}> ' + toTitleCase(ref.replace('#','').replaceAll('"','').replaceAll('-',' ')) + '</p>';
+                template_content += '\n \t\t\t<p {{action "goTo" ' +ref.toLowerCase().replace('-','') +'}}> ' + toTitleCase(ref.replace('#','').replaceAll('"','').replaceAll('-',' ')) + '</p>';
               });
-              sidebar += '\n{{/frost-sidebar}} \n </div>\n';
-            }
-            
-            fs.writeFileSync(pagePath + "/template.hbs", sidebar + "{{markdown-to-html class=\"guide-markdown\" " +
+              template_content += '\n\t\t</div>\n\t</div>\n</div>\n';
+            }else{
+              template_content = "{{markdown-to-html class=\"guide-markdown\" " +
                 "markdown=(fr-markdown-file-strip-number-prefix '" +
                 path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
-                "')}}");
+                "')}} ";
+            }
+            
+            fs.writeFileSync(pagePath + "/template.hbs", template_content );
         }
 
     });
