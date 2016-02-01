@@ -12,18 +12,8 @@ before_install:
 - npm install -g jshint@^2.5
 install:
 - npm install -g bower
-- bower install
-- npm install chalk
-- npm install path
-- npm install bower
-- npm install sync-request
-- npm install npm
 - npm install -g ember-cli@1.13.13
-- npm install
-- npm install path-posix
-- npm install walk-sync
-- bower install
-- ember install ember-cli-github-pages
+
 
 script:
 - npm --version
