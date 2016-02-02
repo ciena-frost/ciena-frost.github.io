@@ -18,7 +18,7 @@ var body = JSON.parse(res.getBody());
 
 body.forEach(function(repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name,"ember-")) {
+  if (stringStartsWith(repo.name,"ember-frost-button")) {
     //ember install this package
 
     npmInstall(repo.name.replace("ember-", ""));

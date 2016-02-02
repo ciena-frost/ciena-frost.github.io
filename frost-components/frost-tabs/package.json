@@ -39,8 +39,7 @@
     "ember-export-application-global": "~1.0.4",
     "ember-lodash": "~0.0.6",
     "ember-truth-helpers": "~1.2.0",
-    "ember-try": "~0.0.8",
-    "frost-svg": "~1.1.1"
+    "ember-try": "~0.0.8"
   },
   "keywords": [
     "ember-addon"
@@ -48,9 +47,7 @@
   "dependencies": {
     "ember-cli-babel": "~5.1.5",
     "ember-cli-htmlbars": "~1.0.1",
-    "ember-cli-sass": "5.1.0",
-    "frost-button": "~1.1.0",
-    "frost-css": "~1.1.0"
+    "ember-cli-sass": "5.1.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

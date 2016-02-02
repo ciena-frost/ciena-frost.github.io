@@ -49,9 +49,7 @@
     "ember-truth-helpers": "^1.2.0",
     "ember-try": "~0.0.8",
     "fr-cli-bump": "^0.6.3",
-    "frost-css": "~1.2.0",
-    "frost-docs": "~1.1.0",
-    "frost-svg": "~1.1.1",
+
     "jscs": "^2.7.0",
     "liquid-fire": "0.22.0"
   },
@@ -61,8 +59,7 @@
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
     "ember-cli-htmlbars": "^1.0.1",
-    "ember-cli-sass": "5.1.0",
-    "frost-css": "~1.2.0"
+    "ember-cli-sass": "5.1.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"

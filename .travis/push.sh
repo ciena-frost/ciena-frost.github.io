@@ -1,20 +1,25 @@
 #!/bin/sh
 
 setup_git() {
- git clone --branch=$branch $repo
-  cd xlsm-git-diff-test/
+  git clone --branch=$branch $repo
+  cd ciena-frost.github.io
   git config --global user.email "ericwhite613@gmail.com"
   git config --global user.name "Eric White"
   git config credential.helper "store --file=.git/credentials"
   echo "https://${GH_TOKEN}:@github.com" > .git/credentials
   git fetch origin
   git checkout -b gh-pages origin/gh-pages
-  chmod +x .travis/link.sh
-  ./.travis/link.sh
 }
 
 commit_website_files() {
   git checkout $branch
+  npm install frost-components/frost-css
+  npm install frost-components/frost-button
+  npm install frost-components/frost-tab
+  npm install frost-components/frost-link
+  npm install frost-components/frost-scroll
+  npm install frost-components/frost-svg
+  npm install frost-components/frost-text
   npm install && bower install
   npm install path-posix
   npm install walk-sync

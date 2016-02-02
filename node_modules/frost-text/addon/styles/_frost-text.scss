@@ -5,7 +5,7 @@
 	border-bottom: 1px solid $frost-color-grey-6;
 	font-size: $frost-font-size-2;
 	color: $frost-color-grey-1;
-	background-color: inherit;
+  background-color: $frost-color-white;   
 	cursor: text;
 
 	&.errored,	// deprecated
