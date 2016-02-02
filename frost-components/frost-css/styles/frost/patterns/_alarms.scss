@@ -1,0 +1,46 @@
+@import '../variables/colors';
+
+.frost-alarm-background-critical {
+  color: $frost-color-white;
+  background-color: $frost-color-critical-1;
+}
+
+.frost-alarm-critical {
+  color: $frost-color-critical-1;
+}
+
+.frost-alarm-background-major {
+  color: $frost-color-white;
+  background-color: $frost-color-major-1;
+}
+
+.frost-alarm-major {
+  color: $frost-color-major-1;
+}
+
+.frost-alarm-background-minor {
+  color: $frost-color-white;
+  background-color: $frost-color-minor-1;
+}
+
+.frost-alarm-minor {
+  color: $frost-color-minor-1;
+}
+
+.frost-alarm-background-warning {
+  color: $frost-color-white;
+  background-color: $frost-color-warn-1;
+}
+
+.frost-alarm-warning {
+  color: $frost-color-warn-1;
+}
+
+.frost-alarm-background-indeterminate {
+  color: $frost-color-white;
+  background-color: $frost-color-indeterminate;
+}
+
+.frost-alarm-indeterminate {
+  color: $frost-color-indeterminate;
+}
