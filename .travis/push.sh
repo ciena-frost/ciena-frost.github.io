@@ -9,6 +9,8 @@ setup_git() {
   echo "https://${GH_TOKEN}:@github.com" > .git/credentials
   git fetch origin
   git checkout -b gh-pages origin/gh-pages
+  chmod +x .travis/link.sh
+  ./.travis/link.sh
 }
 
 commit_website_files() {
