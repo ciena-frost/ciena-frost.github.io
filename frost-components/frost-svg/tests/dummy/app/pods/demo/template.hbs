@@ -1,0 +1,20 @@
+{{#frost-tabs class=(if iframe 'iframe') on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Readme' id='readme'}}
+        <div id='content'></div>
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' id='demo' }}
+
+        <div class="demo">
+			{{#each entries as |entry|}}
+                <div class="entry">
+                    <div class="title">
+						{{entry}}
+                    </div>
+                    <div class="content">
+						{{frost-svg path=entry}}
+                    </div>
+                </div>
+			{{/each}}
+        </div>
+	{{/frost-tab}}
+{{/frost-tabs}}
