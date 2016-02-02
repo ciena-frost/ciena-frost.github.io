@@ -15,7 +15,7 @@ commit_website_files() {
   git checkout $branch
   npm install frost-components/frost-css
   npm install frost-components/frost-button
-  npm install frost-components/frost-tab
+  npm install frost-components/frost-tabs
   npm install frost-components/frost-link
   npm install frost-components/frost-scroll
   npm install frost-components/frost-svg
