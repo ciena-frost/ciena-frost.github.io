@@ -4,11 +4,5 @@ export default Ember.Route.extend({
 		title:'Frost Guide'
 	},
 	actions: { 
- 		 goTo: function (id, event) {
-   $('html, body').animate({
-     scrollTop: $(id).offset().top
-   }, 500);
-           console.log(event);
- }
- }
+ 		 goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500);}}
 });
