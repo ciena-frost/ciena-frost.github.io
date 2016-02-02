@@ -1,0 +1,79 @@
+{{#frost-tabs class=(if iframe 'iframe') on-change=(action 'tabSelected') selection=selectedTab}}
+  {{#frost-tab alias='Readme' id='readme'}}
+      <div id='content'>
+        {{#frost-docs 'frost-text'}}
+          {{#frost-docs-api}}
+            {{#frost-docs-api-category 'actions'}}
+              {{frost-docs-api-attribute 'on-input' 'triggers action'}}
+            {{/frost-docs-api-category}}
+
+            {{#frost-docs-api-category 'data'}}
+              {{frost-docs-api-attribute 'value' 'default or provided by user'}}
+            {{/frost-docs-api-category}}
+
+            {{#frost-docs-api-category 'states'}}
+              {{frost-docs-api-attribute 'autofocus' 'automatic focus'}}
+              {{frost-docs-api-attribute 'disabled' 'disabled element'}}
+              {{frost-docs-api-css 'error' 'indicates error'}}
+              {{frost-docs-api-attribute 'readonly' 'readonly element'}}
+            {{/frost-docs-api-category}}
+          {{/frost-docs-api}}
+
+          {{#frost-docs-examples}}
+            {{frost-docs-example autofocus}}
+            {{frost-docs-example disabled}}
+            {{frost-docs-example error1}}
+            {{frost-docs-example readonly}}
+            {{frost-docs-example oninput}}
+          {{/frost-docs-examples}}
+
+          {{#frost-docs-references}}
+              <a href="http://guides.emberjs.com/v2.0.0/templates/input-helpers/">Input helpers</a>
+          {{/frost-docs-references}}
+
+          {{#frost-docs-changelog}}
+            {{frost-docs-changelog-entry '1.0.0' "Initial version"}}
+            {{frost-docs-changelog-entry '1.0.1' "Deprecating the 'errored' class in favor of 'error'"}}
+          {{/frost-docs-changelog}}
+        {{/frost-docs}}
+      </div>
+  {{/frost-tab}}
+  {{#frost-tab alias='Demo' id='demo' }}
+      <div id='content'>
+          <div class='dummy-header'>Basic</div>
+          <div style="padding: 10px 20px;">
+            {{frost-text id="basic" autofocus=true}}
+          </div>
+
+          <div class='dummy-header'>Action</div>
+          <div style="padding: 10px 20px;">
+            {{frost-text id="action" on-input=(action "text" )}}
+          </div>
+
+          <div class='dummy-header'>Bound</div>
+          <div style="padding: 10px 20px;">
+            {{frost-text id="bound" on-input=(action 'bind') value=boundText}}
+              <br>Bound Text: {{boundText}}<br>
+            {{frost-text id="bound2" on-input=(action 'bind2') value=boundText}}
+          </div>
+
+          <div class='dummy-header'>Error</div>
+          <div style="padding: 10px 20px;">
+            {{frost-text id="error" classNameBindings="error"}}
+            {{#frost-button on-click=(action "toggleError") class="small secondary"}}
+                <div class='text'>Toggle error</div>
+            {{/frost-button}}
+          </div>
+
+          <div class='dummy-header'>Attributes - e.g. Disabled</div>
+          <div style="padding: 10px 20px;">
+            {{frost-text id="disabled" disabled=true}}
+          </div>
+
+          <div class='dummy-header'>Attributes - e.g. Read-only</div>
+          <div style="padding: 10px 20px;">
+            {{frost-text id="read-only" readonly=true value="Read only text"}}
+          </div>
+      </div>
+  {{/frost-tab}}
+{{/frost-tabs}}
