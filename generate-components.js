@@ -3,10 +3,10 @@ var http = require('http');
 var fs = require('fs');
 var request = require('sync-request');
 var chalk = require('chalk');
-
 var options = {
   'headers': {
-    'user-agent': 'ciena-frost'
+    'user-agent': 'ciena-frost',
+    'Authorization': 'token ' + process.env.GH_TOKEN
   }
 };
 
