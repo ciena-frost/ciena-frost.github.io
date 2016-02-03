@@ -21,7 +21,7 @@ body.forEach(function(repo) {
   if (stringStartsWith(repo.name,"ember-frost-button")) {
     //ember install this package
 
-    npmInstall(repo.name.replace("ember-", ""));
+    npmInstall(repo.name);
 
 
     //get Package JSON un comment when needed
