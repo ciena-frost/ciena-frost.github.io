@@ -1,0 +1,85 @@
+@import 'bourbon';
+@import 'frost';
+
+.dummy-notification-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 1060;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.dummy-body {
+  @include display(flex);
+  @include flex-direction(row);
+}
+
+.dummy-content {
+  @include flex(1);
+}
+
+.dummy-header {
+  padding: 20px 20px 10px 0px;
+  font-weight: bold;
+}
+
+
+.dummy-padding {
+  margin: 10px;
+  padding: 10px 0 10px 20px;
+
+  @include display(inline-flex);
+  @include flex-direction(column);
+}
+
+.dummy-padding-link {
+  margin: 10px;
+  padding: 10px 0 10px 20px;
+}
+
+.dummy-alternate {
+  @include display(flex);
+  @include flex-direction(row);
+}
+
+.dummy-text {
+  padding: 5px 5px 5px 30px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.dummy-info {
+  padding-top: 5px;
+  font-size: 12px;
+}
+
+.frost-tabs.iframe {
+  .navigation {
+    display: none;
+  }
+}
+
+.dummy-style {
+  @include display(flex);
+  @include flex-direction(row);
+}
+
+.dummy-style-item {
+  padding-right: 10px;
+  padding-top: 10px;
+
+}
+
+.dummy-new-style {
+  @include display(inline-flex);
+  @include flex-direction(column);
+}
+
+.dummy-row {
+  height: 90px;
+  vertical-align: top;
+  padding-bottom: 10px;
+}
+

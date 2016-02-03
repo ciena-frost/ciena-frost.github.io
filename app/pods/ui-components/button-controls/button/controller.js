@@ -1,12 +1,15 @@
-import Ember from 'ember';
+import ApiController from 'frost-guide/utils/ApiController';
+import Ember from 'ember'
 
-export default Ember.Controller.extend({
-	queryParams: ['selectedTab'],
-	selectedTab: 'description',
-
-	actions: {
-		tabSelected(tab) {
-			this.set('selectedTab', tab);
-		}
-	}
-});
+export default ApiController.extend({
+  actions: {
+    action () {
+      this.notifications.addNotification({
+        message: 'Action sent',
+        type: 'success',
+        autoClear: true,
+        clearDuration: 2000
+      })
+    }
+  }
+})

@@ -1,0 +1,50 @@
+@import 'bourbon';
+
+.frost-progress {
+	display: inline-block;
+}
+
+.frost-progress .state:first-child {
+	margin-left: 0;
+}
+
+.frost-progress .state {
+	display: inline-block;
+	position: relative;
+	width: 35px;
+	height: 35px;
+	margin-left: 10px;
+}
+
+.frost-progress .state .frost-svg {
+	width: 25px;
+	height: 25px;
+}
+
+.frost-progress .state .frost-svg.overlay {
+	position: absolute;
+	top: -5px;
+	left: -5px;
+	width: 35px;
+	height: 35px;
+}
+
+.frost-progress .state .frost-svg.overlay.processing {
+	@include animation(rotate 1s linear infinite);
+}
+
+.frost-progress .state .frost-svg.overlay.failed {
+	top: 0;
+	left: 15px;
+	width: 25px;
+	height: 25px;
+}
+
+@include keyframes(rotate) {
+	from {
+		@include transform(rotate(0deg));
+	}
+	to {
+		@include transform(rotate(359deg));
+	}
+}

@@ -1,0 +1,14 @@
+{{#frost-tabs class=(if iframe 'iframe') on-change=(action 'tabSelected') selection=selectedTab}}
+    {{#frost-tab alias='Readme' id='readme'}}
+        <div id='content'></div>
+    {{/frost-tab}}
+    {{#frost-tab alias='Demo' id='demo' }}
+        <div class="dummy-padding">
+            <div style="width:800px; height:400px; border: 1px grey solid;">
+              {{#frost-scroll class='full' on-scroll-y-end=(action 'yEndReached')}}
+                {{frost-svg path="frost/add" class="dummy-svg-huge"}}
+              {{/frost-scroll}}
+            </div>
+        </div>
+    {{/frost-tab}}
+  {{/frost-tabs}}

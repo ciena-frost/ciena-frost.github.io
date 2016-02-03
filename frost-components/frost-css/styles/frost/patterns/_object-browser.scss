@@ -1,0 +1,56 @@
+@import 'bourbon';
+@import '../variables/colors';
+
+.frost-object-browser {
+	@include display(flex);
+	@include flex-direction(column);
+	height: 100%;
+}
+
+.frost-object-browser .frost-info-bar {
+}
+
+.frost-object-browser > .body {
+	@include flex(1);
+	background-color: $frost-color-lgrey-3;
+	@include display(flex);
+	@include flex-direction(row);
+}
+
+.frost-object-browser > .body > .facets,
+.frost-object-browser > .body .liquid-child > .facets {
+	margin: 20px 10px 10px 10px;
+}
+
+.frost-object-browser > .body > .facets .frost-form,
+.frost-object-browser > .body .liquid-child > .facets .frost-form {
+	width: 100%;
+}
+
+.frost-object-browser > .body .content {
+	@include flex(1);
+	@include display(flex);
+	@include flex-direction(column);
+	position: relative;
+}
+
+.frost-object-browser > .body .content > .tools {
+	height: 40px;
+	@include display(flex);
+	@include flex-direction(row);
+	@include align-items(center);
+}
+
+.frost-object-browser > .body .content > .objects {
+	@include flex(1);
+	height: 0;
+}
+
+.frost-object-browser > .body .content > .actions {
+	height: 75px;
+	margin-right: 15px;
+	@include display(flex);
+	@include flex-direction(row);
+	@include justify-content(flex-end);
+	@include align-items(center);
+}

@@ -1,0 +1,440 @@
+{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+  {{#frost-tab alias='Readme' id='readme'}}
+    <div id='content'>
+      {{#frost-docs 'frost-link'}}
+        {{#frost-docs-api}}
+          {{#frost-docs-api-category 'css (content)'}}
+            {{frost-docs-api-css 'icon' 'default or provided by user'}}
+            {{frost-docs-api-css 'icon-text' 'allowed file extensions'}}
+            {{frost-docs-api-css 'info' 'allowed file extensions'}}
+            {{frost-docs-api-css 'text' 'allowed file extensions'}}
+          {{/frost-docs-api-category}}
+
+          {{#frost-docs-api-category 'css (size)'}}
+            {{frost-docs-api-css 'small' 'small link button'}}
+            {{frost-docs-api-css 'medium' 'medium link button'}}
+            {{frost-docs-api-css 'large' 'large link button'}}
+            {{frost-docs-api-css 'extra-large' 'extra-large link button'}}
+          {{/frost-docs-api-category}}
+
+          {{#frost-docs-api-category 'css (type)'}}
+            {{frost-docs-api-css 'primary' 'primary link button'}}
+            {{frost-docs-api-css 'secondary' 'secondary link button'}}
+            {{frost-docs-api-css 'tertriary' 'tertiary link button'}}
+          {{/frost-docs-api-category}}
+
+          {{#frost-docs-api-category 'states'}}
+            {{frost-docs-api-attribute 'disabled' 'disabled element'}}
+          {{/frost-docs-api-category}}
+        {{/frost-docs-api}}
+
+        {{#frost-docs-examples}}
+          {{frost-docs-example basic}}
+          {{frost-docs-example first1}}
+          {{frost-docs-example nested}}
+          {{frost-docs-example disabled}}
+          {{frost-docs-example primary}}
+          {{frost-docs-example secondary}}
+          {{frost-docs-example tertiary}}
+          {{frost-docs-example icon}}
+          {{frost-docs-example icontext}}
+          {{frost-docs-example info}}
+        {{/frost-docs-examples}}
+
+        {{#frost-docs-references}}
+          {{frost-docs-reference 'Link helpers' 'http://guides.emberjs.com/v2.1.0/templates/links/'}}
+        {{/frost-docs-references}}
+
+        {{#frost-docs-changelog}}
+          {{frost-docs-changelog-entry '2.0.0' "Initial version"}}
+        {{/frost-docs-changelog}}
+      {{/frost-docs}}
+    </div>
+  {{/frost-tab}}
+  {{#frost-tab alias='Demo' id='demo' }}
+    <div class='dummy-padding'>
+      <div class='dummy-header'>Basic</div>
+      {{#frost-link 'demo.min' id='basic'}}Basic{{/frost-link}}
+
+      <div class='dummy-header'>Model - ID</div>
+      {{#frost-link 'demo.first' 1 id='model-id'}}First : 1{{/frost-link}}
+
+      <div class='dummy-header'>Model - Object</div>
+      {{#frost-link 'demo.first' first id='model-object'}}First : 'custom first'{{/frost-link}}
+
+      <div class='dummy-header'>Nested Model - ID</div>
+      {{#frost-link 'demo.first.second' 1 2 id='nested-model-id'}}First : 1 / Second : 2{{/frost-link}}
+
+      <div class='dummy-header'>Nested Model - Object</div>
+      {{#frost-link 'demo.first.second' first second id='nested-model-object'}}First : 'custom first' / Second :
+        'custom second'{{/frost-link}}
+
+      <div class='dummy-header'>Nested Model - Mixed ID/Object</div>
+      {{#frost-link 'demo.first.second' first 2 id='nested-model-mixed'}}First : 'custom first' / Second :
+        2{{/frost-link}}
+
+      <div class='dummy-header'>Attributes - E.g. Disabled</div>
+      {{#frost-link 'demo.min' disabled=true id='attributes-disabled'}}Disabled{{/frost-link}}
+                
+    </div>
+    <div>
+
+    <div class='dummy-padding-link'>
+      {{#frost-link 'demo.min' }}
+        <div class='icon-action'>
+          {{frost-svg path='frost/infobar-find'}}
+          <div class='text'>Find NE</div>
+        </div>
+      {{/frost-link}}
+      
+      {{#frost-link 'demo.min' }}
+        <div class='icon-action'>
+          {{frost-svg path='frost/infobar-find'}}
+          <div class='text'>Find NE<br>long text</div>
+        </div>
+      {{/frost-link}}
+      
+      <div class='dummy-header'>Text and Icon Link small Primary</div>
+      {{#frost-link 'demo.min' class='small primary'}}
+        <div class='text-icon'>
+          <div class='text'>Small</div>
+          <div class='svg'>{{frost-svg path='frost/new-tab'}}</div>   
+        </div>
+      {{/frost-link}}
+      
+      <div class='dummy-header'>Text and Icon Link Small Secondary</div>
+      {{#frost-link 'demo.min' class='small secondary'}}
+        <div class='text-icon'>
+          <div class='text'>Small</div>
+          <div class='svg'>{{frost-svg path='frost/new-tab'}}</div>   
+        </div>
+      {{/frost-link}}
+      
+      <div class='dummy-header'>Text and Icon Link Small Tertiary</div>
+      {{#frost-link 'demo.min' class='small tertiary'}}
+        <div class='text-icon'>
+          <div class='text'>Small</div>
+          <div class='svg'>{{frost-svg path='frost/new-tab'}}</div>   
+        </div>
+      {{/frost-link}}
+      
+      
+      <div class='dummy-header'>Text and Icon Link Medium Primary</div>
+      {{#frost-link 'demo.min' class='medium primary'}}
+        <div class='text-icon'>
+          <div class='text'>Medium</div>
+          <div class='svg'>{{frost-svg path='frost/new-tab'}}</div>   
+        </div>
+      {{/frost-link}}
+      
+      <div class='dummy-header'>Text and Icon Link Medium Secondary</div>
+      {{#frost-link 'demo.min' class='medium secondary'}}
+        <div class='text-icon'>
+          <div class='text'>Medium</div>
+          <div class='svg'>{{frost-svg path='frost/new-tab'}}</div>   
+        </div>
+      {{/frost-link}}
+      
+      <div class='dummy-header'>Text and Icon Link Medium Tertiary</div>
+      {{#frost-link 'demo.min' class='medium tertiary'}}
+        <div class='text-icon'>
+          <div class='text'>Medium</div>
+          <div class='svg'>{{frost-svg path='frost/new-tab'}}</div>   
+        </div>
+      {{/frost-link}}
+      </div>
+      
+      <div class='dummy-header'>Link - Small</div>
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='small primary'}}
+        <div class='content'>
+          <div class='text'>Primary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='small secondary'}}
+        <div class='content'>
+          <div class='text'>Secondary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='small tertiary'}}
+        <div class='content'>
+          <div class='text'>Tertiary</div>
+        </div>
+      {{/frost-link}}
+            
+      <div class='dummy-header'>Link - Medium</div>
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='medium primary'}}
+        <div class='content'>
+          <div class='text'>Primary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='medium secondary'}}
+        <div class='content'>
+          <div class='text'>Secondary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='medium tertiary'}}
+        <div class='content'>
+          <div class='text'>Tertiary</div>
+        </div>
+      {{/frost-link}}
+      
+      <div class='dummy-header'>Link - Large</div>
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='large primary'}}
+        <div class='content'>
+          <div class='text'>Primary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='large secondary'}}
+        <div class='content'>
+          <div class='text'>Secondary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='large tertiary'}}
+        <div class='content'>
+          <div class='text'>Tertiary</div>
+        </div>
+      {{/frost-link}}
+      
+      <div class='dummy-header'>Link - Extra Large</div>
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='extra-large primary'}}
+        <div class='content'>
+          <div class='text'>Primary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='extra-large secondary'}}
+        <div class='content'>
+          <div class='text'>Secondary</div>
+        </div>
+      {{/frost-link}}
+      {{frost-link '' class='space'}}
+      {{#frost-link 'demo.min' class='extra-large tertiary'}}
+        <div class='content'>
+          <div class='text'>Tertiary</div>
+        </div>
+      {{/frost-link}}
+
+    </div>
+
+    <div class="dummy-text">
+      Due to issues with flexbox and button in Firefox, button styling has been updated.
+      Going forward, 'text', 'icon', 'info' and 'text+icon' styles need to be defined in a separate div.
+      <p><strong>Note: For backward compatibility, text and icon styles are still supported,
+        but it is recommended to update to the new pattern.</strong></p>
+      Below, there are two examples of old and new styling for various buttons.
+    </div>
+
+    <div class='dummy-padding'>
+      <div class="dummy-style">
+        <div class='dummy-old-style'>
+          <div class='dummy-header'>Old Style</div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='text small primary' id='primary' }}Link{{/frost-link}}
+            <div class="dummy-info">frost-link class='text small primary'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='text small secondary' id='secondary' }}Link{{/frost-link}}
+            <div class="dummy-info">frost-link class='text medium primary'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='text small tertiary' id='tertiary' }}Link{{/frost-link}}
+            <div class="dummy-info">frost-link class='text small tertiary'</div>
+          </div>
+
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='text small primary' id='small' }}Link{{/frost-link}}
+            <div class="dummy-info">frost-link class='text small primary'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='text medium primary' id='medium' }}Link{{/frost-link}}
+            <div class="dummy-info">frost-link class='text medium secondary'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='text large primary' id='large' }}Link{{/frost-link}}
+            <div class="dummy-info">frost-link class='text small tertiary'</div>
+          </div>
+
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="text small primary" disabled=true id="disabled"}}Link{{/frost-link}}
+            <div class="dummy-info">frost-link class='text small primary'</div>
+          </div>
+
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="icon small primary" id="icon-small"}}
+              {{frost-svg path="frost/add"}}
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='icon small primary'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="icon medium primary" id="icon-medium"}}
+              {{frost-svg path="frost/add"}}
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='icon medium primary'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="icon large primary" id="icon-large"}}
+              {{frost-svg path="frost/add"}}
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='icon large primary'</div>
+          </div>
+
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="info extra-large primary" id="info"}}
+              {{frost-svg path="frost/add"}}
+              <div class="content">
+                <div class="alias">Info alias</div>
+                <div class="details">Info details</div>
+              </div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='info extra-large primary'</div>
+          </div>
+
+        </div>
+
+
+        <div class='dummy-new-style'>
+          <div class='dummy-header'>New Style</div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='small primary' id='primary1'}}
+              <div class='text'>Link</div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='small primary'</div>
+            <div class="dummy-info">div class='text'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='small secondary' id='secondary1' }}
+              <div class='text'>Link</div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='small secondary'</div>
+            <div class="dummy-info">div class='text'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='small tertiary' id='tertiary1' }}
+              <div class='text'>Link</div>
+            {{/frost-link}}
+             <div class="dummy-info">frost-link class='small tertiary'</div>
+            <div class="dummy-info">div class='text'</div>
+          </div>
+
+
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='small primary' id='small1' }}
+              <div class='text'>Link</div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='small primary'</div>
+            <div class="dummy-info">div class='text'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='medium primary' id='medium1' }}
+              <div class='text'>Link</div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='medium primary'</div>
+            <div class="dummy-info">div class='text'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='large primary' id='large1' }}
+              <div class='text'>Link</div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='large primary'</div>
+            <div class="dummy-info">div class='text'</div>
+          </div>
+
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="small primary" disabled=true id="disabled1"}}
+              <div class='text'>Link (disabled)</div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='small primary'</div>
+            <div class="dummy-info">div class='text'</div>
+          </div>
+
+
+        <div class='dummy-row'>
+          {{#frost-link "demo.min" class="small primary" id="icon-small1"}}
+          <div class="icon">
+            {{frost-svg path="frost/add"}}
+          </div>
+          {{/frost-link}}
+          <div class="dummy-info">frost-link class='small primary'</div>
+          <div class="dummy-info">div class='icon'</div>
+        </div>
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="medium primary" id="icon-medium1"}}
+              <div class="icon">
+                {{frost-svg path="frost/add"}}
+              </div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='medium primary'</div>
+            <div class="dummy-info">div class='icon'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="large primary" id="icon-large1"}}
+              <div class="icon">
+                {{frost-svg path="frost/add"}}
+              </div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='large primary'</div>
+            <div class="dummy-info">div class='icon'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link "demo.min" class="extra-large primary" id="info1"}}
+            <div class="info">
+              {{frost-svg path="frost/add"}}
+              <div class="content">
+                <div class="alias">Info alias</div>
+                <div class="details">Info details</div>
+              </div>
+            </div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='extra-large primary'</div>
+            <div class="dummy-info">div class='info'</div>
+          </div>
+
+          <div class='dummy-row'>
+            {{#frost-link 'demo.min' class='medium primary'}}
+              <div class="icon-text">
+                {{frost-svg path='frost/add'}}
+                <div class="text">Text</div>
+              </div>
+            {{/frost-link}}
+            <div class="dummy-info">frost-link class='medium primary'</div>
+            <div class="dummy-info">div class='icon-text'</div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  {{/frost-tab}}
+{{/frost-tabs}}
