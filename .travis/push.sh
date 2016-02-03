@@ -7,6 +7,7 @@ setup_git() {
   git config --global user.name "Eric White"
   git config credential.helper "store --file=.git/credentials"
   echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+  export HOMEBREW_GITHUB_API_TOKEN=${GH_TOKEN}
   git fetch origin
   git checkout -b gh-pages origin/gh-pages
 }
