@@ -39,6 +39,7 @@ publish_gh_pages() {
   echo "I AM NOW ABOUT TO EXECUTE THE GH_PAGES SHELL COMMANDS"
   echo "I AM NOW ABOUT TO EXECUTE THE PUBLISH COMMAND"
   ember install ember-cli-github-pages
+  git commit -am "[ci skip] install ember gh pages"
   ember github-pages:commit --message "[ci skip] Update gh-pages"
   git push
 }
