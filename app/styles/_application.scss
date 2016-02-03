@@ -127,13 +127,23 @@
     float:left;
     width:80%;
 }
-.markdown .sidenav {
+.markdown .right-col {
     float:left;
     width:20%;
 }
 
 #markdown-sidenav{
-  display: inline-block;
-  position: fixed;
-  right: 0px;
+    width: 100%;
+    position: fixed;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+#markdown-sidenav button{
+    width: 100%;
+    text-align: left;
+    background-color: white;
+    border: none;
+    outline: 0;
+    white-space: normal;
 }

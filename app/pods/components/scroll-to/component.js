@@ -1,9 +1,16 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: "p",
+  previousActiveId: null,
+  tagName: "button",
+  classNames: ['active'],
   click: function(evt) {
-    alert(this.elementId);
-    $('html, body').animate({scrollTop:$(this.get('id')).offset().top},500);
+    $("#" + this.elementId).parent().children().each(function(){
+        console.log(this.id);
+        $(this).css("font-weight", "normal");
+    });
+    $("#" + this.elementId).css("font-weight", "bold");
+    $('html, body').animate({scrollTop:$(this.to).offset().top},500);
+    this.previousActiveId = this.elementId;
   }
 });
