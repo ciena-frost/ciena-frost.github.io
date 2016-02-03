@@ -87,7 +87,7 @@ function dive(dir) {
             var template_content = "";
             var content = fs.readFileSync(path, 'utf8');
             if (content.indexOf("<!--Table of Contents-->") > -1){
-              template_content = '<div class="markdown">\n\t<div class="content">\n' + "\t\t{{markdown-to-html class=\"guide-markdown\" " +
+              template_content = '<div class="markdown">\n\t<div class="content">\n' + "\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true " +
                 "markdown=(fr-markdown-file-strip-number-prefix '" +
                 path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
                 "')}} \n \t</div>\n\t <div class='right-col'> \n\t\t<div id='markdown-sidenav'>\n";
@@ -105,7 +105,7 @@ function dive(dir) {
               });
               template_content += '\n\t\t</div>\n\t</div>\n</div>\n';
             }else{
-              template_content = "{{markdown-to-html class=\"guide-markdown\" " +
+              template_content = "{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true " +
                 "markdown=(fr-markdown-file-strip-number-prefix '" +
                 path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
                 "')}} ";
