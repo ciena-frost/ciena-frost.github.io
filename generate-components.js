@@ -6,7 +6,7 @@ var chalk = require('chalk');
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
-    'Authorization': 'token ' + process.env.GH_TOKEN
+    'Authorization': 'token ' + process.env.ghToken
   }
 };
 

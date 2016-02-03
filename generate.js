@@ -8,7 +8,7 @@ var fs = require('fs');
 var child_process = require('child_process');
 var chalk = require('chalk');
 var path = require('path');
-var mark_dir = "markdown";
+var mark_dir = "markdown"
 var routing_string = "module.exports = [ \n";
 
 dive(mark_dir);
@@ -71,47 +71,23 @@ function dive(dir) {
             //debug console.log(chalk.green.bold("Create Folder page: " + pagePath));
             //debug console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
 
-            if (!directoryExistsSync(pagePath)) {
-                mkdirpSync((pagePath).toLowerCase());
+            if (!directoryExistsSync(pagePath + "/index")) {
+                mkdirpSync((pagePath + "/index").toLowerCase());
             }
 
             //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
-            var route_js_string = "import Ember from 'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
-                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t},\n\tactions: { \n \t\t goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500);}}\n});"
+            var route_js_string = "import Ember from'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
+                filename.replaceAll("[0-9][0-9][-]", "") + "'\n\t}\n});"
 
-            fs.writeFileSync(pagePath +"/route.js", route_js_string);
+            fs.writeFileSync(pagePath + "/index" + "/route.js", route_js_string);
 
             //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
             //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
-            
-            var template_content = "";
-            var content = fs.readFileSync(path, 'utf8');
-            if (content.indexOf("<!--Table of Contents-->") > -1){
-              template_content = '<div class="markdown">\n\t<div class="content">\n' + "\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true " +
-                "markdown=(fr-markdown-file-strip-number-prefix '" +
-                path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
-                "')}} \n \t</div>\n\t <div class='right-col'> \n\t\t<div id='markdown-sidenav'>\n";
-             
-              content = content.substring(content.indexOf("<!--Table of Contents-->"),content.indexOf("<!---End Table of Contents-->") + "<!---End Table of Contents-->".length);
-              content = content.replaceAll("<!--Table of Contents-->|<!---End Table of Contents-->|<!--|-->|","");
-              
-              var contents = content.split('\n');
-              contents.shift();
-              contents.pop();
-              console.log(contents);
-              contents.forEach(function(ref){
-                ref = ref.replace(/\((.*)\)/, '"$1"');
-                template_content += '\n \t\t\t<p {{action "goTo" ' +ref.toLowerCase().replace('-','') +'}}> ' + toTitleCase(ref.replace('#','').replaceAll('"','').replaceAll('-',' ')) + '</p>';
-              });
-              template_content += '\n\t\t</div>\n\t</div>\n</div>\n';
-            }else{
-              template_content = "{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true " +
-                "markdown=(fr-markdown-file-strip-number-prefix '" +
-                path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
-                "')}} ";
-            }
-            
-            fs.writeFileSync(pagePath + "/template.hbs", template_content );
+
+            fs.writeFileSync(pagePath + "/template.hbs", "{{markdown-to-html class=\"guide-markdown\" " +
+                "markdown=(fr-markdown-file '" +
+                path.replace(".md", "").replace(mark_dir + "/", "") +
+                "')}}");
         }
 
     });
