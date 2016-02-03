@@ -125,4 +125,5 @@ module.exports = [
 
 ]}, // 08-contributing
 	{id: 'terminology', alias: 'Terminology', type: 'route', route: 'terminology'},
+	{id: 'terminology', alias: 'Terminology', type: 'route', route: 'terminology'},
 ];
