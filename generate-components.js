@@ -6,14 +6,13 @@ var chalk = require('chalk');
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
-    'Authorization': 'token ' + process.env.GH_TOKEN
+    'Authorization': 'token ' + process.env.ghToken
   }
 };
 
 
 
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
-
 var body = JSON.parse(res.getBody());
 
 
