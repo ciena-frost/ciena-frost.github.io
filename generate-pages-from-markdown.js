@@ -79,39 +79,37 @@ function dive(dir) {
             var route_js_string = "import Ember from 'ember';\nexport default Ember.Route.extend({\n\tbreadCrumb:{\n\t\ttitle:'" +
                 toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n\t},\n\tactions: { \n \t\t goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500);}}\n});"
 
-            fs.writeFileSync(pagePath +"/route.js", route_js_string);
+            fs.writeFileSync(pagePath + "/route.js", route_js_string);
 
             //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
             //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
-            
+
             var template_content = "";
             var content = fs.readFileSync(path, 'utf8');
-            if (content.indexOf("<!--Table of Contents-->") > -1){
-              template_content = '<div class="markdown">\n\t<div class="content">\n' + "\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true " +
-                "markdown=(fr-markdown-file-strip-number-prefix '" +
-                path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
-                "')}} \n \t</div>\n\t <div class='right-col'> \n\t\t<div id='markdown-sidenav'>\n";
-             
-              content = content.substring(content.indexOf("<!--Table of Contents-->"),content.indexOf("<!---End Table of Contents-->") + "<!---End Table of Contents-->".length);
-              content = content.replaceAll("<!--Table of Contents-->|<!---End Table of Contents-->|<!--|-->|","");
-              
-              var contents = content.split('\n');
-              contents.shift();
-              contents.pop();
-              console.log(contents);
-              contents.forEach(function(ref){
-                ref = ref.replace(/\((.*)\)/, '"$1"');
-                template_content += '\n \t\t\t<p {{action "goTo" ' +ref.toLowerCase().replace('-','') +'}}> ' + toTitleCase(ref.replace('#','').replaceAll('"','').replaceAll('-',' ')) + '</p>';
-              });
-              template_content += '\n\t\t</div>\n\t</div>\n</div>\n';
-            }else{
-              template_content = "{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true " +
-                "markdown=(fr-markdown-file-strip-number-prefix '" +
-                path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") +
-                "')}} ";
-            }
-            
-            fs.writeFileSync(pagePath + "/template.hbs", template_content );
+
+            template_content += "\n<div class=\"markdown\">";
+            template_content +=     "\n\t<div class=\"content\">";
+            template_content +=         "\n\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true ";
+            template_content +=             "markdown=(fr-markdown-file-strip-number-prefix '";
+            template_content +=              path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") + "')}} ";
+            template_content +=     "\n\t</div>";
+            template_content +=     "\n\t<div class='right-col'>";
+            template_content +=         "\n\t\t<div id='markdown-sidenav'>";
+
+            fs.readFileSync(path).toString().split('\n').forEach(function (line) {
+                if(line.match("^#")){
+                    line = line.replaceAll("#", "");
+                    var header = line;
+                    var id = "#" + line.replaceAll(" ", "").toLowerCase();
+                    template_content +=         "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+                }
+            });
+          
+            template_content +=         "\n\t\t</div>";
+            template_content +=     "\n\t</div>";
+            template_content += "\n</div>";
+
+            fs.writeFileSync(pagePath + "/template.hbs", template_content);
         }
 
     });
