@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 var App = window.App = Ember.Application.extend();
 
 App.ApiController = Ember.Controller.extend({

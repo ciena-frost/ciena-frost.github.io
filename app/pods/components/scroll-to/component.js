@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   previousActiveId: null,
   tagName: "button",
   classNames: ['active'],
-  click: function(evt) {
+  click: function() {
     $("#" + this.elementId).parent().children().each(function(){
         console.log(this.id);
         $(this).css("font-weight", "normal");
