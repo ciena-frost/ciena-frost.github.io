@@ -1,12 +1,12 @@
-import Ember from 'ember';
+import Ember from 'ember'
 
 export default Ember.Controller.extend({
-	queryParams: ['selectedTab'],
-	selectedTab: 'description',
+  queryParams: ['selectedTab'],
+  selectedTab: 'description',
 
-	actions: {
-		tabSelected(tab) {
-			this.set('selectedTab', tab);
-		}
-	}
-});
+  actions: {
+    tabSelected (tab) {
+      this.set('selectedTab', tab)
+    }
+  }
+})
