@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "start": "ember server",
     "build": "ember build",
-    "test": "ember test"
+    "test": "npm run-script lint && ember test" 
   },
   "repository": "",
   "engines": {
@@ -33,7 +33,6 @@
     "broccoli-funnel": "^0.2.8",
     "ember-cli": "1.13.13",
     "ember-cli-app-version": "^1.0.0",
-    "ember-cli-babel": "^5.1.5",
     "ember-cli-blanket": "0.6.2",
     "ember-cli-content-security-policy": "0.4.0",
     "ember-cli-dependency-checker": "^1.1.0",

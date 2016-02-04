@@ -1,8 +1,8 @@
 /* global require, module */
-var EmberApp = require('ember-cli/lib/broccoli/ember-app');
-var Funnel = require('broccoli-funnel');
+var EmberApp = require('ember-cli/lib/broccoli/ember-app')
+var Funnel = require('broccoli-funnel')
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   var app = new EmberApp(defaults, {
     'ember-cli-mocha': {
       useLintTree: false
@@ -13,13 +13,13 @@ module.exports = function(defaults) {
         'node_modules/frost-css/styles'
       ]
     }
-  });
+  })
 
-	var font = new Funnel('vendor/google/fonts/roboto', {
-		srcDir: '/',
-		include: ['**/*.woff2', '**/stylesheet.css'],
-		destDir: '/assets/fonts'
-	});
+  var font = new Funnel('vendor/google/fonts/roboto', {
+    srcDir: '/',
+    include: ['**/*.woff2', '**/stylesheet.css'],
+    destDir: '/assets/fonts'
+  })
 
-	return app.toTree(font);
-};
+  return app.toTree(font)
+}

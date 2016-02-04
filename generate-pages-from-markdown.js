@@ -9,7 +9,7 @@ var child_process = require('child_process');
 var chalk = require('chalk');
 var path = require('path');
 var mark_dir = "markdown";
-var routing_string = "module.exports = [ \n";
+var routing_string = "module.exports = [\n";
 
 dive(mark_dir);
 
@@ -22,7 +22,7 @@ fs.writeFileSync("config/routing.js", routing_string);
 function dive(dir) {
     var list = [];
     var stat = "";
-
+    var fileCount = 0;
     // Read the directory
     list = fs.readdirSync(dir);
     list.forEach(function (file) {
@@ -42,27 +42,35 @@ function dive(dir) {
         if (stat && stat.isDirectory()) {
             // Dive into the directory
             //debug console.log(chalk.red.bold("Directory: " + path.replace(mark_dir + "/", "app/pods/")));
-
+            fileCount = fs.readdirSync(path).length;
             var filename = file.replace(".md", "");
 
             routing_string += "{id: '" + filename.replaceAll("[0-9][0-9][-]", "") +
                 "', alias: '" + toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
                 "', type: 'category', route: '" +
                 path.replace(mark_dir + "/", "").replaceAll("/", ".").replaceAll("[0-9][0-9][-]", "") +
-                "', items: [ \n";
+                "', items: [\n";
 
             dive(path);
 
             routing_string += "\n]}, // " + filename + "\n"
         } else {
+            fileCount++;
             var filename = file.replace(".md", "");
+            if (fileCount >= list.length){
 
             routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
                 toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
                 "', type: 'route', route: '" +
                 path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
+                "'}";
+            }else{
+              routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
+                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
+                "', type: 'route', route: '" +
+                path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
                 "'},\n";
-
+            }
             var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
 
             //remove the order prefixes
@@ -104,7 +112,7 @@ function dive(dir) {
                     template_content +=         "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
                 }
             });
-          
+
             template_content +=         "\n\t\t</div>";
             template_content +=     "\n\t</div>";
             template_content += "\n</div>";
