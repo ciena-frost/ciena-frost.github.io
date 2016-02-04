@@ -12,6 +12,7 @@ before_install:
 - npm install eslint
 - npm install eslint-config-standard
 - npm install eslint-config-frost-standard
+- npm install babel-eslint
 
 install:
 - npm install -g bower
