@@ -1,22 +1,22 @@
-var npm = require('npm');
-var http = require('http');
-var fs = require('fs');
-var request = require('sync-request');
+var npm = require('npm')
+var http = require('http')
+var fs = require('fs')
+var request = require('sync-request')
 
 var options = {
   'headers': {
     'user-agent': 'ciena-frost'
   }
-};
+}
 
-var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
-var body = JSON.parse(res.getBody());
+var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options)
+var body = JSON.parse(res.getBody())
 
-body.forEach(function(repo) {
-  console.log(repo.name);
-  if (repo.name.startsWith("ember-")){
+body.forEach(function (repo) {
+  console.log(repo.name)
+  if (repo.name.startsWith('ember-')) {
     //ember install this package
-    console.log("Doing Ember Install of : " + repo.name);
+    console.log('Doing Ember Install of : ' + repo.name)
     npm.load({
       loaded: false
           // package_url = repo.contents_url.replace("{+path}","package.json?ref=dev");
@@ -25,22 +25,22 @@ body.forEach(function(repo) {
     }, function (err) {
       // catch errors
       npm.commands.install([repo.name], function (er, data) {
-        console.log(er);
-      });
-      npm.on("log", function (message) {
+        console.log(er)
+      })
+      npm.on('log', function (message) {
         // log the progress of the installation
-        console.log(message);
-      });
-    });
+        console.log(message)
+      })
+    })
   }
-});
+})
 
-function getPackageJSON(url){
+function getPackageJSON (url) {
   //get api file request
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
-  res = request('GET',body.download_url,options);
-  return JSON.parse(res.getBody());
+  var res = request('GET', url, options)
+  var body = JSON.parse(res.getBody())
+  res = request('GET', body.download_url, options)
+  return JSON.parse(res.getBody())
   //get download url
 
 }
@@ -101,24 +101,24 @@ function getPackageJSON(url){
 // getRepo(content_url);
 
 
-function get(url) {
-  requestify.get(url).then(function(response) {
-    var body = respone.getBody();
-    return body;
-  }, function(err) {
-    console.log(err);
-  });
+function get (url) {
+  requestify.get(url).then(function (response) {
+    var body = respone.getBody()
+    return body
+  }, function (err) {
+    console.log(err)
+  })
 }
 
-function getRepo(url) {
-  console.log(url);
-  debugger;
-  requestify.get(url).then(function(response) {
-    var body = respone.getBody();
-    console.log(respone);
-    console.log("Hello");
-  }, function(err) {
-    console.log(err);
-  });
+function getRepo (url) {
+  console.log(url)
+  debugger
+  requestify.get(url).then(function (response) {
+    var body = respone.getBody()
+    console.log(respone)
+    console.log('Hello')
+  }, function (err) {
+    console.log(err)
+  })
 
 }

@@ -1,13 +1,13 @@
-import Ember from 'ember';
+import Ember from 'ember'
 
 export default Ember.Component.extend({
-	classNames: ['frost-sidebar'],
+	  classNames: ['frost-sidebar'],
 
-	collapsed: true,
+	  collapsed: true,
 
-	actions: {
-		toggleCollapsed() {
-			this.toggleProperty('collapsed');
+	  actions: {
+		  toggleCollapsed () {
+			  this.toggleProperty('collapsed')
 		}
 	}
-});
+})

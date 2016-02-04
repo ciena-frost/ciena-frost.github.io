@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Ember from 'ember'
 export default Ember.Route.extend({
-	breadCrumb:{
-		title:'Network Objects'
+	  breadCrumb:{
+		  title:'Network Objects'
 	},
-	actions: { 
- 		 goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500);}}
+	  actions: {
+ 		  goTo: function (id) { $('html, body').animate({scrollTop:$(id).offset().top}, 500); }}
 });
