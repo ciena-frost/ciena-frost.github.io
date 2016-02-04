@@ -10,6 +10,7 @@ before_install:
 - npm config set spin false
 - npm install -g npm@^2
 - npm install -g jshint@^2.5
+
 install:
 - npm install -g bower
 - npm install -g ember-cli@1.13.13

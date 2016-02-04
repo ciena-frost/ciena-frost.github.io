@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import _ from 'lodash/lodash';
 import config from 'frost-guide/config/environment';
 
 export default Ember.Controller.extend({
