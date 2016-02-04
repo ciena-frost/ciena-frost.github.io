@@ -5,4 +5,3 @@ tmp/**/*
 frost-components/**/*
 generate-components.js
 generate-pages-from-markdown.js
-config/routing.js
