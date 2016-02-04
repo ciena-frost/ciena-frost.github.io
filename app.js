@@ -4,7 +4,6 @@
 var express = require('express')
 var request = require('request')
 var path = require('path')
-var favicon = require('serve-favicon')
 var logger = require('morgan')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
@@ -50,8 +49,8 @@ app.get('/resources/:name', function (req, res, next) {
 })
 
 app.get(/^(?!.*(\/docs\/))/, function (req, res, next) {
-    res.sendFile(__dirname + '/dist/index.html')
-  })
+  res.sendFile(__dirname + '/dist/index.html')
+})
   // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   res.status(404).send('Cannot GET ' + req.originalUrl)

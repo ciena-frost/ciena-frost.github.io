@@ -5,12 +5,12 @@ export default Ember.Component.extend({
   routing: Ember.inject.service('-routing'),
   isExpanded: false,
 
-  didInitAttrs() {
+  didInitAttrs  () {
     this.set('isExpanded', this.get('routing.currentRouteName').split('.').contains(this.get('category.id')))
   },
 
   actions: {
-    toggleExpanded() {
+    toggleExpanded  () {
       this.toggleProperty('isExpanded')
     }
   }

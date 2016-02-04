@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "start": "ember server",
     "build": "ember build",
-    "test": "npm run-script lint && ember test"
+    "test": "npm run-script lint"
   },
   "repository": "",
   "engines": {

@@ -2,7 +2,7 @@ import Ember from 'ember'
 import config from 'frost-guide/config/environment'
 import _ from 'lodash/lodash'
 
-function flattenRoutes(flattenedRoutes, routes) {
+function flattenRoutes (flattenedRoutes, routes) {
   _.each(routes, (route) => {
     flattenedRoutes.push(route)
     if (_.isArray(route.items)) {
@@ -12,7 +12,7 @@ function flattenRoutes(flattenedRoutes, routes) {
   return flattenedRoutes
 }
 
-export function routeBreadcrumb([route]) {
+export function routeBreadcrumb ([route]) {
   let path = route.path.replace('.index', '')
   return _.find(flattenRoutes([], config.APP.routingConfig), {
     route: path
