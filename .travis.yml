@@ -13,6 +13,13 @@ before_install:
 install:
 - npm install -g bower
 - npm install -g ember-cli@1.13.13
+- npm install frost-components/frost-css
+- npm install frost-components/frost-button
+- npm install frost-components/frost-tabs
+- npm install frost-components/frost-link
+- npm install frost-components/frost-scroll
+- npm install frost-components/frost-svg
+- npm install frost-components/frost-text
 
 after_success:
 - git config credential.helper "store --file=.git/credentials"
@@ -26,7 +33,3 @@ matrix:
   fast_finish: true
   allow_failures:
   - node_js: iojs
-
-env:
-  global:
-    secure: GLzk48tAYIPmUq6gj51xr6wJ8tSM/B4hRXPcVniWPg8STfiCQhZ3ZM8h4YjRro5JLW/PxPxn7aonXKnZ+jXsAzAeKKxFV/yUXvIYgmuF0zCYmKYHp4p8juCt7OU0hjrzbrKBZyPDOQ2l72U6Sz6uWEnRJ48Kc6EYXMk4Y2Dzrex7jg8rF5lUj9VSaHPHO2LR0W6Iq97WGLHwRgAeUV7YMvpkSu5D6OSHBZeSZAjmxyqyhbhp/PVPgdNDH4TlBsY8NLUZ60R8HSMV/RFX1quAjGKs/DYZ0/RTBT3ublKz5D/CizKU8mZNgZyGhrnHoSMAmbSy/Trc91UqjBKyku8CFO0CwRhjsjtCZKpfUCcGTjw6Zo9qyo9y6YPMsJ4miKuzcr6g5xLIZ4+fOxZZkwlfof6c8VggEAxZzoxHadgfV4/DjaksZAxjz95lOkEpUKtsKTLidlsOVEBYT7URcnI5KKCPDhP9o2G4iSoFJhuvTa6/RSas/juc/kPdFejuQpX33OkU1Ds7amtshaAW5UA+ATfoR7HgqzqkBLr9/YWbV6XWSBW1GabktZnHjIMC2D6L0FvUsUiuDuYKPDmXzx36vJ9SAgD7kRE722iftsiKduoczIjzSozWWxxxt6G6Ckk4HlrVb1+IA8PzNGyV80EOkx42a/tnVOZJeCIt1YWqoZw=

@@ -14,13 +14,6 @@ setup_git() {
 
 commit_website_files() {
   git checkout $branch
-  npm install frost-components/frost-css
-  npm install frost-components/frost-button
-  npm install frost-components/frost-tabs
-  npm install frost-components/frost-link
-  npm install frost-components/frost-scroll
-  npm install frost-components/frost-svg
-  npm install frost-components/frost-text
   npm install && bower install
   npm install path-posix
   npm install walk-sync
