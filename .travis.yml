@@ -20,6 +20,10 @@ install:
 - npm install frost-components/frost-scroll
 - npm install frost-components/frost-svg
 - npm install frost-components/frost-text
+- npm install && bower install
+
+script:
+- npm test
 
 after_success:
 - git config credential.helper "store --file=.git/credentials"
