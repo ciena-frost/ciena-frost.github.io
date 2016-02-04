@@ -1,6 +1,7 @@
 var npm = require('npm');
 var http = require('http');
 var fs = require('fs');
+var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
 var options = {
