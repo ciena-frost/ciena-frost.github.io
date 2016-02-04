@@ -10,7 +10,7 @@ export default Ember.Component.extend({
       $(this).css('font-weight', 'normal')
     })
     $('#' + this.elementId).css('font-weight', 'bold')
-    $('html, body').animate({scrollTop:$(this.to).offset().top - (0.3 * $(window).height())}, 500)
+    $('html, body').animate({scrollTop: $(this.to).offset().top - (0.3 * $(window).height())}, 500)
     this.previousActiveId = this.elementId
   }
 })

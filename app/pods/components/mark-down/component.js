@@ -19,8 +19,7 @@ export default Ember.Component.extend({
       if (!resources[file.name].status) {
         self.set('hasFailed', true)
       }
-    }
-    else {
+    } else {
       $.get(file.path)
        .then(function (result) {
          Ember.set(resources, file.name, {
