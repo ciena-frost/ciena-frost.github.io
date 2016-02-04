@@ -1,6 +1,6 @@
 import Ember from 'ember'
 export default Ember.Route.extend({
-	  breadCrumb:{
-		  title:'Defender View'
+	      breadCrumb:{
+		      title:'Defender View'
 	}
-});
+})

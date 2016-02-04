@@ -15,11 +15,11 @@ module.exports = function (defaults) {
     }
   })
 
-	  var font = new Funnel('vendor/google/fonts/roboto', {
-		  srcDir: '/',
-		  include: ['**/*.woff2', '**/stylesheet.css'],
-		  destDir: '/assets/fonts'
-	})
+  var font = new Funnel('vendor/google/fonts/roboto', {
+    srcDir: '/',
+    include: ['**/*.woff2', '**/stylesheet.css'],
+    destDir: '/assets/fonts'
+  })
 
-	  return app.toTree(font)
-};
+  return app.toTree(font)
+}

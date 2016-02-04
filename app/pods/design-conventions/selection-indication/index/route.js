@@ -1,6 +1,6 @@
 import Ember from 'ember'
 export default Ember.Route.extend({
-	  breadCrumb:{
-		  title:'Selection Indication'
+	      breadCrumb:{
+		      title:'Selection Indication'
 	}
-});
+})

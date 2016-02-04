@@ -4,4 +4,4 @@ export default Ember.Route.extend({
     title: 'Frost Guide'
   }
 
-});
+})

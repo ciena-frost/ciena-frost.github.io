@@ -11,8 +11,8 @@ export default Ember.Controller.extend({
 	//		}
 	//	}, false);
 	//},
-	  routing: Ember.inject.service('-routing'),
-	  applicationMenuItems: config.APP.routingConfig,
+	      routing: Ember.inject.service('-routing'),
+	      applicationMenuItems: config.APP.routingConfig,
 	//routeCategory: Ember.computed('routing.currentRouteName', function() {
 	//	let currentRouteName = this.get('routing.currentRouteName');
 	//	return _.chain(currentRouteName)

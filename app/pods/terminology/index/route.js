@@ -1,7 +1,7 @@
 import Ember from 'ember'
 export default Ember.Route.extend({
-	  breadCrumb:{
-		  title:'Terminology'
+	      breadCrumb:{
+		      title:'Terminology'
 	},
   actions: {
     goTo: function (id) {
@@ -10,4 +10,4 @@ export default Ember.Route.extend({
       }, 2000)
     }
   }
-});
+})

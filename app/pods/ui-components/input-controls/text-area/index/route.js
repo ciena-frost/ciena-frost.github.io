@@ -1,6 +1,6 @@
 import Ember from 'ember'
 export default Ember.Route.extend({
-	  breadCrumb:{
-		  title:'Text Area'
+	      breadCrumb:{
+		      title:'Text Area'
 	}
-});
+})
