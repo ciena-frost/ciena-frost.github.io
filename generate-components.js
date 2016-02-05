@@ -40,7 +40,7 @@ var body = JSON.parse(res.getBody());
 
 body.forEach(function(repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name,"ember-frost-button")) {
+  if (stringStartsWith(repo.name,"ember-")) {
     //ember install this package
 
     npmInstall(repo.name);
@@ -49,7 +49,13 @@ body.forEach(function(repo) {
     //get Package JSON un comment when needed
     package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
     packageJSON = getPackageJSON(package_url);
+    if (packageJSON === undefined){
+      return;
+    }
     demoParentDirectory = packageJSON.frostGuideDirectory;
+    if (demoParentDirectory === undefined){
+      return;
+    }
     // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
 
@@ -109,12 +115,15 @@ body.forEach(function(repo) {
 
 function getPackageJSON(url) {
   //get api file request
+  try{
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   res = request('GET', body.download_url, options);
   return JSON.parse(res.getBody());
   //get download url
-
+  }catch(err){
+    return undefined;
+  }
 }
 
 function getFile(url) {
