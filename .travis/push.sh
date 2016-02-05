@@ -14,6 +14,7 @@ setup_git() {
 
 commit_website_files() {
   git checkout $branch
+  ember install ember-cli-github-pages
   npm install frost-components/frost-css
   npm install frost-components/frost-button
   npm install frost-components/frost-tabs
@@ -36,8 +37,6 @@ commit_website_files() {
 }
 
 publish_gh_pages() {
-
-  ember install ember-cli-github-pages
   git commit -am "[ci skip] install ember gh pages"
   ember github-pages:commit --message "[ci skip] Update gh-pages" --branch="master"
   git push
