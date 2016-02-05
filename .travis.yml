@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '5.4.1'
+- 5.4.1
 sudo: false
 cache:
   directories:
@@ -13,7 +13,6 @@ before_install:
 - npm install eslint-config-standard
 - npm install eslint-config-frost-standard
 - npm install babel-eslint
-
 install:
 - npm install -g bower
 - npm install -g ember-cli@1.13.13
@@ -25,23 +24,18 @@ install:
 - npm install frost-components/frost-svg
 - npm install frost-components/frost-text
 - npm install && bower install
-
-
 script:
 - npm test
-
 after_success:
 - git config credential.helper "store --file=.git/credentials"
 - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-- .travis/push.sh
-
+- ".travis/push.sh"
 notifications:
   email: false
-
 matrix:
   fast_finish: true
   allow_failures:
   - node_js: iojs
 env:
-    global:
-      secure: GLzk48tAYIPmUq6gj51xr6wJ8tSM/B4hRXPcVniWPg8STfiCQhZ3ZM8h4YjRro5JLW/PxPxn7aonXKnZ+jXsAzAeKKxFV/yUXvIYgmuF0zCYmKYHp4p8juCt7OU0hjrzbrKBZyPDOQ2l72U6Sz6uWEnRJ48Kc6EYXMk4Y2Dzrex7jg8rF5lUj9VSaHPHO2LR0W6Iq97WGLHwRgAeUV7YMvpkSu5D6OSHBZeSZAjmxyqyhbhp/PVPgdNDH4TlBsY8NLUZ60R8HSMV/RFX1quAjGKs/DYZ0/RTBT3ublKz5D/CizKU8mZNgZyGhrnHoSMAmbSy/Trc91UqjBKyku8CFO0CwRhjsjtCZKpfUCcGTjw6Zo9qyo9y6YPMsJ4miKuzcr6g5xLIZ4+fOxZZkwlfof6c8VggEAxZzoxHadgfV4/DjaksZAxjz95lOkEpUKtsKTLidlsOVEBYT7URcnI5KKCPDhP9o2G4iSoFJhuvTa6/RSas/juc/kPdFejuQpX33OkU1Ds7amtshaAW5UA+ATfoR7HgqzqkBLr9/YWbV6XWSBW1GabktZnHjIMC2D6L0FvUsUiuDuYKPDmXzx36vJ9SAgD7kRE722iftsiKduoczIjzSozWWxxxt6G6Ckk4HlrVb1+IA8PzNGyV80EOkx42a/tnVOZJeCIt1YWqoZw=
+  global:
+    secure: gpQSLsWlqm4afAN2Do2gTNRgqHG/I1lIa2VKpLux6QGWi+DdQO+HyRvNAXIRVPN5EHL7vglXTN/zZd8yh+80FhT05QZDctXO5CkMo8akbwLr5zjgiX95REVJe8Lg9jnYn9IGuQ0tJkvfOuJ8yp/Et6UvxMkSEEgbJ7DykSkl4MX1mvDfT5EB3CukLI4elDs/PTvdKD050yw1ecIBy/lRTMIlPgVdHEVNbnhs4CGaJ5BNLthA9hM5RAIVEs0tTtp39VWMkZK4g1bx3LFxa3HC/51ERPUlYFrpyeqseYjxlXzacHU+/7IXLQ3OhnvgEIxPHzw3ts+jJMHXAaKyjlU91GxWdzBUMZj6kbtuiIBunBQLqdnH9eXC/zeqwtfITn5s0omEDBaobzs+aintGd+WI3ny1Gbhdirz7iI3NfOFOwGLlWpL5JSRMv4z2MKEqo86F6OaKfvGJCuyjEhFgVxYNvONEzL0TgXGqOUDqQOy86cWl2n9/1/svAOmDommQjP1O0byeOZmiZnFQ/sQnnvaM3wcgzU/rLUVQmRxoi//+RVB/jSuYff7r3yoNCe3/4ZH8Ej3miKtit035VFR8IghEjh0J/txlz04NUhF6FAz4StBHyeG73YLU6+a1JBOCRiYFnFaejOV5I8tj2dKUW3/cGPT2tr7GDKmEFYEQ/rcil4=

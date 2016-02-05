@@ -7,7 +7,6 @@ setup_git() {
   git config --global user.name "Eric White"
   git config credential.helper "store --file=.git/credentials"
   echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  export HOMEBREW_GITHUB_API_TOKEN=${GH_TOKEN}
   git fetch origin
   git checkout -b master origin/master
 }
@@ -40,7 +39,7 @@ commit_website_files() {
 
 publish_gh_pages() {
   git commit -am "[ci skip] install ember gh pages"
-  ember github-pages:commit --message "[ci skip] Update gh-pages"
+  ember github-pages:commit --message "[ci skip] Update gh-pages" --branch="master"
   git push
 }
 
