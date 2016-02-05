@@ -14,7 +14,13 @@ setup_git() {
 
 commit_website_files() {
   git checkout $branch
-  npm install && bower install
+  npm install frost-components/frost-css
+  npm install frost-components/frost-button
+  npm install frost-components/frost-tabs
+  npm install frost-components/frost-link
+  npm install frost-components/frost-scroll
+  npm install frost-components/frost-svg
+  npm install frost-components/frost-text
   npm install path-posix
   npm install walk-sync
   npm install chalk
@@ -22,6 +28,7 @@ commit_website_files() {
   npm install bower
   npm install sync-request
   npm install npm
+  npm install && bower install
   node generate-pages-from-markdown.js
   node generate-components.js
   git add --all
@@ -29,6 +36,7 @@ commit_website_files() {
 }
 
 publish_gh_pages() {
+
   ember install ember-cli-github-pages
   git commit -am "[ci skip] install ember gh pages"
   ember github-pages:commit --message "[ci skip] Update gh-pages" --branch="master"
