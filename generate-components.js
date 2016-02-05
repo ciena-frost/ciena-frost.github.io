@@ -1,8 +1,28 @@
 var npm = require('npm');
 var http = require('http');
 var fs = require('fs');
+var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
+var marked = require('marked');
+var hljs = require('highlight').Highlight;
+String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false,
+  highlight: function(code) {
+      return hljs(code).value;
+    }
+});
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
@@ -18,7 +38,7 @@ var body = JSON.parse(res.getBody());
 
 body.forEach(function(repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name,"ember-frost-button")) {
+  if (stringStartsWith(repo.name,"ember-")) {
     //ember install this package
 
     npmInstall(repo.name);
@@ -27,7 +47,13 @@ body.forEach(function(repo) {
     //get Package JSON un comment when needed
     package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
     packageJSON = getPackageJSON(package_url);
+    if (packageJSON === undefined){
+      return;
+    }
     demoParentDirectory = packageJSON.frostGuideDirectory;
+    if (demoParentDirectory === undefined){
+      return;
+    }
     // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
 
@@ -48,8 +74,11 @@ body.forEach(function(repo) {
 
       //controller
       if (content.controller_js !== undefined) {
+        if (occurrences(content.controller_js,"Ember") === 2){
+          content.controller_js = content.controller_js.replace("import Ember from 'ember'\n","");
+        }
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
-          "import ApiController from 'frost-guide/utils/ApiController';\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend")
+          "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend")
         );
       }
       //create template.hbs
@@ -66,7 +95,7 @@ body.forEach(function(repo) {
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\t {{md-text class='guide-markdown' text=\" \n" + readme_content +"\n \"}}"  +
+        "\n\t\t  "+ marked(readme_content).replaceAll("&#39;","'").replaceAll("&lt;","<").replaceAll("&gt;",">").replace(/<pre><code class="lang-(\w+)">([a-z| |\n|{}|#|=|'|()|<>|/|-]*)<\/code><\/pre>/gi,"{{md-text class=\"guide-markdown\" text=\"```$1\n$2\n```\"\n}}")+
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
         "\n\t\t" + content.template_hbs +"\n" +
@@ -84,12 +113,15 @@ body.forEach(function(repo) {
 
 function getPackageJSON(url) {
   //get api file request
+  try{
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   res = request('GET', body.download_url, options);
   return JSON.parse(res.getBody());
   //get download url
-
+  }catch(err){
+    return undefined;
+  }
 }
 
 function getFile(url) {
@@ -195,6 +227,28 @@ function directoryExistsSync(filePath) {
     }
 }
 
+function occurrences(string, subString, allowOverlapping) {
+
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0,
+        pos = 0,
+        step = allowOverlapping ? 1 : subString.length;
+
+    while (true) {
+        pos = string.indexOf(subString, pos);
+        if (pos >= 0) {
+            ++n;
+            pos += step;
+        } else break;
+    }
+    return n;
+}
+
 function stringStartsWith (string, prefix) {
     return string.slice(0, prefix.length) == prefix;
 }
+
+

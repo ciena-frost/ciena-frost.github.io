@@ -1,13 +1,13 @@
-import Ember from 'ember';
+import Ember from 'ember'
 export default Ember.Route.extend({
-	breadCrumb:{
-		title:'Terminology'
-	},
+  breadCrumb: {
+    title: 'Terminology'
+  },
   actions: {
     goTo: function (id) {
       $('html, body').animate({
-                    scrollTop: $(id).offset().top
-                }, 2000);
+        scrollTop: $(id).offset().top
+      }, 2000)
     }
   }
-});
+})

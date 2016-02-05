@@ -1,0 +1,9 @@
+bower_components/**/*
+dist/**/*
+node_modules/**/*
+tmp/**/*
+frost-components/**/*
+generate-components.js
+generate-pages-from-markdown.js
+config/routing.js
+app/pods/components/frost-navigation-sidebar-menu/component.js

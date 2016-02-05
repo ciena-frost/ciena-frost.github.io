@@ -1,9 +1,8 @@
-import ApiController from 'frost-guide/utils/ApiController';
-import Ember from 'ember'
+import ApiController from 'frost-guide/utils/ApiController'
 
 export default ApiController.extend({
   actions: {
-    action () {
+    click () {
       this.notifications.addNotification({
         message: 'Action sent',
         type: 'success',

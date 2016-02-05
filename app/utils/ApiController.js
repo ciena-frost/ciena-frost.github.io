@@ -1,14 +1,16 @@
-var App = window.App = Ember.Application.extend();
+import Ember from 'ember'
+
+var App = window.App = Ember.Application.extend()
 
 App.ApiController = Ember.Controller.extend({
-	queryParams: ['selectedTab'],
-	selectedTab: 'description',
+  queryParams: ['selectedTab'],
+  selectedTab: 'description',
 
-	actions: {
-		tabSelected(tab) {
-			this.set('selectedTab', tab);
-		}
-	}
-});
+  actions: {
+    tabSelected (tab) {
+      this.set('selectedTab', tab)
+    }
+  }
+})
 
-export default App.ApiController;
+export default App.ApiController

@@ -1,1 +1,16 @@
-{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'development/app')}} 
+
+<div class="markdown">
+	<div class="content">
+		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'development/app')}} 
+	</div>
+	<div class='right-col'>
+		<div id='markdown-sidenav'>
+			{{#scroll-to to="#overview"}} Overview{{/scroll-to}}
+			{{#scroll-to to="#projectstructure"}} Project structure{{/scroll-to}}
+			{{#scroll-to to="#runninganexistingproject"}} Running an existing project{{/scroll-to}}
+			{{#scroll-to to="#creatinganewproject"}} Creating a new project{{/scroll-to}}
+			{{#scroll-to to="#testingaproject"}} Testing a project{{/scroll-to}}
+			{{#scroll-to to="#deployingaproject"}} Deploying a project{{/scroll-to}}
+		</div>
+	</div>
+</div>

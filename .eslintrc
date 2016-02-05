@@ -1,0 +1,7 @@
+{
+  "extends": ["frost-standard"],
+      "env": {
+        "jquery": true
+    }
+}
+

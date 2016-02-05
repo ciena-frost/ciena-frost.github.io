@@ -1,8 +1,13 @@
-import Ember from 'ember';
+import Ember from 'ember'
 export default Ember.Route.extend({
-	breadCrumb:{
-		title:'Overview'
-	},
-	actions: { 
- 		 goTo:function(id){$('html, body').animate({scrollTop:$(id).offset().top},500);}}
-});
+  breadCrumb: {
+    title: 'Overview'
+  },
+  actions: {
+    goTo: function (id) {
+      $('html, body').animate({
+        scrollTop: $(id).offset().top
+      }, 500)
+    }
+  }
+})
