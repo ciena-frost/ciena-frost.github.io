@@ -1,10 +1,443 @@
+{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/button')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='API' class='api' id='api'}}
+		  <h1 id="ember-frost-button-br-travis-ci-img-ci-url-coveralls-cov-img-cov-url-npm-npm-img-npm-url-">ember-frost-button <br /> <a href="https://travis-ci.org/ciena-frost/ember-frost-button"><img src="https://travis-ci.org/ciena-frost/ember-frost-button.svg" alt="Travis" title="Travis CI Build Status"></a> <a href="https://coveralls.io/github/ciena-frost/ember-frost-button"><img src="https://coveralls.io/repos/github/ciena-frost/ember-frost-button/badge.svg?branch=master" alt="Coveralls" title="Coveralls Code Coverage"></a> <a href="https://www.npmjs.com/package/ember-frost-button"><img src="https://img.shields.io/npm/v/ember-frost-button.svg" alt="NPM" title="NPM Version"></a></h1>
+<ul>
+<li><a href="#API">API</a></li>
+<li><a href="#Examples">Examples</a></li>
+<li><a href="#Development">Development</a></li>
+</ul>
+<h2 id="installation">Installation</h2>
+<pre><code>ember install ember-frost-button
+</code></pre><h2 id="api">API</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Actions</strong></td>
+<td><code>on-click</code></td>
+<td>triggers associated action</td>
+</tr>
+<tr>
+<td><strong>CSS (Content)</strong></td>
+<td><code>icon</code></td>
+<td>icon is part of the button</td>
+</tr>
+<tr>
+<td></td>
+<td><code>icon-text</code></td>
+<td>icon and text are part of the button</td>
+</tr>
+<tr>
+<td></td>
+<td><code>info</code></td>
+<td>additional info is part of the button</td>
+</tr>
+<tr>
+<td></td>
+<td><code>text</code></td>
+<td>text is part of the button</td>
+</tr>
+<tr>
+<td><strong>CSS (Size)</strong></td>
+<td><code>small</code></td>
+<td>the smallest button you ever did see</td>
+</tr>
+<tr>
+<td></td>
+<td><code>medium</code></td>
+<td>not quite as small as <code>small</code>, but not very big either</td>
+</tr>
+<tr>
+<td></td>
+<td><code>large</code></td>
+<td>now we're getting somewhere</td>
+</tr>
+<tr>
+<td></td>
+<td><code>extra-large</code></td>
+<td>my grandma, what a big button you have!</td>
+</tr>
+<tr>
+<td><strong>CSS (TYPE)</strong></td>
+<td><code>primary</code></td>
+<td>default action on forms, etc.</td>
+</tr>
+<tr>
+<td></td>
+<td><code>secondary</code></td>
+<td>average, garden-variety button</td>
+</tr>
+<tr>
+<td></td>
+<td><code>tertiary</code></td>
+<td>subdued actions, like <code>Cancel</code></td>
+</tr>
+<tr>
+<td><strong>States</strong></td>
+<td><code>autofocus</code></td>
+<td>wave your arms and make a big racket to attract everyone's attention as soon as you render</td>
+</tr>
+<tr>
+<td></td>
+<td><code>disabled</code></td>
+<td>don't even think about trying to click this!</td>
+</tr>
+</tbody>
+</table>
+<h2 id="examples">Examples</h2>
+<h3 id="text">Text</h3>
+{{md-text class="guide-markdown" text="```handlebars
+{{#frost-button autofocus disabled=isDisabled class='primary small' on-click=(action 'closure')}}
+  <div class='text'>Text</div>
+{{/frost-button}
 
-<div class="markdown">
-	<div class="content">
-		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/button')}} 
-	</div>
-	<div class='right-col'>
-		<div id='markdown-sidenav'>
-		</div>
-	</div>
+```"
+}}
+<h3 id="icon">Icon</h3>
+{{md-text class="guide-markdown" text="```handlebars
+{{#frost-button class='tertiary medium' on-click=(action 'closure')}}
+  <div class='icon'>
+    {{frost-svg path='frost/add'}}
+  </div>
+{{/frost-button}}
+
+```"
+}}
+<h3 id="icon-text">Icon Text</h3>
+{{md-text class="guide-markdown" text="```handlebars
+{{#frost-button class='secondary large' on-click=(action 'closure')}}
+  <div class='icon-text'>
+    {{frost-svg path='frost/add'}}
+    <div class='text'>Text</div>
+  </div>
+{{/frost-button}}
+
+```"
+}}
+<h3 id="info">Info</h3>
+{{md-text class="guide-markdown" text="```handlebars
+{{#frost-button class='primary extra-large' on-click=(action 'closure')}}
+  <div class='info'>
+    {{frost-svg path='frost/add'}}
+    <div class='content'>
+      <div class='alias'>Info alias</div>
+      <div class='details'>Info details</div>
+    </div>
+  </div>
+{{/frost-button}}
+
+```"
+}}
+<h2 id="development">Development</h2>
+<h3 id="setup">Setup</h3>
+<pre><code>git clone git@github.com:ciena-frost/ember-frost-button.git
+cd ember-frost-button
+npm install &amp;&amp; bower install
+</code></pre><h3 id="development-server">Development Server</h3>
+<p>A dummy application for development is available under <code>ember-frost-button/tests/dummy</code>.
+To run the server run <code>ember server</code> from the root of the repository and visit the app at <a href="http://localhost:4200">http://localhost:4200</a>.</p>
+<h3 id="testing">Testing</h3>
+<p>Run <code>ember test</code> from the root of the project to execute the test suite and output code coverage.</p>
+
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' class='demo' id='demo'}}
+		<div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+      {{notification-message notification=notification}}
+  {{/each}}
 </div>
+
+<h2>frost-button</h2>
+
+<div class="example">
+  <div class="title">Primary</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='small primary'}}
+      <div class='text'>Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='small primary'}}
+  <div class='text'>Action</div>
+{{/frost-button}}```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Secondary</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='small secondary'}}
+      <div class="text">Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='small secondary'}}
+  <div class=\"text\">Action</div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Tertiary</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='small tertiary'}}
+      <div class="text">Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='small tertiary'}}
+  <div class=\"text\">Action</div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Small</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='small primary'}}
+      <div class="text">Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='small primary'}}
+  <div class=\"text\">Action</div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Medium</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='medium primary'}}
+      <div class="text">Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='medium primary'}}
+  <div class=\"text\">Action</div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Large</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='large primary'}}
+      <div class="text">Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='large primary'}}
+  <div class=\"text\">Action</div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Disabled</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='small primary' disabled=true}}
+      <div class="text">Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='small primary' disabled=true}}
+  <div class=\"text\">Action</div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Autofocus</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='small primary' autofocus=true}}
+      <div class="text">Action</div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='small primary' autofocus=true}}
+  <div class=\"text\">Action</div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Icon Small</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='small primary'}}
+      <div class="icon">
+        <svg class="frost-svg" viewBox="55 0 40 40">
+          <rect x="57.9" y="17.9" fill="#FFFFFF" width="33.3" height="4.1"></rect>
+          <rect x="72.5" y="3.3" fill="#FFFFFF" width="4.1" height="33.3"></rect>
+        </svg>
+      </div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='small primary'}}
+  <div class=\"icon\">
+    <svg class=\"frost-svg\" viewBox=\"55 0 40 40\">
+      <rect x=\"57.9\" y=\"17.9\" fill=\"#FFFFFF\" width=\"33.3\" height=\"4.1\"></rect>
+      <rect x=\"72.5\" y=\"3.3\" fill=\"#FFFFFF\" width=\"4.1\" height=\"33.3\"></rect>
+    </svg>
+  </div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Icon Medium</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='medium primary'}}
+      <div class="icon">
+        <svg class="frost-svg" viewBox="55 0 40 40">
+          <rect x="57.9" y="17.9" fill="#FFFFFF" width="33.3" height="4.1"></rect>
+          <rect x="72.5" y="3.3" fill="#FFFFFF" width="4.1" height="33.3"></rect>
+        </svg>
+      </div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='medium primary'}}
+  <div class=\"icon\">
+    <svg class=\"frost-svg\" viewBox=\"55 0 40 40\">
+      <rect x=\"57.9\" y=\"17.9\" fill=\"#FFFFFF\" width=\"33.3\" height=\"4.1\"></rect>
+      <rect x=\"72.5\" y=\"3.3\" fill=\"#FFFFFF\" width=\"4.1\" height=\"33.3\"></rect>
+    </svg>
+  </div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Icon Large</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='large primary'}}
+      <div class="icon">
+        <svg class="frost-svg" viewBox="55 0 40 40">
+          <rect x="57.9" y="17.9" fill="#FFFFFF" width="33.3" height="4.1"></rect>
+          <rect x="72.5" y="3.3" fill="#FFFFFF" width="4.1" height="33.3"></rect>
+        </svg>
+      </div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='large primary'}}
+  <div class=\"icon\">
+    <svg class=\"frost-svg\" viewBox=\"55 0 40 40\">
+      <rect x=\"57.9\" y=\"17.9\" fill=\"#FFFFFF\" width=\"33.3\" height=\"4.1\"></rect>
+      <rect x=\"72.5\" y=\"3.3\" fill=\"#FFFFFF\" width=\"4.1\" height=\"33.3\"></rect>
+    </svg>
+  </div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Icon and Info</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='extra-large primary'}}
+      <div class="info">
+        <svg class="frost-svg" viewBox="55 0 40 40">
+          <rect x="57.9" y="17.9" fill="#FFFFFF" width="33.3" height="4.1"></rect>
+          <rect x="72.5" y="3.3" fill="#FFFFFF" width="4.1" height="33.3"></rect>
+        </svg>
+        <div class='content'>
+          <div class='alias'>Info alias</div>
+          <div class='details'>Info details</div>
+        </div>
+      </div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='extra-large primary'}}
+  <div class=\"info\">
+    <svg class=\"frost-svg\" viewBox=\"55 0 40 40\">
+      <rect x=\"57.9\" y=\"17.9\" fill=\"#FFFFFF\" width=\"33.3\" height=\"4.1\"></rect>
+      <rect x=\"72.5\" y=\"3.3\" fill=\"#FFFFFF\" width=\"4.1\" height=\"33.3\"></rect>
+    </svg>
+    <div class='content'>
+      <div class='alias'>Info alias</div>
+      <div class='details'>Info details</div>
+    </div>
+  </div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+<div class="example">
+  <div class="title">Icon and Text</div>
+  <div class="demo">
+    {{#frost-button on-click=(action 'click') class='medium primary'}}
+      <div class="icon-text text">
+        <svg class="frost-svg" viewBox="55 0 40 40">
+          <rect x="57.9" y="17.9" fill="#FFFFFF" width="33.3" height="4.1"></rect>
+          <rect x="72.5" y="3.3" fill="#FFFFFF" width="4.1" height="33.3"></rect>
+        </svg>
+        <div class="text">Text</div>
+      </div>
+    {{/frost-button}}
+  </div>
+  <div class="code">
+    {{format-markdown "```handlebars
+{{#frost-button on-click=(action 'click') class='medium primary'}}
+  <div class=\"icon-text text\">
+    <svg class=\"frost-svg\" viewBox=\"55 0 40 40\">
+      <rect x=\"57.9\" y=\"17.9\" fill=\"#FFFFFF\" width=\"33.3\" height=\"4.1\"></rect>
+      <rect x=\"72.5\" y=\"3.3\" fill=\"#FFFFFF\" width=\"4.1\" height=\"33.3\"></rect>
+    </svg>
+    <div class=\"text\">Text</div>
+  </div>
+{{/frost-button}}
+```"
+    }}
+  </div>
+</div>
+
+
+	{{/frost-tab}}
+{{/frost-tabs}}
