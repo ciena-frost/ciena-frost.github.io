@@ -71,6 +71,7 @@
     "frost-tabs": "~2.1.0",
     "frost-text": "~1.1.0",
     "liquid-fire": "0.22.0",
+    "markdown-code-highlighting": "0.0.6",
     "sync-request": "^3.0.0"
   }
 }

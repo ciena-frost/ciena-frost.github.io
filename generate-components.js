@@ -4,6 +4,27 @@ var fs = require('fs');
 var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
+var Remarkable = require('remarkable');
+var md = new Remarkable({html: true});
+var marked = require('marked');
+var hljs = require('highlight').Highlight;
+String.prototype.replaceAll = function (search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  gfm: true,
+  tables: true,
+  breaks: false,
+  pedantic: false,
+  sanitize: false,
+  smartLists: true,
+  smartypants: false,
+  highlight: function(code) {
+      return hljs(code).value;
+    }
+});
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
@@ -70,7 +91,7 @@ body.forEach(function(repo) {
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\t {{md-text class='guide-markdown' text=\" \n" + readme_content +"\n \"}}"  +
+        "\n\t\t  "+ marked(readme_content).replaceAll("&#39;","'").replaceAll("&lt;","<").replaceAll("&gt;",">").replace(/<pre><code class="lang-(\w+)">([a-z| |\n|{}|#|=|'|()|<>|/|-]*)<\/code><\/pre>/gi,"{{md-text class=\"guide-markdown\" text=\"```$1\n$2\n```\"\n}}")+
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
         "\n\t\t" + content.template_hbs +"\n" +
@@ -222,3 +243,5 @@ function occurrences(string, subString, allowOverlapping) {
 function stringStartsWith (string, prefix) {
     return string.slice(0, prefix.length) == prefix;
 }
+
+
