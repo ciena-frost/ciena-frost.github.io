@@ -30,6 +30,7 @@ commit_website_files() {
 }
 
 publish_gh_pages() {
+  npm install && bower install
   ember install ember-cli-github-pages
   git commit -am "[ci skip] install ember gh pages"
   ember github-pages:commit --message "[ci skip] Update gh-pages" --branch="master"
