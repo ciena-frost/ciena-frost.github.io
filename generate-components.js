@@ -71,7 +71,7 @@ body.forEach(function(repo) {
       //controller
       if (content.controller_js !== undefined) {
         if (occurrences(content.controller_js,"Ember") === 2){
-          content.controller_js = content.controller_js.replace("import Ember from 'ember'","");
+          content.controller_js = content.controller_js.replace("import Ember from 'ember'\n","");
         }
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
           "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend")
