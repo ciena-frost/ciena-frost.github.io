@@ -28,6 +28,8 @@ commit_website_files() {
   npm install path
   npm install bower
   npm install sync-request
+  npm install marked
+  npm install highlight
   npm install npm
   npm install && bower install
   node generate-pages-from-markdown.js
