@@ -1,0 +1,43 @@
+@import 'bourbon';
+
+// TODO: replace these with referenes to ember-frost-css classes when available
+html, body {
+  font-family: 'Roboto, sans-serif';
+  color: rgb(102, 102, 102);
+}
+
+.dummy-notification-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 999;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.section {
+  float: left;
+  padding-right: 30px;
+}
+
+th, td {
+  padding: 5px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.example {
+  display: table;
+  vertical-align: middle;
+  .title {
+    display: table-row;
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+  .demo, .code {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 15px;
+  }
+}
