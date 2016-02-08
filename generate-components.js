@@ -102,7 +102,8 @@ body.forEach(function(repo) {
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\t  "+ "/////markdown-to-html link here" +
+        "\n\t\t  "+ "{{markdown-to-html class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '" +
+          demoParentDirectory + "')}}" +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
         "\n\t\t" + content.template_hbs +"\n" +

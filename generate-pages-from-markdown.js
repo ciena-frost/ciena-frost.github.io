@@ -85,7 +85,7 @@ function dive(dir) {
 
             //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
             var route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n  breadCrumb: {\n    title: '" +
-                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  },\n  actions: {\n    goTo: function (id) {\n      $('html, body').animate({\n        scrollTop: $(id).offset().top\n      }, 500)\n    }\n  }\n})\n"
+                toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  }\n })\n"
 
             fs.writeFileSync(pagePath + "/route.js", route_js_string);
 
