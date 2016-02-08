@@ -88,14 +88,21 @@ body.forEach(function(repo) {
           "markdown=(fr-markdown-file-strip-number-prefix '" +
           demoParentDirectory +
           "')}}";
-
+      
+      if (!directoryExistsSync("public/api_markdown/" + demoParentDirectory)) {
+          mkdirpSync(("public/api_markdown/" + demoParentDirectory).toLowerCase());
+      }
+      fs.writeFileSync("public/api_markdown/" + demoParentDirectory + "/README.md",
+        readme_content
+      );
+      
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
         "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
         "\n\t{{#frost-tab alias='Description' class='description' id='description'}}" +
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\t  "+ marked(readme_content).replaceAll("&#39;","'").replaceAll("&lt;","<").replaceAll("&gt;",">").replace(/<pre><code class="lang-(\w+)">([a-z| |\n|{}|#|=|'|()|<>|/|-]*)<\/code><\/pre>/gi,"{{md-text class=\"guide-markdown\" text=\"```$1\n$2\n```\"\n}}")+
+        "\n\t\t  "+ "/////markdown-to-html link here" +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
         "\n\t\t" + content.template_hbs +"\n" +
