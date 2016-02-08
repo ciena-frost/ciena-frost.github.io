@@ -7,6 +7,7 @@
 
 @import './application';
 @import './introduction';
+@import './api-ember-frost-button';
 @import 'app/pods/components/frost-navigation-sidebar-category/styles';
 @import 'app/pods/components/frost-navigation-sidebar-menu/styles';
 @import 'app/pods/components/frost-sidebar/styles';
@@ -22,34 +23,34 @@ body {
 
 .guide-markdown {
   pre {
-	padding: 10px;
-	background-color: $frost-color-lgrey-3;
+  padding: 10px;
+  background-color: $frost-color-lgrey-3;
   }
 }
 
 .guide-content {
   .frost-tabs {
-	@include flex(1);
-	@include display(flex);
-	@include flex-direction(column);
+  @include flex(1);
+  @include display(flex);
+  @include flex-direction(column);
 
-	.content {
-	  @include flex(1);
-	  @include display(flex);
-	  @include flex-direction(column);
+  .content {
+    @include flex(1);
+    @include display(flex);
+    @include flex-direction(column);
 
-	  .frost-tab {
-		@include flex(1);
-		@include display(flex);
-		@include flex-direction(column);
-	  }
-	}
+    .frost-tab {
+    @include flex(1);
+    @include display(flex);
+    @include flex-direction(column);
+    }
+  }
   }
 
   .guide-iframe {
-	@include flex(1);
-	@include display(flex);
-	@include flex-direction(column);
+  @include flex(1);
+  @include display(flex);
+  @include flex-direction(column);
   }
 
   .api,
@@ -62,14 +63,14 @@ body {
   }
 
   .description {
-	@include flex(1);
-	@include display(flex);
-	@include flex-direction(column);
+  @include flex(1);
+  @include display(flex);
+  @include flex-direction(column);
 
-	.guide-iframe iframe {
-	  @include flex(1);
-	  width: 900px;
-	  border: none;
-	}
+  .guide-iframe iframe {
+    @include flex(1);
+    width: 900px;
+    border: none;
+  }
   }
 }
