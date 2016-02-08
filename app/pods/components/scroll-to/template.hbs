@@ -2,21 +2,18 @@
 
 <script>
 $('{{to}}').on('scrollSpy:enter', function() {
-    setActive('{{elementId}}')
-    
-});
-
-var offsetBottom = - 0.3 * $(window).height();
-var offsetTop = 0.3 * $(window).height();  
-  
-$('{{to}}').scrollSpy({'offsetBottom': offsetBottom, 'offsetTop': offsetTop});
-
-function setActive(id){
+  var id = '{{elementId}}'
   $('#' + id).parent().children().each(function () {
     $(this).css('font-weight', 'lighter')
     $(this).css('border-left', '2px solid white')
   })
   $('#' + id).css('font-weight', 'bold')
-  $('#' + id).css('border-left', '2px solid #009EEF')
-}
+  $('#' + id).css('border-left', '2px solid #009EEF')  
+});
+
+var offsetBottom = - 0.85 * $(window).height();
+var offsetTop = 0.1 * $(window).height();  
+  
+$('{{to}}').scrollSpy({'offsetBottom': offsetBottom, 'offsetTop': offsetTop});
+
 </script>
