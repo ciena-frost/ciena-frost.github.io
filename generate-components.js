@@ -62,8 +62,9 @@ body.forEach(function(repo) {
 
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)){
       demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+      demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
       var content = getDemoContent(demo_content_url);
-
+      var style = GetDemoStyle(demo_style_url);
       //create route.js
       if (!directoryExistsSync("app/pods/" + demoParentDirectory  + "/index")) {
           mkdirpSync(("app/pods/" + demoParentDirectory  + "/index").toLowerCase());
@@ -110,6 +111,18 @@ body.forEach(function(repo) {
         "\n\t{{/frost-tab}}" +
         "\n{{/frost-tabs}}"
       );
+
+      //styles.scss
+      if (style !== undefined){
+        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
+        var app_sass = fs.readFileSync("app/styles/app.scss");
+        var arr_app_sass = app_sass.toString().split('\n');
+        arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
+        var final_app_sass = arr_app_sass.join('\n');
+        fs.writeFileSync("app/styles/app.scss", final_app_sass);
+        console.log(final_app_sass);
+      }
+
     }else{
       console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
     }
@@ -163,6 +176,12 @@ function getDemoContent(url){
     route_js: route_js,
     controller_js: controller_js
   };
+}
+
+function GetDemoStyle(url){
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  return new Buffer(body.content, body.encoding).toString();
 }
 
 function npmInstall(repo) {

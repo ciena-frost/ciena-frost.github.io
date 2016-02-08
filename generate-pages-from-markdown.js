@@ -42,7 +42,7 @@ function dive(dir) {
     if (stat && stat.isDirectory()) {
       // Dive into the directory
       //debug
-      console.log(chalk.red.bold("Directory: " + path))
+//      console.log(chalk.red.bold("Directory: " + path))
       var DirectoryDepth = (path.match(/\//g) || []).length;
       fileCount = fs.readdirSync(path).length;
       var filename = file.replace(".md", "");
