@@ -88,22 +88,22 @@ body.forEach(function(repo) {
           "markdown=(fr-markdown-file-strip-number-prefix '" +
           demoParentDirectory +
           "')}}";
-      
-      if (!directoryExistsSync("public/api_markdown/" + demoParentDirectory)) {
-          mkdirpSync(("public/api_markdown/" + demoParentDirectory).toLowerCase());
+
+      if (!directoryExistsSync("public/api-markdown/" + demoParentDirectory)) {
+          mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
       }
-      fs.writeFileSync("public/api_markdown/" + demoParentDirectory + "/README.md",
+      fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
         readme_content
       );
-      
+
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
         "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
         "\n\t{{#frost-tab alias='Description' class='description' id='description'}}" +
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\t  "+ "{{markdown-to-html class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '" +
-          demoParentDirectory + "')}}" +
+        "\n\t\t  "+ "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '" +
+          demoParentDirectory + "/README')}}" +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
         "\n\t\t" + content.template_hbs +"\n" +
