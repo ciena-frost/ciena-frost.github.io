@@ -108,8 +108,8 @@ function dive(dir) {
                 if(line.match("^#")){
                     line = line.replaceAll("#", "");
                     var header = line;
-                    var id = "#" + line.replaceAll(" ", "").toLowerCase();
-                    template_content +=         "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+                    var id = "#" + line.replaceAll(" ", "").toLowerCase().replaceAll('/\W+/g', '');
+                    template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
                 }
             });
 
