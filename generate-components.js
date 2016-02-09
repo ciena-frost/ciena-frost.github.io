@@ -113,10 +113,10 @@ body.forEach(function(repo) {
       );
 
       //styles.scss
-      if (style !== undefined){
+      var app_sass = fs.readFileSync("app/styles/app.scss").toString();
+      if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1){
         fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
-        var app_sass = fs.readFileSync("app/styles/app.scss");
-        var arr_app_sass = app_sass.toString().split('\n');
+        var arr_app_sass = app_sass.split('\n');
         arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
         fs.writeFileSync("app/styles/app.scss", final_app_sass);
