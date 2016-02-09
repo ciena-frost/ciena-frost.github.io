@@ -1,4 +1,5 @@
-## Overview
+Overview
+--------
 
 Ember is a stable project with good documentation (something Frost is working to emulate).  Here are a few resources to get you started:
 - [Ember guides](https://guides.emberjs.com/v2.2.0/)

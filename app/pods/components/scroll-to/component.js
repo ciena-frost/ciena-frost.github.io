@@ -10,6 +10,6 @@ export default Ember.Component.extend({
     })
     $('#' + this.elementId).css('font-weight', 'bold')
     $('#' + this.elementId).css('border-left', '2px solid #009EEF')
-    $('html, body').animate({scrollTop: $(this.to).offset().top - (0.125 * $(window).height())}, 500)
+    $('html, body').animate({scrollTop: $(this.to).offset().top - (0.125 * $(window).height())}, 200)
   }
 })
