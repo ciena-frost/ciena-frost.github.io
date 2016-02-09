@@ -146,12 +146,17 @@
     border: none;
     outline: 0;
     white-space: normal;
-    border-left: 3px solid white;
+    border-left: 2px solid white;
 }
 
 #md-scrollspy button:first-child{
     font-weight: bold;
-    border-left: 3px solid #009EEF;
+    border-left: 2px solid #009EEF;
+}
+
+#md-scrollspy button:hover{
+    font-weight: bold;
+    border-left: 2px solid #009EEF !important;
 }
 
 .frost-link{
