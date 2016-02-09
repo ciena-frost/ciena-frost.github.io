@@ -116,8 +116,13 @@ function dive(dir) {
       template_content += "\n\t<div class='right-col'>";
       template_content += "\n\t\t<div id='md-scrollspy'>";
 
+      var insideCodeSnippet = false;
       fs.readFileSync(path).toString().split('\n').forEach(function (line) {
-        if (line.match("^#")) {
+        if(line.match('```') && !insideCodeSnippet)
+          insideCodeSnippet = true;
+        else if(line.match('```') && insideCodeSnippet)
+          insideCodeSnippet = false;
+        else if (line.match("^#") && !insideCodeSnippet) {
           line = line.replaceAll("#", "");
           var header = line;
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replaceAll('/\W+/g', '');
