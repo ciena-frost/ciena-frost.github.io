@@ -107,14 +107,14 @@ function dive(dir) {
       var template_content = "";
       var content = fs.readFileSync(path, 'utf8');
 
-      template_content += "\n<div class=\"markdown\">";
+      template_content += "\n<div class=\"md\">";
       template_content += "\n\t<div class=\"content\">";
       template_content += "\n\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true ";
       template_content += "markdown=(fr-markdown-file-strip-number-prefix '";
       template_content += path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") + "')}} ";
       template_content += "\n\t</div>";
       template_content += "\n\t<div class='right-col'>";
-      template_content += "\n\t\t<div id='markdown-sidenav'>";
+      template_content += "\n\t\t<div id='md-scrollspy'>";
 
       fs.readFileSync(path).toString().split('\n').forEach(function (line) {
         if (line.match("^#")) {

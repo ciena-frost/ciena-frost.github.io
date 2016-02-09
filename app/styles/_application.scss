@@ -119,27 +119,27 @@
 }
 
 
-.markdown {
+.md {
     float:left;
     width:100%;
 }
-.markdown .content{
+.md .content{
     float:left;
     width:80%;
 }
-.markdown .right-col {
+.md .right-col {
     float:left;
     width:20%;
 }
 
-#markdown-sidenav{
+#md-scrollspy{
     width: 100%;
     position: fixed;
     margin-top: 20px;
     margin-left: 20px;
 }
 
-#markdown-sidenav button{
+#md-scrollspy button{
     width: 100%;
     text-align: left;
     background-color: white;
@@ -149,7 +149,7 @@
     border-left: 3px solid white;
 }
 
-#markdown-sidenav button:first-child{
+#md-scrollspy button:first-child{
     font-weight: bold;
     border-left: 3px solid #009EEF;
 }
