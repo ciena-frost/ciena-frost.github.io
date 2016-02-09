@@ -1,4 +1,5 @@
-## Overview
+Overview
+--------
 
 All functionality from app development is available as well as a dummy application for development/testing.
 

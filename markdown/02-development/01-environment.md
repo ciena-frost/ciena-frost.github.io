@@ -1,4 +1,5 @@
-## Overview
+Overview
+--------
 
 Frost uses [ember-cli](http://ember-cli.com/user-guide/) and ember-cli addons for tooling, builds and project conventions.
 
