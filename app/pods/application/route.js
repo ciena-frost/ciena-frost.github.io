@@ -2,10 +2,12 @@ import Ember from 'ember'
 
 export default Ember.Route.extend({
   actions: {
-    didTransition: function() {
+    didTransition: function () {
       Ember.run.next(() => {
-        Prism.highlightAll();
-      });
+        /*eslint-disable */
+        Prism.highlightAll()
+        /*eslint-enable */
+      })
     }
   }
 })
