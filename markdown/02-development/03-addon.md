@@ -1,4 +1,5 @@
-## Overview
+Overview
+--------
 
 All functionality from app development is available as well as a dummy application for development/testing.
 
@@ -18,13 +19,13 @@ could be imported using `import Component from 'frost-button/pods/components/fro
 component into the app namespace the component can be re-exported in the addon's app directory - e.g.:
 
 app/frost-button.js
-```
+```javascript
 export { default } from 'frost-button/pods/components/frost-button/component';
 ```
 
 This re-export allows the component to be referenced in a consuming app's templates directly - e.g.:
 
-```
+```handlebars
 {{frost-button}}
 ```
 

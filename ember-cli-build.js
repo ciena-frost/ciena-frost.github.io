@@ -12,6 +12,11 @@ module.exports = function (defaults) {
         'bower_components/bourbon/app/assets/stylesheets',
         'node_modules/frost-css/styles'
       ]
+    },
+    'ember-prism': {
+      'theme': 'coy',
+      'components': ['scss', 'sass', 'javascript', 'handlebars', 'markdown', 'css', 'git', 'bash', 'json'],
+      'plugins': ['line-highlight']
     }
   })
 
@@ -20,6 +25,8 @@ module.exports = function (defaults) {
     include: ['**/*.woff2', '**/stylesheet.css'],
     destDir: '/assets/fonts'
   })
+
+  app.import('vendor/jquery-scrollspy/scrollspy.js');
 
   return app.toTree(font)
 }

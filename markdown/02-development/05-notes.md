@@ -1,7 +1,8 @@
 ## IDEs
 We currently recommend Visual Studio Code or WebStorm - although editors are really a personal preference.
 
-### [Visual Studio Code](https://code.visualstudio.com/)
+[Visual Studio Code](https://code.visualstudio.com/)
+----------------------------------------------------
 - Enable 'Auto Save'
 - Install [Handlebars](https://marketplace.visualstudio.com/items/andrejunges.Handlebars),
 [Ember CLI](https://marketplace.visualstudio.com/items/felixrieseberg.vsc-ember-cli),
@@ -16,5 +17,6 @@ We currently recommend Visual Studio Code or WebStorm - although editors are rea
 		'**/tmp': true
 	}
 
-### [WebStorm](https://www.jetbrains.com/webstorm/)
+[WebStorm](https://www.jetbrains.com/webstorm/)
+-----------------------------------------------
 [Setup](http://ember-cli.com/user-guide/#webstorm)
