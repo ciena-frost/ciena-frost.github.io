@@ -63,7 +63,7 @@ function dive(dir) {
         }
 
         //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
-        var flat_route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n })\n"
+        var flat_route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n})\n"
          fs.writeFileSync(flat_route + "/route.js", flat_route_js_string);
       }
     } else {
@@ -97,7 +97,7 @@ function dive(dir) {
 
       //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
       var route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n  breadCrumb: {\n    title: '" +
-        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  }\n })\n"
+        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  }\n})\n"
 
       fs.writeFileSync(pagePath + "/route.js", route_js_string);
 
