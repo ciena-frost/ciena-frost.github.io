@@ -7,6 +7,7 @@ export default Ember.Route.extend({
         /*eslint-disable */
         Prism.highlightAll()
         /*eslint-enable */
+        $('.guide-sidebar').height($("[class='content']").height())
       })
     }
   }
