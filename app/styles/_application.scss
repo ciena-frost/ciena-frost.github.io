@@ -74,6 +74,17 @@
 
 .guide-content .guide-markdown {
   margin-left: 20px;
+  margin-right: 20px;
+}
+
+.guide-content .api .guide-markdown{
+  position: absolute;
+}
+
+.guide-content .demo{
+  position: absolute;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .tabs__bar--justified {
