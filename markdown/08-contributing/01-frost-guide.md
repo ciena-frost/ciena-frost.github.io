@@ -25,10 +25,10 @@ This header would not appear in the scrollspy
 ---------------------------------------------
 ```
   
-## Creating component pages
-To create a component page you must also create markdown files and folders where you wish to have your content appear. The markdown file will act as the description for the component page.
+## Creating Component Pages
+Just like regular pages, component pages require the creation of markdown files and folders where you wish to have your content appear. The markdown file will act as the content of the description tab for the component page.
 
-  The package.json of the component must have the frostGuideDirectory where the value is equal to the markdown file location in the markdown folder(stripped of prefix and file extension *.md* ):
+The package.json file in the component's repository must have a frostGuideDirectory attribute where the value is equal to the markdown file location in the markdown folder (stripped of prefix and file extension *.md* ):
 
 ```json
 ...
@@ -36,9 +36,9 @@ To create a component page you must also create markdown files and folders where
 ...
 ```
 
+## Updating Component Pages
+Updates of the content in the API and Demo tabs has to be done in the component's repository. However, the changes made to the README or demo page in a frost component repository will not be reflected on this site until a new build is triggered. Follow the following instructions to trigger a new build:
 
-## Run a new build
-  If there are changes in components README or demo page that you wish appear on this site follow these steps:
   1. Fork the [repository](https://github.com/ciena-frost/ciena-frost.github.io)
   2. Increment the version number in the package.json file located in the root directory.
   
