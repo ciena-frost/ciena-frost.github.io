@@ -37,7 +37,7 @@ The package.json file in the component's repository must have a frostGuideDirect
 ```
 
 ## Updating Component Pages
-Updates of the content in the API and Demo tabs has to be done in the component's repository. However, the changes made to the README or demo page in a frost component repository will not be reflected on this site until a new build is triggered. Follow the following instructions to trigger a new build:
+Updates of the content in the API and Demo tabs has to be done in the component's repository. However, the changes made to the README or demo page in a frost component repository will not be reflected on this site until a new build is triggered. Follow these instructions to trigger a new build:
 
   1. Fork the [repository](https://github.com/ciena-frost/ciena-frost.github.io)
   2. Increment the version number in the package.json file located in the root directory.
