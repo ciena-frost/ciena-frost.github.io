@@ -26,7 +26,7 @@ module.exports = function (defaults) {
     destDir: '/assets/fonts'
   })
 
-  app.import('vendor/jquery-scrollspy/scrollspy.js');
+  app.import('vendor/jquery-scrollspy/scrollspy.js')
 
   return app.toTree(font)
 }
