@@ -3,4 +3,4 @@ export default Ember.Route.extend({
   breadCrumb: {
     title: 'Application Bar'
   }
- })
+})
