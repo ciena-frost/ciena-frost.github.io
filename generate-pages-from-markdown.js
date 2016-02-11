@@ -11,6 +11,14 @@ var path = require('path');
 var mark_dir = "markdown";
 var routing_string = "module.exports = [\n";
 
+var exec = require('sync-exec');
+var request = require('sync-request');
+var options = {
+  'headers': {
+    'user-agent': 'ciena-frost',
+    'Authorization': 'token ' + process.env.ghToken
+  }
+};
 dive(mark_dir);
 
 routing_string += "];";
@@ -134,6 +142,14 @@ function dive(dir) {
       template_content += "\n\t</div>";
       template_content += "\n</div>";
 
+      template_content += "\n<div class='footer'>\n"
+      template_content += "\t<div class='info'>\n"
+      getContributorsOfFile(path).forEach(function(contributor){
+        template_content += "<p>" + contributor + "</p>";
+      });
+      template_content += "\n\t</div>";
+      template_content += "\n</div>";
+
       fs.writeFileSync(pagePath + "/template.hbs", template_content);
     }
 
@@ -145,6 +161,21 @@ String.prototype.replaceAll = function (search, replacement) {
   var target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
 };
+
+function getContributorsOfFile(filePath){
+  var contributorSet = new Set();
+  var blame = exec('git blame --show-stats ' + filePath);
+  var arr_blame = blame.stdout.split('\n');
+  var RegexExp = /[a-z|0-9]*\smarkdown[\/|a-z|\-|0-9]*.md\s*\(([a-z|\s|,]*)2/i;
+  arr_blame.forEach(function(line){
+    var match = RegexExp.exec(line.toString());
+    if (match !== null){
+      contributorSet.add(match[1].trim());
+    }
+  })
+
+  return contributorSet;
+}
 
 function fileExistsSync(filePath) {
   try {
