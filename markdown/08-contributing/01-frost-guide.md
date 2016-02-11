@@ -41,7 +41,6 @@ Updates of the content in the API and Demo tabs has to be done in the component'
 
   1. Fork the [repository](https://github.com/ciena-frost/ciena-frost.github.io)
   2. Increment the version number in the package.json file located in the root directory.
-
 ```json
 {
   "name": "frost-guide",
@@ -49,7 +48,6 @@ Updates of the content in the API and Demo tabs has to be done in the component'
   ++ "version": "0.0.2",
   ...
 ```
-
   3. Push the change to the fork.
   4. Create a pull request.
 
