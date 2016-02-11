@@ -53,7 +53,7 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-    ENV.baseURL = '/'
+    ENV.baseURL = '/ciena-frost.github.io'
   }
 
   return ENV
