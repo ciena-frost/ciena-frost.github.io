@@ -7,7 +7,7 @@ export default Ember.Route.extend({
         /*eslint-disable */
         Prism.highlightAll()
         /*eslint-enable */
-        if (!this.get('media.isMobile')){
+        if (!this.get('media.isMobile')) {
           $('.guide-sidebar').height($("[class='content']").height())
         }
       })
