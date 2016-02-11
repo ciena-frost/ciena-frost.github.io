@@ -125,7 +125,7 @@ function dive(dir) {
         else if (line.match("^#") && !insideCodeSnippet) {
           line = line.replaceAll("#", "");
           var header = line;
-          var id = "#" + line.replaceAll(" ", "").toLowerCase().replaceAll('/\W+/g', '');
+          var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
           template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
         }
       });
