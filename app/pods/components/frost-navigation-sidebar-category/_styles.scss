@@ -5,6 +5,7 @@
   @include display(flex);
   @include flex-direction(row);
   @include align-items(center);
+  text-align: left;
 }
 
 .frost-navigation-sidebar-menu .sub-category > .frost-button.category.expanded {
