@@ -1,4 +1,4 @@
-
+Last update: 2016-02-11
 ###Allow contribution:
 - Publish ember-frost-theme (CSS variables)
 - Publish ember-frost-css

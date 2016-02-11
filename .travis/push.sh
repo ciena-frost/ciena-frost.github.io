@@ -31,6 +31,7 @@ commit_website_files() {
   npm install highlight
   npm install npm
   npm install && bower install
+  node generate-roadmap.js
   node generate-pages-from-markdown.js
   node generate-components.js
   git add --all
