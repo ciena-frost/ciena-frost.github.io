@@ -26,6 +26,7 @@ body {
   padding: 10px;
   background-color: $frost-color-lgrey-3;
   }
+  
 }
 
 .guide-content {
@@ -76,11 +77,12 @@ body {
 }
 
 .footer {
-  height: 4em;
-  clear: both;
   background-color: $frost-color-blue-1;
+  width: 100%;
+  min-height: 90px;
 }
 
 .footer .info{
+  margin: 20px;
   color: $frost-color-white;
 }
