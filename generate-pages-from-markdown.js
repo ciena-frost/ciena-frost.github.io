@@ -143,10 +143,11 @@ function dive(dir) {
       template_content += "\n</div>";
 
       template_content += "\n<div class='footer'>\n"
-      template_content += "\t<div class='info'>\n"
+      template_content += "\t<div class='info'>\n\t\t<div class='contributors'>\nContributors: "
       getContributorsOfFile(path).forEach(function(contributor){
-        template_content += "<p>" + contributor + "</p>";
+        template_content += contributor + " ";
       });
+      template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
       template_content += "\n</div>";
 
@@ -163,14 +164,16 @@ String.prototype.replaceAll = function (search, replacement) {
 };
 
 function getContributorsOfFile(filePath){
+  console.log(filePath);
   var contributorSet = new Set();
   var blame = exec('git blame --show-stats ' + filePath);
   var arr_blame = blame.stdout.split('\n');
-  var RegexExp = /[a-z|0-9]*\smarkdown[\/|a-z|\-|0-9]*.md\s*\(([a-z|\s|,]*)2/i;
+  var RegexExp = /[a-z|0-9]*\s[markdown]*[\/|a-z|\-|0-9]*[.md\s*]*\(([a-z|\s|,]*)2/i;
   arr_blame.forEach(function(line){
     var match = RegexExp.exec(line.toString());
     if (match !== null){
       contributorSet.add(match[1].trim());
+      console.log(match[1].trim());
     }
   })
 
