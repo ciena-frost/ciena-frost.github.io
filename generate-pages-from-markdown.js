@@ -145,7 +145,7 @@ function dive(dir) {
       template_content += "\n<div class='footer'>\n"
       template_content += "\t<div class='info'>\n\t\t<div class='contributors'>\nContributors: "
       getContributorsOfFile(path).forEach(function(value, key){
-        template_content += key + " ";
+        template_content += key + ", ";
       });
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
