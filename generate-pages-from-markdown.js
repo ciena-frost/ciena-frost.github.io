@@ -143,7 +143,7 @@ function dive(dir) {
       template_content += "\n</div>";
 
       template_content += "\n<div class='footer'>\n"
-      template_content += "\t<div class='info'>\n\t\t<div class='contributors'>\nContributors: "
+      template_content += "\t<div class='info'>\n\t\t<div>\n\t\t\t<div class='contributors'>\n\t\t\t\t<span " +                                                                "class=\"footerHeading\">Contributors</span>";
       var mapContributors = getContributorsOfFile(path);
       var mapCounter = 0;
       mapContributors.forEach(function(value, key){
@@ -151,14 +151,15 @@ function dive(dir) {
         if (mapCounter === mapContributors.size){
           template_content += key;
         }else{
-          template_content += key + ", ";
+          template_content += key + " - ";
         }
 
       });
-      template_content += "\n\t\t</div>";
-      template_content += "\n\t</div>";
-      template_content += "\n</div>";
-
+      
+      template_content += "\n\t\t</div>\n\t\t<div class='connect'>\n\t\t\t<span class=\"footerHeading\">Connect</span>";
+      template_content += "\n\t\t\t\t Github Button here \n\t\t\t</div>\n\t\t</div>\n\t\t<br/>\n\t</div>";
+      template_content += "\n\t<div class='copyright'>\n\t\t© 2016 Ciena-Frost, All rights reserved.\n\t</div>\n</div>";
+      
       fs.writeFileSync(pagePath + "/template.hbs", template_content);
     }
 

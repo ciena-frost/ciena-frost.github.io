@@ -79,10 +79,52 @@ body {
 .footer {
   background-color: $frost-color-blue-1;
   width: 100%;
-  min-height: 90px;
+  height:100%;
+  color: $frost-color-white;
+  clear:both;
 }
 
 .footer .info{
-  margin: 20px;
-  color: $frost-color-white;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.footer .info br{
+  clear: left;
+}
+
+.footer .copyright{
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  background-color: darken($frost-color-blue-1, 4%);
+  height: 100%;
+  bottom: 0 !important;
+}
+
+.footerHeading {
+  display: block;
+  margin: 0 0 20px 0;
+  padding: 0;
+  border: none;
+  font-size: 29px;
+}
+
+.contributors{
+  float: left;
+  width: 60%;
+}
+.connect{
+  float: left;
+  width: 40%;
+}
+.contributors table{
+  font-size: 16px;
+  width: 100%;
+}
+.contributors table td{
+  width: 33%
 }
