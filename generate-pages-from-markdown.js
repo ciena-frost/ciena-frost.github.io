@@ -172,8 +172,8 @@ function getContributorsOfFile(filePath){
   arr_blame.forEach(function(line){
     var match = RegexExp.exec(line.toString());
     if (match !== null){
-      contributorSet.add(match[1].trim());
-      console.log(match[1].trim());
+      contributorSet.add(formatName(match[1].trim()));
+      console.log(formatName(match[1].trim()));
     }
   })
 
@@ -195,7 +195,14 @@ function directoryExistsSync(filePath) {
     return false;
   }
 }
-
+function formatName(name){
+  var match = name.match(/([a-z]+)[,\s|\s]*/ig);
+  if (name.indexOf(",") > -1){
+    return match[1] + " " + match[0].replace(",","");
+  }else{
+    return match[0] + " " + match[1];
+  }
+}
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
