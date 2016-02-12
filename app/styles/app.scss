@@ -74,3 +74,13 @@ body {
   }
   }
 }
+
+.footer {
+  height: 4em;
+  clear: both;
+  background-color: $frost-color-blue-1;
+}
+
+.footer .info{
+  color: $frost-color-white;
+}
