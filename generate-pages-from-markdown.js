@@ -144,8 +144,8 @@ function dive(dir) {
 
       template_content += "\n<div class='footer'>\n"
       template_content += "\t<div class='info'>\n\t\t<div class='contributors'>\nContributors: "
-      getContributorsOfFile(path).forEach(function(contributor){
-        template_content += contributor + " ";
+      getContributorsOfFile(path).forEach(function(value, key){
+        template_content += key + " ";
       });
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
@@ -165,19 +165,23 @@ String.prototype.replaceAll = function (search, replacement) {
 
 function getContributorsOfFile(filePath){
   console.log(filePath);
-  var contributorSet = new Set();
+  var contributorMap = new Map();
   var blame = exec('git blame --show-stats ' + filePath);
   var arr_blame = blame.stdout.split('\n');
   var RegexExp = /[a-z|0-9]*\s[markdown]*[\/|a-z|\-|0-9]*[.md\s*]*\(([a-z|\s|,]*)2/i;
   arr_blame.forEach(function(line){
     var match = RegexExp.exec(line.toString());
     if (match !== null){
-      contributorSet.add(formatName(match[1].trim()));
-      console.log(formatName(match[1].trim()));
+      var name = formatName(match[1]);
+      if (contributorMap.has(name)){
+        contributorMap.set(name, contributorMap.get(name) + 1);
+      }else{
+        contributorMap.set(name, 1);
+      }
     }
   })
-
-  return contributorSet;
+  console.log(contributorMap)
+  return contributorMap;
 }
 
 function fileExistsSync(filePath) {
@@ -198,9 +202,9 @@ function directoryExistsSync(filePath) {
 function formatName(name){
   var match = name.match(/([a-z]+)[,\s|\s]*/ig);
   if (name.indexOf(",") > -1){
-    return match[1] + " " + match[0].replace(",","");
+    return match[1].trim() + " " + match[0].replace(",","").trim();
   }else{
-    return match[0] + " " + match[1];
+    return match[0].trim() + " " + match[1].trim();
   }
 }
 function toTitleCase(str) {
