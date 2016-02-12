@@ -158,7 +158,7 @@ function dive(dir) {
 
       template_content += "\n\t\t</div>\n\t\t<div class='connect'>\n\t\t\t<span class=\"footerHeading\">Connect</span>";
       template_content += "\n\t\t\t\t Github Button here \n\t\t\t</div>\n\t\t</div>\n\t\t<br/>\n\t</div>";
-      template_content += "\n\t<div class='copyright'>\n\t\t© 2016 Ciena-Frost, All rights reserved.\n\t</div>\n</div>";
+      template_content += "\n\t<div class='copyright'>\n\t\t\n\t</div>\n</div>";
 
       fs.writeFileSync(pagePath + "/template.hbs", template_content);
     }
