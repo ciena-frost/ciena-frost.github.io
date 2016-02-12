@@ -155,11 +155,11 @@ function dive(dir) {
         }
 
       });
-      
+
       template_content += "\n\t\t</div>\n\t\t<div class='connect'>\n\t\t\t<span class=\"footerHeading\">Connect</span>";
       template_content += "\n\t\t\t\t Github Button here \n\t\t\t</div>\n\t\t</div>\n\t\t<br/>\n\t</div>";
       template_content += "\n\t<div class='copyright'>\n\t\t© 2016 Ciena-Frost, All rights reserved.\n\t</div>\n</div>";
-      
+
       fs.writeFileSync(pagePath + "/template.hbs", template_content);
     }
 
@@ -213,8 +213,10 @@ function formatName(name){
   var match = name.match(/([a-z]+)[,\s|\s]*/ig);
   if (name.indexOf(",") > -1){
     return match[1].trim() + " " + match[0].replace(",","").trim();
-  }else{
+  }else if (match.length >= 2){
     return match[0].trim() + " " + match[1].trim();
+  }else{
+    return name;
   }
 }
 function toTitleCase(str) {
