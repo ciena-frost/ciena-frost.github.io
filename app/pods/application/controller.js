@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
       var footerHeight = $('.footer').height()
       var footerTop = $('.footer').position().top + footerHeight
       if (footerTop < docHeight) {
-        $('.footer').css('margin-top', 10 + (docHeight - footerTop) + 'px')
+        $('.footer').css('margin-top', (docHeight - footerTop) + 'px')
       }
     })
   }.on('init')
