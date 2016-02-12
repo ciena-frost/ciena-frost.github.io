@@ -172,19 +172,20 @@ String.prototype.replaceAll = function (search, replacement) {
 };
 
 function getContributorsOfFile(filePath){
-  console.log(filePath);
   var contributorMap = new Map();
-  var blame = exec('git blame --show-stats ' + filePath);
-  var arr_blame = blame.stdout.split('\n');
-  var RegexExp = /[a-z|0-9]*\s[markdown]*[\/|a-z|\-|0-9]*[.md\s*]*\(([a-z|\s|,]*)2/i;
-  arr_blame.forEach(function(line){
-    var match = RegexExp.exec(line.toString());
-    if (match !== null){
-      var name = formatName(match[1]);
+  var log = exec('git log --numstat ' + filePath);
+  var arr_log = log.stdout.split(/commit [0-9|a-z]+\s*/i);
+  var authorRegexExp = /Author:\s([a-z|\s|,]*)/i;
+  var linesAddedDeletedRegexExp = /([0-9]+)\s+([0-9]+)\s+markdown/i;
+  arr_log.forEach(function(commit){
+    var author = commit.match(/Author: ([a-z|\s|,]*)/i);
+    if (author !== null){
+      var name = formatName(author[1]);
+      var linesAddedDeletedMatches = commit.match(/([0-9]+)\s+([0-9]+)\s+markdown/i);
       if (contributorMap.has(name)){
-        contributorMap.set(name, contributorMap.get(name) + 1);
+        contributorMap.set(name, contributorMap.get(name) + parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
       }else{
-        contributorMap.set(name, 1);
+        contributorMap.set(name, parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
       }
     }
   })
