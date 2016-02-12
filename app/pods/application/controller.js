@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
   routing: Ember.inject.service('-routing'),
   applicationMenuItems: config.APP.routingConfig,
   windowRezise: function () {
-    jQuery(window).on('resize', function () {
+    $(window).on('resize', function () {
       var docHeight = $(window).height()
       var footerHeight = $('.footer').height()
       var footerTop = $('.footer').position().top + footerHeight
