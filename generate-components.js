@@ -4,34 +4,19 @@ var fs = require('fs');
 var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
-var marked = require('marked');
+
 var exec = require('sync-exec');
-var hljs = require('highlight').Highlight;
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  tables: true,
-  breaks: false,
-  pedantic: false,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false,
-  highlight: function(code) {
-      return hljs(code).value;
-    }
-});
+
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
     'Authorization': 'token ' + process.env.ghToken
   }
 };
-
-
 
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
 var body = JSON.parse(res.getBody());
