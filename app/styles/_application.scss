@@ -129,18 +129,19 @@
   min-height:500px;
 }
 
-
-.md {
-    float:left;
-    width:100%;
-}
-.md .content{
-    float:left;
-    width:80%;
-}
-.md .right-col {
-    float:left;
-    width:20%;
+@media (min-width: 600px) {
+  .md {
+    float: left;
+    width: 100%;
+  }
+  .md .content {
+    float: left;
+    width: 80%;
+  }
+  .md .right-col {
+    float: left;
+    width: 20%;
+  }
 }
 
 #md-scrollspy{
