@@ -5,6 +5,7 @@ var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
 var marked = require('marked');
+var exec = require('sync-exec');
 var hljs = require('highlight').Highlight;
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
@@ -41,7 +42,7 @@ body.forEach(function(repo) {
   if (stringStartsWith(repo.name,"ember-")) {
     //ember install this package
 
-    npmInstall(repo.name);
+    emberInstall(repo.name);
 
 
     //get Package JSON un comment when needed
@@ -185,7 +186,7 @@ function GetDemoStyle(url){
 }
 
 function npmInstall(repo) {
-  console.log("Doing Ember Install of : " + repo);
+  console.log("Doing NPM Install of : " + repo);
   npm.load({
     loaded: false
   }, function(err) {
@@ -273,7 +274,16 @@ function occurrences(string, subString, allowOverlapping) {
     }
     return n;
 }
+function emberInstall(repo){
+  console.log("Doing Ember Install of : " + repo);
+  var log = exec('ember install ' + repo);
+  if (log.status === 0){
+    console.log(chalk.green.bold(log.stdout));
+  }else{
+    console.log(chalk.red.bold(log.stderr));
+  }
 
+}
 function stringStartsWith (string, prefix) {
     return string.slice(0, prefix.length) == prefix;
 }

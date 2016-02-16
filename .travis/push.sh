@@ -26,6 +26,7 @@ commit_website_files() {
   npm install path
   npm install bower
   npm install sync-request
+  npm install sync-exec
   npm install marked
   npm install highlight
   npm install npm
