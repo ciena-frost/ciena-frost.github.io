@@ -12,6 +12,8 @@ export default Ember.Route.extend({
         }else{
           $('.content').width($(window).width())
           $('.guide-markdown').width($(window).width())
+          $('.frost-tabs').width($(window).width())
+          $('#demo').width($(window).width())
         }
 
         /*push footer to bottom of viewport if page has no y-overflow*/
