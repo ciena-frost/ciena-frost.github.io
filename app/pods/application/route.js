@@ -9,12 +9,8 @@ export default Ember.Route.extend({
           /*eslint-enable */
         if (!this.get('media.isMobile')) {
           $('.guide-sidebar').height($("[class='content']").height())
-        } else {
-          $('.content').width($(window).width())
-          $('.guide-markdown').width($(window).width())
-          $('.frost-tabs').width($(window).width())
-          $('#demo').width($(window).width())
-          $($('.title')[0]).css('margin-left', $($('.menu .collapsed')[0]).width() + 5 + 'px')
+        }else{
+          $('.md').width($(window).width() - $('.guide-sidebar-mobile').width())
         }
 
         /*push footer to bottom of viewport if page has no y-overflow*/
