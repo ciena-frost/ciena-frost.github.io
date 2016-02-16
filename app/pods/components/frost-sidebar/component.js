@@ -5,7 +5,9 @@ export default Ember.Component.extend({
 
   collapsed: true,
   didInsertElement: function (){
-
+    if (this.get('media.isMobile') && this.collapsed) {
+      $('.guide-sidebar-mobile').height($('.frost-info-bar').height());
+    }
   },
   actions: {
     toggleCollapsed () {
