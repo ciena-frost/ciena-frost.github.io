@@ -15,7 +15,6 @@ commit_website_files() {
   git checkout $branch
   ember install ember-cli-github-pages
   npm install frost-components/frost-css
-  npm install frost-components/frost-button
   npm install frost-components/frost-tabs
   npm install frost-components/frost-link
   npm install frost-components/frost-scroll
