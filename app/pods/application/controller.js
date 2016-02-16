@@ -12,6 +12,16 @@ export default Ember.Controller.extend({
       if (footerTop < docHeight) {
         $('.footer').css('margin-top', (docHeight - footerTop) + 'px')
       }
+
+      if ($(window).width() > 768) {
+        $('.guide-sidebar').height($("[class='content']").height())
+      } 
+      else {
+        $('.content').width($(window).width())
+        $('.guide-markdown').width($(window).width())
+        $('.frost-tabs').width($(window).width())
+        $('#demo').width($(window).width())
+      }
     })
   }.on('init')
 })

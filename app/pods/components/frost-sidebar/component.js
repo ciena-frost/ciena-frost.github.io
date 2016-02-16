@@ -5,9 +5,8 @@ export default Ember.Component.extend({
 
   collapsed: true,
   didInsertElement: function (){
-        $('.guide-sidebar-mobile').height($('.frost-info-bar').height())
-      $('.guide-sidebar-mobile').height($('.frost-info-bar').height());
-    }
+    $('.guide-sidebar-mobile').height($('.frost-info-bar').height())
+    $('.guide-sidebar-mobile').height($('.frost-info-bar').height())
   },
   actions: {
     toggleCollapsed () {
