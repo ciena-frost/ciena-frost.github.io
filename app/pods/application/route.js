@@ -9,8 +9,6 @@ export default Ember.Route.extend({
           /*eslint-enable */
         if (!this.get('media.isMobile')) {
           $('.guide-sidebar').height($("[class='content']").height())
-        }else{
-          $('.md').width($(window).width() - $('.guide-sidebar-mobile').width())
         }
 
         /*push footer to bottom of viewport if page has no y-overflow*/
