@@ -10,6 +10,10 @@ export default Ember.Component.extend({
       }
     })
   },
+  willDestroyElement: function(){
+    console.log("Destroy sidebar")
+    $('.md').removeAttr('style')
+  },
   actions: {
     toggleCollapsed () {
       this.toggleProperty('collapsed')
