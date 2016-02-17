@@ -9,7 +9,7 @@ export default Ember.Component.extend({
     Ember.$(window).on('resize', this._resizeListener)
     Ember.run.schedule('afterRender', this, function () {
       if (this.collapsed){
-        this.adjustContent;
+        this.adjustContent();
       }
     })
   },
@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     }
   },
   adjustContent: function () {
-    console.log("hello")
+    console.log($(window).width() - $('.menu .collapsed').width())
     $('.md').width($(window).width() - $('.menu .collapsed').width())
   },
   actions: {

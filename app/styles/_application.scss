@@ -145,6 +145,10 @@
   }
 }
 
+.frost-button > .text {
+    min-width: 0px !important;
+}
+
 #md-scrollspy{
     width: 100%;
     position: fixed;
