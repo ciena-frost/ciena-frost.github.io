@@ -12,16 +12,18 @@ export default Ember.Route.extend({
         }
 
         /*push footer to bottom of viewport if page has no y-overflow*/
-        var docHeight = $(window).height();
-        var footerHeight = $('.footer').height();
-        var footerTop = $('.footer').position().top + footerHeight;
+        if($('.footer').length){
+          var docHeight = $(window).height();
+          var footerHeight = $('.footer').height();
+          var footerTop = $('.footer').position().top + footerHeight;
 
 
-        if (footerTop < docHeight) {
-          $('.footer').css('margin-top', (docHeight - footerTop) + 'px');
+          if (footerTop < docHeight) {
+            $('.footer').css('margin-top', (docHeight - footerTop) + 'px');
+          }
+
+          $('.footer').css('visibility', 'visible');
         }
-
-        $('.footer').css('visibility', 'visible');
       })
     }
   }

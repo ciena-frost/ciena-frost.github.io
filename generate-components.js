@@ -84,7 +84,7 @@ body.forEach(function(repo) {
       );
 
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
-        "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
+        "<div class=\"md\">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
         "\n\t{{#frost-tab alias='Description' class='description' id='description'}}" +
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
@@ -93,9 +93,9 @@ body.forEach(function(repo) {
           demoParentDirectory + "/README')}}" +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
-        "\n\t\t" + content.template_hbs +"\n" +
+        "\n\t\t<div>" + content.template_hbs +"</div>\n" +
         "\n\t{{/frost-tab}}" +
-        "\n{{/frost-tabs}}"
+        "\n{{/frost-tabs}}</div>"
       );
 
       //styles.scss

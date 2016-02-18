@@ -76,7 +76,7 @@
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
-  overflow-x: scroll;
+  overflow-x: scroll; 
 }
 
 .guide-content .api .guide-markdown{
@@ -84,10 +84,14 @@
 }
 
 .guide-content .demo{
-  position: absolute;
+  position: relative;
   margin-left: 20px;
   margin-right: 20px;
-  overflow: scroll;
+  overflow-x: scroll; 
+}
+
+.guide-content .demo > :first-child{
+  position: relative;
 }
 
 .tabs__bar--justified {

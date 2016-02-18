@@ -6,11 +6,13 @@ export default Ember.Controller.extend({
   applicationMenuItems: config.APP.routingConfig,
   windowRezise: function () {
     $(window).on('resize', function () {
-      var docHeight = $(window).height()
-      var footerHeight = $('.footer').height()
-      var footerTop = $('.footer').position().top + footerHeight
-      if (footerTop < docHeight) {
-        $('.footer').css('margin-top', (docHeight - footerTop) + 'px')
+      if($('.footer').length){
+        var docHeight = $(window).height()
+        var footerHeight = $('.footer').height()
+        var footerTop = $('.footer').position().top + footerHeight
+        if (footerTop < docHeight) {
+          $('.footer').css('margin-top', (docHeight - footerTop) + 'px')
+        }
       }
     })
   }.on('init')
