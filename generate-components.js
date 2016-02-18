@@ -101,7 +101,7 @@ body.forEach(function(repo) {
       //styles.scss
       var app_sass = fs.readFileSync("app/styles/app.scss").toString();
       if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1){
-        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
+        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style.replace("@import 'bourbon';","@import 'bourbon';\n.demo{") + '}');
         var arr_app_sass = app_sass.split('\n');
         arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
