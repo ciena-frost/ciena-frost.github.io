@@ -21,7 +21,7 @@ What is Frost?
 An initiative to establish common styles, conventions and code for Ciena
 UIs using a collaborative approach inspired by open source projects.
 
-Goalss
+Goals
 -----
 
 ### Consistency
