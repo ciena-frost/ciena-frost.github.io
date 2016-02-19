@@ -140,10 +140,8 @@ function dive(dir) {
 
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
-      template_content += "\n</div>";
-
-      template_content += "\n<div class='footer'>\n"
-      template_content += "\t<div class='info'>\n\t\t<div>\n\t\t\t<div class='contributors'>\n\t\t\t\t<span " +                                                                "class=\"footerHeading\">Contributors</span>";
+      template_content += "\n\t<div class='footer'>\n"
+      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span " +                                                                "class=\"footerHeading\">Contributors</span>";
       var mapContributors = getContributorsOfFile(path);
       var mapCounter = 0;
       mapContributors.forEach(function(value, key){
@@ -156,9 +154,12 @@ function dive(dir) {
 
       });
 
-      template_content += "\n\t\t</div>\n\t\t<div class='connect'>\n\t\t\t<span class=\"footerHeading\">Connect</span>";
-      template_content += "\n\t\t\t\t Github Button here \n\t\t\t</div>\n\t\t</div>\n\t\t<br/>\n\t</div>";
-      template_content += "\n\t<div class='copyright'>\n\t\t\n\t</div>\n</div>";
+      template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
+      template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+      template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
+      template_content += "\n</div>";
+
+
 
       fs.writeFileSync(pagePath + "/template.hbs", template_content);
     }
@@ -185,7 +186,8 @@ function getContributorsOfFile(filePath){
       var linesAddedDeletedMatches = commit.match(/([0-9]+)\s+([0-9]+)\s+markdown/i);
       if (contributorMap.has(name)){
         contributorMap.set(name, contributorMap.get(name) + parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
-      }else{
+      }else if(linesAddedDeletedMatches !== null){
+        console.log(linesAddedDeletedMatches);
         contributorMap.set(name, parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
       }
     }

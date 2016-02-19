@@ -81,7 +81,6 @@ body {
   width: 100%;
   color: $frost-color-white;
   clear:both;
-  margin-top: 50px;
   visibility: hidden;
 }
 
@@ -115,10 +114,12 @@ body {
 .contributors{
   float: left;
   width: 60%;
+  padding-top: 10px;
 }
 .connect{
   float: left;
   width: 40%;
+  padding-top: 10px;
 }
 .contributors table{
   font-size: 16px;
