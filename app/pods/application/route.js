@@ -19,7 +19,7 @@ export default Ember.Route.extend({
 
 
           if (footerTop < docHeight) {
-            $('.footer').css('margin-top', (docHeight - footerHeight) + 'px')
+            $('.footer').css('margin-top', (docHeight - ($('.frost-info-bar').height() + footerHeight)) + 'px')
           }
 
           $('.footer').css('visibility', 'visible');
