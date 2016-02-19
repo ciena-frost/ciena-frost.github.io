@@ -85,11 +85,12 @@ body {
 }
 
 .footer .info{
-  margin-left: 20px;
-  margin-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-top: 20px;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
   font-size: 18px;
+  background-color: $frost-color-blue-1;
 }
 
 .footer .info br{
