@@ -113,13 +113,19 @@ body {
 }
 
 .contributors{
+  @media (min-width: 400px) {
   float: left;
   width: 60%;
+  padding-right: 15px;
+  }
   padding-top: 10px;
 }
 .connect{
+  @media (min-width: 400px) {
+  padding-left: 15px;
   float: left;
   width: 40%;
+  }
   padding-top: 10px;
 }
 .contributors table{
