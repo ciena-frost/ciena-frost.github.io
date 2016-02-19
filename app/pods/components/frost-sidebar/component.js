@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     }
   },
   adjustContent: function () {
-    console.log($(window).width() - $('.menu .collapsed').width())
+//    console.log($(window).width() - $('.menu .collapsed').width())
     $('.md').width($(window).width() - $('.menu .collapsed').width())
     $('.md').css('max-width', $(window).width() - $('.menu .collapsed').width())
   },
