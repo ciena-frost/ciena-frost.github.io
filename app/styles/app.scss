@@ -2,9 +2,7 @@
 @import 'frost/variables';
 @import 'frost/app';
 @import 'frost/patterns';
-
 @import 'whirly';
-
 @import './application';
 @import './introduction';
 @import './api-ember-frost-button';
@@ -12,7 +10,6 @@
 @import 'app/pods/components/frost-navigation-sidebar-menu/styles';
 @import 'app/pods/components/frost-sidebar/styles';
 @import 'app/pods/components/guide-coming-soon/styles';
-
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -23,37 +20,32 @@ body {
 
 .guide-markdown {
   pre {
-  padding: 10px;
-  background-color: $frost-color-lgrey-3;
+    padding: 10px;
+    background-color: $frost-color-lgrey-3;
   }
-
 }
 
 .guide-content {
   .frost-tabs {
-  @include flex(1);
-  @include display-box;
-  @include flex-direction(column);
-
-  .content {
     @include flex(1);
-    @include display(flex);
+    @include display-box;
     @include flex-direction(column);
-
-    .frost-tab {
-    @include flex(1);
-    @include display(flex);
-    @include flex-direction(column);
+    .content {
+      @include flex(1);
+      @include display(flex);
+      @include flex-direction(column);
+      .frost-tab {
+        @include flex(1);
+        @include display(flex);
+        @include flex-direction(column);
+      }
     }
   }
-  }
-
   .guide-iframe {
-  @include flex(1);
-  @include display(flex);
-  @include flex-direction(column);
+    @include flex(1);
+    @include display(flex);
+    @include flex-direction(column);
   }
-
   .api,
   .demo {
     .guide-iframe iframe {
@@ -62,17 +54,15 @@ body {
       border: none;
     }
   }
-
   .description {
-  @include flex(1);
-  @include display(flex);
-  @include flex-direction(column);
-
-  .guide-iframe iframe {
     @include flex(1);
-    width: 900px;
-    border: none;
-  }
+    @include display(flex);
+    @include flex-direction(column);
+    .guide-iframe iframe {
+      @include flex(1);
+      width: 900px;
+      border: none;
+    }
   }
 }
 
@@ -80,12 +70,13 @@ body {
   background-color: $frost-color-blue-1;
   width: 100%;
   color: $frost-color-white;
-  clear:both;
+  clear: both;
   margin-top: 50px;
   visibility: hidden;
+  display: table;
 }
 
-.footer .info{
+.footer .info {
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 20px;
@@ -93,11 +84,11 @@ body {
   font-size: 18px;
 }
 
-.footer .info br{
+.footer .info br {
   clear: left;
 }
 
-.footer .copyright{
+.footer .copyright {
   padding-top: 10px;
   padding-left: 20px;
   padding-bottom: 10px;
@@ -112,31 +103,46 @@ body {
   font-size: 29px;
 }
 
-.contributors{
+.contributors {
   float: left;
   width: 60%;
 }
-.connect{
+
+.connect {
   float: left;
   width: 40%;
 }
-.contributors table{
+
+.contributors table {
   font-size: 16px;
   width: 100%;
 }
-.contributors table td{
+
+.contributors table td {
   width: 33%
 }
+
+
+/* Safari 7.1+ */
+
+_::-webkit-full-page-media,
+_:future,
+:root {
+//  .footer {
+//    color: #0000FF;
+//    background-color: #FF0FFF;
+//  }
+}
+
 
 /*
 Max width before this PARTICULAR table gets nasty
 This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
-@media
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
 
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
   table {
     overflow-x: auto;
     display: block;
