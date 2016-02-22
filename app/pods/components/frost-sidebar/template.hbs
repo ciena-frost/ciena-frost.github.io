@@ -1,15 +1,19 @@
 {{#liquid-if collapsed class='menu'}}
 	<div class="menu collapsed">
-		{{#frost-button class='icon large menu' on-click=(action 'toggleCollapsed')}}
-			{{frost-svg path='frost/menu'}}
-		{{/frost-button}}
+      {{#frost-button class='icon large menu' on-click=(action 'toggleCollapsed')}}
+          {{frost-svg path='frost/menu'}}
+      {{/frost-button}}
 	</div>
 {{else}}
 	<div class="menu">
+      	<div>
+          {{#frost-button class='icon large menu' on-click=(action 'toggleCollapsed')}}
+              {{frost-svg path='frost/close'}}
+          {{/frost-button}}
+        </div>
 		{{yield}}
 	</div>
 {{/liquid-if}}
-
 {{#unless collapsed}}
     <div class='underlay' {{action (action 'toggleCollapsed')}}></div>
 {{/unless}}
