@@ -87,7 +87,13 @@ clear: both;
   margin-right: 20px;
   overflow-x: scroll;
 }
-
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+  /* IE10+ specific styles go here */
+  .guide-content .demo {
+    overflow-x: visible;
+  }
+}
 .guide-content .demo >:first-child {
   position: relative;
 }
