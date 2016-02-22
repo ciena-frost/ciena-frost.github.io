@@ -41,6 +41,10 @@
   background-color: rgba($frost-color-white, 0.25f);
 }
 
+.frost-sidebar .menu:hover {
+    box-shadow: 0 0 0px 0px lightgrey !important;
+}
+
 .frost-sidebar .pad-bottom-15{
   padding-bottom: 15px;
 }
