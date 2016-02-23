@@ -141,7 +141,7 @@ clear: both;
     float: left;
     width: 100%;
   }
-  .md .content {
+  .md .content-col {
     float: left;
     width: 80%;
   }
@@ -153,7 +153,7 @@ clear: both;
   .md .right-col {
     display: none;
   }
-  .md .content {
+  .md .content-col {
     width: 100%;
   }
 }
@@ -206,3 +206,5 @@ and also iPads specifically.
     overflow-x: scroll;
   }
 }
+
+
