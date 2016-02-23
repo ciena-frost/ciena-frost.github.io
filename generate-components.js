@@ -81,25 +81,25 @@ body.forEach(function (repo) {
       fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
         readme_content
       );
-      
+
       var template_content = ""
       template_content += "<div class=\"md\">"
-      template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" 
-      template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}" 
-      template_content += "\n\t\t" + descriptionContent 
-      template_content += "\n\t{{/frost-tab}}" 
-      template_content += "\n\t{{#frost-tab alias='API' class='api' id='api'}}" 
+      template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
+      template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
+      template_content += "\n\t\t" + descriptionContent
+      template_content += "\n\t{{/frost-tab}}"
+      template_content += "\n\t{{#frost-tab alias='API' class='api' id='api'}}"
       template_content += "\n\t\t  "+ "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
-      template_content +=  demoParentDirectory + "/README')}}" 
-      template_content += "\n\t{{/frost-tab}}" 
-      template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" 
-      template_content += "\n\t\t<div>" + content.template_hbs +"</div>\n" 
-      template_content += "\n\t{{/frost-tab}}" 
-      template_content += "\n{{/frost-tabs}}" 
+      template_content +=  demoParentDirectory + "/README')}}"
+      template_content += "\n\t{{/frost-tab}}"
+      template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}"
+      template_content += "\n\t\t<div>" + content.template_hbs +"</div>\n"
+      template_content += "\n\t{{/frost-tab}}"
+      template_content += "\n{{/frost-tabs}}"
       template_content += "\n\t<div class='footer'>\n"
-      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span "                                 
+      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span "
       template_content += "class=\"footerHeading\">Contributors</span>";
-      
+
       var contributorsCount = 0;
       packageJSON.contributors.forEach(function(name){
         contributorsCount++;
@@ -115,7 +115,7 @@ body.forEach(function (repo) {
       template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
-      
+
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs", template_content);
 
       //styles.scss
@@ -237,6 +237,15 @@ function getRepo(url) {
     console.log(err);
   });
 
+}
+
+function getComponentContributors (repo){
+  try{
+  var res = request('GET', 'https://api.github.com/repos/ciena-frost/' + repo.name + '/contributors', options);
+  return JSON.parse(res.getBody());
+  }catch(err){
+    return undefined;
+  }
 }
 
 function mkdirSync(path) {
