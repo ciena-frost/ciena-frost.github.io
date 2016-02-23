@@ -22,21 +22,20 @@ var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', option
 var body = JSON.parse(res.getBody());
 
 
-body.forEach(function(repo) {
+body.forEach(function (repo) {
   console.log(repo.name);
   if (stringStartsWith(repo.name,"ember-")) {
     //ember install this package
 
     emberInstall(repo.name);
 
-
     //get Package JSON un comment when needed
-    package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
-    packageJSON = getPackageJSON(package_url);
+    var package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
+    var packageJSON = getPackageJSON(package_url);
     if (packageJSON === undefined){
       return;
     }
-    demoParentDirectory = packageJSON.frostGuideDirectory;
+    var demoParentDirectory = packageJSON.frostGuideDirectory;
     if (demoParentDirectory === undefined){
       return;
     }
@@ -101,12 +100,14 @@ body.forEach(function(repo) {
       //styles.scss
       var app_sass = fs.readFileSync("app/styles/app.scss").toString();
       if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1){
-        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style.replace("@import 'bourbon';","@import 'bourbon';\n.demo{") + '}');
+        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
         var arr_app_sass = app_sass.split('\n');
         arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
         fs.writeFileSync("app/styles/app.scss", final_app_sass);
         console.log(final_app_sass);
+      }else if (style !== undefined){
+        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
       }
 
     }else{
