@@ -6,27 +6,24 @@ export default Ember.Component.extend({
   _resizeListener: null,
   _leftSwipeListener: null,
   _rightSwipeListener: null,
-  didInsertElement: function (){
-
+  didInsertElement: function () {
     this._resizeListener = Ember.run.bind(this, this.adjustContent)
     this._rightSwipeListener = Ember.run.bind(this, this.openMenu)
     this._leftSwipeListener = Ember.run.bind(this, this.closeMenu)
-    
+
     Ember.$(window).on('resize', this._resizeListener)
     Ember.$('.menu').on('swiperight', this._rightSwipeListener)
     Ember.$('.menu').on('swipeleft', this._leftSwipeListener)
 
-    
     Ember.run.schedule('afterRender', this, function () {
-      if (this.collapsed){
-        this.adjustContent();
+      if (this.collapsed) {
+        this.adjustContent()
       }
     })
   },
-  willDestroyElement: function(){
-
+  willDestroyElement: function () {
     $('.md').removeAttr('style')
-    if(this._resizeListener){
+    if (this._resizeListener) {
       Ember.$(window).off('resize', this._resizeListener)
     }
   },
@@ -36,19 +33,19 @@ export default Ember.Component.extend({
     $('.md').css('max-width', $(window).width() - $('.menu .collapsed').width())
   },
   openMenu: function () {
-    this.set('collapsed', false);
+    this.set('collapsed', false)
   },
   closeMenu: function () {
-    this.set('collapsed', true);
+    this.set('collapsed', true)
   },
   actions: {
     toggleCollapsed () {
       this.toggleProperty('collapsed')
       Ember.run.schedule('afterRender', this, function () {
-      if (this.collapsed){
-        this.adjustContent();
-      }
-    })
+        if (this.collapsed) {
+          this.adjustContent()
+        }
+      })
     }
   }
 })
