@@ -40,7 +40,7 @@ body {
   @include display-box;
   @include flex-direction(column);
 
-  .content {
+  .content-col {
     @include flex(1);
     @include display(flex);
     @include flex-direction(column);
