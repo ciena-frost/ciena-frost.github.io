@@ -27,6 +27,7 @@ module.exports = function (defaults) {
   })
 
   app.import('vendor/jquery-scrollspy/scrollspy.js')
+  app.import('vendor/jquery-mobile-touch-events/jquery.mobile.custom.min.js')
 
   return app.toTree(font)
 }

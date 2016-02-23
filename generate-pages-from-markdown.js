@@ -11,6 +11,14 @@ var path = require('path');
 var mark_dir = "markdown";
 var routing_string = "module.exports = [\n";
 
+var exec = require('sync-exec');
+var request = require('sync-request');
+var options = {
+  'headers': {
+    'user-agent': 'ciena-frost',
+    'Authorization': 'token ' + process.env.ghToken
+  }
+};
 dive(mark_dir);
 
 routing_string += "];";
@@ -132,7 +140,26 @@ function dive(dir) {
 
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
+      template_content += "\n\t<div class='footer'>\n"
+      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span " +                                                                "class=\"footerHeading\">Contributors</span>";
+      var mapContributors = getContributorsOfFile(path);
+      var mapCounter = 0;
+      mapContributors.forEach(function(value, key){
+        mapCounter++;
+        if (mapCounter === mapContributors.size){
+          template_content += key;
+        }else{
+          template_content += key + " - ";
+        }
+
+      });
+
+      template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
+      template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+      template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
+
+
 
       fs.writeFileSync(pagePath + "/template.hbs", template_content);
     }
@@ -145,6 +172,29 @@ String.prototype.replaceAll = function (search, replacement) {
   var target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
 };
+
+function getContributorsOfFile(filePath){
+  var contributorMap = new Map();
+  var log = exec('git log --numstat ' + filePath);
+  var arr_log = log.stdout.split(/commit [0-9|a-z]+\s*/i);
+  var authorRegexExp = /Author:\s([a-z|\s|,]*)/i;
+  var linesAddedDeletedRegexExp = /([0-9]+)\s+([0-9]+)\s+markdown/i;
+  arr_log.forEach(function(commit){
+    var author = commit.match(/Author: ([a-z|\s|,]*)/i);
+    if (author !== null){
+      var name = formatName(author[1]);
+      var linesAddedDeletedMatches = commit.match(/([0-9]+)\s+([0-9]+)\s+markdown/i);
+      if (contributorMap.has(name)){
+        contributorMap.set(name, contributorMap.get(name) + parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
+      }else if(linesAddedDeletedMatches !== null){
+        console.log(linesAddedDeletedMatches);
+        contributorMap.set(name, parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
+      }
+    }
+  })
+  console.log(contributorMap)
+  return contributorMap;
+}
 
 function fileExistsSync(filePath) {
   try {
@@ -161,10 +211,19 @@ function directoryExistsSync(filePath) {
     return false;
   }
 }
-
+function formatName(name){
+  var match = name.match(/([a-z]+)[,\s|\s]*/ig);
+  if (name.indexOf(",") > -1){
+    return match[1].trim() + " " + match[0].replace(",","").trim();
+  }else if (match.length >= 2){
+    return match[0].trim() + " " + match[1].trim();
+  }else{
+    return name;
+  }
+}
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    return txt.charAt(0).toUpperCase() + txt.substr(1);
   });
 }
 

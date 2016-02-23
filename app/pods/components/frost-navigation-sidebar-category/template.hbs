@@ -1,18 +1,18 @@
-{{#frost-button class='category' classNameBindings='isExpanded:expanded' on-click=(action 'toggleExpanded')}}
-	{{category.alias}}
+{{#frost-button class='category' priority='cancel' classNameBindings='isExpanded:expanded' on-click=(action 'toggleExpanded')}}
+  {{category.alias}}
 {{/frost-button}}
 {{#liquid-if isExpanded}}
-	<div class='sub-category-items'>
-		{{#each category.items as |item|}}
-			{{#if (eq item.type 'category')}}
-				{{frost-navigation-sidebar-category category=item}}
-			{{else if (eq item.type 'route')}}
-				{{#frost-link item.route class='route'}}
-					{{item.alias}}
-				{{/frost-link}}
-			{{else if (eq item.type 'divider')}}
-				<div class="divider"></div>
-			{{/if}}
-		{{/each}}
-	</div>
+  <div class='sub-category-items'>
+    {{#each category.items as |item|}}
+      {{#if (eq item.type 'category')}}
+        {{frost-navigation-sidebar-category category=item}}
+      {{else if (eq item.type 'route')}}
+        {{#frost-link item.route class='route'}}
+          {{item.alias}}
+        {{/frost-link}}
+      {{else if (eq item.type 'divider')}}
+        <div class="divider"></div>
+      {{/if}}
+    {{/each}}
+  </div>
 {{/liquid-if}}

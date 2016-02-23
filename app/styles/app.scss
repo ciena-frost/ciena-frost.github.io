@@ -26,12 +26,13 @@ body {
   padding: 10px;
   background-color: $frost-color-lgrey-3;
   }
+
 }
 
 .guide-content {
   .frost-tabs {
   @include flex(1);
-  @include display(flex);
+  @include display-box;
   @include flex-direction(column);
 
   .content {
@@ -72,5 +73,83 @@ body {
     width: 900px;
     border: none;
   }
+  }
+}
+
+.footer {
+  background-color: $frost-color-blue-1;
+  width: 100%;
+  color: $frost-color-white;
+  clear:both;
+  visibility: hidden;
+}
+
+.footer .info{
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 20px;
+  padding-bottom: 10px;
+  font-size: 18px;
+  background-color: $frost-color-blue-1;
+}
+
+.footer .info br{
+  clear: left;
+}
+
+.footer .copyright{
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  background-color: darken($frost-color-blue-1, 4%);
+}
+
+.footerHeading {
+  display: block;
+  margin: 0 0 20px 0;
+  padding: 0;
+  border: none;
+  font-size: 29px;
+}
+
+.contributors{
+  @media (min-width: 400px) {
+  float: left;
+  width: 60%;
+  padding-right: 15px;
+  }
+  padding-top: 10px;
+}
+.connect{
+  @media (min-width: 400px) {
+  padding-left: 15px;
+  float: left;
+  width: 40%;
+  }
+  padding-top: 10px;
+}
+.contributors table{
+  font-size: 16px;
+  width: 100%;
+}
+.contributors table td{
+  width: 33%
+}
+.frost-tabs .tab-nav .tab{
+  background-color: transparent;
+}
+
+/*
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  table {
+    overflow-x: auto;
+    display: block;
   }
 }

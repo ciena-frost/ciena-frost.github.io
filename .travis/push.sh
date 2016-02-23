@@ -15,7 +15,6 @@ commit_website_files() {
   git checkout $branch
   ember install ember-cli-github-pages
   npm install frost-components/frost-css
-  npm install frost-components/frost-button
   npm install frost-components/frost-tabs
   npm install frost-components/frost-link
   npm install frost-components/frost-scroll
@@ -27,6 +26,7 @@ commit_website_files() {
   npm install path
   npm install bower
   npm install sync-request
+  npm install sync-exec
   npm install marked
   npm install highlight
   npm install npm

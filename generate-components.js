@@ -4,33 +4,19 @@ var fs = require('fs');
 var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
-var marked = require('marked');
-var hljs = require('highlight').Highlight;
+
+var exec = require('sync-exec');
 String.prototype.replaceAll = function (search, replacement) {
     var target = this;
     return target.replace(new RegExp(search, 'g'), replacement);
 };
-marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  tables: true,
-  breaks: false,
-  pedantic: false,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false,
-  highlight: function(code) {
-      return hljs(code).value;
-    }
-});
+
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
     'Authorization': 'token ' + process.env.ghToken
   }
 };
-
-
 
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
 var body = JSON.parse(res.getBody());
@@ -41,7 +27,7 @@ body.forEach(function(repo) {
   if (stringStartsWith(repo.name,"ember-")) {
     //ember install this package
 
-    npmInstall(repo.name);
+    emberInstall(repo.name);
 
 
     //get Package JSON un comment when needed
@@ -98,7 +84,7 @@ body.forEach(function(repo) {
       );
 
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
-        "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
+        "<div class=\"md\">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
         "\n\t{{#frost-tab alias='Description' class='description' id='description'}}" +
         "\n\t\t" + descriptionContent +
         "\n\t{{/frost-tab}}" +
@@ -107,15 +93,15 @@ body.forEach(function(repo) {
           demoParentDirectory + "/README')}}" +
         "\n\t{{/frost-tab}}" +
         "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
-        "\n\t\t" + content.template_hbs +"\n" +
+        "\n\t\t<div>" + content.template_hbs +"</div>\n" +
         "\n\t{{/frost-tab}}" +
-        "\n{{/frost-tabs}}"
+        "\n{{/frost-tabs}}</div>"
       );
 
       //styles.scss
       var app_sass = fs.readFileSync("app/styles/app.scss").toString();
       if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1){
-        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
+        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style.replace("@import 'bourbon';","@import 'bourbon';\n.demo{") + '}');
         var arr_app_sass = app_sass.split('\n');
         arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
@@ -185,7 +171,7 @@ function GetDemoStyle(url){
 }
 
 function npmInstall(repo) {
-  console.log("Doing Ember Install of : " + repo);
+  console.log("Doing NPM Install of : " + repo);
   npm.load({
     loaded: false
   }, function(err) {
@@ -273,7 +259,16 @@ function occurrences(string, subString, allowOverlapping) {
     }
     return n;
 }
+function emberInstall(repo){
+  console.log("Doing Ember Install of : " + repo);
+  var log = exec('ember install ' + repo);
+  if (log.status === 0){
+    console.log(chalk.green.bold(log.stdout));
+  }else{
+    console.log(chalk.red.bold(log.stderr));
+  }
 
+}
 function stringStartsWith (string, prefix) {
     return string.slice(0, prefix.length) == prefix;
 }
