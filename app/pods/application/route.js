@@ -18,7 +18,7 @@ export default Ember.Route.extend({
           var footerTop = $('.footer').position().top + footerHeight
 
           if (footerTop < docHeight) {
-            $('.footer').css('margin-top', (docHeight - ($('.frost-info-bar').height() + $('.footer').height())) + 'px')
+            $('.footer').css('margin-top', (docHeight - ($('.frost-info-bar').height() + $('.frost-tabs').height() + $('.footer').height())) + 'px')
           }
 
           $('.footer').css('visibility', 'visible')

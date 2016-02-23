@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
         var footerHeight = $('.footer').height()
         var footerTop = $('.footer').position().top + footerHeight
         if (footerTop < docHeight) {
-          $('.footer').css('margin-top', (docHeight - ($('.frost-info-bar').height() + footerHeight)) + 'px')
+          $('.footer').css('margin-top', (docHeight - ($('.frost-info-bar').height() + $('.frost-tabs').height() + footerHeight)) + 'px')
         }
       }
     })

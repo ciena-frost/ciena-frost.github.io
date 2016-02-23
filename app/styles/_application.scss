@@ -67,7 +67,7 @@ clear: both;
   @include flex(1);
 }
 
-.guide-content .content {
+.guide-content .content-col {
   padding-bottom: 20px;
 }
 
@@ -75,10 +75,6 @@ clear: both;
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.guide-content .api .guide-markdown {
-  position: absolute;
 }
 
 .guide-content .demo {
