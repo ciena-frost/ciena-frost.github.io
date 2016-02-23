@@ -56,7 +56,7 @@
     "ember-disable-proxy-controllers": "^1.0.1",
     "ember-export-application-global": "^1.0.4",
     "ember-fr-markdown-api-file": "^1.0.0",
-    "ember-fr-markdown-file-strip-number-prefix": "^1.2.0",
+    "ember-fr-markdown-file-strip-number-prefix": "^1.2.1",
     "ember-frost-button": "1.1.0",
     "ember-frost-checkbox": "1.0.0",
     "ember-frost-css-core": "1.0.0",
