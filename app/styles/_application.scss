@@ -67,7 +67,7 @@ clear: both;
   @include flex(1);
 }
 
-.guide-content .content {
+.guide-content .content-col {
   padding-bottom: 20px;
 }
 
@@ -75,10 +75,6 @@ clear: both;
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.guide-content .api .guide-markdown {
-  position: absolute;
 }
 
 .guide-content .demo {
@@ -141,19 +137,19 @@ clear: both;
     float: left;
     width: 100%;
   }
-  .md .content {
+  .md .content-col {
     float: left;
-    width: 80%;
+    width: 65%;
   }
   .md .right-col {
     float: left;
-    width: 20%;
+    width: 35%;
   }
 @media (max-width: 600px) {
   .md .right-col {
     display: none;
   }
-  .md .content {
+  .md .content-col {
     width: 100%;
   }
 }
@@ -177,7 +173,7 @@ clear: both;
   outline: 0;
   white-space: normal;
   border-left: 2px solid white;
-  padding-left: 5px;
+  padding: 5px;
 }
 
 #md-scrollspy button:first-child {
@@ -206,3 +202,5 @@ and also iPads specifically.
     overflow-x: scroll;
   }
 }
+
+

@@ -22,21 +22,20 @@ var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', option
 var body = JSON.parse(res.getBody());
 
 
-body.forEach(function(repo) {
+body.forEach(function (repo) {
   console.log(repo.name);
   if (stringStartsWith(repo.name,"ember-")) {
     //ember install this package
 
     emberInstall(repo.name);
 
-
     //get Package JSON un comment when needed
-    package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
-    packageJSON = getPackageJSON(package_url);
+    var package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
+    var packageJSON = getPackageJSON(package_url);
     if (packageJSON === undefined){
       return;
     }
-    demoParentDirectory = packageJSON.frostGuideDirectory;
+    var demoParentDirectory = packageJSON.frostGuideDirectory;
     if (demoParentDirectory === undefined){
       return;
     }
@@ -71,7 +70,7 @@ body.forEach(function(repo) {
       //create template.hbs
             //insert tabs
       //need to redo this
-      var descriptionContent = "{{markdown-to-html class=\"guide-markdown\" " +
+      var descriptionContent = "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " +
           "markdown=(fr-markdown-file-strip-number-prefix '" +
           demoParentDirectory +
           "')}}";
@@ -83,30 +82,56 @@ body.forEach(function(repo) {
         readme_content
       );
 
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs",
-        "<div class=\"md\">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}" +
-        "\n\t{{#frost-tab alias='Description' class='description' id='description'}}" +
-        "\n\t\t" + descriptionContent +
-        "\n\t{{/frost-tab}}" +
-        "\n\t{{#frost-tab alias='API' class='api' id='api'}}" +
-        "\n\t\t  "+ "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '" +
-          demoParentDirectory + "/README')}}" +
-        "\n\t{{/frost-tab}}" +
-        "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}" +
-        "\n\t\t<div>" + content.template_hbs +"</div>\n" +
-        "\n\t{{/frost-tab}}" +
-        "\n{{/frost-tabs}}</div>"
-      );
+      var template_content = ""
+      template_content += "<div class=\"md\">"
+      template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
+      template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
+      template_content += "\n\t\t" + descriptionContent
+      template_content += "\n\t{{/frost-tab}}"
+      template_content += "\n\t{{#frost-tab alias='API' class='api' id='api'}}"
+      template_content += "\n\t\t  "+ "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
+      template_content +=  demoParentDirectory + "/README')}}"
+      template_content += "\n\t{{/frost-tab}}"
+      template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}"
+      template_content += "\n\t\t<div>" + content.template_hbs +"</div>\n"
+      template_content += "\n\t{{/frost-tab}}"
+      template_content += "\n{{/frost-tabs}}"
+      template_content += "\n\t<div class='footer'>\n"
+      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span "
+      template_content += "class=\"footerHeading\">Contributors</span>";
+
+      var contributorsCount = 0;
+      var componentContributors = getComponentContributors(repo);
+      componentContributors.forEach(function(user){
+        contributorsCount++;
+        var userJSON = requestJSON(user.url);
+        if (contributorsCount === componentContributors.length){
+          template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
+        }else{
+          template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
+        }
+
+      });
+      console.log();
+
+      template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
+      template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+      template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
+      template_content += "\n</div>";
+
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs", template_content);
 
       //styles.scss
       var app_sass = fs.readFileSync("app/styles/app.scss").toString();
       if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1){
-        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style.replace("@import 'bourbon';","@import 'bourbon';\n.demo{") + '}');
+        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
         var arr_app_sass = app_sass.split('\n');
         arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
         fs.writeFileSync("app/styles/app.scss", final_app_sass);
-        console.log(final_app_sass);
+//        console.log(final_app_sass);
+      }else if (style !== undefined){
+        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
       }
 
     }else{
@@ -149,8 +174,8 @@ function getDemoContent(url){
   body.forEach(function(item){
     if (item.name == 'template.hbs'){
       template_hbs = getFile(item.url);
-      console.log(template_hbs);
-      console.log("Template file: " + item.url );
+//      console.log(template_hbs);
+//      console.log("Template file: " + item.url );
     } else if(item.name == 'route.js'){
       route_js = getFile(item.url);
     } else if(item.name == 'controller.js'){
@@ -209,7 +234,7 @@ function getRepo(url) {
   debugger;
   requestify.get(url).then(function(response) {
     var body = respone.getBody();
-    console.log(respone);
+//    console.log(respone);
     console.log("Hello");
   }, function(err) {
     console.log(err);
@@ -217,6 +242,23 @@ function getRepo(url) {
 
 }
 
+function getComponentContributors (repo){
+  try{
+  var res = request('GET', 'https://api.github.com/repos/ciena-frost/' + repo.name + '/contributors', options);
+  return JSON.parse(res.getBody());
+  }catch(err){
+    return undefined;
+  }
+}
+
+function requestJSON (url){
+  try{
+  var res = request('GET', url, options);
+  return JSON.parse(res.getBody());
+  }catch(err){
+    return undefined;
+  }
+}
 function mkdirSync(path) {
     try {
         fs.mkdirSync(path);
