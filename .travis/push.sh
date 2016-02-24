@@ -43,7 +43,8 @@ publish_gh_pages() {
   ember github-pages:commit --message "[ci skip] Update gh-pages" --branch="master"
   git push
 }
-
+if ["$TRAVIS_PULL_REQUEST" != "false" ]; then
 setup_git
 commit_website_files
 publish_gh_pages
+fi
