@@ -11,7 +11,7 @@ module.exports = function (defaults) {
       includePaths: [
         'bower_components/bourbon/app/assets/stylesheets',
         'node_modules/frost-css/styles',
-         'node_modules/ember-frost-theme/scss',
+        'node_modules/ember-frost-theme/scss',
         'node_modules/ember-frost-css-core/scss'
       ]
     },
