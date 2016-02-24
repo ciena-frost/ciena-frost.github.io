@@ -139,11 +139,11 @@ clear: both;
   }
   .md .content-col {
     float: left;
-    width: 80%;
+    width: 65%;
   }
   .md .right-col {
     float: left;
-    width: 20%;
+    width: 35%;
   }
 @media (max-width: 600px) {
   .md .right-col {
@@ -173,7 +173,7 @@ clear: both;
   outline: 0;
   white-space: normal;
   border-left: 2px solid white;
-  padding-left: 5px;
+  padding: 5px;
 }
 
 #md-scrollspy button:first-child {
