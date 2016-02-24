@@ -5,7 +5,7 @@ var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
 
-var child_process = require('child_process');
+var exec = require('sync-exec');
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
@@ -27,20 +27,18 @@ body.forEach(function (repo) {
   if (stringStartsWith(repo.name, "ember-")) {
     //ember install this package
 
-
-
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
     var packageJSON = getPackageJSON(package_url);
     if (packageJSON === undefined) {
       return;
     }
-
+    emberInstall(repo.name);
     var demoParentDirectory = packageJSON.frostGuideDirectory;
     if (demoParentDirectory === undefined) {
       return;
     }
-    emberInstall(repo.name);
+
     // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
 
@@ -156,7 +154,7 @@ frostGuideContributors.forEach(function (user) {
 });
 var template_content = "";
 contributorMap.forEach(function (value, key) {
-  template_content += key + "\n"
+  template_content += (key !== null ? key : value.login) + "\n"
 })
 fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
 
@@ -325,13 +323,12 @@ function occurrences(string, subString, allowOverlapping) {
 
 function emberInstall(repo) {
   console.log("Doing Ember Install of : " + repo);
-  var log = child_process.exec('ember install ' + repo, function (err, out, code) {
-    if (err instanceof Error)
-      throw err;
-    process.stdout.write(chalk.red.bold(err));
-    process.stdout.write(chalk.green.bold(out));
-    process.stdout.write(code);
-  });
+    var log = exec('ember install ' + repo);
+  if (log.status === 0){
+    console.log(chalk.green.bold(log.stdout));
+  }else{
+    console.log(chalk.red.bold(log.stderr));
+  }
 }
 
 function stringStartsWith(string, prefix) {
