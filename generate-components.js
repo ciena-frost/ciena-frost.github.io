@@ -101,15 +101,17 @@ body.forEach(function (repo) {
       template_content += "class=\"footerHeading\">Contributors</span>";
 
       var contributorsCount = 0;
-      packageJSON.contributors.forEach(function(name){
+      var componentContributors = getComponentContributors(repo);
+      componentContributors.forEach(function(user){
         contributorsCount++;
-        if (contributorsCount === packageJSON.contributors.length){
-          template_content += name;
+        if (contributorsCount === componentContributors.length){
+          template_content += user.login;
         }else{
-          template_content += name + " - ";
+          template_content += user.login + " - ";
         }
 
       });
+      console.log();
 
       template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
       template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
@@ -126,7 +128,7 @@ body.forEach(function (repo) {
         arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
         fs.writeFileSync("app/styles/app.scss", final_app_sass);
-        console.log(final_app_sass);
+//        console.log(final_app_sass);
       }else if (style !== undefined){
         fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
       }
@@ -171,8 +173,8 @@ function getDemoContent(url){
   body.forEach(function(item){
     if (item.name == 'template.hbs'){
       template_hbs = getFile(item.url);
-      console.log(template_hbs);
-      console.log("Template file: " + item.url );
+//      console.log(template_hbs);
+//      console.log("Template file: " + item.url );
     } else if(item.name == 'route.js'){
       route_js = getFile(item.url);
     } else if(item.name == 'controller.js'){
@@ -231,7 +233,7 @@ function getRepo(url) {
   debugger;
   requestify.get(url).then(function(response) {
     var body = respone.getBody();
-    console.log(respone);
+//    console.log(respone);
     console.log("Hello");
   }, function(err) {
     console.log(err);
