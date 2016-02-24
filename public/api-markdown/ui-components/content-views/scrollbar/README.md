@@ -14,9 +14,7 @@ This README outlines the details of collaborating on this Ember addon.
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+* `ember install ember-frost-scroll`
 
 ## Running
 
