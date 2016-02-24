@@ -2,27 +2,70 @@
 <div class="md">
 	<div class="content-col">
       <div class="card">
-		<a href="https://github.com/laflower">
-          <img src="https://avatars.githubusercontent.com/u/11548575?v=3" height="200" width="200">
-        </a>
+        <div class="avatar">
+          <a href="https://github.com/laflower">
+            <img src="https://avatars.githubusercontent.com/u/11548575?v=3" height="75" width="75">
+          </a>
+        </div>
         <div class="card-block">
           <span class="card-row card-name">Justin Lafleur</span>
           <span class="card-row card-handle divider">laflower</span>
-          <span class="card-row card-repo">ciena-frost.github.io</span>
-          <span class="card-row card-repo">ember-frost-scroll</span>
+          <span class="card-row card-repo">
+            frost-about-dialog, frost-checkbox, frost-link, 
+            {{#show-more}}
+            frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll, frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll, 
+            {{/show-more}}
+          </span>
         </div>
       </div>
       <div class="card">
-		<a href="https://github.com/ewhite613">
-          <img src="https://avatars.githubusercontent.com/u/9057680?v=3" height="200" width="200">
-        </a>
-        <div class="card-block">
-          <span class="card-row card-name">Eric White</span>
-          <span class="card-row card-handle divider">ewhite613</span>
-          <span class="card-row card-repo">ciena-frost.github.io</span>
-          <span class="card-row card-repo">ember-frost-tabs</span>
+        <div class="avatar">
+          <a href="https://github.com/laflower">
+            <img src="https://avatars.githubusercontent.com/u/11548575?v=3" height="75" width="75">
+          </a>
         </div>
-	  </div>
+        <div class="card-block">
+          <span class="card-row card-name">Justin Lafleur</span>
+          <span class="card-row card-handle divider">laflower</span>
+          <span class="card-row card-repo">
+            ciena-frost.github.io, ember-frost-scroll, frost-about-dialog, frost-checkbox, frost-link, 
+            {{#show-more}}frost-about-dialog, frost-checkbox, frost-link,{{/show-more}}
+          </span>
+        </div>
+      </div>
+            <div class="card">
+        <div class="avatar">
+          <a href="https://github.com/laflower">
+            <img src="https://avatars.githubusercontent.com/u/11548575?v=3" height="75" width="75">
+          </a>
+        </div>
+        <div class="card-block">
+          <span class="card-row card-name">Justin Lafleur</span>
+          <span class="card-row card-handle divider">laflower</span>
+          <span class="card-row card-repo">
+            frost-about-dialog, frost-checkbox, frost-link, 
+            {{#show-more}}
+            frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll, frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll,frost-about-dialog, frost-checkbox, frost-link, ciena-frost.github.io, ember-frost-scroll, 
+            {{/show-more}}
+          </span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="avatar">
+          <a href="https://github.com/laflower">
+            <img src="https://avatars.githubusercontent.com/u/11548575?v=3" height="75" width="75">
+          </a>
+        </div>
+        <div class="card-block">
+          <span class="card-row card-name">Justin Lafleur</span>
+          <span class="card-row card-handle divider">laflower</span>
+          <span class="card-row card-repo">
+            ciena-frost.github.io, ember-frost-scroll, frost-about-dialog, frost-checkbox, frost-link, 
+            {{#show-more}}frost-about-dialog, frost-checkbox, frost-link,{{/show-more}}
+          </span>
+        </div>
+      </div>
+      
     </div>
 	<div class='right-col'>
 		<div id='md-scrollspy'>
@@ -52,21 +95,40 @@
     float:left;
     margin-left: 20px;
     margin-top: 20px;
+    height:150px;
+    width: 325px;
+    display: inline;
+  }
+  .card .avatar{
+    float:left;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 75px;
+    height:75px;
+  }
+  .card .card-block{
+    float:left;
+    margin-left: 20px;
+    margin-top: 20px;
     width: 200px;
   }
   
   .card .card-row{
     width: 200px;
     display: block;
+    position: relative;
+
   }
   
   .card .card-name{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
   }
-  
-  .card .card-handle{
-    font-size: 18px;
+    
+   .card .card-row{
+    width: 200px;
+    display: block;
+
   }
   
   .card .divider{
