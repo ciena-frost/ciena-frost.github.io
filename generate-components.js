@@ -5,10 +5,10 @@ var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
 
-var exec = require('sync-exec');
+var child_process = require('child_process');
 String.prototype.replaceAll = function (search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
 };
 
 var options = {
@@ -20,39 +20,41 @@ var options = {
 
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
 var body = JSON.parse(res.getBody());
-
+var contributorMap = new Map();
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name,"ember-")) {
+  if (stringStartsWith(repo.name, "ember-")) {
     //ember install this package
 
-    emberInstall(repo.name);
+
 
     //get Package JSON un comment when needed
-    var package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
+    var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
     var packageJSON = getPackageJSON(package_url);
-    if (packageJSON === undefined){
+    if (packageJSON === undefined) {
       return;
     }
+
     var demoParentDirectory = packageJSON.frostGuideDirectory;
-    if (demoParentDirectory === undefined){
+    if (demoParentDirectory === undefined) {
       return;
     }
+    emberInstall(repo.name);
     // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
 
     readme_url = repo.contents_url.replace("{+path}", "README.md");
     readme_content = getFile(readme_url);
 
-    if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)){
+    if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
       demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
       demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
       var content = getDemoContent(demo_content_url);
       var style = GetDemoStyle(demo_style_url);
       //create route.js
-      if (!directoryExistsSync("app/pods/" + demoParentDirectory  + "/index")) {
-          mkdirpSync(("app/pods/" + demoParentDirectory  + "/index").toLowerCase());
+      if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
+        mkdirpSync(("app/pods/" + demoParentDirectory + "/index").toLowerCase());
       }
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js",
         content.route_js
@@ -60,23 +62,23 @@ body.forEach(function (repo) {
 
       //controller
       if (content.controller_js !== undefined) {
-        if (occurrences(content.controller_js,"Ember") === 2){
-          content.controller_js = content.controller_js.replace("import Ember from 'ember'\n","");
+        if (occurrences(content.controller_js, "Ember") === 2) {
+          content.controller_js = content.controller_js.replace("import Ember from 'ember'\n", "");
         }
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
           "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend")
         );
       }
       //create template.hbs
-            //insert tabs
+      //insert tabs
       //need to redo this
       var descriptionContent = "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " +
-          "markdown=(fr-markdown-file-strip-number-prefix '" +
-          demoParentDirectory +
-          "')}}";
+        "markdown=(fr-markdown-file-strip-number-prefix '" +
+        demoParentDirectory +
+        "')}}";
 
       if (!directoryExistsSync("public/api-markdown/" + demoParentDirectory)) {
-          mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
+        mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
       }
       fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
         readme_content
@@ -89,11 +91,11 @@ body.forEach(function (repo) {
       template_content += "\n\t\t" + descriptionContent
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n\t{{#frost-tab alias='API' class='api' id='api'}}"
-      template_content += "\n\t\t  "+ "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
-      template_content +=  demoParentDirectory + "/README')}}"
+      template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
+      template_content += demoParentDirectory + "/README')}}"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}"
-      template_content += "\n\t\t<div>" + content.template_hbs +"</div>\n"
+      template_content += "\n\t\t<div>" + content.template_hbs + "</div>\n"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n{{/frost-tabs}}"
       template_content += "\n\t<div class='footer'>\n"
@@ -101,18 +103,19 @@ body.forEach(function (repo) {
       template_content += "class=\"footerHeading\">Contributors</span>";
 
       var contributorsCount = 0;
-      var componentContributors = getComponentContributors(repo);
-      componentContributors.forEach(function(user){
+      var componentContributors = getCienFrostRepoContributors(repo.name);
+      componentContributors.forEach(function (user) {
         contributorsCount++;
         var userJSON = requestJSON(user.url);
-        if (contributorsCount === componentContributors.length){
+        if (contributorsCount === componentContributors.length) {
           template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
-        }else{
+        } else {
           template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
         }
-
+        if (!contributorMap.has(userJSON.name)) {
+          contributorMap.set(userJSON.name, userJSON)
+        }
       });
-      console.log();
 
       template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
       template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
@@ -123,18 +126,18 @@ body.forEach(function (repo) {
 
       //styles.scss
       var app_sass = fs.readFileSync("app/styles/app.scss").toString();
-      if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1){
+      if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1) {
         fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
         var arr_app_sass = app_sass.split('\n');
-        arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
+        arr_app_sass.splice(9, 0, "@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
         fs.writeFileSync("app/styles/app.scss", final_app_sass);
-//        console.log(final_app_sass);
-      }else if (style !== undefined){
+        //        console.log(final_app_sass);
+      } else if (style !== undefined) {
         fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
       }
 
-    }else{
+    } else {
       console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
     }
 
@@ -143,15 +146,31 @@ body.forEach(function (repo) {
   }
 });
 
+//Populate Dedicated Contributors Page
+var frostGuideContributors = getCienFrostRepoContributors("ciena-frost.github.io");
+frostGuideContributors.forEach(function (user) {
+  var userJSON = requestJSON(user.url);
+  if (!contributorMap.has(userJSON.name)) {
+    contributorMap.set(userJSON.name, userJSON)
+  }
+});
+var template_content = "";
+contributorMap.forEach(function (value, key) {
+  template_content += key + "\n"
+})
+fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
+
+
+
 function getPackageJSON(url) {
   //get api file request
-  try{
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
-  res = request('GET', body.download_url, options);
-  return JSON.parse(res.getBody());
-  //get download url
-  }catch(err){
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    res = request('GET', body.download_url, options);
+    return JSON.parse(res.getBody());
+    //get download url
+  } catch (err) {
     return undefined;
   }
 }
@@ -164,21 +183,22 @@ function getFile(url) {
   return buf.toString("ascii");
 
 }
-function getDemoContent(url){
+
+function getDemoContent(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   var template_hbs;
   var route_js;
   var controller_js;
 
-  body.forEach(function(item){
-    if (item.name == 'template.hbs'){
+  body.forEach(function (item) {
+    if (item.name == 'template.hbs') {
       template_hbs = getFile(item.url);
-//      console.log(template_hbs);
-//      console.log("Template file: " + item.url );
-    } else if(item.name == 'route.js'){
+      //      console.log(template_hbs);
+      //      console.log("Template file: " + item.url );
+    } else if (item.name == 'route.js') {
       route_js = getFile(item.url);
-    } else if(item.name == 'controller.js'){
+    } else if (item.name == 'controller.js') {
       controller_js = getFile(item.url);
     }
   });
@@ -189,7 +209,7 @@ function getDemoContent(url){
   };
 }
 
-function GetDemoStyle(url){
+function GetDemoStyle(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   return new Buffer(body.content, body.encoding).toString();
@@ -199,13 +219,13 @@ function npmInstall(repo) {
   console.log("Doing NPM Install of : " + repo);
   npm.load({
     loaded: false
-  }, function(err) {
+  }, function (err) {
     // catch errors
-    npm.commands.install([repo], function(er, data) {
-      if(er !== null)
+    npm.commands.install([repo], function (er, data) {
+      if (er !== null)
         console.log("Npm install error: " + er);
     });
-    npm.on("log", function(message) {
+    npm.on("log", function (message) {
       // log the progress of the installation
       console.log(message);
     });
@@ -213,18 +233,18 @@ function npmInstall(repo) {
 }
 
 function directoryExistsSync(filePath) {
-    try {
-        return fs.statSync(filePath).isDirectory();
-    } catch (err) {
-        return false;
-    }
+  try {
+    return fs.statSync(filePath).isDirectory();
+  } catch (err) {
+    return false;
+  }
 }
 
 function get(url) {
-  requestify.get(url).then(function(response) {
+  requestify.get(url).then(function (response) {
     var body = respone.getBody();
     return body;
-  }, function(err) {
+  }, function (err) {
     console.log(err);
   });
 }
@@ -232,87 +252,88 @@ function get(url) {
 function getRepo(url) {
   console.log(url);
   debugger;
-  requestify.get(url).then(function(response) {
+  requestify.get(url).then(function (response) {
     var body = respone.getBody();
-//    console.log(respone);
+    //    console.log(respone);
     console.log("Hello");
-  }, function(err) {
+  }, function (err) {
     console.log(err);
   });
 
 }
 
-function getComponentContributors (repo){
-  try{
-  var res = request('GET', 'https://api.github.com/repos/ciena-frost/' + repo.name + '/contributors', options);
-  return JSON.parse(res.getBody());
-  }catch(err){
+function getCienFrostRepoContributors(repo) {
+  try {
+    var res = request('GET', 'https://api.github.com/repos/ciena-frost/' + repo + '/contributors', options);
+    return JSON.parse(res.getBody());
+  } catch (err) {
     return undefined;
   }
 }
 
-function requestJSON (url){
-  try{
-  var res = request('GET', url, options);
-  return JSON.parse(res.getBody());
-  }catch(err){
+function requestJSON(url) {
+  try {
+    var res = request('GET', url, options);
+    return JSON.parse(res.getBody());
+  } catch (err) {
     return undefined;
   }
 }
+
 function mkdirSync(path) {
-    try {
-        fs.mkdirSync(path);
-    } catch (e) {
-        if (e.code != 'EEXIST') throw e;
-    }
+  try {
+    fs.mkdirSync(path);
+  } catch (e) {
+    if (e.code != 'EEXIST') throw e;
+  }
 }
 
 function mkdirpSync(dirpath) {
-    var parts = dirpath.split(path.sep);
-    for (var i = 1; i <= parts.length; i++) {
-        mkdirSync(path.join.apply(null, parts.slice(0, i)));
-    }
+  var parts = dirpath.split(path.sep);
+  for (var i = 1; i <= parts.length; i++) {
+    mkdirSync(path.join.apply(null, parts.slice(0, i)));
+  }
 }
 
 function directoryExistsSync(filePath) {
-    try {
-        return fs.statSync(filePath).isDirectory();
-    } catch (err) {
-        return false;
-    }
+  try {
+    return fs.statSync(filePath).isDirectory();
+  } catch (err) {
+    return false;
+  }
 }
 
 function occurrences(string, subString, allowOverlapping) {
 
-    string += "";
-    subString += "";
-    if (subString.length <= 0) return (string.length + 1);
+  string += "";
+  subString += "";
+  if (subString.length <= 0) return (string.length + 1);
 
-    var n = 0,
-        pos = 0,
-        step = allowOverlapping ? 1 : subString.length;
+  var n = 0,
+    pos = 0,
+    step = allowOverlapping ? 1 : subString.length;
 
-    while (true) {
-        pos = string.indexOf(subString, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else break;
-    }
-    return n;
-}
-function emberInstall(repo){
-  console.log("Doing Ember Install of : " + repo);
-  var log = exec('ember install ' + repo);
-  if (log.status === 0){
-    console.log(chalk.green.bold(log.stdout));
-  }else{
-    console.log(chalk.red.bold(log.stderr));
+  while (true) {
+    pos = string.indexOf(subString, pos);
+    if (pos >= 0) {
+      ++n;
+      pos += step;
+    } else break;
   }
-
-}
-function stringStartsWith (string, prefix) {
-    return string.slice(0, prefix.length) == prefix;
+  return n;
 }
 
+function emberInstall(repo) {
+  console.log("Doing Ember Install of : " + repo);
+  var log = child_process.exec('ember install ' + repo, function (err, out, code) {
+    if (err instanceof Error)
+      throw err;
+    process.stdout.write(chalk.red.bold(err));
+    process.stdout.write(chalk.green.bold(out));
+    process.stdout.write(code);
+  });
+}
 
+function stringStartsWith(string, prefix) {
+  return string.slice(0, prefix.length) == prefix;
+}
