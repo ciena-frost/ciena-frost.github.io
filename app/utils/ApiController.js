@@ -15,8 +15,7 @@ App.ApiController = Ember.Controller.extend({
           var footerTop = $('.footer').position().top + footerHeight
           if (footerTop < docHeight) {
             $('.footer').css('margin-top', (docHeight - ($('.frost-info-bar').height() + $('.frost-tabs').height() + footerHeight)) + 'px')
-          }
-          else{
+          } else {
             $('.footer').css('margin-top', '')
           }
         }
