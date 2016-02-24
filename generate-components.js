@@ -153,14 +153,16 @@ var template_content = "<div class='md'>\n\t<div class='content-col'>";
 
 contributorMap.forEach(function (value, key) {
   template_content += "\n\t\t<div class='card'>"
-  template_content += "\n\t\t\t<a href='" + value.html_url + "'>"
-  template_content += "\n\t\t\t\t<img src='" + value.avatar_url + "' height='200' width='200'>"
-  template_content += "\n\t\t\t</a>"
+  template_content += "\n\t\t\t<div class='avatar'>"
+  template_content += "\n\t\t\t\t<a href='" + value.html_url + "'>"
+  template_content += "\n\t\t\t\t\t<img src='" + value.avatar_url + "' height='75' width='75'>"
+  template_content += "\n\t\t\t\t</a>"
+  template_content += "\n\t\t\t</div>"
   template_content += "\n\t\t\t<div class='card-block'>"
   template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (key !== null ? key : value.login) + "</span>"
   template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
-  Array.from(value.repos).forEach( function(item){
-    "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
+  Array.from(value.repos.values()).forEach( function(item){
+     template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
   })
   template_content += "\n\t\t\t</div>"
   template_content += "\n\t\t</div>"
