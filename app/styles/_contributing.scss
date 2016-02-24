@@ -1,0 +1,57 @@
+.card {
+  float: left;
+  margin-left: 50px;
+  margin-top: 50px;
+  height: 150px;
+  display: inline;
+}
+
+.card .avatar {
+  float: left;
+  margin-left: 20px;
+  margin-top: 20px;
+  width: 75px;
+  height: 75px;
+}
+
+.card .card-block {
+  position: relative;
+  float: left;
+  margin-left: 20px;
+  margin-top: 20px;
+  width: 150px;
+}
+
+.card .card-row {
+  width: 150px;
+  display: block;
+  position: relative;
+}
+
+.card .card-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card .divider {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #eee;
+}
+
+.show-more {
+  position: relative;
+  background-color: white;
+}
+
+.more-button {
+  cursor: pointer;
+  text-align: center;
+  padding: 0 .5em;
+  color: #666;
+  font-size: .9em;
+  line-height: 2;
+  border: 1px solid #ddd;
+  border-radius: .25em;
+  margin-top: 5px;
+}

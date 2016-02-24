@@ -161,9 +161,17 @@ contributorMap.forEach(function (value, key) {
   template_content += "\n\t\t\t<div class='card-block'>"
   template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (key !== null ? key : value.login) + "</span>"
   template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
-  Array.from(value.repos.values()).forEach( function(item){
-     template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
+  var counter = 0
+  Array.from(value.repos.values()).forEach(function (item) {
+    counter++
+    if (counter === 3) {
+      template_content += "{{#show-more}}"
+    }
+    template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
   })
+  if (counter >= 3) {
+    template_content += "{{/show-more}}"
+  }
   template_content += "\n\t\t\t</div>"
   template_content += "\n\t\t</div>"
 })
@@ -190,13 +198,13 @@ template_content += "  <div class='footer'> \
 fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
 
 
-function addDedicatedContributor (user, repo){
+function addDedicatedContributor(user, repo) {
   if (!contributorMap.has(user.name)) {
     user.repos = new Set()
     user.repos.add(repo)
     contributorMap.set(user.name, user)
 
-  }else{
+  } else {
     var currUser = contributorMap.get(user.name)
     currUser.repos.add(repo)
     contributorMap.set(user.name, currUser)
@@ -365,15 +373,15 @@ function occurrences(string, subString, allowOverlapping) {
 }
 
 function emberInstall(repo) {
-  if (repo === "ember-frost-notifier"){
+  if (repo === "ember-frost-notifier") {
     //until issue is resolved
     return
   }
   console.log("Doing Ember Install of : " + repo);
-    var log = exec('ember install ' + repo);
-  if (log.status === 0){
+  var log = exec('ember install ' + repo);
+  if (log.status === 0) {
     console.log(chalk.green.bold(log.stdout));
-  }else{
+  } else {
     console.log(chalk.red.bold(log.stderr));
   }
 }
