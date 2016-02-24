@@ -110,9 +110,7 @@ body.forEach(function (repo) {
         } else {
           template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
         }
-        if (!contributorMap.has(userJSON.name)) {
-          contributorMap.set(userJSON.name, userJSON)
-        }
+        addDedicatedContributor(userJSON, repo.name)
       });
 
       template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
@@ -144,21 +142,64 @@ body.forEach(function (repo) {
   }
 });
 
-//Populate Dedicated Contributors Page
+//Populate Dedicated Contributors Map
 var frostGuideContributors = getCienFrostRepoContributors("ciena-frost.github.io");
 frostGuideContributors.forEach(function (user) {
   var userJSON = requestJSON(user.url);
-  if (!contributorMap.has(userJSON.name)) {
-    contributorMap.set(userJSON.name, userJSON)
-  }
+  addDedicatedContributor(userJSON, "ciena-frost.github.io")
 });
-var template_content = "";
+//Populate Dedicated Contributors Page
+var template_content = "<div class='md'>\n\t<div class='content-col'>";
+
 contributorMap.forEach(function (value, key) {
-  template_content += (key !== null ? key : value.login) + "\n"
+  template_content += "\n\t\t<div class='card'>"
+  template_content += "\n\t\t\t<a href='" + value.html_url + "'>"
+  template_content += "\n\t\t\t\t<img src='" + value.avatar_url + "' height='200' width='200'>"
+  template_content += "\n\t\t\t</a>"
+  template_content += "\n\t\t\t<div class='card-block'>"
+  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (key !== null ? key : value.login) + "</span>"
+  template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
+  Array.from(value.repos).forEach( function(item){
+    "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
+  })
+  template_content += "\n\t\t\t</div>"
+  template_content += "\n\t\t</div>"
 })
+
+template_content += "\n\t</div>\n</div>"
+template_content += "  <div class='footer'> \
+    <div class='info'> \
+      <div> \
+        <div class='contributors'> \
+          <span class='footerHeading'>Contributors</span>Justin Lafleur - Eric White\
+      </div> \
+      <div class='connect'> \
+        <span class='footerHeading'>Connect</span> \
+           Github Button here \
+        </div> \
+      </div> \
+      <br/> \
+    </div> \
+    <div class='copyright'> \
+      \
+    </div> \
+  </div> \
+"
 fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
 
 
+function addDedicatedContributor (user, repo){
+  if (!contributorMap.has(user.name)) {
+    user.repos = new Set()
+    user.repos.add(repo)
+    contributorMap.set(user.name, user)
+
+  }else{
+    var currUser = contributorMap.get(user.name)
+    currUser.repos.add(repo)
+    contributorMap.set(user.name, currUser)
+  }
+}
 
 function getPackageJSON(url) {
   //get api file request
@@ -322,6 +363,10 @@ function occurrences(string, subString, allowOverlapping) {
 }
 
 function emberInstall(repo) {
+  if (repo === "ember-frost-notifier"){
+    //until issue is resolved
+    return
+  }
   console.log("Doing Ember Install of : " + repo);
     var log = exec('ember install ' + repo);
   if (log.status === 0){
