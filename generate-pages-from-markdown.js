@@ -62,7 +62,9 @@ function dive(dir) {
         "', items: [\n";
 
       dive(path);
-
+      if (filename.replaceAll("[0-9][0-9][-]", "") === "contributing"){
+        routing_string += ",\n\t{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'}"
+      }
       routing_string += "\n]}, // " + filename + "\n"
       if (DirectoryDepth === 1) {
         var flat_route = path.replace(mark_dir, "app/pods").replaceAll("[0-9][0-9][-]", "") +"/index"
