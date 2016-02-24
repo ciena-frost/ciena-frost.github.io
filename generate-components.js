@@ -104,10 +104,11 @@ body.forEach(function (repo) {
       var componentContributors = getComponentContributors(repo);
       componentContributors.forEach(function(user){
         contributorsCount++;
+        var userJSON = requestJSON(user.url);
         if (contributorsCount === componentContributors.length){
-          template_content += user.login;
+          template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
         }else{
-          template_content += user.login + " - ";
+          template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
         }
 
       });
@@ -250,6 +251,14 @@ function getComponentContributors (repo){
   }
 }
 
+function requestJSON (url){
+  try{
+  var res = request('GET', url, options);
+  return JSON.parse(res.getBody());
+  }catch(err){
+    return undefined;
+  }
+}
 function mkdirSync(path) {
     try {
         fs.mkdirSync(path);
