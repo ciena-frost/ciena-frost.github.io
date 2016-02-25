@@ -5,6 +5,11 @@ export default Ember.Component.extend({
   tagName: 'div',
   toggle: true,
   moreOrLess: 'show more',
+  onInsert: function() {
+    $('#' + this.elementId + ' .more').css('display', 'none');
+    $('#' + this.elementId).css('z-index', '');
+    this.set('moreOrLess', 'show more');
+  }.on('didInsertElement'),
     actions: {
       showMore () {
         if(this.toggle){
