@@ -11,6 +11,16 @@ String.prototype.replaceAll = function (search, replacement) {
   return target.replace(new RegExp(search, 'g'), replacement);
 };
 
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
@@ -24,8 +34,8 @@ var contributorMap = new Map();
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name, "ember-")) {
-    //ember install this package
+  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
+
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
@@ -33,7 +43,23 @@ body.forEach(function (repo) {
     if (packageJSON === undefined) {
       return;
     }
-    emberInstall(repo.name);
+    //ember install this package
+//    emberInstall(repo.name);
+
+    if (packageJSON.contributors != undefined) {
+      packageJSON.contributors.forEach(function (user) {
+
+        //get user in (https://github.com/ewhite613)
+        var userIdRegex = /\/([a-z|0-9]+)\)/i
+        var userId = user.match(userIdRegex)
+        if (userId != undefined) {
+          var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
+          addDedicatedContributor(userJSON, repo.name)
+        }
+
+      })
+    }
+
     var demoParentDirectory = packageJSON.frostGuideDirectory;
     if (demoParentDirectory === undefined) {
       var componentContributors = getCienFrostRepoContributors(repo.name);
@@ -106,20 +132,43 @@ body.forEach(function (repo) {
       template_content += "class=\"footerHeading\">Contributors</span>";
 
       var contributorsCount = 0;
+      var contributorDuplicates = 0;
       var componentContributors = getCienFrostRepoContributors(repo.name);
+      if (packageJSON.contributors != undefined) {
+        packageJSON.contributors.forEach(function (user) {
+          contributorsCount++
+          //get user in (https://github.com/ewhite613)
+          var userIdRegex = /\/([a-z|0-9]+)\)/i
+          var userId = user.match(userIdRegex)
+          if (userId != undefined) {
+            var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
+            if (componentContributors.contains(userJSON) === false) {
+              if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
+                template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
+              } else {
+                template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
+              }
+            }else {
+              contributorDuplicates++
+            }
+          }
+
+        })
+      }
       componentContributors.forEach(function (user) {
         contributorsCount++;
-        if (user === ""){
+        if (user === "") {
           return
         }
         var userJSON = requestJSON(user.url);
-        if (contributorsCount === componentContributors.length) {
+        if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
           template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
         } else {
           template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
         }
         addDedicatedContributor(userJSON, repo.name)
       });
+
 
       template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
       template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
@@ -158,7 +207,7 @@ frostGuideContributors.forEach(function (user) {
 });
 
 //Populate Dedicated Contributors Page
-var template_content = "<div class='md'>\n\t<div class='content-col'>";
+var template_content = "<div class='md'>\n\t<div >";
 
 contributorMap.forEach(function (value, key) {
   template_content += "\n\t\t<div class='card'>"
@@ -168,7 +217,7 @@ contributorMap.forEach(function (value, key) {
   template_content += "\n\t\t\t\t</a>"
   template_content += "\n\t\t\t</div>"
   template_content += "\n\t\t\t<div class='card-block'>"
-  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (key !== null ? key : value.login) + "</span>"
+  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (value.name !== null ? value.name : value.login) + "</span>"
   template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
   var counter = 0
   Array.from(value.repos.values()).forEach(function (item) {
@@ -176,9 +225,9 @@ contributorMap.forEach(function (value, key) {
     if (counter === 3) {
       template_content += "{{#show-more}}"
     }
-    if (counter === Array.from(value.repos.values()).length){
+    if (counter === Array.from(value.repos.values()).length) {
       template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
-    }else{
+    } else {
       template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
     }
 
@@ -213,15 +262,15 @@ fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_con
 
 
 function addDedicatedContributor(user, repo) {
-  if (!contributorMap.has(user.name)) {
+  if (!contributorMap.has(user.login)) {
     user.repos = new Set()
     user.repos.add(repo)
-    contributorMap.set(user.name, user)
+    contributorMap.set(user.login, user)
 
   } else {
-    var currUser = contributorMap.get(user.name)
+    var currUser = contributorMap.get(user.login)
     currUser.repos.add(repo)
-    contributorMap.set(user.name, currUser)
+    contributorMap.set(user.login, currUser)
   }
 }
 
