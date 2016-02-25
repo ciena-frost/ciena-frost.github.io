@@ -14,20 +14,13 @@ module.exports = [
 ]}, // 02-development
 {id: 'design-strategy', alias: 'Design Strategy', type: 'category', route: 'design-strategy', items: [
 	{id: 'usability-myths', alias: 'Usability Myths', type: 'route', route: 'design-strategy.usability-myths'},
-	{id: 'branding', alias: 'Branding', type: 'route', route: 'design-strategy.branding'},
-
+	{id: 'branding', alias: 'Branding', type: 'route', route: 'design-strategy.branding'}
 ]}, // 03-design-strategy
 {id: 'design-patterns', alias: 'Design Patterns', type: 'category', route: 'design-patterns', items: [
 	{id: 'about', alias: 'About', type: 'route', route: 'design-patterns.about'},
 	{id: 'application-bar', alias: 'Application Bar', type: 'route', route: 'design-patterns.application-bar'},
-	{id: 'date:time-input', alias: 'Date:time Input', type: 'route', route: 'design-patterns.date:time-input'},
 	{id: 'error-page', alias: 'Error Page', type: 'route', route: 'design-patterns.error-page'},
 	{id: 'filtering', alias: 'Filtering', type: 'route', route: 'design-patterns.filtering'},
-{id: 'forms', alias: 'Forms', type: 'category', route: 'design-patterns.forms', items: [
-	{id: 'overview', alias: 'Overview', type: 'route', route: 'design-patterns.forms.overview'},
-	{id: 'create', alias: 'Create', type: 'route', route: 'design-patterns.forms.create'},
-	{id: 'edit', alias: 'Edit', type: 'route', route: 'design-patterns.forms.edit'}
-]}, // 06-forms
 	{id: 'global-search', alias: 'Global Search', type: 'route', route: 'design-patterns.global-search'},
 	{id: 'info-bar', alias: 'Info Bar', type: 'route', route: 'design-patterns.info-bar'},
 	{id: 'login-logout', alias: 'Login Logout', type: 'route', route: 'design-patterns.login-logout'},
@@ -35,8 +28,7 @@ module.exports = [
 {id: 'object-browser', alias: 'Object Browser', type: 'category', route: 'design-patterns.object-browser', items: [
 	{id: 'overview', alias: 'Overview', type: 'route', route: 'design-patterns.object-browser.overview'},
 	{id: 'list', alias: 'List', type: 'route', route: 'design-patterns.object-browser.list'},
-	{id: 'table', alias: 'Table', type: 'route', route: 'design-patterns.object-browser.table'},
-
+	{id: 'table', alias: 'Table', type: 'route', route: 'design-patterns.object-browser.table'}
 ]}, // 14-object-browser
 	{id: 'object-details', alias: 'Object Details', type: 'route', route: 'design-patterns.object-details'},
 
@@ -59,20 +51,15 @@ module.exports = [
 ]}, // 02-menu-controls
 {id: 'indicator-controls', alias: 'Indicator Controls', type: 'category', route: 'UI-components.indicator-controls', items: [
 	{id: 'notifications', alias: 'Notifications', type: 'route', route: 'UI-components.indicator-controls.notifications'},
-	{id: 'progress-indicators', alias: 'Progress Indicators', type: 'route', route: 'UI-components.indicator-controls.progress-indicators'},
-	{id: 'loading', alias: 'Loading', type: 'route', route: 'UI-components.indicator-controls.loading'},
-	{id: 'badge', alias: 'Badge', type: 'route', route: 'UI-components.indicator-controls.badge'},
-
+	{id: 'progress-indicators', alias: 'Progress Indicators', type: 'route', route: 'UI-components.indicator-controls.progress-indicators'}
 ]}, // 03-indicator-controls
 {id: 'input-controls', alias: 'Input Controls', type: 'category', route: 'UI-components.input-controls', items: [
 	{id: 'text', alias: 'Text', type: 'route', route: 'UI-components.input-controls.text'},
 	{id: 'text-area', alias: 'Text Area', type: 'route', route: 'UI-components.input-controls.text-area'},
 	{id: 'password', alias: 'Password', type: 'route', route: 'UI-components.input-controls.password'},
 	{id: 'file-chooser', alias: 'File Chooser', type: 'route', route: 'UI-components.input-controls.file-chooser'},
-	{id: 'login', alias: 'Login', type: 'route', route: 'UI-components.input-controls.login'},
 	{id: 'select', alias: 'Select', type: 'route', route: 'UI-components.input-controls.select'},
-	{id: 'slider', alias: 'Slider', type: 'route', route: 'UI-components.input-controls.slider'},
-	{id: 'date-picker', alias: 'Date Picker', type: 'route', route: 'UI-components.input-controls.date-picker'}
+	{id: 'slider', alias: 'Slider', type: 'route', route: 'UI-components.input-controls.slider'}
 ]}, // 04-input-controls
 {id: 'text', alias: 'Text', type: 'category', route: 'UI-components.text', items: [
 	{id: 'tone', alias: 'Tone', type: 'route', route: 'UI-components.text.tone'},
@@ -90,10 +77,7 @@ module.exports = [
 	{id: 'modal-dialog', alias: 'Modal Dialog', type: 'route', route: 'UI-components.content-views.modal-dialog'},
 	{id: 'scrollbar', alias: 'Scrollbar', type: 'route', route: 'UI-components.content-views.scrollbar'},
 	{id: 'table', alias: 'Table', type: 'route', route: 'UI-components.content-views.table'},
-	{id: 'tabs', alias: 'Tabs', type: 'route', route: 'UI-components.content-views.tabs'},
-	{id: 'info-bar', alias: 'Info Bar', type: 'route', route: 'UI-components.content-views.info-bar'},
-	{id: 'application-bar', alias: 'Application Bar', type: 'route', route: 'UI-components.content-views.application-bar'},
-	{id: 'about-dialog', alias: 'About Dialog', type: 'route', route: 'UI-components.content-views.about-dialog'}
+	{id: 'tabs', alias: 'Tabs', type: 'route', route: 'UI-components.content-views.tabs'}
 ]}, // 06-content-views
 
 ]}, // 06-UI-components
