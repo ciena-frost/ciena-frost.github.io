@@ -44,7 +44,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-//    emberInstall(repo.name);
+    emberInstall(repo.name);
 
     if (packageJSON.contributors != undefined) {
       packageJSON.contributors.forEach(function (user) {
