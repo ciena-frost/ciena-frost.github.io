@@ -36,6 +36,11 @@ body.forEach(function (repo) {
     emberInstall(repo.name);
     var demoParentDirectory = packageJSON.frostGuideDirectory;
     if (demoParentDirectory === undefined) {
+      var componentContributors = getCienFrostRepoContributors(repo.name);
+      componentContributors.forEach(function (user) {
+        var userJSON = requestJSON(user.url);
+        addDedicatedContributor(userJSON, repo.name)
+      })
       return;
     }
 
@@ -104,6 +109,9 @@ body.forEach(function (repo) {
       var componentContributors = getCienFrostRepoContributors(repo.name);
       componentContributors.forEach(function (user) {
         contributorsCount++;
+        if (user === ""){
+          return
+        }
         var userJSON = requestJSON(user.url);
         if (contributorsCount === componentContributors.length) {
           template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
@@ -148,6 +156,7 @@ frostGuideContributors.forEach(function (user) {
   var userJSON = requestJSON(user.url);
   addDedicatedContributor(userJSON, "ciena-frost.github.io")
 });
+
 //Populate Dedicated Contributors Page
 var template_content = "<div class='md'>\n\t<div class='content-col'>";
 
@@ -167,7 +176,12 @@ contributorMap.forEach(function (value, key) {
     if (counter === 3) {
       template_content += "{{#show-more}}"
     }
-    template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
+    if (counter === Array.from(value.repos.values()).length){
+      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
+    }else{
+      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
+    }
+
   })
   if (counter >= 3) {
     template_content += "{{/show-more}}"
