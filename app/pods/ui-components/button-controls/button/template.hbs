@@ -1,6 +1,6 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
-		{{markdown-to-html class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/button')}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/button')}}
 	{{/frost-tab}}
 	{{#frost-tab alias='API' class='api' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/button-controls/button/README')}}
@@ -369,4 +369,22 @@
 </div>
 
 	{{/frost-tab}}
-{{/frost-tabs}}</div>
+{{/frost-tabs}}
+	<div class='footer'>
+		<div class='info'>
+			<div>
+				<div class='contributors'>
+					<span class="footerHeading">Contributors</span>Adam Meadows - travis-ci-ciena - Matthew Dahl - Nagarajan - Justin Lafleur - Eric White - Steven Glanzer
+			</div>
+			<div class='connect'>
+				<span class="footerHeading">Connect</span>
+					 Github Button here 
+				</div>
+			</div>
+			<br/>
+		</div>
+		<div class='copyright'>
+			
+		</div>
+	</div>
+</div>

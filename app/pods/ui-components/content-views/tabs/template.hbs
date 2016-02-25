@@ -1,17 +1,117 @@
+<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/content-views/tabs')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='API' class='api' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/content-views/tabs/README')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' class='demo' id='demo'}}
+		<div><div class='ember-frost-demo'>
+{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+  {{#frost-tab alias='Template' id='template'}}
+      <div id='content'>
+  <pre><code>
+    \{{#frost-tabs frostTabs=tabs}}
+    \{{#frost-tab alias='Template' id='template'}}
+      ...
+    \{{/frost-tab}}
+    \{{#frost-tab alias='Controller' id='controller'}}
+      ...
+    \{{/frost-tab}}
+    \{{#frost-tab id='css' alias='CSS' disabled=true}}
+      ...
+    \{{/frost-tab}}
+    \{{/frost-tabs}}
+  </code></pre>
+      </div>
+  {{/frost-tab}}
+  {{#frost-tab alias='Controller' id='controller'}}
+      <div id='content'>
+<pre><code>
+import Ember from 'ember'
 
-<div class="md">
-	<div class="content">
-		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'ui-components/content-views/tabs')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-		</div>
-	</div>
+export default Ember.Controller.extend({
+  queryParams: ['selectedTab'],
+
+  selectedTab: 'controller',
+
+  actions: {
+    tabSelected (tab) {
+      this.set('selectedTab', tab)
+    }
+  }
+})
+</code></pre>
+      </div>
+  {{/frost-tab}}
+  {{#frost-tab alias='Route' id='route'}}
+          <div id='content'>
+<pre><code>
+import Ember from 'ember'
+
+export default Ember.Route.extend({
+  queryParams: {
+    selectedTab: {
+      as: 'tab'
+    }
+  }
+})
+</code></pre>
+      </div>
+  {{/frost-tab}}
+  {{#frost-tab alias='CSS' disabled=true id='css'}}
+      <div id='content'>
+<pre><code>
+    .dummy-notification-container {
+      position: fixed;
+      top: 60px;
+      right: 10px;
+      z-index: 999;
+      width: 80%;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    pre {
+      font-family: "Courier 10 Pitch", Courier, monospace;
+      font-size: 80%;
+      line-height: 140%;
+      white-space: pre;
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -o-pre-wrap;
+    }
+
+    code {
+      font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+      font-size: 80%;
+      line-height: 140%;
+      white-space: pre;
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -o-pre-wrap;
+      background: #faf8f0;
+    }
+
+    #content code {
+      display: block;
+      padding: 0.5em 1em;
+      border: 1px solid #bebab0;
+    }
+</code></pre>
+      </div>
+  {{/frost-tab}}
+{{/frost-tabs}}
+</div>
+</div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Justin Lafleur
+					<span class="footerHeading">Contributors</span>Eric White - travis-ci-ciena
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>

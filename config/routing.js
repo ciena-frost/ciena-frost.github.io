@@ -50,54 +50,54 @@ module.exports = [
 	{id: 'object-details', alias: 'Object Details', type: 'route', route: 'design-patterns.object-details'},
 
 ]}, // 05-design-patterns
-{id: 'ui-components', alias: 'Ui Components', type: 'category', route: 'ui-components', items: [
-{id: 'button-controls', alias: 'Button Controls', type: 'category', route: 'ui-components.button-controls', items: [
-	{id: 'button', alias: 'Button', type: 'route', route: 'ui-components.button-controls.button'},
-	{id: 'link', alias: 'Link', type: 'route', route: 'ui-components.button-controls.link'},
-	{id: 'checkbox', alias: 'Checkbox', type: 'route', route: 'ui-components.button-controls.checkbox'},
-	{id: 'checkbox-group', alias: 'Checkbox Group', type: 'route', route: 'ui-components.button-controls.checkbox-group'},
-	{id: 'help-button', alias: 'Help Button', type: 'route', route: 'ui-components.button-controls.help-button'},
-	{id: 'radio-button', alias: 'Radio Button', type: 'route', route: 'ui-components.button-controls.radio-button'},
-	{id: 'radio-button-group', alias: 'Radio Button Group', type: 'route', route: 'ui-components.button-controls.radio-button-group'},
-	{id: 'toggle', alias: 'Toggle', type: 'route', route: 'ui-components.button-controls.toggle'}
+{id: 'UI-components', alias: 'UI Components', type: 'category', route: 'UI-components', items: [
+{id: 'button-controls', alias: 'Button Controls', type: 'category', route: 'UI-components.button-controls', items: [
+	{id: 'button', alias: 'Button', type: 'route', route: 'UI-components.button-controls.button'},
+	{id: 'link', alias: 'Link', type: 'route', route: 'UI-components.button-controls.link'},
+	{id: 'checkbox', alias: 'Checkbox', type: 'route', route: 'UI-components.button-controls.checkbox'},
+	{id: 'checkbox-group', alias: 'Checkbox Group', type: 'route', route: 'UI-components.button-controls.checkbox-group'},
+	{id: 'help-button', alias: 'Help Button', type: 'route', route: 'UI-components.button-controls.help-button'},
+	{id: 'radio-button', alias: 'Radio Button', type: 'route', route: 'UI-components.button-controls.radio-button'},
+	{id: 'radio-button-group', alias: 'Radio Button Group', type: 'route', route: 'UI-components.button-controls.radio-button-group'},
+	{id: 'toggle', alias: 'Toggle', type: 'route', route: 'UI-components.button-controls.toggle'}
 ]}, // 01-button-controls
-{id: 'menu-controls', alias: 'Menu Controls', type: 'category', route: 'ui-components.menu-controls', items: [
-	{id: 'command-menu', alias: 'Command Menu', type: 'route', route: 'ui-components.menu-controls.command-menu'},
-	{id: 'context-menu', alias: 'Context Menu', type: 'route', route: 'ui-components.menu-controls.context-menu'},
-	{id: 'disclosure-tab', alias: 'Disclosure Tab', type: 'route', route: 'ui-components.menu-controls.disclosure-tab'}
+{id: 'menu-controls', alias: 'Menu Controls', type: 'category', route: 'UI-components.menu-controls', items: [
+	{id: 'command-menu', alias: 'Command Menu', type: 'route', route: 'UI-components.menu-controls.command-menu'},
+	{id: 'context-menu', alias: 'Context Menu', type: 'route', route: 'UI-components.menu-controls.context-menu'},
+	{id: 'disclosure-tab', alias: 'Disclosure Tab', type: 'route', route: 'UI-components.menu-controls.disclosure-tab'}
 ]}, // 02-menu-controls
-{id: 'indicator-controls', alias: 'Indicator Controls', type: 'category', route: 'ui-components.indicator-controls', items: [
-	{id: 'notifications', alias: 'Notifications', type: 'route', route: 'ui-components.indicator-controls.notifications'},
-	{id: 'progress-indicators', alias: 'Progress Indicators', type: 'route', route: 'ui-components.indicator-controls.progress-indicators'}
+{id: 'indicator-controls', alias: 'Indicator Controls', type: 'category', route: 'UI-components.indicator-controls', items: [
+	{id: 'notifications', alias: 'Notifications', type: 'route', route: 'UI-components.indicator-controls.notifications'},
+	{id: 'progress-indicators', alias: 'Progress Indicators', type: 'route', route: 'UI-components.indicator-controls.progress-indicators'}
 ]}, // 03-indicator-controls
-{id: 'input-controls', alias: 'Input Controls', type: 'category', route: 'ui-components.input-controls', items: [
-	{id: 'text', alias: 'Text', type: 'route', route: 'ui-components.input-controls.text'},
-	{id: 'text-area', alias: 'Text Area', type: 'route', route: 'ui-components.input-controls.text-area'},
-	{id: 'password', alias: 'Password', type: 'route', route: 'ui-components.input-controls.password'},
-	{id: 'file-chooser', alias: 'File Chooser', type: 'route', route: 'ui-components.input-controls.file-chooser'},
-	{id: 'select', alias: 'Select', type: 'route', route: 'ui-components.input-controls.select'},
-	{id: 'slider', alias: 'Slider', type: 'route', route: 'ui-components.input-controls.slider'}
+{id: 'input-controls', alias: 'Input Controls', type: 'category', route: 'UI-components.input-controls', items: [
+	{id: 'text', alias: 'Text', type: 'route', route: 'UI-components.input-controls.text'},
+	{id: 'text-area', alias: 'Text Area', type: 'route', route: 'UI-components.input-controls.text-area'},
+	{id: 'password', alias: 'Password', type: 'route', route: 'UI-components.input-controls.password'},
+	{id: 'file-chooser', alias: 'File Chooser', type: 'route', route: 'UI-components.input-controls.file-chooser'},
+	{id: 'select', alias: 'Select', type: 'route', route: 'UI-components.input-controls.select'},
+	{id: 'slider', alias: 'Slider', type: 'route', route: 'UI-components.input-controls.slider'}
 ]}, // 04-input-controls
-{id: 'text', alias: 'Text', type: 'category', route: 'ui-components.text', items: [
-	{id: 'tone', alias: 'Tone', type: 'route', route: 'ui-components.text.tone'},
-	{id: 'capitalization', alias: 'Capitalization', type: 'route', route: 'ui-components.text.capitalization'},
-	{id: 'titles', alias: 'Titles', type: 'route', route: 'ui-components.text.titles'},
-	{id: 'labels', alias: 'Labels', type: 'route', route: 'ui-components.text.labels'},
-	{id: 'units', alias: 'Units', type: 'route', route: 'ui-components.text.units'},
-	{id: 'truncation', alias: 'Truncation', type: 'route', route: 'ui-components.text.truncation'}
+{id: 'text', alias: 'Text', type: 'category', route: 'UI-components.text', items: [
+	{id: 'tone', alias: 'Tone', type: 'route', route: 'UI-components.text.tone'},
+	{id: 'capitalization', alias: 'Capitalization', type: 'route', route: 'UI-components.text.capitalization'},
+	{id: 'titles', alias: 'Titles', type: 'route', route: 'UI-components.text.titles'},
+	{id: 'labels', alias: 'Labels', type: 'route', route: 'UI-components.text.labels'},
+	{id: 'units', alias: 'Units', type: 'route', route: 'UI-components.text.units'},
+	{id: 'truncation', alias: 'Truncation', type: 'route', route: 'UI-components.text.truncation'}
 ]}, // 05-text
-{id: 'content-views', alias: 'Content Views', type: 'category', route: 'ui-components.content-views', items: [
-	{id: 'accordion', alias: 'Accordion', type: 'route', route: 'ui-components.content-views.accordion'},
-	{id: 'collapsible-section', alias: 'Collapsible Section', type: 'route', route: 'ui-components.content-views.collapsible-section'},
-	{id: 'info-pods', alias: 'Info Pods', type: 'route', route: 'ui-components.content-views.info-pods'},
-	{id: 'list', alias: 'List', type: 'route', route: 'ui-components.content-views.list'},
-	{id: 'modal-dialog', alias: 'Modal Dialog', type: 'route', route: 'ui-components.content-views.modal-dialog'},
-	{id: 'scrollbar', alias: 'Scrollbar', type: 'route', route: 'ui-components.content-views.scrollbar'},
-	{id: 'table', alias: 'Table', type: 'route', route: 'ui-components.content-views.table'},
-	{id: 'tabs', alias: 'Tabs', type: 'route', route: 'ui-components.content-views.tabs'}
+{id: 'content-views', alias: 'Content Views', type: 'category', route: 'UI-components.content-views', items: [
+	{id: 'accordion', alias: 'Accordion', type: 'route', route: 'UI-components.content-views.accordion'},
+	{id: 'collapsible-section', alias: 'Collapsible Section', type: 'route', route: 'UI-components.content-views.collapsible-section'},
+	{id: 'info-pods', alias: 'Info Pods', type: 'route', route: 'UI-components.content-views.info-pods'},
+	{id: 'list', alias: 'List', type: 'route', route: 'UI-components.content-views.list'},
+	{id: 'modal-dialog', alias: 'Modal Dialog', type: 'route', route: 'UI-components.content-views.modal-dialog'},
+	{id: 'scrollbar', alias: 'Scrollbar', type: 'route', route: 'UI-components.content-views.scrollbar'},
+	{id: 'table', alias: 'Table', type: 'route', route: 'UI-components.content-views.table'},
+	{id: 'tabs', alias: 'Tabs', type: 'route', route: 'UI-components.content-views.tabs'}
 ]}, // 06-content-views
 
-]}, // 06-ui-components
+]}, // 06-UI-components
 {id: 'data-visualization', alias: 'Data Visualization', type: 'category', route: 'data-visualization', items: [
 	{id: 'defender-view', alias: 'Defender View', type: 'route', route: 'data-visualization.defender-view'},
 	{id: 'charts', alias: 'Charts', type: 'route', route: 'data-visualization.charts'},
@@ -109,7 +109,8 @@ module.exports = [
 	{id: 'trail-analyzer', alias: 'Trail Analyzer', type: 'route', route: 'data-visualization.trail-analyzer'}
 ]}, // 07-data-visualization
 {id: 'contributing', alias: 'Contributing', type: 'category', route: 'contributing', items: [
-	{id: 'frost-guide', alias: 'Frost Guide', type: 'route', route: 'contributing.frost-guide'}
+	{id: 'frost-guide', alias: 'Frost Guide', type: 'route', route: 'contributing.frost-guide'},
+	{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'}
 ]}, // 08-contributing
 	{id: 'terminology', alias: 'Terminology', type: 'route', route: 'terminology'},
 ];
