@@ -13,39 +13,30 @@ module.exports = [
 	{id: 'notes', alias: 'Notes', type: 'route', route: 'development.notes'}
 ]}, // 02-development
 {id: 'design-strategy', alias: 'Design Strategy', type: 'category', route: 'design-strategy', items: [
-	{id: 'design-principles', alias: 'Design Principles', type: 'route', route: 'design-strategy.design-principles'},
-	{id: 'personas', alias: 'Personas', type: 'route', route: 'design-strategy.personas'},
 	{id: 'usability-myths', alias: 'Usability Myths', type: 'route', route: 'design-strategy.usability-myths'},
-	{id: 'design-philosophy', alias: 'Design Philosophy', type: 'route', route: 'design-strategy.design-philosophy'},
-	{id: 'branding', alias: 'Branding', type: 'route', route: 'design-strategy.branding'}
+	{id: 'branding', alias: 'Branding', type: 'route', route: 'design-strategy.branding'},
+
 ]}, // 03-design-strategy
-{id: 'design-conventions', alias: 'Design Conventions', type: 'category', route: 'design-conventions', items: [
-	{id: 'icons', alias: 'Icons', type: 'route', route: 'design-conventions.icons'},
-	{id: 'spacing', alias: 'Spacing', type: 'route', route: 'design-conventions.spacing'},
-	{id: 'color', alias: 'Color', type: 'route', route: 'design-conventions.color'},
-	{id: 'typography', alias: 'Typography', type: 'route', route: 'design-conventions.typography'},
-	{id: 'selection-indication', alias: 'Selection Indication', type: 'route', route: 'design-conventions.selection-indication'},
-	{id: 'animation', alias: 'Animation', type: 'route', route: 'design-conventions.animation'}
-]}, // 04-design-conventions
 {id: 'design-patterns', alias: 'Design Patterns', type: 'category', route: 'design-patterns', items: [
 	{id: 'about', alias: 'About', type: 'route', route: 'design-patterns.about'},
-	{id: 'screen-architecture', alias: 'Screen Architecture', type: 'route', route: 'design-patterns.screen-architecture'},
 	{id: 'application-bar', alias: 'Application Bar', type: 'route', route: 'design-patterns.application-bar'},
+	{id: 'date:time-input', alias: 'Date:time Input', type: 'route', route: 'design-patterns.date:time-input'},
 	{id: 'error-page', alias: 'Error Page', type: 'route', route: 'design-patterns.error-page'},
 	{id: 'filtering', alias: 'Filtering', type: 'route', route: 'design-patterns.filtering'},
-	{id: 'forms', alias: 'Forms', type: 'route', route: 'design-patterns.forms'},
+{id: 'forms', alias: 'Forms', type: 'category', route: 'design-patterns.forms', items: [
+	{id: 'overview', alias: 'Overview', type: 'route', route: 'design-patterns.forms.overview'},
+	{id: 'create', alias: 'Create', type: 'route', route: 'design-patterns.forms.create'},
+	{id: 'edit', alias: 'Edit', type: 'route', route: 'design-patterns.forms.edit'}
+]}, // 06-forms
 	{id: 'global-search', alias: 'Global Search', type: 'route', route: 'design-patterns.global-search'},
 	{id: 'info-bar', alias: 'Info Bar', type: 'route', route: 'design-patterns.info-bar'},
 	{id: 'login-logout', alias: 'Login Logout', type: 'route', route: 'design-patterns.login-logout'},
-	{id: 'landing-page', alias: 'Landing Page', type: 'route', route: 'design-patterns.landing-page'},
-	{id: 'map-data-pods', alias: 'Map Data Pods', type: 'route', route: 'design-patterns.map-data-pods'},
-	{id: 'navigation', alias: 'Navigation', type: 'route', route: 'design-patterns.navigation'},
 	{id: 'notifications', alias: 'Notifications', type: 'route', route: 'design-patterns.notifications'},
 {id: 'object-browser', alias: 'Object Browser', type: 'category', route: 'design-patterns.object-browser', items: [
 	{id: 'overview', alias: 'Overview', type: 'route', route: 'design-patterns.object-browser.overview'},
 	{id: 'list', alias: 'List', type: 'route', route: 'design-patterns.object-browser.list'},
-	{id: 'list-samples', alias: 'List Samples', type: 'route', route: 'design-patterns.object-browser.list-samples'},
-	{id: 'table', alias: 'Table', type: 'route', route: 'design-patterns.object-browser.table'}
+	{id: 'table', alias: 'Table', type: 'route', route: 'design-patterns.object-browser.table'},
+
 ]}, // 14-object-browser
 	{id: 'object-details', alias: 'Object Details', type: 'route', route: 'design-patterns.object-details'},
 
@@ -68,15 +59,20 @@ module.exports = [
 ]}, // 02-menu-controls
 {id: 'indicator-controls', alias: 'Indicator Controls', type: 'category', route: 'UI-components.indicator-controls', items: [
 	{id: 'notifications', alias: 'Notifications', type: 'route', route: 'UI-components.indicator-controls.notifications'},
-	{id: 'progress-indicators', alias: 'Progress Indicators', type: 'route', route: 'UI-components.indicator-controls.progress-indicators'}
+	{id: 'progress-indicators', alias: 'Progress Indicators', type: 'route', route: 'UI-components.indicator-controls.progress-indicators'},
+	{id: 'loading', alias: 'Loading', type: 'route', route: 'UI-components.indicator-controls.loading'},
+	{id: 'badge', alias: 'Badge', type: 'route', route: 'UI-components.indicator-controls.badge'},
+
 ]}, // 03-indicator-controls
 {id: 'input-controls', alias: 'Input Controls', type: 'category', route: 'UI-components.input-controls', items: [
 	{id: 'text', alias: 'Text', type: 'route', route: 'UI-components.input-controls.text'},
 	{id: 'text-area', alias: 'Text Area', type: 'route', route: 'UI-components.input-controls.text-area'},
 	{id: 'password', alias: 'Password', type: 'route', route: 'UI-components.input-controls.password'},
 	{id: 'file-chooser', alias: 'File Chooser', type: 'route', route: 'UI-components.input-controls.file-chooser'},
+	{id: 'login', alias: 'Login', type: 'route', route: 'UI-components.input-controls.login'},
 	{id: 'select', alias: 'Select', type: 'route', route: 'UI-components.input-controls.select'},
-	{id: 'slider', alias: 'Slider', type: 'route', route: 'UI-components.input-controls.slider'}
+	{id: 'slider', alias: 'Slider', type: 'route', route: 'UI-components.input-controls.slider'},
+	{id: 'date-picker', alias: 'Date Picker', type: 'route', route: 'UI-components.input-controls.date-picker'}
 ]}, // 04-input-controls
 {id: 'text', alias: 'Text', type: 'category', route: 'UI-components.text', items: [
 	{id: 'tone', alias: 'Tone', type: 'route', route: 'UI-components.text.tone'},
@@ -94,23 +90,15 @@ module.exports = [
 	{id: 'modal-dialog', alias: 'Modal Dialog', type: 'route', route: 'UI-components.content-views.modal-dialog'},
 	{id: 'scrollbar', alias: 'Scrollbar', type: 'route', route: 'UI-components.content-views.scrollbar'},
 	{id: 'table', alias: 'Table', type: 'route', route: 'UI-components.content-views.table'},
-	{id: 'tabs', alias: 'Tabs', type: 'route', route: 'UI-components.content-views.tabs'}
+	{id: 'tabs', alias: 'Tabs', type: 'route', route: 'UI-components.content-views.tabs'},
+	{id: 'info-bar', alias: 'Info Bar', type: 'route', route: 'UI-components.content-views.info-bar'},
+	{id: 'application-bar', alias: 'Application Bar', type: 'route', route: 'UI-components.content-views.application-bar'},
+	{id: 'about-dialog', alias: 'About Dialog', type: 'route', route: 'UI-components.content-views.about-dialog'}
 ]}, // 06-content-views
 
 ]}, // 06-UI-components
-{id: 'data-visualization', alias: 'Data Visualization', type: 'category', route: 'data-visualization', items: [
-	{id: 'defender-view', alias: 'Defender View', type: 'route', route: 'data-visualization.defender-view'},
-	{id: 'charts', alias: 'Charts', type: 'route', route: 'data-visualization.charts'},
-	{id: 'geographic-topology', alias: 'Geographic Topology', type: 'route', route: 'data-visualization.geographic-topology'},
-	{id: 'network-objects', alias: 'Network Objects', type: 'route', route: 'data-visualization.network-objects'},
-	{id: 'physical-equipment', alias: 'Physical Equipment', type: 'route', route: 'data-visualization.physical-equipment'},
-	{id: 'subway-map', alias: 'Subway Map', type: 'route', route: 'data-visualization.subway-map'},
-	{id: 'subway-line', alias: 'Subway Line', type: 'route', route: 'data-visualization.subway-line'},
-	{id: 'trail-analyzer', alias: 'Trail Analyzer', type: 'route', route: 'data-visualization.trail-analyzer'}
-]}, // 07-data-visualization
 {id: 'contributing', alias: 'Contributing', type: 'category', route: 'contributing', items: [
 	{id: 'frost-guide', alias: 'Frost Guide', type: 'route', route: 'contributing.frost-guide'},
 	{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'}
 ]}, // 08-contributing
-	{id: 'terminology', alias: 'Terminology', type: 'route', route: 'terminology'},
 ];
