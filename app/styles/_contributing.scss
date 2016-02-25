@@ -1,15 +1,13 @@
 .card {
   float: left;
-  margin-left: 50px;
-  margin-top: 50px;
-  height: 150px;
+  padding: 20px;
+  height: 200px;
+  width: 325px;
   display: inline;
 }
 
 .card .avatar {
   float: left;
-  margin-left: 20px;
-  margin-top: 20px;
   width: 75px;
   height: 75px;
 }
@@ -17,13 +15,11 @@
 .card .card-block {
   position: relative;
   float: left;
-  margin-left: 20px;
-  margin-top: 20px;
-  width: 150px;
+  width: 210px;
+  padding-left: 20px;
 }
 
 .card .card-row {
-  width: 150px;
   display: block;
   position: relative;
 }

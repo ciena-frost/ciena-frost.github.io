@@ -207,7 +207,7 @@ frostGuideContributors.forEach(function (user) {
 });
 
 //Populate Dedicated Contributors Page
-var template_content = "<div class='md'>\n\t<div >";
+var template_content = "<div class='md'>\n\t";
 
 contributorMap.forEach(function (value, key) {
   template_content += "\n\t\t<div class='card'>"
@@ -239,25 +239,23 @@ contributorMap.forEach(function (value, key) {
   template_content += "\n\t\t</div>"
 })
 
-template_content += "\n\t</div>\n</div>"
-template_content += "  <div class='footer'> \
-    <div class='info'> \
-      <div> \
-        <div class='contributors'> \
-          <span class='footerHeading'>Contributors</span>Justin Lafleur - Eric White\
-      </div> \
-      <div class='connect'> \
-        <span class='footerHeading'>Connect</span> \
-           Github Button here \
-        </div> \
-      </div> \
-      <br/> \
-    </div> \
-    <div class='copyright'> \
-      \
-    </div> \
-  </div> \
-"
+template_content += "\n\t\t<div class='footer'> \
+                    \n\t\t\t<div class='info'> \
+                    \n\t\t\t\t<div> \
+                    \n\t\t\t\t\t<div class='contributors'> \
+                    \n\t\t\t\t\t\t<span class='footerHeading'>Contributors</span>Justin Lafleur - Eric White\
+                    \n\t\t\t\t\t</div> \
+                    \n\t\t\t\t\t<div class='connect'> \
+                    \n\t\t\t\t\t\t<span class='footerHeading'>Connect</span> \
+                    \n\t\t\t\t\t\tGithub Button here \
+                    \n\t\t\t\t\t</div> \
+                    \n\t\t\t\t</div> \
+                    \n\t\t\t\t<br/> \
+                    \n\t\t\t</div> \
+                    \n\t\t\t<div class='copyright'></div> \
+                    \n\t</div> \
+                    \n</div>"
+
 fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
 
 
