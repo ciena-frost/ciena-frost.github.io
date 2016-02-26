@@ -434,7 +434,7 @@ function occurrences(string, subString, allowOverlapping) {
 }
 
 function emberInstall(repo) {
-  if (repo === "ember-frost-notifier" || repo === "ember=frost-bunsen") {
+  if (repo === "ember-frost-notifier" || repo === "ember-frost-bunsen") {
     //until issue is resolved
     return
   }
