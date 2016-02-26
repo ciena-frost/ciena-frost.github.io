@@ -208,56 +208,57 @@ frostGuideContributors.forEach(function (user) {
 
 //Populate Dedicated Contributors Page
 var template_content = "<div class='md'>\n\t";
-
+var contributorJSON = []
 contributorMap.forEach(function (value, key) {
-  template_content += "\n\t\t<div class='card'>"
-  template_content += "\n\t\t\t<div class='avatar'>"
-  template_content += "\n\t\t\t\t<a href='" + value.html_url + "'>"
-  template_content += "\n\t\t\t\t\t<img src='" + value.avatar_url + "' height='75' width='75'>"
-  template_content += "\n\t\t\t\t</a>"
-  template_content += "\n\t\t\t</div>"
-  template_content += "\n\t\t\t<div class='card-block'>"
-  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (value.name !== null ? value.name : value.login) + "</span>"
-  template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
-  var counter = 0
-  Array.from(value.repos.values()).forEach(function (item) {
-    counter++
-    if (counter === 3) {
-      template_content += "{{#show-more}}"
-    }
-    if (counter === Array.from(value.repos.values()).length) {
-      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
-    } else {
-      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
-    }
-
-  })
-  if (counter >= 3) {
-    template_content += "{{/show-more}}"
-  }
-  template_content += "\n\t\t\t</div>"
-  template_content += "\n\t\t</div>"
+  contributorJSON.push(value);
+//  template_content += "\n\t\t<div class='card'>"
+//  template_content += "\n\t\t\t<div class='avatar'>"
+//  template_content += "\n\t\t\t\t<a href='" + value.html_url + "'>"
+//  template_content += "\n\t\t\t\t\t<img src='" + value.avatar_url + "' height='75' width='75'>"
+//  template_content += "\n\t\t\t\t</a>"
+//  template_content += "\n\t\t\t</div>"
+//  template_content += "\n\t\t\t<div class='card-block'>"
+//  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (value.name !== null ? value.name : value.login) + "</span>"
+//  template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
+//  var counter = 0
+//  Array.from(value.repos.values()).forEach(function (item) {
+//    counter++
+//    if (counter === 3) {
+//      template_content += "{{#show-more}}"
+//    }
+//    if (counter === Array.from(value.repos.values()).length) {
+//      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
+//    } else {
+//      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
+//    }
+//
+//  })
+//  if (counter >= 3) {
+//    template_content += "{{/show-more}}"
+//  }
+//  template_content += "\n\t\t\t</div>"
+//  template_content += "\n\t\t</div>"
 })
 
-template_content += "\n\t\t<div class='footer'> \
-                    \n\t\t\t<div class='info'> \
-                    \n\t\t\t\t<div> \
-                    \n\t\t\t\t\t<div class='contributors'> \
-                    \n\t\t\t\t\t\t<span class='footerHeading'>Contributors</span>Justin Lafleur - Eric White\
-                    \n\t\t\t\t\t</div> \
-                    \n\t\t\t\t\t<div class='connect'> \
-                    \n\t\t\t\t\t\t<span class='footerHeading'>Connect</span> \
-                    \n\t\t\t\t\t\tGithub Button here \
-                    \n\t\t\t\t\t</div> \
-                    \n\t\t\t\t</div> \
-                    \n\t\t\t\t<br/> \
-                    \n\t\t\t</div> \
-                    \n\t\t\t<div class='copyright'></div> \
-                    \n\t</div> \
-                    \n</div>"
-
-fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
-
+//template_content += "\n\t\t<div class='footer'> \
+//                    \n\t\t\t<div class='info'> \
+//                    \n\t\t\t\t<div> \
+//                    \n\t\t\t\t\t<div class='contributors'> \
+//                    \n\t\t\t\t\t\t<span class='footerHeading'>Contributors</span>Justin Lafleur - Eric White\
+//                    \n\t\t\t\t\t</div> \
+//                    \n\t\t\t\t\t<div class='connect'> \
+//                    \n\t\t\t\t\t\t<span class='footerHeading'>Connect</span> \
+//                    \n\t\t\t\t\t\tGithub Button here \
+//                    \n\t\t\t\t\t</div> \
+//                    \n\t\t\t\t</div> \
+//                    \n\t\t\t\t<br/> \
+//                    \n\t\t\t</div> \
+//                    \n\t\t\t<div class='copyright'></div> \
+//                    \n\t</div> \
+//                    \n</div>"
+//
+//fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
+fs.writeFileSync("app/utils/contributors.json", JSON.stringify(contributorJSON))
 
 function addDedicatedContributor(user, repo) {
   if (!contributorMap.has(user.login)) {

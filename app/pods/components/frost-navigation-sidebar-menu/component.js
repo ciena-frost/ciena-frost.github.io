@@ -26,6 +26,9 @@ let deepCopy = function (obj) {
     return out
   }
   if (typeof obj === 'object') {
+    if (obj.hidden){
+      return;
+    }
     let out = {},
       i
     for (i in obj) {
@@ -42,6 +45,7 @@ export default Ember.Component.extend({
   classNames: ['frost-navigation-sidebar-menu'],
   selectedCategory: null,
   filteredItems: Ember.computed('items', function () {
+    console.log(this.get('items'))
     return this.get('items')
   }),
   didInitAttrs() {
