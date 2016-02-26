@@ -1,10 +1,11 @@
-<div class='md'>
-	   {{#each model as |contributor|}}
+<div class='md speaker-icons'>
+      {{#liquid-with model as |currentModel|}}
+        {{#each currentModel as |contributor|}}
 		<div class='card'>
 			<div class='avatar'>
-				<a href='https://github.com/rox163'>
-					<img src='{{contributor.avatar}}' height='75' width='75'>
-				</a>
+				{{#link-to "contributing.contributor" contributor}}
+					<img src='{{contributor.avatar}}' height='75' width='75' data-speaker-id={{contributor.handle}}>
+				{{/link-to}}
 			</div>
 			<div class='card-block'>
 				<span class='card-row card-name'>{{contributor.name}}</span>
@@ -27,6 +28,7 @@
 			</div>
 		</div>
         {{/each}}
+    {{/liquid-with}}
 		<div class='footer'>                     
 			<div class='info'>                     
 				<div>                     

@@ -22,6 +22,16 @@ Router.map(function () {
   routerConfig.forEach((item) => {
     addRoute.call(this, item)
   })
+  
+  this.route('contributing', function() {
+    this.route('frost-guide', function() {
+      this.alias('Frost Guide')
+    });
+    this.route('contributors', function() {
+      this.alias('Contributors')
+    });
+    this.route('contributor', { path: '/contributors/:handle' });
+  })
 
   this.route('overview', {
     path: '/'
