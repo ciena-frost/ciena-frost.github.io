@@ -25,10 +25,10 @@ Router.map(function () {
   
   this.route('contributing', function() {
     this.route('frost-guide', function() {
-      this.alias('Frost Guide')
+
     });
     this.route('contributors', function() {
-      this.alias('Contributors')
+
     });
     this.route('contributor', { path: '/contributors/:handle' });
   })

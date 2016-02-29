@@ -1,47 +1,16 @@
-<div class='md speaker-icons'>
-      {{#liquid-with model as |currentModel|}}
-        {{#each currentModel as |contributor|}}
-		<div class='card'>
-			<div class='avatar'>
-				{{#link-to "contributing.contributor" contributor}}
-					<img src='{{contributor.avatar}}' height='75' width='75' data-speaker-id={{contributor.handle}}>
-				{{/link-to}}
-			</div>
-			<div class='card-block'>
-				<span class='card-row card-name'>{{contributor.name}}</span>
-				<span class='card-row card-handle divider'>{{contributor.handle}}</span>
-				<span class='card-row card-repo'>ember-frost-button, </span>
-				<span class='card-row card-repo'>ember-frost-icons, </span>{{#show-more}}
-				<span class='card-row card-repo'>ember-frost-text, </span>
-				<span class='card-row card-repo'>ember-frost-checkbox, </span>
-				<span class='card-row card-repo'>ember-frost-list, </span>
-				<span class='card-row card-repo'>ember-frost-notifier, </span>
-				<span class='card-row card-repo'>ember-frost-info-bar, </span>
-				<span class='card-row card-repo'>ember-frost-scroll, </span>
-				<span class='card-row card-repo'>ember-frost-tabs, </span>
-				<span class='card-row card-repo'>ember-frost-loading, </span>
-				<span class='card-row card-repo'>ember-frost-about-dialog, </span>
-				<span class='card-row card-repo'>ember-frost-textarea, </span>
-				<span class='card-row card-repo'>ember-frost-login, </span>
-				<span class='card-row card-repo'>ember-frost-modal-input, </span>
-				<span class='card-row card-repo'>ember-frost-bunsen</span>{{/show-more}}
-			</div>
-		</div>
-        {{/each}}
-    {{/liquid-with}}
-		<div class='footer'>                     
-			<div class='info'>                     
-				<div>                     
-					<div class='contributors'>                     
-						<span class='footerHeading'>Contributors</span>Justin Lafleur - Eric White                    
-					</div>                     
-					<div class='connect'>                     
-						<span class='footerHeading'>Connect</span>                     
-						Github Button here                     
-					</div>                     
-				</div>                     
-				<br/>                     
-			</div>                     
-			<div class='copyright'></div>                     
-	</div>                     
+<div class="contributor-icons">
+{{#liquid-with model as |currentModel|}}
+    {{#each currentModel as |contributor|}}
+<div class='card'>
+    {{#link-to "contributing.contributor" contributor}}
+    <img class="contributor-image-small" alt="{{contributor.name}}"
+             src="{{contributor.avatar}}" data-contributor-id={{contributor.handle}} >
+    {{/link-to}}
+  <div class='card-block'>
+      <span class='card-row card-name'>{{contributor.name}}</span>
+      <span class='card-row card-handle divider'>{{contributor.handle}}</span>
+  </div>
+</div>
+    {{/each}}
+  {{/liquid-with}}
 </div>

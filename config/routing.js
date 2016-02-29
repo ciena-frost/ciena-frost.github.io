@@ -99,6 +99,7 @@ module.exports = [
 ]}, // 06-UI-components
 {id: 'contributing', alias: 'Contributing', type: 'category', route: 'contributing', items: [
 	{id: 'frost-guide', alias: 'Frost Guide', type: 'route', route: 'contributing.frost-guide'},
-	{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'}
+	{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'},
+  	{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributor'},
 ]}, // 08-contributing
 ];
