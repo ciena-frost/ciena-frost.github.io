@@ -258,7 +258,7 @@ contributorMap.forEach(function (value, key) {
 //                    \n</div>"
 //
 //fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
-fs.writeFileSync("app/utils/contributors.json", JSON.stringify(contributorJSON))
+fs.writeFileSync("public/data/contributors.json", JSON.stringify(contributorJSON))
 
 function addDedicatedContributor(user, repo) {
   if (!contributorMap.has(user.login)) {
