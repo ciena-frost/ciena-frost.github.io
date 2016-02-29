@@ -1,22 +1,20 @@
 .card {
   float: left;
   padding: 20px;
-  height: 200px;
-  width: 325px;
   display: inline;
-}
-
-.card .avatar {
-  float: left;
-  width: 75px;
-  height: 75px;
 }
 
 .card .card-block {
   position: relative;
-  float: left;
-  width: 210px;
+  float: right;
+  width: 150px;
   padding-left: 20px;
+}
+
+.card .card-block-large {
+  float: left;
+  padding-left: 20px;
+  max-width: 500px;
 }
 
 .card .card-row {
@@ -26,6 +24,17 @@
 
 .card .card-name {
   font-size: 18px;
+  font-weight: bold;
+}
+
+.card .card-row-large{
+  display: block;
+  position: relative;
+  font-size: 18px;
+}
+
+.card .card-name-large{
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -50,4 +59,77 @@
   border: 1px solid #ddd;
   border-radius: .25em;
   margin-top: 5px;
+}
+
+.contributor-image-large {
+    width: 12.5em;
+    height: 12.5em;
+    background: #F06034;
+    -webkit-border-radius: 6.25em;
+    -moz-border-radius: 6.25em;
+    border-radius: 6.25em;
+    box-shadow: 0px 0px 0px 2px #F06034;
+    position: relative;
+    float:left;
+    margin-bottom: 20px; 
+}
+
+.contributor-image-small {
+    margin-bottom: 25px;
+    margin-left: 25px;    
+    width: 6.5em;
+    height: 6.5em;
+    background: #F06034;
+    -webkit-border-radius: 6.25em;
+    -moz-border-radius: 6.25em;
+    border-radius: 6.25em;
+    box-shadow: 0px 0px 0px 2px #F06034;
+    position: relative;
+}
+
+.contributor-icons {
+    .contributor-image-small {
+        cursor: pointer;
+        transition: transform 100ms;
+        &:hover {
+            transform: translateY(-6px)
+        }
+    }    
+}
+
+.contributor-icons > .liquid-container {
+    overflow: visible
+}
+
+
+.contributor-btn {
+    &:before {
+        position: static;
+        font-family: 'FontAwesome';
+        content: '\f0d9';
+        color: #fff;
+        margin-right: 0.5em;
+    }
+}
+
+.contributor-list-inner {
+    button:before {
+        content: ''
+    }
+    button:after {
+        content: ''
+    }
+    button {
+        padding: 18px 24px;
+    }
+    .top {
+        cursor: pointer;
+    }
+    input, textarea {
+        line-height: 36px;
+    }
+}
+
+.contributor-profile {
+  padding: 20px;
 }
