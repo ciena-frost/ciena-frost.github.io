@@ -4,11 +4,11 @@
 <div class='card'>
     {{#link-to "contributing.contributor" contributor}}
     <img class="contributor-image-small" alt="{{contributor.name}}"
-             src="{{contributor.avatar}}" data-contributor-id={{contributor.handle}} >
+             src="{{contributor.avatar_url}}" data-contributor-id={{contributor.login}} >
     {{/link-to}}
   <div class='card-block'>
       <span class='card-row card-name'>{{contributor.name}}</span>
-      <span class='card-row card-handle divider'>{{contributor.handle}}</span>
+      <span class='card-row card-handle divider'>{{contributor.login}}</span>
   </div>
 </div>
     {{/each}}

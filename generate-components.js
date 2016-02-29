@@ -10,15 +10,17 @@ String.prototype.replaceAll = function (search, replacement) {
   var target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
 };
-
-Array.prototype.contains = function(obj) {
-    var i = this.length;
-    while (i--) {
-        if (this[i] === obj) {
-            return true;
-        }
+Set.prototype.toJSON = function toJSON() {
+  return Array.from(this);
+}
+Array.prototype.contains = function (obj) {
+  var i = this.length;
+  while (i--) {
+    if (this[i] === obj) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 var options = {
@@ -148,7 +150,7 @@ body.forEach(function (repo) {
               } else {
                 template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
               }
-            }else {
+            } else {
               contributorDuplicates++
             }
           }
@@ -211,33 +213,33 @@ var template_content = "<div class='md'>\n\t";
 var contributorJSON = []
 contributorMap.forEach(function (value, key) {
   contributorJSON.push(value);
-//  template_content += "\n\t\t<div class='card'>"
-//  template_content += "\n\t\t\t<div class='avatar'>"
-//  template_content += "\n\t\t\t\t<a href='" + value.html_url + "'>"
-//  template_content += "\n\t\t\t\t\t<img src='" + value.avatar_url + "' height='75' width='75'>"
-//  template_content += "\n\t\t\t\t</a>"
-//  template_content += "\n\t\t\t</div>"
-//  template_content += "\n\t\t\t<div class='card-block'>"
-//  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (value.name !== null ? value.name : value.login) + "</span>"
-//  template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
-//  var counter = 0
-//  Array.from(value.repos.values()).forEach(function (item) {
-//    counter++
-//    if (counter === 3) {
-//      template_content += "{{#show-more}}"
-//    }
-//    if (counter === Array.from(value.repos.values()).length) {
-//      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
-//    } else {
-//      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
-//    }
-//
-//  })
-//  if (counter >= 3) {
-//    template_content += "{{/show-more}}"
-//  }
-//  template_content += "\n\t\t\t</div>"
-//  template_content += "\n\t\t</div>"
+  //  template_content += "\n\t\t<div class='card'>"
+  //  template_content += "\n\t\t\t<div class='avatar'>"
+  //  template_content += "\n\t\t\t\t<a href='" + value.html_url + "'>"
+  //  template_content += "\n\t\t\t\t\t<img src='" + value.avatar_url + "' height='75' width='75'>"
+  //  template_content += "\n\t\t\t\t</a>"
+  //  template_content += "\n\t\t\t</div>"
+  //  template_content += "\n\t\t\t<div class='card-block'>"
+  //  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (value.name !== null ? value.name : value.login) + "</span>"
+  //  template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
+  //  var counter = 0
+  //  Array.from(value.repos.values()).forEach(function (item) {
+  //    counter++
+  //    if (counter === 3) {
+  //      template_content += "{{#show-more}}"
+  //    }
+  //    if (counter === Array.from(value.repos.values()).length) {
+  //      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
+  //    } else {
+  //      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
+  //    }
+  //
+  //  })
+  //  if (counter >= 3) {
+  //    template_content += "{{/show-more}}"
+  //  }
+  //  template_content += "\n\t\t\t</div>"
+  //  template_content += "\n\t\t</div>"
 })
 
 //template_content += "\n\t\t<div class='footer'> \

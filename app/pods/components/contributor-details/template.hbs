@@ -1,10 +1,10 @@
 <div class='card'>
   <img class="contributor-image-large" alt="{{model.name}}"
-       src="{{model.avatar}}" data-contributor-id={{model.handle}} >
+       src="{{model.avatar_url}}" data-contributor-id={{model.login}} >
 
 <div class='card-block-large'>
     <span class='card-row card-name-large'>{{model.name}}</span>
-    <span class='card-row-large card-handle divider '>{{model.handle}}</span>
+    <span class='card-row-large card-handle divider '>{{model.login}}</span>
     {{#each model.repos as |repo|}}
     {{repo}}, 
     {{/each}}

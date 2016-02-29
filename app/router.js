@@ -30,7 +30,7 @@ Router.map(function () {
     this.route('contributors', function() {
 
     });
-    this.route('contributor', { path: '/contributors/:handle' });
+    this.route('contributor', { path: '/contributors/:login' });
   })
 
   this.route('overview', {
