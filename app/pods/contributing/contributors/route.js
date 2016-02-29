@@ -1,25 +1,9 @@
 import Ember from 'ember';
+//import Contributors from 'frost-guide/utils/contributors'
 
 export default Ember.Route.extend({
   model: function () {
-    return [{
-      handle: 'laflower',
-      name: 'Justin Lafleur',
-      avatar: 'https://avatars.githubusercontent.com/u/11548575?v=3',
-      repos: ['frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css']
-      }, {
-      handle: 'white613',
-      name: 'Eric White',
-      avatar: 'https://avatars.githubusercontent.com/u/11548575?v=3',
-      repos: ['frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css']
-      }, {
-      handle: 'ewhit613',
-      name: 'Eric White',
-      avatar: 'https://avatars.githubusercontent.com/u/11548575?v=3',
-      repos: ['frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css']
-      }, {
-      handle: 'ewhite613',
-      name: 'Eric White',
+    return $.getJSON("data/contributors.json")
       avatar: 'https://avatars.githubusercontent.com/u/11548575?v=3',
       repos: ['frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css']
       }, {
@@ -40,9 +24,6 @@ export default Ember.Route.extend({
       }, {
       handle: 'ewhe613',
       name: 'Eric White',
-      avatar: 'https://avatars.githubusercontent.com/u/11548575?v=3',
-      repos: ['frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css', 'frost-button', 'frost-css']
-      }]
   },
   breadCrumb: {
     title: 'Contributors'
