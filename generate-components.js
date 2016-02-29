@@ -11,14 +11,14 @@ String.prototype.replaceAll = function (search, replacement) {
   return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-Array.prototype.contains = function(obj) {
-    var i = this.length;
-    while (i--) {
-        if (this[i] === obj) {
-            return true;
-        }
+Array.prototype.contains = function (obj) {
+  var i = this.length;
+  while (i--) {
+    if (this[i] === obj) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 var options = {
@@ -143,12 +143,15 @@ body.forEach(function (repo) {
           if (userId != undefined) {
             var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
             if (componentContributors.contains(userJSON) === false) {
+              if (userJSON.login === "travis-ci-ciena") {
+                return
+              }
               if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
                 template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
               } else {
                 template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
               }
-            }else {
+            } else {
               contributorDuplicates++
             }
           }
@@ -161,6 +164,9 @@ body.forEach(function (repo) {
           return
         }
         var userJSON = requestJSON(user.url);
+        if (userJSON.login === "travis-ci-ciena") {
+          return
+        }
         if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
           template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
         } else {
@@ -210,6 +216,9 @@ frostGuideContributors.forEach(function (user) {
 var template_content = "<div class='md'>\n\t";
 
 contributorMap.forEach(function (value, key) {
+  if (value.login === "travis-ci-ciena") {
+    return;
+  }
   template_content += "\n\t\t<div class='card'>"
   template_content += "\n\t\t\t<div class='avatar'>"
   template_content += "\n\t\t\t\t<a href='" + value.html_url + "'>"
@@ -434,7 +443,7 @@ function occurrences(string, subString, allowOverlapping) {
 }
 
 function emberInstall(repo) {
-  if (repo === "ember-frost-notifier" || repo === "ember-frost-bunsen") {
+  if (repo === "ember-frost-notifier") {
     //until issue is resolved
     return
   }
