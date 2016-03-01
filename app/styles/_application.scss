@@ -86,6 +86,7 @@ clear: both;
   margin-left: 20px;
   margin-right: 20px;
   overflow-x: scroll;
+  @include display(flex);
 }
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
