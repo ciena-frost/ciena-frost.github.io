@@ -63,7 +63,7 @@ function dive(dir) {
 
       dive(path);
       if (filename.replaceAll("[0-9][0-9][-]", "") === "contributing"){
-        routing_string += ",\n\t{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'}"
+        routing_string += ",\n\t{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'},\n\t{id: 'contributor', alias: 'Contributor', type: 'route', route: 'contributing.contributor'}"
       }
       routing_string += "\n]}, // " + filename + "\n"
       if (DirectoryDepth === 1) {
@@ -87,11 +87,13 @@ function dive(dir) {
           path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
           "'}";
       } else {
+
         routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
           toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
           "', type: 'route', route: '" +
           path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
           "'},\n";
+
       }
       var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
 
