@@ -4,6 +4,10 @@
   display: inline;
 }
 
+.card-large{
+  height: 100vh;
+}
+
 .card .card-block {
   position: relative;
   float: right;
@@ -64,11 +68,11 @@
 .contributor-image-large {
     width: 12.5em;
     height: 12.5em;
-    background: #F06034;
+    background: $frost-color-blue-1;
     -webkit-border-radius: 6.25em;
     -moz-border-radius: 6.25em;
     border-radius: 6.25em;
-    box-shadow: 0px 0px 0px 2px #F06034;
+    box-shadow: 0px 0px 0px 1px $frost-color-blue-1;
     position: relative;
     float:left;
     margin-bottom: 20px; 
@@ -79,11 +83,11 @@
     margin-left: 25px;    
     width: 6.5em;
     height: 6.5em;
-    background: #F06034;
+    background: $frost-color-blue-1;
     -webkit-border-radius: 6.25em;
     -moz-border-radius: 6.25em;
     border-radius: 6.25em;
-    box-shadow: 0px 0px 0px 2px #F06034;
+    box-shadow: 0px 0px 0px 1px $frost-color-blue-1;
     position: relative;
 }
 
