@@ -36,6 +36,8 @@ body {
 }
 
 .guide-content {
+  width: calc(100% - 220px);
+  
   .frost-tabs {
   @include flex(1);
   @include display-box;
