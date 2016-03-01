@@ -1,7 +1,7 @@
 {
   "name": "frost-guide",
   "version": "0.0.0",
-  "roadmapLastUpdate": "2016-02-12",
+  "roadmapLastUpdate": "2016-02-25",
   "description": "Frost guide",
   "private": true,
   "directories": {
@@ -72,7 +72,7 @@
     "ember-frost-modal-input": "0.0.1",
     "ember-frost-navigation": "0.0.2",
     "ember-frost-notifier": "1.0.2",
-    "ember-frost-object-details": "0.0.1",
+    "ember-frost-password": "0.0.2",
     "ember-frost-password": "0.0.2",
     "ember-frost-scroll": "0.3.0",
     "ember-frost-select": "1.1.0",
@@ -92,9 +92,9 @@
     "eslint": "^1.10.3",
     "eslint-config-frost-standard": "^0.2.4",
     "frost-css": "~1.2.3",
-    "frost-svg": "~1.1.0",
-    "liquid-fire": "^0.22.0",
-    "markdown-code-highlighting": "0.0.6",
+    "frost-svg": "file:frost-components/frost-svg",
+    "liquid-fire": "0.22.0",
+        "markdown-code-highlighting": "0.0.6",
     "sync-request": "^3.0.0"
   }
 }

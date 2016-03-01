@@ -81,7 +81,10 @@ body.forEach(function (repo) {
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
       demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
       demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
+      demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
+
       var content = getDemoContent(demo_content_url);
+      var application_content = getDemoApplicationContent(demo_application_content_url);
       var style = GetDemoStyle(demo_style_url);
       //create route.js
       if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
@@ -126,7 +129,7 @@ body.forEach(function (repo) {
       template_content += demoParentDirectory + "/README')}}"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}"
-      template_content += "\n\t\t<div>" + content.template_hbs + "</div>\n"
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs) + "</div>\n"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n{{/frost-tabs}}"
       template_content += "\n\t<div class='footer'>\n"
@@ -145,6 +148,9 @@ body.forEach(function (repo) {
           if (userId != undefined) {
             var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
             if (componentContributors.contains(userJSON) === false) {
+              if (userJSON.login === "travis-ci-ciena") {
+                return
+              }
               if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
                 template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
               } else {
@@ -163,6 +169,9 @@ body.forEach(function (repo) {
           return
         }
         var userJSON = requestJSON(user.url);
+        if (userJSON.login === "travis-ci-ciena") {
+          return
+        }
         if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
           template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
         } else {
@@ -212,6 +221,9 @@ frostGuideContributors.forEach(function (user) {
 var template_content = "<div class='md'>\n\t";
 var contributorJSON = []
 contributorMap.forEach(function (value, key) {
+  if (value.login === "travis-ci-ciena") {
+    return;
+  }
   contributorJSON.push(value);
   //  template_content += "\n\t\t<div class='card'>"
   //  template_content += "\n\t\t\t<div class='avatar'>"
@@ -320,6 +332,38 @@ function getDemoContent(url) {
     route_js: route_js,
     controller_js: controller_js
   };
+}
+
+function getDemoApplicationContent(url) {
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    var template_hbs;
+    var route_js;
+    var controller_js;
+
+    body.forEach(function (item) {
+      if (item.name == 'template.hbs') {
+        template_hbs = getFile(item.url);
+        //      console.log(template_hbs);
+        //      console.log("Template file: " + item.url );
+      } else if (item.name == 'route.js') {
+        route_js = getFile(item.url);
+      } else if (item.name == 'controller.js') {
+        controller_js = getFile(item.url);
+      }
+    });
+    return {
+      template_hbs: template_hbs,
+      route_js: route_js,
+      controller_js: controller_js
+    };
+  } catch(err) {
+    return {
+      template_hbs: "{{outlet}}"
+    }
+  }
+
 }
 
 function GetDemoStyle(url) {

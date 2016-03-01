@@ -183,7 +183,7 @@ function getContributorsOfFile(filePath){
   var linesAddedDeletedRegexExp = /([0-9]+)\s+([0-9]+)\s+markdown/i;
   arr_log.forEach(function(commit){
     var author = commit.match(/Author: ([a-z|\s|,]*)/i);
-    if (author !== null){
+    if (author !== null  && author[1] !== "travis-ci-ciena"){
       var name = formatName(author[1]);
       var linesAddedDeletedMatches = commit.match(/([0-9]+)\s+([0-9]+)\s+markdown/i);
       if (contributorMap.has(name)){

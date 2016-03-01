@@ -26,6 +26,10 @@
     }
   }
 }
+
+.content-col .confluence-embedded-image{
+  max-width: 100%;
+}
 .guide-sidebar-mobile {
   position: absolute;
   height: 100%;
@@ -41,7 +45,7 @@
   @include flex-direction(column);
 }
 
-.guide-content .frost-info-bar {
+.guide-content .frost-info-bar.frost-guide{
   background-color: $frost-color-blue-1;
   min-height: 90px;
 }
@@ -49,17 +53,17 @@
 .footer, .push {
 clear: both;
 }
-.guide-content .frost-info-bar .title .primary-title {
+.guide-content .frost-info-bar .frost-guide .title .primary-title {
   color: $frost-color-white;
 }
 
-.guide-content .frost-info-bar .title .sub-title {
+.guide-content .frost-info-bar .title .frost-guide .sub-title {
   color: $frost-color-white;
   font-size: 90%;
   text-transform: capitalize;
 }
 
-.guide-content .frost-info-bar .action .frost-select {
+.guide-content .frost-info-bar .frost-guide .action .frost-select {
   width: 100px;
 }
 
@@ -82,6 +86,7 @@ clear: both;
   margin-left: 20px;
   margin-right: 20px;
   overflow-x: scroll;
+  @include display(flex);
 }
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
