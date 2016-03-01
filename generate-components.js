@@ -79,7 +79,10 @@ body.forEach(function (repo) {
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
       demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
       demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
+      demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
+
       var content = getDemoContent(demo_content_url);
+      var application_content = getDemoApplicationContent(demo_application_content_url);
       var style = GetDemoStyle(demo_style_url);
       //create route.js
       if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
@@ -124,7 +127,7 @@ body.forEach(function (repo) {
       template_content += demoParentDirectory + "/README')}}"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}"
-      template_content += "\n\t\t<div>" + content.template_hbs + "</div>\n"
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs) + "</div>\n"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n{{/frost-tabs}}"
       template_content += "\n\t<div class='footer'>\n"
@@ -326,6 +329,38 @@ function getDemoContent(url) {
     route_js: route_js,
     controller_js: controller_js
   };
+}
+
+function getDemoApplicationContent(url) {
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    var template_hbs;
+    var route_js;
+    var controller_js;
+
+    body.forEach(function (item) {
+      if (item.name == 'template.hbs') {
+        template_hbs = getFile(item.url);
+        //      console.log(template_hbs);
+        //      console.log("Template file: " + item.url );
+      } else if (item.name == 'route.js') {
+        route_js = getFile(item.url);
+      } else if (item.name == 'controller.js') {
+        controller_js = getFile(item.url);
+      }
+    });
+    return {
+      template_hbs: template_hbs,
+      route_js: route_js,
+      controller_js: controller_js
+    };
+  } catch(err) {
+    return {
+      template_hbs: "{{outlet}}"
+    }
+  }
+
 }
 
 function GetDemoStyle(url) {
