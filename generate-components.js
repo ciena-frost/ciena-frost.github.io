@@ -162,6 +162,8 @@ body.forEach(function (repo) {
           }
 
         })
+      }else{
+        packageJSON.contributors = []
       }
       componentContributors.forEach(function (user) {
         contributorsCount++;
