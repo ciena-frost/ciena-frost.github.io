@@ -105,7 +105,14 @@ body.forEach(function (repo) {
         content.route_js
       );
       //import route and use
-      var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
+      try {
+        var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
+      } catch (e){
+        console.log(chalk.red.bold("route.js does not exist. This is probably because" +
+                                   " the markdown file for the description tab has not been created. Create one, run" +
+                                   " generate-pages-from-markdown.js to create route.js and then run this script again."));
+        console.log("\n\n" + e);
+      }
       route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\n export default DemoRoute.extend")
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
 
