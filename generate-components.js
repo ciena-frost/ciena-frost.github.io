@@ -34,10 +34,14 @@ var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', option
 var body = JSON.parse(res.getBody());
 var contributorMap = new Map();
 
+//Mirage Maps   Map Key = <path> Value = <ModuleName>       In main funcition call <ModuleName>()
+var scenariosToImportMap = new Map();
+var configstoImportMap = new Map();
+
+
 body.forEach(function (repo) {
   console.log(repo.name);
   if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
-
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
@@ -46,7 +50,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-    emberInstall(repo.name);
+    //    emberInstall(repo.name);
 
     if (packageJSON.contributors != undefined) {
       packageJSON.contributors.forEach(function (user) {
@@ -79,13 +83,20 @@ body.forEach(function (repo) {
     readme_content = getFile(readme_url);
 
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
-      demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
-      demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
-
+      var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+      var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
+      var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
+      var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
+      var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
+      getDemoModels(demo_models_url);
+      getDemoMirage(demo_mirage_url, scenariosToImportMap, configstoImportMap, repo.name);
       var content = getDemoContent(demo_content_url);
       var application_content = getDemoApplicationContent(demo_application_content_url);
       var style = GetDemoStyle(demo_style_url);
+
+
+
+
       //create route.js
       if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
         mkdirpSync(("app/pods/" + demoParentDirectory + "/index").toLowerCase());
@@ -93,6 +104,10 @@ body.forEach(function (repo) {
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js",
         content.route_js
       );
+      //import route and use
+      var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
+      route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\n export default DemoRoute.extend")
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
 
       //controller
       if (content.controller_js !== undefined) {
@@ -162,7 +177,7 @@ body.forEach(function (repo) {
           }
 
         })
-      }else{
+      } else {
         packageJSON.contributors = []
       }
       componentContributors.forEach(function (user) {
@@ -227,55 +242,36 @@ contributorMap.forEach(function (value, key) {
     return;
   }
   contributorJSON.push(value);
-  //  template_content += "\n\t\t<div class='card'>"
-  //  template_content += "\n\t\t\t<div class='avatar'>"
-  //  template_content += "\n\t\t\t\t<a href='" + value.html_url + "'>"
-  //  template_content += "\n\t\t\t\t\t<img src='" + value.avatar_url + "' height='75' width='75'>"
-  //  template_content += "\n\t\t\t\t</a>"
-  //  template_content += "\n\t\t\t</div>"
-  //  template_content += "\n\t\t\t<div class='card-block'>"
-  //  template_content += "\n\t\t\t\t<span class='card-row card-name'>" + (value.name !== null ? value.name : value.login) + "</span>"
-  //  template_content += "\n\t\t\t\t<span class='card-row card-handle divider'>" + value.login + "</span>"
-  //  var counter = 0
-  //  Array.from(value.repos.values()).forEach(function (item) {
-  //    counter++
-  //    if (counter === 3) {
-  //      template_content += "{{#show-more}}"
-  //    }
-  //    if (counter === Array.from(value.repos.values()).length) {
-  //      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + "</span>"
-  //    } else {
-  //      template_content += "\n\t\t\t\t<span class='card-row card-repo'>" + item + ", </span>"
-  //    }
-  //
-  //  })
-  //  if (counter >= 3) {
-  //    template_content += "{{/show-more}}"
-  //  }
-  //  template_content += "\n\t\t\t</div>"
-  //  template_content += "\n\t\t</div>"
 })
-
-//template_content += "\n\t\t<div class='footer'> \
-//                    \n\t\t\t<div class='info'> \
-//                    \n\t\t\t\t<div> \
-//                    \n\t\t\t\t\t<div class='contributors'> \
-//                    \n\t\t\t\t\t\t<span class='footerHeading'>Contributors</span>Justin Lafleur - Eric White\
-//                    \n\t\t\t\t\t</div> \
-//                    \n\t\t\t\t\t<div class='connect'> \
-//                    \n\t\t\t\t\t\t<span class='footerHeading'>Connect</span> \
-//                    \n\t\t\t\t\t\tGithub Button here \
-//                    \n\t\t\t\t\t</div> \
-//                    \n\t\t\t\t</div> \
-//                    \n\t\t\t\t<br/> \
-//                    \n\t\t\t</div> \
-//                    \n\t\t\t<div class='copyright'></div> \
-//                    \n\t</div> \
-//                    \n</div>"
-//
-//fs.writeFileSync("app/pods/contributing/contributors/template.hbs", template_content);
 fs.writeFileSync("public/data/contributors.json", JSON.stringify(contributorJSON))
 
+//Build Mirage Maps Key = <path> Value = <ModuleName>
+var defaultImportsJS = ""
+var defaultBodyJS = "export default function (server) {\n"
+scenariosToImportMap.forEach(function (value, key) {
+  defaultImportsJS += "import " + value + " from " + "'./" + key + "'\n"
+  defaultBodyJS += "\t" + value + "(server)\n"
+})
+defaultBodyJS += "}\n"
+fs.writeFileSync("app/mirage/scenarios/default.js", defaultImportsJS + defaultBodyJS)
+
+var configImportsJS = ""
+var configBodyJS = "export default function () {\n"
+configBodyJS += ` if (config && config.isProd){
+    this.namespace = "https://ciena-frost.github.io"
+  }else{
+    this.namespace = 'https://localhost:4200/'
+  }
+`
+configstoImportMap.forEach(function (value, key) {
+  configImportsJS += "import " + value + " from " + "'./" + key + "'\n"
+  configBodyJS += "\t" + value + ".call(this)\n"
+})
+configBodyJS += "}\n"
+configImportsJS += "import config from '../config/environment'\n"
+fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
+
+/////////////////////////// FUNCTIONS ////////////////////////////////////
 function addDedicatedContributor(user, repo) {
   if (!contributorMap.has(user.login)) {
     user.repos = new Set()
@@ -287,6 +283,61 @@ function addDedicatedContributor(user, repo) {
     currUser.repos.add(repo)
     contributorMap.set(user.login, currUser)
   }
+}
+
+function getDemoModels(url) {
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    body.forEach(function (model) {
+      if (model.name.endsWith('.js')) {
+        var contents = getFile(model.url)
+        fs.writeFileSync("app/models/" + model.name, contents)
+      }
+    })
+  } catch (err) {
+    console.log(chalk.red.bold(err))
+  }
+}
+
+function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) {
+  //  try {
+  mkdirpSync("app/mirage/fixtures")
+  mkdirpSync("app/mirage/factories")
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  body.forEach(function (mirage) {
+      if (mirage.type === "dir") {
+        var folderContent = getFolder(mirage.url, mirage.name)
+          //        console.log(folderContent)
+        folderContent.forEach(function (value, key) {
+          if (key.indexOf("fixtures/") > -1 || key.indexOf("factories/") > -1) {
+            fs.writeFileSync("app/mirage/" + key, value)
+          } else if (key.indexOf("scenarios/default.js") > -1) {
+            var path = "app/mirage/scenarios/" + repoName + "-default.js"
+            fs.writeFileSync(path, value)
+            var val = repoName.replace(/-(.)/g, function (m, $1) {
+              return $1.toUpperCase()
+            })
+            scenariosToImportMap.set(repoName + "-default", val)
+          }
+        })
+      } else {
+        if (mirage.name === "config.js") {
+          var config_Content = getFile(mirage.url)
+          var path = "app/mirage/" + repoName + "-config.js"
+          fs.writeFileSync(path, config_Content)
+          var val = repoName.replace(/-(.)/g, function (m, $1) {
+            return $1.toUpperCase()
+          })
+          configstoImportMap.set(repoName + "-config", val)
+        }
+      }
+
+    })
+    //  } catch (err) {
+    //    console.log(chalk.red.bold(err))
+    //  }
 }
 
 function getPackageJSON(url) {
@@ -309,6 +360,25 @@ function getFile(url) {
   var buf = new Buffer(body.content, 'base64')
   return buf.toString("ascii");
 
+}
+
+function getFolder(url, parent) {
+  var contents = new Map()
+  var res = request('GET', url, options)
+  var body = JSON.parse(res.getBody())
+  body.forEach(function (item) {
+    console.log(parent + "/" + item.name)
+    if (item.type === "dir") {
+      contents = new Map(function* () {
+        yield * contents;
+        yield * getFolder(item.url, parent + "/" + item.name);
+      }())
+    } else if (item.type === "file") {
+      var fileContent = getFile(item.url);
+      contents.set(parent + "/" + item.name, fileContent)
+    }
+  })
+  return contents
 }
 
 function getDemoContent(url) {
@@ -360,7 +430,7 @@ function getDemoApplicationContent(url) {
       route_js: route_js,
       controller_js: controller_js
     };
-  } catch(err) {
+  } catch (err) {
     return {
       template_hbs: "{{outlet}}"
     }
