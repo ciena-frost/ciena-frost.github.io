@@ -111,7 +111,7 @@ body.forEach(function (repo) {
         console.log(chalk.red.bold("route.js does not exist. This is probably because" +
                                    " the markdown file for the description tab has not been created. Create one, run" +
                                    " generate-pages-from-markdown.js to create route.js and then run this script again."));
-        console.log("\n\n" + e);
+        throw e;
       }
       route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\n export default DemoRoute.extend")
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
@@ -311,8 +311,13 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
   //  try {
   mkdirpSync("app/mirage/fixtures")
   mkdirpSync("app/mirage/factories")
+  try{
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
+  }catch(err) {
+    console.log(chalk.red.bold(err))
+    return;
+  }
   body.forEach(function (mirage) {
       if (mirage.type === "dir") {
         var folderContent = getFolder(mirage.url, mirage.name)
