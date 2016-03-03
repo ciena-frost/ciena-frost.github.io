@@ -240,7 +240,9 @@ body.forEach(function (repo) {
     // Get Demo Components
     try {
       var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
+      getDemoComponents(components_url)
     } catch (err) {
+      console.log(chalk.red.bold("No demo components to import"))
       console.log(chalk.red.bold(err))
     }
 
@@ -306,14 +308,16 @@ function addDedicatedContributor(user, repo) {
 }
 
 function getDemoComponents(url) {
-  var components = []
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   body.forEach(function(component){
     if (component.type === "dir"){
       var content = getFolder(component.url, component.name)
       var path = "app/pods/components/" + component.name;
-    fs.writeFileSync()
+      mkdirpSync(path);
+      content.forEach(function(value, key){
+        fs.writeFileSync("app/pods/components/" + key, value)
+      })
     }
   })
 }
