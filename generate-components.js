@@ -90,7 +90,12 @@ body.forEach(function (repo) {
       var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
       getDemoModels(demo_models_url);
       getDemoMirage(demo_mirage_url, scenariosToImportMap, configstoImportMap, repo.name);
-      var content = getDemoContent(demo_content_url);
+      try {
+        var content = getDemoContent(demo_content_url);
+      } catch (err) {
+        console.log(err)
+        return
+      }
       var application_content = getDemoApplicationContent(demo_application_content_url);
       var style = GetDemoStyle(demo_style_url);
 
@@ -107,10 +112,10 @@ body.forEach(function (repo) {
       //import route and use
       try {
         var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
-      } catch (e){
+      } catch (e) {
         console.log(chalk.red.bold("route.js does not exist. This is probably because" +
-                                   " the markdown file for the description tab has not been created. Create one, run" +
-                                   " generate-pages-from-markdown.js to create route.js and then run this script again."));
+          " the markdown file for the description tab has not been created. Create one, run" +
+          " generate-pages-from-markdown.js to create route.js and then run this script again."));
         throw e;
       }
       route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\n export default DemoRoute.extend")
@@ -229,8 +234,13 @@ body.forEach(function (repo) {
       console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
     }
 
+    // Get Demo Components
+    try {
+      var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
+    } catch (err) {
+      console.log(chalk.red.bold(err))
+    }
 
-    // console.log(readme_content);
   }
 });
 
@@ -292,6 +302,19 @@ function addDedicatedContributor(user, repo) {
   }
 }
 
+function getDemoComponents(url) {
+  var components = []
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  body.forEach(function(component){
+    if (component.type === "dir"){
+      var content = getFolder(component.url, component.name)
+      var path = "app/pods/components/" + component.name;
+    fs.writeFileSync()
+    }
+  })
+}
+
 function getDemoModels(url) {
   try {
     var res = request('GET', url, options);
@@ -311,10 +334,10 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
   //  try {
   mkdirpSync("app/mirage/fixtures")
   mkdirpSync("app/mirage/factories")
-  try{
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
-  }catch(err) {
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+  } catch (err) {
     console.log(chalk.red.bold(err))
     return;
   }
@@ -379,7 +402,6 @@ function getFolder(url, parent) {
   var res = request('GET', url, options)
   var body = JSON.parse(res.getBody())
   body.forEach(function (item) {
-    console.log(parent + "/" + item.name)
     if (item.type === "dir") {
       contents = new Map(function* () {
         yield * contents;
