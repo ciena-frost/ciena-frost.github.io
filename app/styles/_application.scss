@@ -85,7 +85,7 @@ clear: both;
   position: relative;
   margin-left: 20px;
   margin-right: 20px;
-  overflow-x: scroll;
+  overflow-x: auto;
   @include display(flex);
 }
 @media screen and (-ms-high-contrast: active),
@@ -204,7 +204,7 @@ and also iPads specifically.
 
 @media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
   .guide-content .guide-markdown {
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
