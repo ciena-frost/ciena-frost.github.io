@@ -106,10 +106,11 @@ body.forEach(function (repo) {
       if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
         mkdirpSync(("app/pods/" + demoParentDirectory + "/index").toLowerCase());
       }
-      if(content.route_js != undefined)
+      if(content.route_js !== undefined){
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", content.route_js);
+      }
       else{
-        fs.writeFileSync("import Ember from 'ember'\n\n export default Ember.Route.extend({\n\n})");
+        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\n export default Ember.Route.extend({\n\n})");
       }
       //import route and use
       try {
