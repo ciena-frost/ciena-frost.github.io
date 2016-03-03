@@ -73,6 +73,13 @@ clear: both;
 
 .guide-content .content-col {
   padding-bottom: 20px;
+  min-width: 400px;
+  max-width: 1000px;
+}
+
+.md .tab-nav ~ div{
+  min-width: 400px;
+  max-width: 1000px;
 }
 
 .guide-content .guide-markdown {
