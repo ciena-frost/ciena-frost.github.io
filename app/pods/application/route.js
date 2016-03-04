@@ -15,7 +15,6 @@ export default Ember.Route.extend({
       if (!this.get('media.isMobile')) {
         $('.guide-sidebar').height($("[class='content']").height())
       }
-      console.log("Eric is cray")
         /* push footer to bottom of viewport if page has no y-overflow*/
       if ($('.footer').length) {
         var docHeight = $(window).height()

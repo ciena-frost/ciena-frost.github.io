@@ -45,7 +45,6 @@ export default Ember.Component.extend({
   classNames: ['frost-navigation-sidebar-menu'],
   selectedCategory: null,
   filteredItems: Ember.computed('items', function () {
-    console.log(this.get('items'))
     return this.get('items')
   }),
   didInitAttrs() {
