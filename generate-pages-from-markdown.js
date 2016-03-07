@@ -117,18 +117,16 @@ function dive(dir) {
         if (this.controller.get('section') != null) {
           try {
             $('html, body').animate({
-              scrollTop: $("#" + this.controller.get('section')).offset().top - (0.125 * $(window).height())
+              scrollTop: $('#' + this.controller.get('section')).offset().top - (0.125 * $(window).height())
             }, 200)
           } catch (err) {
-
+            // do nothing
           }
         }
         const controller = this.controllerFor('application')
         controller.get('target').send('beautify')
       })
-
     }
-
   }`
 
       route_js_string += "\n})\n"

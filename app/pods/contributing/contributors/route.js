@@ -1,11 +1,10 @@
-import Ember from 'ember';
-//import Contributors from 'frost-guide/utils/contributors'
+import Ember from 'ember'
 
 export default Ember.Route.extend({
   model: function () {
-    return $.getJSON("data/contributors.json")
+    return $.getJSON('data/contributors.json')
   },
   breadCrumb: {
     title: 'Contributors'
   }
-});
+})

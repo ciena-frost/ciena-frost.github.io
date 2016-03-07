@@ -9,3 +9,4 @@ generate-pages-from-markdown.js
 config/routing.js
 app/pods/components/frost-navigation-sidebar-menu/component.js
 vendor/**/*
+app/mirage/**/*

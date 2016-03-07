@@ -50,7 +50,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-    //    emberInstall(repo.name);
+    emberInstall(repo.name);
 
     if (packageJSON.contributors != undefined) {
       packageJSON.contributors.forEach(function (user) {
@@ -106,10 +106,9 @@ body.forEach(function (repo) {
       if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
         mkdirpSync(("app/pods/" + demoParentDirectory + "/index").toLowerCase());
       }
-      if(content.route_js !== undefined){
+      if (content.route_js !== undefined) {
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", content.route_js);
-      }
-      else{
+      } else {
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\n export default Ember.Route.extend({\n\n})");
       }
       //import route and use
@@ -310,23 +309,23 @@ function addDedicatedContributor(user, repo) {
 function getDemoComponents(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
-  var BreakException= {};
+  var BreakException = {};
 
-  body.forEach(function(component){
-    if (component.type === "dir"){
+  body.forEach(function (component) {
+    if (component.type === "dir") {
       var content = getFolder(component.url, component.name)
       var path = "app/pods/components/" + component.name;
       mkdirpSync(path);
-      content.forEach(function(value, key){
-          if (key.indexOf("component.js") > -1){
-            var parent = key.split('/')[0]
-            content.forEach(function(value, key){
-             if (key.indexOf(parent) > -1){
-               fs.writeFileSync("app/pods/components/" + key, value)
-             }
-            })
-          }
-//        fs.writeFileSync("app/pods/components/" + key, value)
+      content.forEach(function (value, key) {
+        if (key.indexOf("component.js") > -1) {
+          var parent = key.split('/')[0]
+          content.forEach(function (value, key) {
+            if (key.indexOf(parent) > -1) {
+              fs.writeFileSync("app/pods/components/" + key, value)
+            }
+          })
+        }
+        //        fs.writeFileSync("app/pods/components/" + key, value)
       })
     }
   })

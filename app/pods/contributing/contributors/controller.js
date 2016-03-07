@@ -4,15 +4,13 @@ export default ApiController.extend({
   toggle: true,
   actions: {
     showMore () {
-      if(this.toggle){
-        $('.more').css('display', 'inline');
-        this.toggle = false;
-      }
-      else{
-        $('.more').css('display', 'none');
-        this.toggle = true;
+      if (this.toggle) {
+        $('.more').css('display', 'inline')
+        this.toggle = false
+      } else {
+        $('.more').css('display', 'none')
+        this.toggle = true
       }
     }
   }
 })
-

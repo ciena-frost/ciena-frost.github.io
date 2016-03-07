@@ -91,7 +91,7 @@
     "ember-responsive": "1.1.1",
     "ember-try": "~0.0.8",
     "ember-wormhole": "0.3.4",
-    "eslint": "^1.10.3",
+    "eslint": "2.2.0",
     "eslint-config-frost-standard": "^0.2.4",
     "frost-css": "~1.2.3",
     "frost-svg": "file:frost-components/frost-svg",
