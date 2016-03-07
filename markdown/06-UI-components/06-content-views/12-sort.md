@@ -1,51 +1,50 @@
 1.  <span>[Blue Planet](index.html)</span>
 
-<span id="title-text"> Blue Planet : Sort (RR) </span>
+<span id="title-text"> Blue Planet : Sort (VI) </span>
 ======================================================
 
-Created by <span class="author"> Katherine Parmeson</span>, last modified by <span class="editor"> Philippe Savignac</span> on Feb 01, 2016
+Created by <span class="author"> Katherine Parmeson</span>, last modified on Mar 07, 2016
 
-When to use
+Description
+-----------
 
-The sort component should be available whenever an object browser is used. It should be visible for both the list browser and the table browser. The table browser will have the added functionality of allowing the user to click on the column headings to sort individual columns. When the user clicks on a header, the sort component will respond accordingly and show the newly sorted column name.
+The sort component should be available whenever an object browser is used. It should be visible for both the list browser and the table browser. The sort component allows a user to sort on as many attributes as they would like, and easily change or remove any sort attribute.
 
-Use cases
-=========
-
-1.  User only chooses to sort on one column, but will frequently change that column.
-2.  User will sort by 2-3 columns at a time
-3.  User will want to quickly remove or change their sort
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/175019564/175020279.png" class="confluence-embedded-image" height="250" /></span>
 
  
 
-How to use
-==========
+Behaviors
+---------
+
+-   Each list browser will always be a default sort.
+-   The user can sort by as many columns at a time that they wish to.
+-   The user can easily remove any sort
+-   The table browser will have the added functionality of allowing the user to click on the column headings to sort columns. When the user clicks on a header, the sort component will respond accordingly and show the newly sorted column name.
+
+Usage guidelines
+----------------
 
 1.  First item in sort, will be set by default
 2.  Button drop down for user to select adding additional sort attributes
-3.  Easy removal option for user
+3.  An “X” will be placed to the left of every sort object so the user can easily remove a sort.
 4.  Secondary sort, user could add as many levels of sort as they have attributes
 5.  Selection list for use to easily change the attribute they are sorting on
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/175019564/175020318.png" class="confluence-embedded-image" height="250" /></span>
-
-<span class="s1">Interaction</span> 
-====================================
-
-1.  <span class="s1">The user will be able to sort on none, 1 or  multiple attributes</span>
-2.  <span class="s1">The user can click on the sort object to get a list of other attributes to sort from, this will allow them to easily select a different attribute</span>
-3.  <span class="s1">An “X” will be placed to the left of every sort object so the user can easily remove a sort.</span>
-
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/175019564/175020279.png" class="confluence-embedded-image" height="250" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/175019564/175020318.png" class="confluence-embedded-image" height="250" /></span>
 
  
 
-Visual design
-=============
+ 
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/175019564/176927114.png" class="confluence-embedded-image" width="850" /></span>
+ 
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/175019564/176927117.png" class="confluence-embedded-image" height="400" /></span>
+Visual specification
+====================
+
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/175019564/176927114.png" class="confluence-embedded-image" width="850" /></span>
+
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/175019564/176927117.png" class="confluence-embedded-image" height="400" /></span>
 
  
 =
@@ -55,15 +54,15 @@ Visual design
 Attachments:
 ------------
 
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-14 at 11.27.22 AM.png](attachments/175019564/175019555.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-14 at 1.58.25 PM.png](attachments/175019564/175019579.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-15 at 8.13.17 AM.png](attachments/175019564/175020231.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-15 at 8.29.56 AM.png](attachments/175019564/175020279.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-15 at 8.54.16 AM.png](attachments/175019564/175020318.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-1 13:9:41.png](attachments/175019564/176927114.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-1 13:10:35.png](attachments/175019564/176927117.png) (image/png)
+$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-14 at 11.27.22 AM.png](attachments/175019564/175019555.png) (image/png)
+$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-14 at 1.58.25 PM.png](attachments/175019564/175019579.png) (image/png)
+$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-15 at 8.13.17 AM.png](attachments/175019564/175020231.png) (image/png)
+$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-15 at 8.29.56 AM.png](attachments/175019564/175020279.png) (image/png)
+$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-15 at 8.54.16 AM.png](attachments/175019564/175020318.png) (image/png)
+$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-1 13:9:41.png](attachments/175019564/176927114.png) (image/png)
+$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-1 13:10:35.png](attachments/175019564/176927117.png) (image/png)
 
-Document generated by Confluence on Feb 25, 2016 11:36
+Document generated by Confluence on Mar 07, 2016 12:06
 
 [Atlassian](http://www.atlassian.com/)
 
