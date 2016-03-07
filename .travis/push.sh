@@ -27,9 +27,7 @@ commit_website_files() {
   npm install highlight
   npm install npm
   npm install && bower install
-  node generate-roadmap.js
-  node generate-pages-from-markdown.js
-  node generate-components.js
+  ./generate-frost-guide-content.sh
   git add --all
   git commit --message "[ci skip] Generating files/folders"
 }
