@@ -130,7 +130,7 @@ body.forEach(function (repo) {
           content.controller_js = content.controller_js.replace("import Ember from 'ember'\n", "");
         }
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
-          "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend")
+          "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'")
         );
       }
       //create template.hbs
@@ -239,7 +239,7 @@ body.forEach(function (repo) {
 
     // Get Demo Components
     try {
-      var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
+      var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
       getDemoComponents(components_url)
     } catch (err) {
       console.log(chalk.red.bold("No demo components to import"))
@@ -310,13 +310,23 @@ function addDedicatedContributor(user, repo) {
 function getDemoComponents(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
+  var BreakException= {};
+
   body.forEach(function(component){
     if (component.type === "dir"){
       var content = getFolder(component.url, component.name)
       var path = "app/pods/components/" + component.name;
       mkdirpSync(path);
       content.forEach(function(value, key){
-        fs.writeFileSync("app/pods/components/" + key, value)
+          if (key.indexOf("component.js") > -1){
+            var parent = key.split('/')[0]
+            content.forEach(function(value, key){
+             if (key.indexOf(parent) > -1){
+               fs.writeFileSync("app/pods/components/" + key, value)
+             }
+            })
+          }
+//        fs.writeFileSync("app/pods/components/" + key, value)
       })
     }
   })
