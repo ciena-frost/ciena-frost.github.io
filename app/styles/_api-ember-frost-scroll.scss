@@ -1,0 +1,27 @@
+@import 'bourbon';
+@import 'node_modules/ember-frost-css-core/scss/frost-core';
+@import 'node_modules/ember-frost-theme/scss/frost-theme';
+
+.dummy-notification-container {
+	position: fixed;
+	top: 60px;
+	right: 10px;
+	z-index: 999;
+	width: 80%;
+	max-width: 400px;
+	margin: auto;
+}
+
+.dummy-svg-huge {
+  width: 800px;
+  height: 800px;
+  > rect {
+	fill: red;
+  }
+}
+
+.frost-tabs.iframe {
+  .navigation {
+    display: none;
+  }
+}
