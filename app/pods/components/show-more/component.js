@@ -5,25 +5,24 @@ export default Ember.Component.extend({
   tagName: 'div',
   toggle: true,
   moreOrLess: 'show more',
-  onInsert: function() {
-    $('#' + this.elementId + ' .more').css('display', 'none');
-    $('#' + this.elementId).css('z-index', '');
-    this.set('moreOrLess', 'show more');
+  onInsert: function () {
+    $('#' + this.elementId + ' .more').css('display', 'none')
+    $('#' + this.elementId).css('z-index', '')
+    this.set('moreOrLess', 'show more')
   }.on('didInsertElement'),
-    actions: {
-      showMore () {
-        if(this.toggle){
-          $('#' + this.elementId + ' .more').css('display', 'inline');
-          $('#' + this.elementId).css('z-index', '1');
-          this.set('toggle', false);
-          this.set('moreOrLess', 'show less');
-        }
-        else{
-          $('#' + this.elementId + ' .more').css('display', 'none');
-          this.set('toggle', true);
-          this.set('moreOrLess', 'show more');
-          $('#' + this.elementId).css('z-index', '');
-        }
+  actions: {
+    showMore () {
+      if (this.toggle) {
+        $('#' + this.elementId + ' .more').css('display', 'inline')
+        $('#' + this.elementId).css('z-index', '1')
+        this.set('toggle', false)
+        this.set('moreOrLess', 'show less')
+      } else {
+        $('#' + this.elementId + ' .more').css('display', 'none')
+        this.set('toggle', true)
+        this.set('moreOrLess', 'show more')
+        $('#' + this.elementId).css('z-index', '')
       }
     }
+  }
 })

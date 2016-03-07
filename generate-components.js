@@ -109,7 +109,7 @@ body.forEach(function (repo) {
       if (content.route_js !== undefined) {
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", content.route_js);
       } else {
-        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\n export default Ember.Route.extend({\n\n})");
+        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})");
       }
       //import route and use
       try {
@@ -120,7 +120,7 @@ body.forEach(function (repo) {
           " generate-pages-from-markdown.js to create route.js and then run this script again."));
         throw e;
       }
-      route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\n export default DemoRoute.extend")
+      route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\nexport default DemoRoute.extend")
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
 
       //controller
