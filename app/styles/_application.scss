@@ -104,6 +104,9 @@ clear: both;
 }
 .guide-content .demo >:first-child {
   position: relative;
+  width:100%;
+  padding-top: 20px;
+  min-height: 4000px;
 }
 
 .tabs__bar--justified {
