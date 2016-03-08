@@ -9,7 +9,7 @@
     "test": "tests"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint *.js addon app config tests",
     "start": "ember server",
     "build": "ember build",
     "test": "npm run-script lint"
