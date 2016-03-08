@@ -12,11 +12,7 @@ install:
 - npm install -g bower
 - npm install -g ember-cli@1.13.13
 - npm install frost-components/frost-css
-- npm install frost-components/frost-tabs
-- npm install frost-components/frost-link
-- npm install frost-components/frost-scroll
 - npm install frost-components/frost-svg
-- npm install frost-components/frost-text
 - npm install && bower install
 script:
 - npm test
