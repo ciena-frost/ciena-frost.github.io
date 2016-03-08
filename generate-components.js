@@ -213,7 +213,7 @@ body.forEach(function (repo) {
 
 
       template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
-      template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+      template_content += "\n\t\t\t\t\t <a href=\"" + repo.html_url + "\" class=\"gh-button\"><img src=\"assets/images/gh-icon.png\" width='20' height='20'><span>View on Github</span></a> \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
 

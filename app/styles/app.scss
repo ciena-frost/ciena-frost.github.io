@@ -121,7 +121,7 @@ body {
 .footerHeading {
   display: block;
   margin: 0 0 20px 0;
-  padding: 0;
+  padding: 10px;
   border: none;
   font-size: 29px;
 }
@@ -157,6 +157,26 @@ body {
   background-color: transparent;
 }
 
+.gh-button{
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+  text-decoration : none;
+}
+
+.gh-button img{
+  vertical-align: middle;
+}
+
+.gh-button span{
+  vertical-align: middle;
+  padding-left: 5px;
+  font-size: 18px;
+  color: #404041;
+  font-weight: 500;
+
+}
 
 /*
 Max width before this PARTICULAR table gets nasty

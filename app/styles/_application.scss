@@ -108,11 +108,11 @@
   }
 }
 
-.guide-content .demo >:first-child {
+.guide-content #demo >:first-child {
   position: relative;
   width: 100%;
   padding-top: 20px;
-  min-height: 4000px;
+  min-height: 400px;
 }
 
 .tabs__bar--justified {
