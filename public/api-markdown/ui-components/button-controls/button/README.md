@@ -9,10 +9,10 @@
 
 # ember-frost-button <br /> [![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
 
- * [Installation](#installation)
- * [API](#api)
- * [Examples](#examples)
- * [Development](#development)
+
+
+
+
 
 ## Installation
 ```

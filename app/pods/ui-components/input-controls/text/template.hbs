@@ -1,21 +1,88 @@
+<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-controls/text')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='API' class='api' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-controls/text/README')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' class='demo' id='demo'}}
+		<div><div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+      {{notification-message notification=notification}}
+  {{/each}}
+</div>
 
-<div class="md">
-	<div class="content-col">
-		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'UI-components/input-controls/text')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-		</div>
-	</div>
+<h2>frost-text</h2>
+
+<div id="content">
+  <div class="dummy-header">Basic</div>
+  <div style="padding: 10px 20px;">
+    {{frost-text
+      autofocus=true
+    }}
+  </div>
+
+  <div class="dummy-header">Action</div>
+  <div style="padding: 10px 20px;">
+    {{frost-text
+      on-input=(action "text")
+    }}
+  </div>
+
+  <div class="dummy-header">Bound</div>
+  <div style="padding: 10px 20px;">
+    {{frost-text
+      on-input=(action "bind")
+      value=boundText
+    }}
+    <br>Bound Text: {{boundText}}<br>
+    {{frost-text
+      on-input=(action "bind2")
+      value=boundText
+    }}
+  </div>
+
+  <div class="dummy-header">Error</div>
+  <div style="padding: 10px 20px;">
+    {{frost-text
+      classNameBindings="error"
+    }}
+    {{#frost-button
+      class="small secondary"
+      on-click=(action "toggleError")
+    }}
+      <div class="text">Toggle error</div>
+    {{/frost-button}}
+  </div>
+
+  <div class="dummy-header">Attributes - e.g. Disabled</div>
+  <div style="padding: 10px 20px;">
+    {{frost-text
+      disabled=true
+    }}
+  </div>
+
+  <div class="dummy-header">Attributes - e.g. Read-only</div>
+  <div style="padding: 10px 20px;">
+    {{frost-text
+      readonly=true
+      value="Read only text"
+    }}
+  </div>
+</div>
+</div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Justin Lafleur
+					<span class="footerHeading">Contributors</span>Roxanne - Gosia Hyndman - Adam Meadows - Matthew Dahl - Matthew Dahl - Eric White - Adam Meadows
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>
-					 Github Button here 
+					 <a href="https://github.com/ciena-frost/ember-frost-text" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
 				</div>
 			</div>
 			<br/>

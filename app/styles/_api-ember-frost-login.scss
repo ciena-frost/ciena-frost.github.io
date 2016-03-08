@@ -1,0 +1,20 @@
+@import 'frost-core';
+@import 'frost-theme';
+
+.dummy-notification-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 999;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.login-wrapper {
+  padding: 100px;
+}
+
+.frost-button.login {
+  background-color: $frost-color-blue-1;
+}
