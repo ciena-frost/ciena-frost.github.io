@@ -2,12 +2,24 @@
 @import 'frost/variables';
 @import 'frost/app';
 @import 'frost/patterns';
-
 @import 'frost-core';
 @import 'frost-theme';
-
 @import 'whirly';
-
+@import './api-ember-frost-app-bar';
+@import './api-ember-frost-login';
+@import './api-ember-frost-sort';
+@import './api-ember-frost-textarea';
+@import './api-ember-frost-about-dialog';
+@import './api-ember-frost-password';
+@import './api-ember-frost-loading';
+@import './api-ember-frost-info-bar';
+@import './api-ember-frost-notifier';
+@import './api-ember-frost-link';
+@import './api-ember-frost-list';
+@import './api-ember-frost-checkbox';
+@import './api-ember-frost-text';
+@import './api-ember-frost-icons';
+@import './api-ember-frost-select';
 @import './application';
 @import './introduction';
 @import './api-ember-frost-tabs';
@@ -18,7 +30,6 @@
 @import 'app/pods/components/frost-navigation-sidebar-menu/styles';
 @import 'app/pods/components/frost-sidebar/styles';
 @import 'app/pods/components/guide-coming-soon/styles';
-
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -29,39 +40,33 @@ body {
 
 .guide-markdown {
   pre {
-  padding: 10px;
-  background-color: $frost-color-lgrey-3;
+    padding: 10px;
+    background-color: $frost-color-lgrey-3;
   }
-
 }
 
 .guide-content {
   width: calc(100% - 220px);
-  
   .frost-tabs {
-  @include flex(1);
-  @include display-box;
-  @include flex-direction(column);
-
-  .content-col {
     @include flex(1);
-    @include display(flex);
+    @include display-box;
     @include flex-direction(column);
-
-    .frost-tab {
-    @include flex(1);
-    @include display(flex);
-    @include flex-direction(column);
+    .content-col {
+      @include flex(1);
+      @include display(flex);
+      @include flex-direction(column);
+      .frost-tab {
+        @include flex(1);
+        @include display(flex);
+        @include flex-direction(column);
+      }
     }
   }
-  }
-
   .guide-iframe {
-  @include flex(1);
-  @include display(flex);
-  @include flex-direction(column);
+    @include flex(1);
+    @include display(flex);
+    @include flex-direction(column);
   }
-
   .api,
   .demo {
     .guide-iframe iframe {
@@ -70,42 +75,42 @@ body {
       border: none;
     }
   }
-
   .description {
-  @include flex(1);
-  @include display(flex);
-  @include flex-direction(column);
-
-  .guide-iframe iframe {
     @include flex(1);
-    width: 900px;
-    border: none;
-  }
+    @include display(flex);
+    @include flex-direction(column);
+    .guide-iframe iframe {
+      @include flex(1);
+      width: 900px;
+      border: none;
+    }
   }
 }
 
 .footer {
   background-color: $frost-color-blue-1;
   width: 100%;
+  min-width: 400px;
   color: $frost-color-white;
-  clear:both;
+  clear: both;
   visibility: hidden;
 }
 
-.footer .info{
+.footer .info {
   padding-left: 20px;
   padding-right: 20px;
   margin-top: 20px;
   padding-bottom: 10px;
   font-size: 18px;
-  background-color: $frost-color-blue-1;
+  background-color:
+  $frost-color-blue-1;
 }
 
-.footer .info br{
+.footer .info br {
   clear: left;
 }
 
-.footer .copyright{
+.footer .copyright {
   padding-top: 10px;
   padding-left: 20px;
   padding-bottom: 10px;
@@ -120,42 +125,46 @@ body {
   font-size: 29px;
 }
 
-.contributors{
+.contributors {
   @media (min-width: 400px) {
-  float: left;
-  width: 60%;
-  padding-right: 15px;
+    float: left;
+    width: 60%;
+    padding-right: 15px;
   }
   padding-top: 10px;
 }
-.connect{
+
+.connect {
   @media (min-width: 400px) {
-  padding-left: 15px;
-  float: left;
-  width: 40%;
+    padding-left: 15px;
+    float: left;
+    width: 40%;
   }
   padding-top: 10px;
 }
-.contributors table{
+
+.contributors table {
   font-size: 16px;
   width: 100%;
 }
-.contributors table td{
+
+.contributors table td {
   width: 33%
 }
-.frost-tabs .tab-nav .tab{
+
+.frost-tabs .tab-nav .tab {
   background-color: transparent;
 }
+
 
 /*
 Max width before this PARTICULAR table gets nasty
 This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
-@media
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
 
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
   table {
     overflow-x: auto;
     display: block;

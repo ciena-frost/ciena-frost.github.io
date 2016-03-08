@@ -27,9 +27,10 @@
   }
 }
 
-.content-col .confluence-embedded-image{
+.content-col .confluence-embedded-image {
   max-width: 100%;
 }
+
 .guide-sidebar-mobile {
   position: absolute;
   height: 100%;
@@ -45,14 +46,17 @@
   @include flex-direction(column);
 }
 
-.guide-content .frost-info-bar.frost-guide{
+.guide-content .frost-info-bar.frost-guide {
   background-color: $frost-color-blue-1;
   min-height: 90px;
+  min-width: 400px;
 }
 
-.footer, .push {
-clear: both;
+.footer,
+.push {
+  clear: both;
 }
+
 .guide-content .frost-info-bar .frost-guide .title .primary-title {
   color: $frost-color-white;
 }
@@ -77,7 +81,7 @@ clear: both;
   max-width: 1000px;
 }
 
-.md .tab-nav ~ div{
+.md .tab-nav ~ div {
   min-width: 400px;
   max-width: 1000px;
 }
@@ -95,6 +99,7 @@ clear: both;
   overflow-x: auto;
   @include display(flex);
 }
+
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
   /* IE10+ specific styles go here */
@@ -102,9 +107,10 @@ clear: both;
     overflow-x: visible;
   }
 }
+
 .guide-content .demo >:first-child {
   position: relative;
-  width:100%;
+  width: 100%;
   padding-top: 20px;
   min-height: 4000px;
 }
@@ -147,19 +153,21 @@ clear: both;
   min-height: 500px;
 }
 
+.md {
+  float: left;
+  width: 100%;
+}
 
-  .md {
-    float: left;
-    width: 100%;
-  }
-  .md .content-col {
-    float: left;
-    width: 65%;
-  }
-  .md .right-col {
-    float: left;
-    width: 35%;
-  }
+.md .content-col {
+  float: left;
+  width: 65%;
+}
+
+.md .right-col {
+  float: left;
+  width: 35%;
+}
+
 @media (max-width: 600px) {
   .md .right-col {
     display: none;
@@ -212,7 +220,8 @@ This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
 
-@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
   .guide-content .guide-markdown {
     overflow-x: auto;
   }
@@ -224,4 +233,3 @@ and also iPads specifically.
   white-space: nowrap;
   overflow: hidden;
 }
-
