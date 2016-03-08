@@ -1,0 +1,139 @@
+.card {
+  float: left;
+  padding: 20px;
+  display: inline;
+}
+
+.card-large{
+  height: 100vh;
+}
+
+.card .card-block {
+  position: relative;
+  float: right;
+  width: 150px;
+  padding-left: 20px;
+}
+
+.card .card-block-large {
+  float: left;
+  padding-left: 20px;
+  max-width: 500px;
+}
+
+.card .card-row {
+  display: block;
+  position: relative;
+}
+
+.card .card-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card .card-row-large{
+  display: block;
+  position: relative;
+  font-size: 18px;
+}
+
+.card .card-name-large{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card .divider {
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #eee;
+}
+
+.show-more {
+  position: relative;
+  background-color: white;
+}
+
+.more-button {
+  cursor: pointer;
+  text-align: center;
+  padding: 0 .5em;
+  color: #666;
+  font-size: .9em;
+  line-height: 2;
+  border: 1px solid #ddd;
+  border-radius: .25em;
+  margin-top: 5px;
+}
+
+.contributor-image-large {
+    width: 12.5em;
+    height: 12.5em;
+    background: $frost-color-blue-1;
+    -webkit-border-radius: 6.25em;
+    -moz-border-radius: 6.25em;
+    border-radius: 6.25em;
+    box-shadow: 0px 0px 0px 1px $frost-color-blue-1;
+    position: relative;
+    float:left;
+    margin-bottom: 20px; 
+}
+
+.contributor-image-small {
+    margin-bottom: 25px;
+    margin-left: 25px;    
+    width: 6.5em;
+    height: 6.5em;
+    background: $frost-color-blue-1;
+    -webkit-border-radius: 6.25em;
+    -moz-border-radius: 6.25em;
+    border-radius: 6.25em;
+    box-shadow: 0px 0px 0px 1px $frost-color-blue-1;
+    position: relative;
+}
+
+.contributor-icons {
+    .contributor-image-small {
+        cursor: pointer;
+        transition: transform 100ms;
+        &:hover {
+            transform: translateY(-6px)
+        }
+    }    
+}
+
+.contributor-icons > .liquid-container {
+    overflow: visible
+}
+
+
+.contributor-btn {
+    &:before {
+        position: static;
+        font-family: 'FontAwesome';
+        content: '\f0d9';
+        color: #fff;
+        margin-right: 0.5em;
+    }
+}
+
+.contributor-list-inner {
+    button:before {
+        content: ''
+    }
+    button:after {
+        content: ''
+    }
+    button {
+        padding: 18px 24px;
+    }
+    .top {
+        cursor: pointer;
+    }
+    input, textarea {
+        line-height: 36px;
+    }
+}
+
+.contributor-profile {
+  padding: 20px;
+}

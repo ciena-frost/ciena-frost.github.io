@@ -7,9 +7,21 @@ var chalk = require('chalk');
 
 var exec = require('sync-exec');
 String.prototype.replaceAll = function (search, replacement) {
-    var target = this;
-    return target.replace(new RegExp(search, 'g'), replacement);
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
 };
+Set.prototype.toJSON = function toJSON() {
+  return Array.from(this);
+}
+Array.prototype.contains = function (obj) {
+  var i = this.length;
+  while (i--) {
+    if (this[i] === obj) {
+      return true;
+    }
+  }
+  return false;
+}
 
 var options = {
   'headers': {
@@ -20,66 +32,119 @@ var options = {
 
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
 var body = JSON.parse(res.getBody());
+var contributorMap = new Map();
+
+//Mirage Maps   Map Key = <path> Value = <ModuleName>       In main funcition call <ModuleName>()
+var scenariosToImportMap = new Map();
+var configstoImportMap = new Map();
 
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name,"ember-")) {
-    //ember install this package
-
-    emberInstall(repo.name);
+  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
 
     //get Package JSON un comment when needed
-    var package_url = repo.contents_url.replace("{+path}","package.json?ref=master");
+    var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
     var packageJSON = getPackageJSON(package_url);
-    if (packageJSON === undefined){
+    if (packageJSON === undefined) {
       return;
     }
+    //ember install this package
+    emberInstall(repo.name);
+
+    if (packageJSON.contributors != undefined) {
+      packageJSON.contributors.forEach(function (user) {
+
+        //get user in (https://github.com/ewhite613)
+        var userIdRegex = /\/([a-z|0-9]+)\)/i
+        var userId = user.match(userIdRegex)
+        if (userId != undefined) {
+          var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
+          addDedicatedContributor(userJSON, repo.name)
+        }
+
+      })
+    }
+
     var demoParentDirectory = packageJSON.frostGuideDirectory;
-    if (demoParentDirectory === undefined){
+    if (demoParentDirectory === undefined) {
+      var componentContributors = getCienFrostRepoContributors(repo.name);
+      componentContributors.forEach(function (user) {
+        var userJSON = requestJSON(user.url);
+        addDedicatedContributor(userJSON, repo.name)
+      })
       return;
     }
+
     // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
 
     readme_url = repo.contents_url.replace("{+path}", "README.md");
     readme_content = getFile(readme_url);
 
-    if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)){
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
-      demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
-      var content = getDemoContent(demo_content_url);
-      var style = GetDemoStyle(demo_style_url);
-      //create route.js
-      if (!directoryExistsSync("app/pods/" + demoParentDirectory  + "/index")) {
-          mkdirpSync(("app/pods/" + demoParentDirectory  + "/index").toLowerCase());
+    if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
+      var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+      var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
+      var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
+      var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
+      var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
+      getDemoModels(demo_models_url);
+      getDemoMirage(demo_mirage_url, scenariosToImportMap, configstoImportMap, repo.name);
+      try {
+        var content = getDemoContent(demo_content_url);
+      } catch (err) {
+        console.log(err)
+        return
       }
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js",
-        content.route_js
-      );
+      var application_content = getDemoApplicationContent(demo_application_content_url);
+      var style = GetDemoStyle(demo_style_url);
+
+
+
+
+      //create route.js
+      if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
+        mkdirpSync(("app/pods/" + demoParentDirectory + "/index").toLowerCase());
+      }
+      if (content.route_js !== undefined) {
+        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", content.route_js);
+      } else {
+        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})");
+      }
+      //import route and use
+      try {
+        var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
+      } catch (e) {
+        console.log(chalk.red.bold("route.js does not exist. This is probably because" +
+          " the markdown file for the description tab has not been created. Create one, run" +
+          " generate-pages-from-markdown.js to create route.js and then run this script again."));
+        throw e;
+      }
+      route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\nexport default DemoRoute.extend")
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
 
       //controller
       if (content.controller_js !== undefined) {
-        if (occurrences(content.controller_js,"Ember") === 2){
-          content.controller_js = content.controller_js.replace("import Ember from 'ember'\n","");
+        if (occurrences(content.controller_js, "Ember") === 2) {
+          content.controller_js = content.controller_js.replace("import Ember from 'ember'\n", "");
         }
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
-          "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend")
+          "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'")
         );
       }
       //create template.hbs
-            //insert tabs
+      //insert tabs
       //need to redo this
       var descriptionContent = "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " +
-          "markdown=(fr-markdown-file-strip-number-prefix '" +
-          demoParentDirectory +
-          "')}}";
+        "markdown=(fr-markdown-file-strip-number-prefix '" +
+        demoParentDirectory +
+        "')}}";
 
       if (!directoryExistsSync("public/api-markdown/" + demoParentDirectory)) {
-          mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
+        mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
       }
       fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
-        readme_content
+        readme_content.replace(/\s\*\s\[[a-z]+\]\(#[a-z]+\)/ig,"")
       );
 
       var template_content = ""
@@ -89,11 +154,11 @@ body.forEach(function (repo) {
       template_content += "\n\t\t" + descriptionContent
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n\t{{#frost-tab alias='API' class='api' id='api'}}"
-      template_content += "\n\t\t  "+ "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
-      template_content +=  demoParentDirectory + "/README')}}"
+      template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
+      template_content += demoParentDirectory + "/README')}}"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}"
-      template_content += "\n\t\t<div>" + content.template_hbs +"</div>\n"
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs) + "</div>\n"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n{{/frost-tabs}}"
       template_content += "\n\t<div class='footer'>\n"
@@ -101,21 +166,54 @@ body.forEach(function (repo) {
       template_content += "class=\"footerHeading\">Contributors</span>";
 
       var contributorsCount = 0;
-      var componentContributors = getComponentContributors(repo);
-      componentContributors.forEach(function(user){
+      var contributorDuplicates = 0;
+      var componentContributors = getCienFrostRepoContributors(repo.name);
+      if (packageJSON.contributors != undefined) {
+        packageJSON.contributors.forEach(function (user) {
+          contributorsCount++
+          //get user in (https://github.com/ewhite613)
+          var userIdRegex = /\/([a-z|0-9]+)\)/i
+          var userId = user.match(userIdRegex)
+          if (userId != undefined) {
+            var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
+            if (componentContributors.contains(userJSON) === false) {
+              if (userJSON.login === "travis-ci-ciena") {
+                return
+              }
+              if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
+                template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
+              } else {
+                template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
+              }
+            } else {
+              contributorDuplicates++
+            }
+          }
+
+        })
+      } else {
+        packageJSON.contributors = []
+      }
+      componentContributors.forEach(function (user) {
         contributorsCount++;
+        if (user === "") {
+          return
+        }
         var userJSON = requestJSON(user.url);
-        if (contributorsCount === componentContributors.length){
+        if (userJSON.login === "travis-ci-ciena") {
+          return
+        }
+        if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
           template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
-        }else{
+        } else {
           template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
         }
-
+        addDedicatedContributor(userJSON, repo.name)
       });
-      console.log();
+
 
       template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
-      template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+      template_content += "\n\t\t\t\t\t <a href=\"" + repo.html_url + "\" class=\"gh-button\"><img src=\"assets/images/gh-icon.png\" width='20' height='20'><span>View on Github</span></a> \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
 
@@ -123,35 +221,185 @@ body.forEach(function (repo) {
 
       //styles.scss
       var app_sass = fs.readFileSync("app/styles/app.scss").toString();
-      if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1){
+      if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1) {
         fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
         var arr_app_sass = app_sass.split('\n');
-        arr_app_sass.splice(9,0,"@import './api-" + repo.name + "';");
+        arr_app_sass.splice(9, 0, "@import './api-" + repo.name + "';");
         var final_app_sass = arr_app_sass.join('\n');
         fs.writeFileSync("app/styles/app.scss", final_app_sass);
-//        console.log(final_app_sass);
-      }else if (style !== undefined){
+        //        console.log(final_app_sass);
+      } else if (style !== undefined) {
         fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
       }
 
-    }else{
+    } else {
       console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
     }
 
+    // Get Demo Components
+    try {
+      var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+      getDemoComponents(components_url)
+    } catch (err) {
+      console.log(chalk.red.bold("No demo components to import"))
+      console.log(chalk.red.bold(err))
+    }
 
-    // console.log(readme_content);
   }
 });
 
-function getPackageJSON(url) {
-  //get api file request
-  try{
+//Populate Dedicated Contributors Map
+var frostGuideContributors = getCienFrostRepoContributors("ciena-frost.github.io");
+frostGuideContributors.forEach(function (user) {
+  var userJSON = requestJSON(user.url);
+  addDedicatedContributor(userJSON, "ciena-frost.github.io")
+});
+
+//Populate Dedicated Contributors Page
+var template_content = "<div class='md'>\n\t";
+var contributorJSON = []
+contributorMap.forEach(function (value, key) {
+  if (value.login === "travis-ci-ciena") {
+    return;
+  }
+  contributorJSON.push(value);
+})
+fs.writeFileSync("public/data/contributors.json", JSON.stringify(contributorJSON))
+
+//Build Mirage Maps Key = <path> Value = <ModuleName>
+var defaultImportsJS = ""
+var defaultBodyJS = "export default function (server) {\n"
+scenariosToImportMap.forEach(function (value, key) {
+  defaultImportsJS += "import " + value + " from " + "'./" + key + "'\n"
+  defaultBodyJS += "\t" + value + "(server)\n"
+})
+defaultBodyJS += "}\n"
+fs.writeFileSync("app/mirage/scenarios/default.js", defaultImportsJS + defaultBodyJS)
+
+var configImportsJS = ""
+var configBodyJS = "export default function () {\n"
+configBodyJS += ` if (config && config.isProd){
+    this.namespace = "https://ciena-frost.github.io"
+  }else{
+    this.namespace = 'https://localhost:4200/'
+  }
+`
+configstoImportMap.forEach(function (value, key) {
+  configImportsJS += "import " + value + " from " + "'./" + key + "'\n"
+  configBodyJS += "\t" + value + ".call(this)\n"
+})
+configBodyJS += "}\n"
+configImportsJS += "import config from '../config/environment'\n"
+fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
+
+/////////////////////////// FUNCTIONS ////////////////////////////////////
+function addDedicatedContributor(user, repo) {
+  if (!contributorMap.has(user.login)) {
+    user.repos = new Set()
+    user.repos.add(repo)
+    contributorMap.set(user.login, user)
+
+  } else {
+    var currUser = contributorMap.get(user.login)
+    currUser.repos.add(repo)
+    contributorMap.set(user.login, currUser)
+  }
+}
+
+function getDemoComponents(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
-  res = request('GET', body.download_url, options);
-  return JSON.parse(res.getBody());
-  //get download url
-  }catch(err){
+  var BreakException = {};
+
+  body.forEach(function (component) {
+    if (component.type === "dir") {
+      var content = getFolder(component.url, component.name)
+      var path = "app/pods/components/" + component.name;
+      mkdirpSync(path);
+      content.forEach(function (value, key) {
+        if (key.indexOf("component.js") > -1) {
+          var parent = key.split('/')[0]
+          content.forEach(function (value, key) {
+            if (key.indexOf(parent) > -1) {
+              fs.writeFileSync("app/pods/components/" + key, value)
+            }
+          })
+        }
+        //        fs.writeFileSync("app/pods/components/" + key, value)
+      })
+    }
+  })
+}
+
+function getDemoModels(url) {
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    body.forEach(function (model) {
+      if (model.name.endsWith('.js')) {
+        var contents = getFile(model.url)
+        fs.writeFileSync("app/models/" + model.name, contents)
+      }
+    })
+  } catch (err) {
+    console.log(chalk.red.bold(err))
+  }
+}
+
+function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) {
+  //  try {
+  mkdirpSync("app/mirage/fixtures")
+  mkdirpSync("app/mirage/factories")
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+  } catch (err) {
+    console.log(chalk.red.bold(err))
+    return;
+  }
+  body.forEach(function (mirage) {
+      if (mirage.type === "dir") {
+        var folderContent = getFolder(mirage.url, mirage.name)
+          //        console.log(folderContent)
+        folderContent.forEach(function (value, key) {
+          if (key.indexOf("fixtures/") > -1 || key.indexOf("factories/") > -1) {
+            fs.writeFileSync("app/mirage/" + key, value)
+          } else if (key.indexOf("scenarios/default.js") > -1) {
+            var path = "app/mirage/scenarios/" + repoName + "-default.js"
+            fs.writeFileSync(path, value)
+            var val = repoName.replace(/-(.)/g, function (m, $1) {
+              return $1.toUpperCase()
+            })
+            scenariosToImportMap.set(repoName + "-default", val)
+          }
+        })
+      } else {
+        if (mirage.name === "config.js") {
+          var config_Content = getFile(mirage.url)
+          var path = "app/mirage/" + repoName + "-config.js"
+          fs.writeFileSync(path, config_Content)
+          var val = repoName.replace(/-(.)/g, function (m, $1) {
+            return $1.toUpperCase()
+          })
+          configstoImportMap.set(repoName + "-config", val)
+        }
+      }
+
+    })
+    //  } catch (err) {
+    //    console.log(chalk.red.bold(err))
+    //  }
+}
+
+function getPackageJSON(url) {
+  //get api file request
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    res = request('GET', body.download_url, options);
+    return JSON.parse(res.getBody());
+    //get download url
+  } catch (err) {
     return undefined;
   }
 }
@@ -164,21 +412,40 @@ function getFile(url) {
   return buf.toString("ascii");
 
 }
-function getDemoContent(url){
+
+function getFolder(url, parent) {
+  var contents = new Map()
+  var res = request('GET', url, options)
+  var body = JSON.parse(res.getBody())
+  body.forEach(function (item) {
+    if (item.type === "dir") {
+      contents = new Map(function* () {
+        yield * contents;
+        yield * getFolder(item.url, parent + "/" + item.name);
+      }())
+    } else if (item.type === "file") {
+      var fileContent = getFile(item.url);
+      contents.set(parent + "/" + item.name, fileContent)
+    }
+  })
+  return contents
+}
+
+function getDemoContent(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   var template_hbs;
   var route_js;
   var controller_js;
 
-  body.forEach(function(item){
-    if (item.name == 'template.hbs'){
+  body.forEach(function (item) {
+    if (item.name == 'template.hbs') {
       template_hbs = getFile(item.url);
-//      console.log(template_hbs);
-//      console.log("Template file: " + item.url );
-    } else if(item.name == 'route.js'){
+      //      console.log(template_hbs);
+      //      console.log("Template file: " + item.url );
+    } else if (item.name == 'route.js') {
       route_js = getFile(item.url);
-    } else if(item.name == 'controller.js'){
+    } else if (item.name == 'controller.js') {
       controller_js = getFile(item.url);
     }
   });
@@ -189,7 +456,39 @@ function getDemoContent(url){
   };
 }
 
-function GetDemoStyle(url){
+function getDemoApplicationContent(url) {
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    var template_hbs;
+    var route_js;
+    var controller_js;
+
+    body.forEach(function (item) {
+      if (item.name == 'template.hbs') {
+        template_hbs = getFile(item.url);
+        //      console.log(template_hbs);
+        //      console.log("Template file: " + item.url );
+      } else if (item.name == 'route.js') {
+        route_js = getFile(item.url);
+      } else if (item.name == 'controller.js') {
+        controller_js = getFile(item.url);
+      }
+    });
+    return {
+      template_hbs: template_hbs,
+      route_js: route_js,
+      controller_js: controller_js
+    };
+  } catch (err) {
+    return {
+      template_hbs: "{{outlet}}"
+    }
+  }
+
+}
+
+function GetDemoStyle(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   return new Buffer(body.content, body.encoding).toString();
@@ -199,13 +498,13 @@ function npmInstall(repo) {
   console.log("Doing NPM Install of : " + repo);
   npm.load({
     loaded: false
-  }, function(err) {
+  }, function (err) {
     // catch errors
-    npm.commands.install([repo], function(er, data) {
-      if(er !== null)
+    npm.commands.install([repo], function (er, data) {
+      if (er !== null)
         console.log("Npm install error: " + er);
     });
-    npm.on("log", function(message) {
+    npm.on("log", function (message) {
       // log the progress of the installation
       console.log(message);
     });
@@ -213,18 +512,18 @@ function npmInstall(repo) {
 }
 
 function directoryExistsSync(filePath) {
-    try {
-        return fs.statSync(filePath).isDirectory();
-    } catch (err) {
-        return false;
-    }
+  try {
+    return fs.statSync(filePath).isDirectory();
+  } catch (err) {
+    return false;
+  }
 }
 
 function get(url) {
-  requestify.get(url).then(function(response) {
+  requestify.get(url).then(function (response) {
     var body = respone.getBody();
     return body;
-  }, function(err) {
+  }, function (err) {
     console.log(err);
   });
 }
@@ -232,87 +531,91 @@ function get(url) {
 function getRepo(url) {
   console.log(url);
   debugger;
-  requestify.get(url).then(function(response) {
+  requestify.get(url).then(function (response) {
     var body = respone.getBody();
-//    console.log(respone);
+    //    console.log(respone);
     console.log("Hello");
-  }, function(err) {
+  }, function (err) {
     console.log(err);
   });
 
 }
 
-function getComponentContributors (repo){
-  try{
-  var res = request('GET', 'https://api.github.com/repos/ciena-frost/' + repo.name + '/contributors', options);
-  return JSON.parse(res.getBody());
-  }catch(err){
+function getCienFrostRepoContributors(repo) {
+  try {
+    var res = request('GET', 'https://api.github.com/repos/ciena-frost/' + repo + '/contributors', options);
+    return JSON.parse(res.getBody());
+  } catch (err) {
     return undefined;
   }
 }
 
-function requestJSON (url){
-  try{
-  var res = request('GET', url, options);
-  return JSON.parse(res.getBody());
-  }catch(err){
+function requestJSON(url) {
+  try {
+    var res = request('GET', url, options);
+    return JSON.parse(res.getBody());
+  } catch (err) {
     return undefined;
   }
 }
+
 function mkdirSync(path) {
-    try {
-        fs.mkdirSync(path);
-    } catch (e) {
-        if (e.code != 'EEXIST') throw e;
-    }
+  try {
+    fs.mkdirSync(path);
+  } catch (e) {
+    if (e.code != 'EEXIST') throw e;
+  }
 }
 
 function mkdirpSync(dirpath) {
-    var parts = dirpath.split(path.sep);
-    for (var i = 1; i <= parts.length; i++) {
-        mkdirSync(path.join.apply(null, parts.slice(0, i)));
-    }
+  var parts = dirpath.split(path.sep);
+  for (var i = 1; i <= parts.length; i++) {
+    mkdirSync(path.join.apply(null, parts.slice(0, i)));
+  }
 }
 
 function directoryExistsSync(filePath) {
-    try {
-        return fs.statSync(filePath).isDirectory();
-    } catch (err) {
-        return false;
-    }
+  try {
+    return fs.statSync(filePath).isDirectory();
+  } catch (err) {
+    return false;
+  }
 }
 
 function occurrences(string, subString, allowOverlapping) {
 
-    string += "";
-    subString += "";
-    if (subString.length <= 0) return (string.length + 1);
+  string += "";
+  subString += "";
+  if (subString.length <= 0) return (string.length + 1);
 
-    var n = 0,
-        pos = 0,
-        step = allowOverlapping ? 1 : subString.length;
+  var n = 0,
+    pos = 0,
+    step = allowOverlapping ? 1 : subString.length;
 
-    while (true) {
-        pos = string.indexOf(subString, pos);
-        if (pos >= 0) {
-            ++n;
-            pos += step;
-        } else break;
-    }
-    return n;
+  while (true) {
+    pos = string.indexOf(subString, pos);
+    if (pos >= 0) {
+      ++n;
+      pos += step;
+    } else break;
+  }
+  return n;
 }
-function emberInstall(repo){
+
+function emberInstall(repo) {
+  if (repo === "ember-frost-notifier") {
+    //until issue is resolved
+    return
+  }
   console.log("Doing Ember Install of : " + repo);
   var log = exec('ember install ' + repo);
-  if (log.status === 0){
+  if (log.status === 0) {
     console.log(chalk.green.bold(log.stdout));
-  }else{
+  } else {
     console.log(chalk.red.bold(log.stderr));
   }
-
-}
-function stringStartsWith (string, prefix) {
-    return string.slice(0, prefix.length) == prefix;
 }
 
-
+function stringStartsWith(string, prefix) {
+  return string.slice(0, prefix.length) == prefix;
+}

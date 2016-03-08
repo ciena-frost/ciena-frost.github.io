@@ -26,6 +26,9 @@ let deepCopy = function (obj) {
     return out
   }
   if (typeof obj === 'object') {
+    if (obj.hidden){
+      return;
+    }
     let out = {},
       i
     for (i in obj) {

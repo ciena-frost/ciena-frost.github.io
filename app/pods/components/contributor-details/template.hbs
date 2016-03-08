@@ -1,0 +1,13 @@
+<div class='card card-large'>
+  <img class="contributor-image-large" alt="{{model.name}}"
+       src="{{model.avatar_url}}" data-contributor-id={{model.login}} >
+
+<div class='card-block-large'>
+    <span class='card-row card-name-large'>{{model.name}}</span>
+    <span class='card-row-large card-handle divider '>{{model.login}}</span>
+    {{#each model.repos as |repo|}}
+    {{repo}}, 
+    {{/each}}
+</div>
+</div>
+

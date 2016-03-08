@@ -9,6 +9,7 @@ module.exports = function (environment) {
     environment: environment,
     baseURL: '/frost-guide',
     locationType: 'hash',
+    isFrostGuideDirectory: true,
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -54,6 +55,7 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     ENV.baseURL = '/'
+    ENV.isProd = true
   }
 
   return ENV

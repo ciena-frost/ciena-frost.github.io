@@ -26,6 +26,11 @@
     }
   }
 }
+
+.content-col .confluence-embedded-image {
+  max-width: 100%;
+}
+
 .guide-sidebar-mobile {
   position: absolute;
   height: 100%;
@@ -41,25 +46,28 @@
   @include flex-direction(column);
 }
 
-.guide-content .frost-info-bar {
+.guide-content .frost-info-bar.frost-guide {
   background-color: $frost-color-blue-1;
   min-height: 90px;
+  min-width: 400px;
 }
 
-.footer, .push {
-clear: both;
+.footer,
+.push {
+  clear: both;
 }
-.guide-content .frost-info-bar .title .primary-title {
+
+.guide-content .frost-info-bar .frost-guide .title .primary-title {
   color: $frost-color-white;
 }
 
-.guide-content .frost-info-bar .title .sub-title {
+.guide-content .frost-info-bar .title .frost-guide .sub-title {
   color: $frost-color-white;
   font-size: 90%;
   text-transform: capitalize;
 }
 
-.guide-content .frost-info-bar .action .frost-select {
+.guide-content .frost-info-bar .frost-guide .action .frost-select {
   width: 100px;
 }
 
@@ -69,6 +77,13 @@ clear: both;
 
 .guide-content .content-col {
   padding-bottom: 20px;
+  min-width: 400px;
+  max-width: 1000px;
+}
+
+.md .tab-nav ~ div {
+  min-width: 400px;
+  max-width: 1000px;
 }
 
 .guide-content .guide-markdown {
@@ -81,8 +96,10 @@ clear: both;
   position: relative;
   margin-left: 20px;
   margin-right: 20px;
-  overflow-x: scroll;
+  overflow-x: auto;
+  @include display(flex);
 }
+
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
   /* IE10+ specific styles go here */
@@ -90,8 +107,12 @@ clear: both;
     overflow-x: visible;
   }
 }
-.guide-content .demo >:first-child {
+
+.guide-content #demo >:first-child {
   position: relative;
+  width: 100%;
+  padding-top: 20px;
+  min-height: 400px;
 }
 
 .tabs__bar--justified {
@@ -132,19 +153,23 @@ clear: both;
   min-height: 500px;
 }
 
+.md {
+  float: left;
+  width: 100%;
+  font-size: 16px;
+  line-height: 1.7;
+}
 
-  .md {
-    float: left;
-    width: 100%;
-  }
-  .md .content-col {
-    float: left;
-    width: 65%;
-  }
-  .md .right-col {
-    float: left;
-    width: 35%;
-  }
+.md .content-col {
+  float: left;
+  width: 65%;
+}
+
+.md .right-col {
+  float: left;
+  width: 35%;
+}
+
 @media (max-width: 600px) {
   .md .right-col {
     display: none;
@@ -197,10 +222,16 @@ This query will take effect for any screen smaller than 760px
 and also iPads specifically.
 */
 
-@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
   .guide-content .guide-markdown {
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
-
+#api h1:first-child {
+  margin-top: -10px;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}

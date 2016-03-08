@@ -62,7 +62,9 @@ function dive(dir) {
         "', items: [\n";
 
       dive(path);
-
+      if (filename.replaceAll("[0-9][0-9][-]", "") === "contributing"){
+        routing_string += ",\n\t{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'},\n\t{id: 'contributor', alias: 'Contributor', type: 'route', route: 'contributing.contributor'}"
+      }
       routing_string += "\n]}, // " + filename + "\n"
       if (DirectoryDepth === 1) {
         var flat_route = path.replace(mark_dir, "app/pods").replaceAll("[0-9][0-9][-]", "") +"/index"
@@ -85,11 +87,13 @@ function dive(dir) {
           path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
           "'}";
       } else {
+
         routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
           toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
           "', type: 'route', route: '" +
           path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
           "'},\n";
+
       }
       var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
 
@@ -105,10 +109,39 @@ function dive(dir) {
 
       //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
       var route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n  breadCrumb: {\n    title: '" +
-        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  }\n})\n"
+        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) +"'\n  },"
+      route_js_string += `
+  actions: {
+    didTransition: function () {
+      Ember.run.schedule('afterRender', this, function () {
+        if (this.controller.get('section') != null) {
+          try {
+            $('html, body').animate({
+              scrollTop: $('#' + this.controller.get('section')).offset().top - (0.125 * $(window).height())
+            }, 200)
+          } catch (err) {
+            // do nothing
+          }
+        }
+        const controller = this.controllerFor('application')
+        controller.get('target').send('beautify')
+      })
+    }
+  }`
+
+      route_js_string += "\n})\n"
 
       fs.writeFileSync(pagePath + "/route.js", route_js_string);
 
+      //Create controller.js
+      var controller_js_string = `import Ember from 'ember'
+
+export default Ember.Controller.extend({
+  queryParams: ['section'],
+  section: null
+})
+`
+      fs.writeFileSync(pagePath + "/controller.js", controller_js_string);
       //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
       //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
 
@@ -154,8 +187,8 @@ function dive(dir) {
 
       });
 
-      template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
-      template_content += "\n\t\t\t\t\t Github Button here \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+      template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\"></span>";
+      template_content += "\n\t\t\t\t\t \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
 
@@ -181,7 +214,7 @@ function getContributorsOfFile(filePath){
   var linesAddedDeletedRegexExp = /([0-9]+)\s+([0-9]+)\s+markdown/i;
   arr_log.forEach(function(commit){
     var author = commit.match(/Author: ([a-z|\s|,]*)/i);
-    if (author !== null){
+    if (author !== null  && author[1] !== "travis-ci-ciena"){
       var name = formatName(author[1]);
       var linesAddedDeletedMatches = commit.match(/([0-9]+)\s+([0-9]+)\s+markdown/i);
       if (contributorMap.has(name)){

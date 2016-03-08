@@ -15,5 +15,10 @@ export default Ember.Controller.extend({
         }
       }
     })
+  }.on('init'),
+  windowScroll: function () {
+    $(window).scroll(function () {
+      $('.guide-sidebar').css('top', $(this).scrollTop() + 'px')
+    })
   }.on('init')
 })

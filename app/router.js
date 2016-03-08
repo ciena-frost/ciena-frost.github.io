@@ -23,6 +23,16 @@ Router.map(function () {
     addRoute.call(this, item)
   })
 
+  this.route('contributing', function () {
+    this.route('frost-guide', function () {
+
+    })
+    this.route('contributors', function () {
+
+    })
+    this.route('contributor', { path: '/contributors/:login' })
+  })
+
   this.route('overview', {
     path: '/'
   }, function () {
