@@ -35,7 +35,7 @@ commit_website_files() {
 publish_gh_pages() {
   git commit -am "[ci skip] install ember gh pages"
   ember github-pages:commit --message "[ci skip] Update gh-pages" --branch="master"
-  git push origin gh-pages:gh-pages
+  git push
 }
 if [ "${ghToken:-false}" != "false" ]; then
 setup_git
