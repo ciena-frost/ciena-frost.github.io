@@ -236,15 +236,22 @@ body.forEach(function (repo) {
       console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
     }
 
-    // Get Demo Components
+    // Get Demo Component Helpers
     try {
       var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
-      getDemoComponents(components_url)
+      getDemoComponentHelpers(components_url)
+    } catch (err) {
+      console.log(chalk.red.bold("No demo component helpers to import"))
+      console.log(chalk.red.bold(err))
+    }
+    // Get Demo Components
+     try {
+      var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
+      getDemoComponent(components_url)
     } catch (err) {
       console.log(chalk.red.bold("No demo components to import"))
       console.log(chalk.red.bold(err))
     }
-
   }
 });
 
@@ -279,7 +286,7 @@ fs.writeFileSync("app/mirage/scenarios/default.js", defaultImportsJS + defaultBo
 var configImportsJS = ""
 var configBodyJS = "export default function () {\n"
 configBodyJS += ` if (config && config.isProd){
-    this.namespace = "https://ciena-frost.github.io"
+    this.namespace = "https://ciena-frost.github.io/"
   }else{
     this.namespace = 'https://localhost:4200/'
   }
@@ -306,7 +313,7 @@ function addDedicatedContributor(user, repo) {
   }
 }
 
-function getDemoComponents(url) {
+function getDemoComponentHelpers(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   var BreakException = {};
@@ -330,6 +337,20 @@ function getDemoComponents(url) {
     }
   })
 }
+ function getDemoComponents(url) {
+   var res = request('GET', url, options);
+   var body = JSON.parse(res.getBody());
+   body.forEach(function(component){
+     if (component.type === "dir"){
+       var content = getFolder(component.url, component.name)
+       var path = "app/pods/components/" + component.name;
+      mkdirpSync(path);
+      content.forEach(function(value, key){
+        fs.writeFileSync("app/pods/components/" + key, value)
+      })
+     }
+   })
+ }
 
 function getDemoModels(url) {
   try {
