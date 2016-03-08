@@ -144,7 +144,7 @@ body.forEach(function (repo) {
         mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
       }
       fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
-        readme_content
+        readme_content.replace(/\s\*\s\[[a-z]+\]\(#[a-z]+\)/ig,"")
       );
 
       var template_content = ""
