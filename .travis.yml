@@ -2,16 +2,12 @@ language: node_js
 node_js:
 - 5.4.1
 sudo: false
-cache:
-  directories:
-  - node_modules
 before_install:
 - export PATH=/usr/local/phantomjs-2.0.0/bin:$PATH
 - npm config set spin false
 - npm install -g npm@^2
 - npm install eslint
 - npm install eslint-config-frost-standard
-- npm install babel-eslint
 install:
 - npm install -g bower
 - npm install -g ember-cli@1.13.13
