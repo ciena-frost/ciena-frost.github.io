@@ -103,7 +103,7 @@ function dive(dir) {
       //debug console.log(chalk.green.bold("Create Folder page: " + pagePath));
       //debug console.log(chalk.blue.bold("Create Index Folder: " + pagePath + "/index"));
 
-      if (!directoryExistsSync(pagePath)) {
+      if (!directoryExistsSync(pagePath.toLowerCase())) {
         mkdirpSync((pagePath).toLowerCase());
       }
 
@@ -131,7 +131,7 @@ function dive(dir) {
 
       route_js_string += "\n})\n"
 
-      fs.writeFileSync(pagePath + "/route.js", route_js_string);
+      fs.writeFileSync(pagePath.toLowerCase() + "/route.js", route_js_string);
 
       //Create controller.js
       var controller_js_string = `import Ember from 'ember'
@@ -141,7 +141,7 @@ export default Ember.Controller.extend({
   section: null
 })
 `
-      fs.writeFileSync(pagePath + "/controller.js", controller_js_string);
+      fs.writeFileSync(pagePath.toLowerCase() + "/controller.js", controller_js_string);
       //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
       //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
 
@@ -194,7 +194,7 @@ export default Ember.Controller.extend({
 
 
 
-      fs.writeFileSync(pagePath + "/template.hbs", template_content);
+      fs.writeFileSync(pagePath.toLowerCase() + "/template.hbs", template_content);
     }
 
   });
