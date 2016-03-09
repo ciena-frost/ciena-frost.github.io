@@ -20,7 +20,7 @@ import emberFrostAppBar from './ember-frost-app-bar-config'
 import config from '../config/environment'
 export default function () {
  if (config && config.isProd){
-    this.namespace = "https://ciena-frost.github.io"
+    this.namespace = "https://ciena-frost.github.io/"
   }else{
     this.namespace = 'https://localhost:4200/'
   }
