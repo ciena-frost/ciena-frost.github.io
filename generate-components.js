@@ -109,7 +109,7 @@ body.forEach(function (repo) {
       if (content.route_js !== undefined) {
         fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", content.route_js);
       } else {
-        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})");
+        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})\n");
       }
       //import route and use
       try {
@@ -247,7 +247,7 @@ body.forEach(function (repo) {
     // Get Demo Components
      try {
       var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
-      getDemoComponent(components_url)
+      getDemoComponents(components_url)
     } catch (err) {
       console.log(chalk.red.bold("No demo components to import"))
       console.log(chalk.red.bold(err))
