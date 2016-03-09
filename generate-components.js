@@ -247,7 +247,7 @@ body.forEach(function (repo) {
     // Get Demo Components
      try {
       var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
-      getDemoComponent(components_url)
+      getDemoComponents(components_url)
     } catch (err) {
       console.log(chalk.red.bold("No demo components to import"))
       console.log(chalk.red.bold(err))
