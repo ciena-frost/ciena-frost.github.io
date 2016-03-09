@@ -7,6 +7,8 @@
 @import 'whirly';
 @import './api-ember-frost-app-bar';
 @import './api-ember-frost-login';
+@import './api-ember-frost-theme';
+@import './api-ember-frost-modal-input';
 @import './api-ember-frost-sort';
 @import './api-ember-frost-textarea';
 @import './api-ember-frost-about-dialog';
@@ -67,8 +69,8 @@ body {
     @include display(flex);
     @include flex-direction(column);
   }
-  .api,
-  .demo {
+  #api,
+  #demo {
     .guide-iframe iframe {
       @include flex(1);
       width: 100%;
