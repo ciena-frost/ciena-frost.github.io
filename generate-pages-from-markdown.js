@@ -68,13 +68,13 @@ function dive(dir) {
       routing_string += "\n]}, // " + filename + "\n"
       if (DirectoryDepth === 1) {
         var flat_route = path.replace(mark_dir, "app/pods").replaceAll("[0-9][0-9][-]", "") +"/index"
-        if (!directoryExistsSync(flat_route)) {
+        if (!directoryExistsSync(flat_route.toLowerCase())) {
           mkdirpSync((flat_route).toLowerCase());
         }
 
         //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
         var flat_route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n})\n"
-         fs.writeFileSync(flat_route + "/route.js", flat_route_js_string);
+         fs.writeFileSync(flat_route.toLowerCase() + "/route.js", flat_route_js_string);
       }
     } else {
       fileCount++;
