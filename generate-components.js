@@ -133,6 +133,12 @@ body.forEach(function (repo) {
           "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'")
         );
       }
+      else{
+        fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
+          "import ApiController from 'frost-guide/utils/ApiController'\n\n" +
+          "export default ApiController.extend({\n\n" +
+          "})");
+      }
       //create template.hbs
       //insert tabs
       //need to redo this
@@ -154,11 +160,11 @@ body.forEach(function (repo) {
       template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
       template_content += "\n\t\t" + descriptionContent
       template_content += "\n\t{{/frost-tab}}"
-      template_content += "\n\t{{#frost-tab alias='API' class='api' id='api'}}"
+      template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
       template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
       template_content += demoParentDirectory + "/README')}}"
       template_content += "\n\t{{/frost-tab}}"
-      template_content += "\n\t{{#frost-tab alias='Demo' class='demo' id='demo'}}"
+      template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs) + "</div>\n"
       template_content += "\n\t{{/frost-tab}}"
       template_content += "\n{{/frost-tabs}}"

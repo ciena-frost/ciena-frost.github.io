@@ -92,7 +92,7 @@
   padding-right: 20px;
 }
 
-.guide-content .demo {
+.guide-content #demo {
   position: relative;
   margin-left: 20px;
   margin-right: 20px;
@@ -103,7 +103,7 @@
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
   /* IE10+ specific styles go here */
-  .guide-content .demo {
+  .guide-content #demo {
     overflow-x: visible;
   }
 }
@@ -230,7 +230,7 @@ and also iPads specifically.
 }
 
 #api h1:first-child {
-  margin-top: -10px;
+  margin-top: -40px;
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
