@@ -80,14 +80,14 @@ function dive(dir) {
       fileCount++;
       var filename = file.replace(".md", "");
       if (fileCount >= list.length) {
-
+        //last route
         routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
           toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
           "', type: 'route', route: '" +
           path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
           "'}";
       } else {
-
+        //if not last route add comma
         routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
           toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
           "', type: 'route', route: '" +

@@ -4,7 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var request = require('sync-request');
 var chalk = require('chalk');
-
+var toSource = require('tosource')
 var exec = require('sync-exec');
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
@@ -38,6 +38,7 @@ var contributorMap = new Map();
 var scenariosToImportMap = new Map();
 var configstoImportMap = new Map();
 
+var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
   console.log(repo.name);
@@ -144,7 +145,7 @@ body.forEach(function (repo) {
         mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
       }
       fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
-        readme_content.replace(/\s\*\s\[[a-z]+\]\(#[a-z]+\)/ig,"")
+        readme_content.replace(/\s\*\s\[[a-z]+\]\(#[a-z]+\)/ig, "")
       );
 
       var template_content = ""
@@ -241,16 +242,33 @@ body.forEach(function (repo) {
       var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
       getDemoComponentHelpers(components_url)
     } catch (err) {
-      console.log(chalk.red.bold("No demo component helpers to import"))
-      console.log(chalk.red.bold(err))
+      if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
+        console.log(chalk.red.bold("No demo component helpers to import"))
+      } else {
+        console.log(chalk.red.bold(err))
+      }
     }
     // Get Demo Components
-     try {
+    try {
       var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
       getDemoComponents(components_url)
     } catch (err) {
-      console.log(chalk.red.bold("No demo components to import"))
-      console.log(chalk.red.bold(err))
+      if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
+        console.log(chalk.red.bold("No demo components to import"))
+      } else {
+        console.log(chalk.red.bold(err))
+      }
+    }
+    //Get Demo routing.js
+    try {
+      var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js?ref=master");
+      getDemoRouting(routing_url, routingConfig, demoParentDirectory)
+    } catch (err) {
+      if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
+        console.log(chalk.red.bold("No routing.js to import"))
+      } else {
+        throw err
+      }
     }
   }
 });
@@ -300,6 +318,37 @@ configImportsJS += "import config from '../config/environment'\n"
 fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
 /////////////////////////// FUNCTIONS ////////////////////////////////////
+function getDemoRouting(url, routingConfig, demoParentDirectory) {
+  var demoRouting_string = getFile(url)
+  var demoRouting = requireFromString(demoRouting_string)
+  var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory)
+
+  fs.writeFileSync("config/routing.js", "module.exports = " + toSource(result) + "\n")
+}
+
+function mergeRouting(base, demo, demoParentDirectory) {
+  var demoId = demoParentDirectory.replace(/\//g, ".").toLowerCase()
+  base.forEach(function (routeConfig) {
+    if (routeConfig.items === undefined) {
+      if (routeConfig.route.toLowerCase() === demoId) {
+        console.log(chalk.blue("Found match for: " + demoId))
+        console.log(routeConfig)
+        console.log(demo)
+          //        routeConfig.alias = "Found You"
+        if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
+          routeConfig.modalName = demo[0].modalName
+          routeConfig.modal = demo[0].modal
+        }
+      }
+    } else {
+      routeConfig.items.forEach((item) => {
+        mergeRouting([item], demo, demoParentDirectory)
+      })
+    }
+  })
+  return base
+}
+
 function addDedicatedContributor(user, repo) {
   if (!contributorMap.has(user.login)) {
     user.repos = new Set()
@@ -337,20 +386,21 @@ function getDemoComponentHelpers(url) {
     }
   })
 }
- function getDemoComponents(url) {
-   var res = request('GET', url, options);
-   var body = JSON.parse(res.getBody());
-   body.forEach(function(component){
-     if (component.type === "dir"){
-       var content = getFolder(component.url, component.name)
-       var path = "app/pods/components/" + component.name;
+
+function getDemoComponents(url) {
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  body.forEach(function (component) {
+    if (component.type === "dir") {
+      var content = getFolder(component.url, component.name)
+      var path = "app/pods/components/" + component.name;
       mkdirpSync(path);
-      content.forEach(function(value, key){
+      content.forEach(function (value, key) {
         fs.writeFileSync("app/pods/components/" + key, value)
       })
-     }
-   })
- }
+    }
+  })
+}
 
 function getDemoModels(url) {
   try {
@@ -621,6 +671,13 @@ function occurrences(string, subString, allowOverlapping) {
     } else break;
   }
   return n;
+}
+
+function requireFromString(src, filename) {
+  var Module = module.constructor;
+  var m = new Module();
+  m._compile(src, filename);
+  return m.exports;
 }
 
 function emberInstall(repo) {
