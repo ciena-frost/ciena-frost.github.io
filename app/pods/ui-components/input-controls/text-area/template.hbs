@@ -2,10 +2,10 @@
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-controls/text-area')}}
 	{{/frost-tab}}
-	{{#frost-tab alias='API' class='api' id='api'}}
+	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-controls/text-area/README')}}
 	{{/frost-tab}}
-	{{#frost-tab alias='Demo' class='demo' id='demo'}}
+	{{#frost-tab alias='Demo' id='demo'}}
 		<div><div class="dummy-notification-container">
   {{#each notifications as |notification|}}
     {{notification-message notification=notification}}

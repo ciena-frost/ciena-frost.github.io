@@ -1,0 +1,42 @@
+<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'design-conventions/layout')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='API' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'design-conventions/layout/README')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' id='demo'}}
+		<div>
+
+<h3>flex</h3>
+
+<div class="wrapper frost-flex-1">
+  <aside class="aside-2 frost-flex-1">Flex 1 - Donec eu libero sit amet quam egestas semper.</aside>
+  <article class="main frost-flex-3">
+    <p>Flex 3 - Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. </p>
+  </article>
+  <aside class="aside-1 frost-flex-1">Flex 1 - Donec eu libero sit amet quam egestas semper. </aside>
+</div>
+
+</div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
+	<div class='footer'>
+		<div class='info'>
+			<div>
+				<div class='contributors'>
+					<span class="footerHeading">Contributors</span>Adam Meadows - Matthew Dahl - Roxanne - Steven Glanzer - Gosia Hyndman - Adam Meadows - Eric White
+			</div>
+			<div class='connect'>
+				<span class="footerHeading">Connect</span>
+					 <a href="https://github.com/ciena-frost/ember-frost-css-core" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
+				</div>
+			</div>
+			<br/>
+		</div>
+		<div class='copyright'>
+			
+		</div>
+	</div>
+</div>
