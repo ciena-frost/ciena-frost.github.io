@@ -3,7 +3,10 @@ import config from './config/environment'
 import addRoute from 'frost-guide-custom-routing/utils/addRoute'
 
 var Router = Ember.Router.extend({
-  location: config.locationType
+  location: config.locationType,
+  resetScroll: function(){
+    window.scrollTo(0,0) //needed because of js fixed sidebar
+  }.on('didTransition')
 })
 
 
