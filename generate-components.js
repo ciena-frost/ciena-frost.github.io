@@ -111,12 +111,7 @@ fs.writeFileSync("app/mirage/scenarios/default.js", defaultImportsJS + defaultBo
 
 var configImportsJS = ""
 var configBodyJS = "export default function () {\n"
-configBodyJS += ` if (config && config.isProd){
-    this.namespace = "https://ciena-frost.github.io/"
-  }else{
-    this.namespace = 'https://localhost:4200/'
-  }
-`
+configBodyJS += "\tthis.namespace = config.mirageNamespace\n"
 configstoImportMap.forEach(function (value, key) {
   configImportsJS += "import " + value + " from " + "'./" + key + "'\n"
   configBodyJS += "\t" + value + ".call(this)\n"
