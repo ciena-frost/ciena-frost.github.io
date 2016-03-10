@@ -9,7 +9,6 @@
 
 # ember-frost-text <br /> [![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
 
-
 ## Installation
 ```
 ember install ember-frost-text
@@ -26,7 +25,7 @@ ember install ember-frost-text
 | `on-input` | `string` | `<action-name>` | triggers associated action when the input value is changed |
 | `value` | `string` | `<value-text>` | what text to put in input |
 
-## Examples
+## Examples 
 
 ### Focus on Input
 ```handlebars
