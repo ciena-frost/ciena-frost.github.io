@@ -25,6 +25,7 @@ commit_website_files() {
   npm install sync-exec
   npm install marked
   npm install highlight
+  npm install tosource
   npm install npm
   npm install && bower install
   ./generate-frost-guide-content.sh
