@@ -1,21 +1,13 @@
 import Ember from 'ember'
 import config from './config/environment'
+import addRoute from 'frost-guide-custom-routing/utils/addRoute'
 
 var Router = Ember.Router.extend({
-  location: config.locationType
+  location: config.locationType,
+  resetScroll: function () {
+    window.scrollTo(0, 0) // needed because of js fixed sidebar
+  }.on('didTransition')
 })
-
-var addRoute = function (routeConfig) {
-  if (Ember.isEmpty(routeConfig.items)) {
-    this.route(routeConfig.id)
-  } else {
-    this.route(routeConfig.id, function () {
-      routeConfig.items.forEach((item) => {
-        addRoute.call(this, item)
-      })
-    })
-  }
-}
 
 Router.map(function () {
   let routerConfig = config.APP.routingConfig
@@ -30,7 +22,9 @@ Router.map(function () {
     this.route('contributors', function () {
 
     })
-    this.route('contributor', { path: '/contributors/:login' })
+    this.route('contributor', {
+      path: '/contributors/:login'
+    })
   })
 
   this.route('overview', {

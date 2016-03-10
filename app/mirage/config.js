@@ -20,25 +20,25 @@ import emberFrostAppBar from './ember-frost-app-bar-config'
 import config from '../config/environment'
 export default function () {
  if (config && config.isProd){
-    this.namespace = "https://ciena-frost.github.io/"
+    this.namespace = "https://ciena-frost.github.io"
   }else{
     this.namespace = 'https://localhost:4200/'
   }
-	emberFrostButton.call(this)
-	emberFrostSelect.call(this)
+  emberFrostButton.call(this)
+  emberFrostSelect.call(this)
 	emberFrostText.call(this)
 	emberFrostCheckbox.call(this)
 	emberFrostList.call(this)
 	emberFrostLink.call(this)
-	emberFrostInfoBar.call(this)
-	emberFrostScroll.call(this)
-	emberFrostTabs.call(this)
+  emberFrostInfoBar.call(this)
+  emberFrostScroll.call(this)
+  emberFrostTabs.call(this)
 	emberFrostLoading.call(this)
 	emberFrostPassword.call(this)
 	emberFrostAboutDialog.call(this)
 	emberFrostTextarea.call(this)
 	emberFrostSort.call(this)
-	emberFrostLogin.call(this)
+  emberFrostLogin.call(this)
 	emberFrostModalInput.call(this)
 	emberFrostNavigation.call(this)
 	emberFrostBunsen.call(this)

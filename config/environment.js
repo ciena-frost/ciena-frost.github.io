@@ -10,6 +10,7 @@ module.exports = function (environment) {
     baseURL: '/frost-guide',
     locationType: 'hash',
     isFrostGuideDirectory: true,
+    mirageNamespace: 'https://localhost:4200',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -55,7 +56,12 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     ENV.baseURL = '/'
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    }
+    ENV.mirageNamespace = 'https://ciena-frost.github.io'
     ENV.isProd = true
+    ENV.isDemo = true
   }
 
   return ENV
