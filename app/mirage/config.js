@@ -7,15 +7,15 @@ import emberFrostLogin from './ember-frost-login-config'
 import config from '../config/environment'
 export default function () {
  if (config && config.isProd){
-    this.namespace = "https://ciena-frost.github.io/"
-//    this.namespace = "http://ewhite613.github.io/ciena-frost.github.io/"
+    this.namespace = "https://ciena-frost.github.io"
+//    this.namespace = "http://ewhite613.github.io"
   }else{
     this.namespace = 'https://localhost:4200/'
   }
-	emberFrostButton.call(this)
-	emberFrostSelect.call(this)
-	emberFrostInfoBar.call(this)
-	emberFrostScroll.call(this)
-	emberFrostTabs.call(this)
-	emberFrostLogin.call(this)
+  emberFrostButton.call(this)
+  emberFrostSelect.call(this)
+  emberFrostInfoBar.call(this)
+  emberFrostScroll.call(this)
+  emberFrostTabs.call(this)
+  emberFrostLogin.call(this)
 }

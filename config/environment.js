@@ -55,6 +55,9 @@ module.exports = function (environment) {
 
   if (environment === 'production') {
     ENV.baseURL = '/'
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    }
     ENV.isProd = true
   }
 
