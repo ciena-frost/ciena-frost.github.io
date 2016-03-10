@@ -96,6 +96,7 @@
     "eslint": "2.2.0",
     "eslint-config-frost-standard": "^1.0.0",
     "frost-css": "~1.2.3",
+    "frost-guide-custom-routing": "0.0.2",
     "frost-svg": "file:frost-components/frost-svg",
     "liquid-fire": "0.22.0",
     "loader.js": "^4.0.0",
