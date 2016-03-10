@@ -177,8 +177,14 @@ body {
   font-size: 18px;
   color: #404041;
   font-weight: 500;
-
 }
+
+@media only screen and (max-width: 565px){
+  .gh-button span{
+    display: none;
+  } 
+}
+
 
 /*
 Max width before this PARTICULAR table gets nasty
