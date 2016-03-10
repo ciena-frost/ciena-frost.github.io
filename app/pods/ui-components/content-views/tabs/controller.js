@@ -6,8 +6,8 @@ export default ApiController.extend({
   selectedTab: 'controller',
 
   actions: {
-    tabSelected (tab) {
-      this.set('selectedTab', tab)
+    demoTabSelected (tab) {
+      this.set('demoTabSelected', tab)
     }
   }
 })

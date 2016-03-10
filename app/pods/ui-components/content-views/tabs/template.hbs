@@ -6,8 +6,16 @@
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/content-views/tabs/README')}}
 	{{/frost-tab}}
 	{{#frost-tab alias='Demo' class='demo' id='demo'}}
-		<div><div class='ember-frost-demo'>
-{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+		<div><div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+    {{notification-message notification=notification}}
+  {{/each}}
+</div>
+
+<div class="dummy-body">
+  <div class="dummy-content">
+    <div class='ember-frost-demo'>
+{{#frost-tabs on-change=(action 'demoTabSelected') selection=demoTabSelected}}
   {{#frost-tab alias='Template' id='template'}}
       <div id='content'>
   <pre><code>
@@ -103,7 +111,9 @@ export default Ember.Route.extend({
   {{/frost-tab}}
 {{/frost-tabs}}
 </div>
-</div>
+
+  </div>
+</div></div>
 
 	{{/frost-tab}}
 {{/frost-tabs}}
@@ -111,11 +121,11 @@ export default Ember.Route.extend({
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Gosia Hyndman - oadeojo - Eric White - travis-ci-ciena
+					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Gosia Hyndman - oadeojo - Eric White - Matthew Dahl - 
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>
-					 Github Button here 
+					 <a href="https://github.com/ciena-frost/ember-frost-tabs" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
 				</div>
 			</div>
 			<br/>

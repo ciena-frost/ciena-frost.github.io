@@ -1,0 +1,36 @@
+@import 'frost-core';
+@import 'frost-theme';
+
+.dummy-notification-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 1060;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.dummy-body {
+  display: flex;
+  flex-direction: row;
+}
+
+.dummy-content {
+  flex: 1;
+}
+
+.dummy-svg-huge {
+  width: 1000px;
+  height: 1000px;
+  background-color: purple;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  .text {
+    padding: 10px 0px;
+  }
+}

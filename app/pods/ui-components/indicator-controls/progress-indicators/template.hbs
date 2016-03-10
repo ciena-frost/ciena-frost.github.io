@@ -1,21 +1,44 @@
+<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/indicator-controls/progress-indicators')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='API' class='api' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/indicator-controls/progress-indicators/README')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' class='demo' id='demo'}}
+		<div><div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+    {{notification-message notification=notification}}
+  {{/each}}
+</div>
 
-<div class="md">
-	<div class="content-col">
-		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'UI-components/indicator-controls/progress-indicators')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-		</div>
-	</div>
+<div class="dummy-body">
+  <div class="dummy-content">
+    <div class='loading-container'>
+  <div class="flex-container">
+    <div class="text">Ripple:</div>
+    {{frost-loading}}
+  </div>
+  <div class="flex-container">
+    <div class="text">Ring:</div>
+    {{frost-loading type='ring'}}
+  </div>
+</div>
+
+  </div>
+</div></div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Justin Lafleur
+					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Eric White
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>
-					 Github Button here 
+					 <a href="https://github.com/ciena-frost/ember-frost-loading" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
 				</div>
 			</div>
 			<br/>

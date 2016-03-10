@@ -1,0 +1,23 @@
+@import 'frost-theme';
+@import 'frost-core';
+
+html, body {
+  font-family: $frost-font-family;
+  color: rgb(102, 102, 102);
+  padding: 5px;
+}
+
+.dummy-notification-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 999;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}
+
+.dummy-header {
+  padding: 20px 0 10px 20px;
+  font-weight: bold;
+}

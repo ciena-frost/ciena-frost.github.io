@@ -1,0 +1,42 @@
+@import 'frost-core';
+@import 'frost-theme';
+.dummy-notification-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 999;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+}
+.dummy-body {
+  display: flex;
+  flex-direction: row;
+}
+.dummy-navigation {}
+.dummy-content {
+  flex: 1;
+}
+.dummy-input {
+  width: 800px;
+}
+.dummy-header {
+  padding: 20px 0 10px 20px;
+  font-weight: bold;
+}
+.dummy-padding {
+  padding: 20px 0 0 20px;
+}
+.dummy-gap {
+  width: 5px;
+}
+.dummy-svg-huge {
+  width: 1000px;
+  height: 1000px;
+  background-color: purple;
+}
+.frost-tabs.iframe {
+  .navigation {
+    display: none;
+  }
+}
