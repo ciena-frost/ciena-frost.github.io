@@ -130,7 +130,7 @@ function getDemoRouting(url, routingConfig, demoParentDirectory) {
 }
 
 function mergeRouting(base, demo, demoParentDirectory) {
-  var demoId = demoParentDirectory.replace(/\//g, ".").toLowerCase()
+  var demoId = demoParentDirectory.replace(/\//g, ".")//.toLowerCase()
   function mergeItems (items, parent ){
     items.forEach(function(item){
       item.route = item.route.replace('demo.', parent + ".")
@@ -408,7 +408,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += demoParentDirectory + "/README')}}"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs) + "</div>\n"
+    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'" )) + "</div>\n"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n{{/frost-tabs}}"
     template_content += "\n\t<div class='footer'>\n"
