@@ -66,9 +66,212 @@ body.forEach(function (repo) {
 
       })
     }
+    
+    if(typeof packageJSON.frostGuideDirectory === 'string')
+      createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
+    else if(packageJSON.frostGuideDirectory != undefined){
+      for(var i=0;i<packageJSON.frostGuideDirectory.length;i++){
+        var demo = packageJSON.frostGuideDirectory[i];
+        for(var route in demo){
+            createContent(demo[route], repo, packageJSON, "/" + route)
+        }
+      }
+    }
+    
+  }
+});
 
-    var demoParentDirectory = packageJSON.frostGuideDirectory;
-    if (demoParentDirectory === undefined) {
+//Populate Dedicated Contributors Map
+var frostGuideContributors = getCienFrostRepoContributors("ciena-frost.github.io");
+frostGuideContributors.forEach(function (user) {
+  var userJSON = requestJSON(user.url);
+  addDedicatedContributor(userJSON, "ciena-frost.github.io")
+});
+
+//Populate Dedicated Contributors Page
+var template_content = "<div class='md'>\n\t";
+var contributorJSON = []
+contributorMap.forEach(function (value, key) {
+  if (value.login === "travis-ci-ciena") {
+    return;
+  }
+  contributorJSON.push(value);
+})
+fs.writeFileSync("public/data/contributors.json", JSON.stringify(contributorJSON))
+
+//Build Mirage Maps Key = <path> Value = <ModuleName>
+var defaultImportsJS = ""
+var defaultBodyJS = "export default function (server) {\n"
+scenariosToImportMap.forEach(function (value, key) {
+  defaultImportsJS += "import " + value + " from " + "'./" + key + "'\n"
+  defaultBodyJS += "\t" + value + "(server)\n"
+})
+defaultBodyJS += "}\n"
+fs.writeFileSync("app/mirage/scenarios/default.js", defaultImportsJS + defaultBodyJS)
+
+var configImportsJS = ""
+var configBodyJS = "export default function () {\n"
+configBodyJS += ` if (config && config.isProd){
+    this.namespace = "https://ciena-frost.github.io/"
+  }else{
+    this.namespace = 'https://localhost:4200/'
+  }
+`
+configstoImportMap.forEach(function (value, key) {
+  configImportsJS += "import " + value + " from " + "'./" + key + "'\n"
+  configBodyJS += "\t" + value + ".call(this)\n"
+})
+configBodyJS += "}\n"
+configImportsJS += "import config from '../config/environment'\n"
+fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
+
+/////////////////////////// FUNCTIONS ////////////////////////////////////
+function getDemoRouting(url, routingConfig, demoParentDirectory) {
+  var demoRouting_string = getFile(url)
+  var demoRouting = requireFromString(demoRouting_string)
+  var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory)
+
+  fs.writeFileSync("config/routing.js", "module.exports = " + toSource(result) + "\n")
+}
+
+function mergeRouting(base, demo, demoParentDirectory) {
+  var demoId = demoParentDirectory.replace(/\//g, ".").toLowerCase()
+  base.forEach(function (routeConfig) {
+    if (routeConfig.items === undefined) {
+      if (routeConfig.route.toLowerCase() === demoId) {
+        console.log(chalk.blue("Found match for: " + demoId))
+        console.log(routeConfig)
+        console.log(demo)
+          //        routeConfig.alias = "Found You"
+        if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
+          routeConfig.modalName = demo[0].modalName
+          routeConfig.modal = demo[0].modal
+        }
+      }
+    } else {
+      routeConfig.items.forEach((item) => {
+        mergeRouting([item], demo, demoParentDirectory)
+      })
+    }
+  })
+  return base
+}
+
+function addDedicatedContributor(user, repo) {
+  if (!contributorMap.has(user.login)) {
+    user.repos = new Set()
+    user.repos.add(repo)
+    contributorMap.set(user.login, user)
+
+  } else {
+    var currUser = contributorMap.get(user.login)
+    currUser.repos.add(repo)
+    contributorMap.set(user.login, currUser)
+  }
+}
+
+function getDemoComponentHelpers(url) {
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  var BreakException = {};
+
+  body.forEach(function (component) {
+    if (component.type === "dir") {
+      var content = getFolder(component.url, component.name)
+      var path = "app/pods/components/" + component.name;
+      mkdirpSync(path);
+      content.forEach(function (value, key) {
+        if (key.indexOf("component.js") > -1) {
+          var parent = key.split('/')[0]
+          content.forEach(function (value, key) {
+            if (key.indexOf(parent) > -1) {
+              fs.writeFileSync("app/pods/components/" + key, value)
+            }
+          })
+        }
+        //        fs.writeFileSync("app/pods/components/" + key, value)
+      })
+    }
+  })
+}
+
+function getDemoComponents(url) {
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  body.forEach(function (component) {
+    if (component.type === "dir") {
+      var content = getFolder(component.url, component.name)
+      var path = "app/pods/components/" + component.name;
+      mkdirpSync(path);
+      content.forEach(function (value, key) {
+        fs.writeFileSync("app/pods/components/" + key, value)
+      })
+    }
+  })
+}
+
+function getDemoModels(url) {
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+    body.forEach(function (model) {
+      if (model.name.endsWith('.js')) {
+        var contents = getFile(model.url)
+        fs.writeFileSync("app/models/" + model.name, contents)
+      }
+    })
+  } catch (err) {
+    console.log(chalk.red.bold(err))
+  }
+}
+
+function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) {
+  //  try {
+  mkdirpSync("app/mirage/fixtures")
+  mkdirpSync("app/mirage/factories")
+  try {
+    var res = request('GET', url, options);
+    var body = JSON.parse(res.getBody());
+  } catch (err) {
+    console.log(chalk.red.bold(err))
+    return;
+  }
+  body.forEach(function (mirage) {
+      if (mirage.type === "dir") {
+        var folderContent = getFolder(mirage.url, mirage.name)
+          //        console.log(folderContent)
+        folderContent.forEach(function (value, key) {
+          if (key.indexOf("fixtures/") > -1 || key.indexOf("factories/") > -1) {
+            fs.writeFileSync("app/mirage/" + key, value)
+          } else if (key.indexOf("scenarios/default.js") > -1) {
+            var path = "app/mirage/scenarios/" + repoName + "-default.js"
+            fs.writeFileSync(path, value)
+            var val = repoName.replace(/-(.)/g, function (m, $1) {
+              return $1.toUpperCase()
+            })
+            scenariosToImportMap.set(repoName + "-default", val)
+          }
+        })
+      } else {
+        if (mirage.name === "config.js") {
+          var config_Content = getFile(mirage.url)
+          var path = "app/mirage/" + repoName + "-config.js"
+          fs.writeFileSync(path, config_Content)
+          var val = repoName.replace(/-(.)/g, function (m, $1) {
+            return $1.toUpperCase()
+          })
+          configstoImportMap.set(repoName + "-config", val)
+        }
+      }
+
+    })
+    //  } catch (err) {
+    //    console.log(chalk.red.bold(err))
+    //  }
+}
+
+function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
+  if (demoParentDirectory === undefined) {
       var componentContributors = getCienFrostRepoContributors(repo.name);
       componentContributors.forEach(function (user) {
         var userJSON = requestJSON(user.url);
@@ -84,7 +287,7 @@ body.forEach(function (repo) {
     readme_content = getFile(readme_url);
 
     if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
-      var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+      var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
       var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
       var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
       var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
@@ -276,196 +479,6 @@ body.forEach(function (repo) {
         throw err
       }
     }
-  }
-});
-
-//Populate Dedicated Contributors Map
-var frostGuideContributors = getCienFrostRepoContributors("ciena-frost.github.io");
-frostGuideContributors.forEach(function (user) {
-  var userJSON = requestJSON(user.url);
-  addDedicatedContributor(userJSON, "ciena-frost.github.io")
-});
-
-//Populate Dedicated Contributors Page
-var template_content = "<div class='md'>\n\t";
-var contributorJSON = []
-contributorMap.forEach(function (value, key) {
-  if (value.login === "travis-ci-ciena") {
-    return;
-  }
-  contributorJSON.push(value);
-})
-fs.writeFileSync("public/data/contributors.json", JSON.stringify(contributorJSON))
-
-//Build Mirage Maps Key = <path> Value = <ModuleName>
-var defaultImportsJS = ""
-var defaultBodyJS = "export default function (server) {\n"
-scenariosToImportMap.forEach(function (value, key) {
-  defaultImportsJS += "import " + value + " from " + "'./" + key + "'\n"
-  defaultBodyJS += "\t" + value + "(server)\n"
-})
-defaultBodyJS += "}\n"
-fs.writeFileSync("app/mirage/scenarios/default.js", defaultImportsJS + defaultBodyJS)
-
-var configImportsJS = ""
-var configBodyJS = "export default function () {\n"
-configBodyJS += ` if (config && config.isProd){
-    this.namespace = "https://ciena-frost.github.io/"
-  }else{
-    this.namespace = 'https://localhost:4200/'
-  }
-`
-configstoImportMap.forEach(function (value, key) {
-  configImportsJS += "import " + value + " from " + "'./" + key + "'\n"
-  configBodyJS += "\t" + value + ".call(this)\n"
-})
-configBodyJS += "}\n"
-configImportsJS += "import config from '../config/environment'\n"
-fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
-
-/////////////////////////// FUNCTIONS ////////////////////////////////////
-function getDemoRouting(url, routingConfig, demoParentDirectory) {
-  var demoRouting_string = getFile(url)
-  var demoRouting = requireFromString(demoRouting_string)
-  var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory)
-
-  fs.writeFileSync("config/routing.js", "module.exports = " + toSource(result) + "\n")
-}
-
-function mergeRouting(base, demo, demoParentDirectory) {
-  var demoId = demoParentDirectory.replace(/\//g, ".").toLowerCase()
-  base.forEach(function (routeConfig) {
-    if (routeConfig.items === undefined) {
-      if (routeConfig.route.toLowerCase() === demoId) {
-        console.log(chalk.blue("Found match for: " + demoId))
-        console.log(routeConfig)
-        console.log(demo)
-          //        routeConfig.alias = "Found You"
-        if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
-          routeConfig.modalName = demo[0].modalName
-          routeConfig.modal = demo[0].modal
-        }
-      }
-    } else {
-      routeConfig.items.forEach((item) => {
-        mergeRouting([item], demo, demoParentDirectory)
-      })
-    }
-  })
-  return base
-}
-
-function addDedicatedContributor(user, repo) {
-  if (!contributorMap.has(user.login)) {
-    user.repos = new Set()
-    user.repos.add(repo)
-    contributorMap.set(user.login, user)
-
-  } else {
-    var currUser = contributorMap.get(user.login)
-    currUser.repos.add(repo)
-    contributorMap.set(user.login, currUser)
-  }
-}
-
-function getDemoComponentHelpers(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
-  var BreakException = {};
-
-  body.forEach(function (component) {
-    if (component.type === "dir") {
-      var content = getFolder(component.url, component.name)
-      var path = "app/pods/components/" + component.name;
-      mkdirpSync(path);
-      content.forEach(function (value, key) {
-        if (key.indexOf("component.js") > -1) {
-          var parent = key.split('/')[0]
-          content.forEach(function (value, key) {
-            if (key.indexOf(parent) > -1) {
-              fs.writeFileSync("app/pods/components/" + key, value)
-            }
-          })
-        }
-        //        fs.writeFileSync("app/pods/components/" + key, value)
-      })
-    }
-  })
-}
-
-function getDemoComponents(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
-  body.forEach(function (component) {
-    if (component.type === "dir") {
-      var content = getFolder(component.url, component.name)
-      var path = "app/pods/components/" + component.name;
-      mkdirpSync(path);
-      content.forEach(function (value, key) {
-        fs.writeFileSync("app/pods/components/" + key, value)
-      })
-    }
-  })
-}
-
-function getDemoModels(url) {
-  try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
-    body.forEach(function (model) {
-      if (model.name.endsWith('.js')) {
-        var contents = getFile(model.url)
-        fs.writeFileSync("app/models/" + model.name, contents)
-      }
-    })
-  } catch (err) {
-    console.log(chalk.red.bold(err))
-  }
-}
-
-function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) {
-  //  try {
-  mkdirpSync("app/mirage/fixtures")
-  mkdirpSync("app/mirage/factories")
-  try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
-  } catch (err) {
-    console.log(chalk.red.bold(err))
-    return;
-  }
-  body.forEach(function (mirage) {
-      if (mirage.type === "dir") {
-        var folderContent = getFolder(mirage.url, mirage.name)
-          //        console.log(folderContent)
-        folderContent.forEach(function (value, key) {
-          if (key.indexOf("fixtures/") > -1 || key.indexOf("factories/") > -1) {
-            fs.writeFileSync("app/mirage/" + key, value)
-          } else if (key.indexOf("scenarios/default.js") > -1) {
-            var path = "app/mirage/scenarios/" + repoName + "-default.js"
-            fs.writeFileSync(path, value)
-            var val = repoName.replace(/-(.)/g, function (m, $1) {
-              return $1.toUpperCase()
-            })
-            scenariosToImportMap.set(repoName + "-default", val)
-          }
-        })
-      } else {
-        if (mirage.name === "config.js") {
-          var config_Content = getFile(mirage.url)
-          var path = "app/mirage/" + repoName + "-config.js"
-          fs.writeFileSync(path, config_Content)
-          var val = repoName.replace(/-(.)/g, function (m, $1) {
-            return $1.toUpperCase()
-          })
-          configstoImportMap.set(repoName + "-config", val)
-        }
-      }
-
-    })
-    //  } catch (err) {
-    //    console.log(chalk.red.bold(err))
-    //  }
 }
 
 function getPackageJSON(url) {
