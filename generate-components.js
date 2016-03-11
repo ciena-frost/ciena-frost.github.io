@@ -380,7 +380,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
       fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
         "import ApiController from 'frost-guide/utils/ApiController'\n\n" +
         "export default ApiController.extend({\n\n" +
-        "})");
+        "})\n");
     }
     //create template.hbs
     //insert tabs
