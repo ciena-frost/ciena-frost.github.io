@@ -59,6 +59,9 @@ export default Ember.Component.extend({
     categorySelected(category, selected) {
         this.set('selectedCategory', selected ? category : null)
       },
+    toggleCollapsed() {
+      this.sendAction('toggleCollapsed') //send action to application controller
+    },
       search(attrs) {
         let items = this.get('items')
         let query = attrs.value.toLowerCase()
