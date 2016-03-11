@@ -9,9 +9,11 @@
       {{else if (eq item.type 'route')}}
         {{#if (eq item.alias 'Contributor')}}
         {{else}}
-    {{#frost-link item.route class='route'}}
-          {{item.alias}}
-        {{/frost-link}}
+          <span {{action "toggleCollapsed"}}>
+            {{#frost-link item.route class='route'}}
+              {{item.alias}}
+            {{/frost-link}}
+          </span>
         {{/if}}
       {{else if (eq item.type 'divider')}}
         <div class="divider"></div>

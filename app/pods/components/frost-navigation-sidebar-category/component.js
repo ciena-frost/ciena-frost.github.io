@@ -12,6 +12,9 @@ export default Ember.Component.extend({
   actions: {
     toggleExpanded  () {
       this.toggleProperty('isExpanded')
-    }
+    },
+    toggleCollapsed() {
+      this.get("targetObject").send('toggleCollapsed') //sends action to parent component
+    },
   }
 })

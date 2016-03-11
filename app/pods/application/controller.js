@@ -21,5 +21,10 @@ export default Ember.Controller.extend({
       $('.guide-sidebar').css('top', $(this).scrollTop() + 'px')
       $('.guide-sidebar-mobile').css('top', $(this).scrollTop() + 'px')
     })
-  }.on('init')
+  }.on('init'),
+  actions: {
+    toggleCollapsed() {
+      this.get('frostSidebar').send('toggleCollapsed') //send action to frost-sidebar component
+    }
+  }
 })

@@ -1,8 +1,8 @@
 {{#if media.isMobile}}
     <div class="guide-sidebar-mobile">
-    {{#frost-sidebar}}
+    {{#frost-sidebar register-as=frostSidebar}}
       {{#frost-scroll}}
-        {{frost-navigation-sidebar-menu items=applicationMenuItems}}
+        {{frost-navigation-sidebar-menu toggleCollapsed='toggleCollapsed' items=applicationMenuItems}}
       {{/frost-scroll}}
     {{/frost-sidebar}}
     </div>
