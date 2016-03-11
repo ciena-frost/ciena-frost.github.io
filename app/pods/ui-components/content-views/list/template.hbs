@@ -14,7 +14,7 @@
 
 <div class="dummy-body">
 	<div class="dummy-content">
-		{{#frost-list
+		{{outlet}}{{#frost-list
   class='frost-flex-1'
   on-scroll-y-end=(action 'yEndReached')
   on-select=(action 'selected')
@@ -36,7 +36,7 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Steven Glanzer - Matthew Dahl - Eric White
+					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Steven Glanzer - Matthew Dahl - Eric White - Gosia Hyndman
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>

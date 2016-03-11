@@ -6,7 +6,7 @@
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-controls/text/README')}}
 	{{/frost-tab}}
 	{{#frost-tab alias='Demo' id='demo'}}
-		<div><div class="dummy-notification-container">
+		<div>{{outlet}}<div class="dummy-notification-container">
   {{#each notifications as |notification|}}
       {{notification-message notification=notification}}
   {{/each}}

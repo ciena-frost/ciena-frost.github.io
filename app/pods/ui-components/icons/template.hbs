@@ -6,7 +6,7 @@
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/icons/README')}}
 	{{/frost-tab}}
 	{{#frost-tab alias='Demo' id='demo'}}
-		<div><h2>frost-icon</h2>
+		<div>{{outlet}}<h2>frost-icon</h2>
 
 {{format-markdown "```handlebars
 {{frost-icon icon=<icon-name>}}
