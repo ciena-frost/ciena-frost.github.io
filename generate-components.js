@@ -42,7 +42,7 @@ var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets" && repo.name === "ember-frost-link") {
+  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
@@ -144,7 +144,7 @@ function mergeRouting(base, demo, demoParentDirectory) {
   }
   base.forEach(function (routeConfig) {
     if (routeConfig.items === undefined) {
-      if (routeConfig.route.toLowerCase() === demoId) {
+      if (routeConfig.route === demoId) {
         console.log(chalk.blue("Found match for: " + demoId))
         console.log(routeConfig)
         console.log(demo)
@@ -408,7 +408,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += demoParentDirectory + "/README')}}"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'" )) + "</div>\n"
+    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'" )) + "</div>\n"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n{{/frost-tabs}}"
     template_content += "\n\t<div class='footer'>\n"
