@@ -42,7 +42,7 @@ var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets" && repo.name === "ember-frost-link") {
+  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
@@ -51,7 +51,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-    emberInstall(repo.name);
+    //    emberInstall(repo.name);
 
     if (packageJSON.contributors != undefined) {
       packageJSON.contributors.forEach(function (user) {
@@ -130,10 +130,21 @@ function getDemoRouting(url, routingConfig, demoParentDirectory) {
 }
 
 function mergeRouting(base, demo, demoParentDirectory) {
-  var demoId = demoParentDirectory.replace(/\//g, ".").toLowerCase()
+  var demoId = demoParentDirectory.replace(/\//g, ".")//.toLowerCase()
+  function mergeItems (items, parent ){
+    items.forEach(function(item){
+      item.route = item.route.replace('demo.', parent + ".")
+      if (item.path !== undefined && item.path.path && item.path.path !== "/"){
+        item.path.path =  demoParentDirectory + item.path.path
+      }
+      if (item.items !== undefined){
+        mergeItems(item.items, parent + "." + item.id)
+      }
+    })
+  }
   base.forEach(function (routeConfig) {
     if (routeConfig.items === undefined) {
-      if (routeConfig.route.toLowerCase() === demoId) {
+      if (routeConfig.route === demoId) {
         console.log(chalk.blue("Found match for: " + demoId))
         console.log(routeConfig)
         console.log(demo)
@@ -146,6 +157,12 @@ function mergeRouting(base, demo, demoParentDirectory) {
         if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
           routeConfig.path = demo[0].path
         }
+        if (demo[0].items !== undefined){
+          console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
+          mergeItems(demo[0].items, demoId)
+          routeConfig.items = demo[0].items
+        }
+
       }
     } else {
       routeConfig.items.forEach((item) => {
@@ -192,7 +209,7 @@ function getDemoComponentHelpers(url, demoDirectory) {
         }
         //        fs.writeFileSync("app/pods/components/" + key, value)
       })
-      if (!isComponent) {
+      if (!isComponent && component.name !== "index") {
         path = "app/pods/" + demoDirectory + "/" + component.name
         console.log("Path: " + path)
         mkdirpSync(path)
@@ -331,13 +348,13 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     }
 
     //create route.js
-    if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
-      mkdirpSync(("app/pods/" + demoParentDirectory + "/index").toLowerCase());
+    if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/util")) {
+      mkdirpSync(("app/pods/" + demoParentDirectory + "/util").toLowerCase());
     }
     if (content.route_js !== undefined) {
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", content.route_js);
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/util/route.js", content.route_js);
     } else {
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})\n");
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/util/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})\n");
     }
     //import route and use
     try {
@@ -348,7 +365,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
         " generate-pages-from-markdown.js to create route.js and then run this script again."));
       throw e;
     }
-    route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\nexport default DemoRoute.extend")
+    route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './util/route'\nexport default DemoRoute.extend")
     fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
 
     //controller
@@ -391,7 +408,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += demoParentDirectory + "/README')}}"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs) + "</div>\n"
+    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'" )) + "</div>\n"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n{{/frost-tabs}}"
     template_content += "\n\t<div class='footer'>\n"
