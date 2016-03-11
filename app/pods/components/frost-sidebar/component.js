@@ -10,6 +10,7 @@ export default Ember.Component.extend({
     this._resizeListener = Ember.run.bind(this, this.adjustContent)
     this._rightSwipeListener = Ember.run.bind(this, this.openMenu)
     this._leftSwipeListener = Ember.run.bind(this, this.closeMenu)
+    this.set('register-as', this) // allows to receive actions from application controller
 
     Ember.$(window).on('resize', this._resizeListener)
     Ember.$('.menu').on('swiperight', this._rightSwipeListener)
