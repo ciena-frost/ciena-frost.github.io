@@ -10,7 +10,7 @@ Created by <span class="author"> Brian Choi</span>, last modified by <span class
 
 <span style="color: rgb(0,0,0);"><span style="font-size: 14.0px;line-height: 20.0px;"><span style="color: rgb(65,65,65);">There are different types of basic action button: primary, secondary and tertiary. </span></span></span>
 
-<span class="confluence-embedded-file-wrapper">$assets/images/171214699/176930730.png" class="confluence-embedded-image" /></span>
+<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214699/176930730.png" class="confluence-embedded-image" /></span>
 
 <span style="color: rgb(0,51,102);">Basic buttons can include icons - see below on the specifications for primary, secondary and tertiary buttons.</span>
 
@@ -21,7 +21,7 @@ Created by <span class="author"> Brian Choi</span>, last modified by <span class
 
 <span style="color: rgb(0,51,102);">These special buttons behave like regular buttons except they have a special layout.</span>
 
-<span style="color: rgb(255,0,255);">VI - put in pictures of special buttons - More, action button (in application bar) and Close button - or we can picture them below... or both $assets/images/icons/emoticons/smile.png" alt="(smile)" class="emoticon emoticon-smile" /></span>
+<span style="color: rgb(255,0,255);">VI - put in pictures of special buttons - More, action button (in application bar) and Close button - or we can picture them below... or both <img src="assets/images/icons/emoticons/smile.png" alt="(smile)" class="emoticon emoticon-smile" /></span>
 
 Behaviors
 ---------
@@ -53,7 +53,7 @@ Usage guideline
 
 <span style="color: rgb(0,0,0);">A primary button is used when there is a primary action in a screen. </span>
 
-<span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper image-center-wrapper">$assets/images/171214699/171224946.png" class="confluence-embedded-image image-center" /></span></span>
+<span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper image-center-wrapper"><img src="assets/images/171214699/171224946.png" class="confluence-embedded-image image-center" /></span></span>
 
 -   <span class="s2" style="color: rgb(0,0,0);">Used as the primary action in forms, list, dialogs. </span>
 
@@ -82,7 +82,7 @@ Usage guideline
 
 <span style="color: rgb(0,0,0);"><span class="s2"> <span>A secondary button is used when there are secondary action(s) in a screen.</span></span> </span>
 
-<span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper image-center-wrapper">$assets/images/171214699/176930736.png" class="confluence-embedded-image image-center" /></span></span>
+<span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper image-center-wrapper"><img src="assets/images/171214699/176930736.png" class="confluence-embedded-image image-center" /></span></span>
 
 -   <span class="s2" style="color: rgb(0,0,0);">Used for secondary execution in forms, list, dialogs. </span>
 
@@ -102,12 +102,12 @@ Usage guideline
 
 <span style="color: rgb(255,0,255);"><span class="s2"> <span style="color: rgb(0,0,0);">A tertiary button is used when there are tertiary actions(s) in a screen. </span></span></span>
 
-<span style="color: rgb(255,0,255);"><span class="s2"><span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper image-center-wrapper">$assets/images/171214699/171224950.png" class="confluence-embedded-image image-center" /></span></span></span></span>
+<span style="color: rgb(255,0,255);"><span class="s2"><span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper image-center-wrapper"><img src="assets/images/171214699/171224950.png" class="confluence-embedded-image image-center" /></span></span></span></span>
 
 -   <span style="color: rgb(0,0,0);"><span class="s2"><span>Label can be combined with related icon to show actions</span></span></span>
 
 <span style="color: rgb(0,0,0);"> </span>
-<span class="confluence-embedded-file-wrapper">$assets/images/171214699/171225238.png" class="confluence-embedded-image" /></span>
+<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214699/171225238.png" class="confluence-embedded-image" /></span>
 
 -   <span class="s2" style="color: rgb(0,0,0);">Icons must always be placed before the text label.</span>
 -   <span style="color: rgb(0,0,0);"><span class="s2">All close and cancel are tertiary buttons.</span></span>
@@ -126,7 +126,7 @@ Usage guideline
 <span style="color: rgb(0,0,0);">
 </span>
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214699/176939291.png" class="confluence-embedded-image" width="850" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214699/176939291.png" class="confluence-embedded-image" width="850" /></span>
 
 Example of placement of buttons: the primary button is always on the far right, the secondary is always to the left of the primary if any. And the tertiary is always to the left of the secondary button if any. 
 
@@ -185,7 +185,7 @@ This menu is the same color of the navigation menu and has a different focus and
 
 There are three different button sizes: **small, medium** and** large**. 
 
-<span class="confluence-embedded-file-wrapper">$assets/images/171214699/171225313.png" class="confluence-embedded-image" /></span>
+<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214699/171225313.png" class="confluence-embedded-image" /></span>
 
 **Small buttons **should be used within forms such as in line actions.
 
@@ -195,7 +195,7 @@ There are three different button sizes: **small, medium** and** large**. 
 
  
 
-<span class="confluence-embedded-file-wrapper">$assets/images/171214699/181085609.png" class="confluence-embedded-image" /></span>
+<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214699/181085609.png" class="confluence-embedded-image" /></span>
 
 **
 **
@@ -208,34 +208,34 @@ There are three different button sizes: **small, medium** and** large**. 
 Attachments:
 ------------
 
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:32:54.png](attachments/171214699/171217345.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:33:17.png](attachments/171214699/171217347.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:33:39.png](attachments/171214699/171217348.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:34:5.png](attachments/171214699/171217349.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:34:21.png](attachments/171214699/171217351.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:34:57.png](attachments/171214699/171217352.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 16:21:43.png](attachments/171214699/171223798.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 17:25:12.png](attachments/171214699/171223974.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 17:25:41.png](attachments/171214699/171223975.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 8:37:27.png](attachments/171214699/171224431.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 8:40:10.png](attachments/171214699/171224439.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [button-types.png](attachments/171214699/171224833.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [button-types2.png](attachments/171214699/171224931.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 12:10:56.png](attachments/171214699/171224946.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 12:11:14.png](attachments/171214699/171224947.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 12:11:37.png](attachments/171214699/171224950.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 14:40:32.png](attachments/171214699/171225238.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 15:3:48.png](attachments/171214699/171225286.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [button-types3.png](attachments/171214699/171225313.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-1-11 14:17:45.png](attachments/171214699/175014637.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-1-11 14:25:33.png](attachments/171214699/175014657.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-1-27 13:14:12.png](attachments/171214699/176921561.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 11:40:0.png](attachments/171214699/176930730.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 11:40:57.png](attachments/171214699/176930736.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 13:12:38.png](attachments/171214699/176930924.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-10 10:56:0.png](attachments/171214699/176939287.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-10 10:56:43.png](attachments/171214699/176939291.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 11:32:10.png](attachments/171214699/181085609.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:32:54.png](attachments/171214699/171217345.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:33:17.png](attachments/171214699/171217347.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:33:39.png](attachments/171214699/171217348.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:34:5.png](attachments/171214699/171217349.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:34:21.png](attachments/171214699/171217351.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-3 13:34:57.png](attachments/171214699/171217352.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 16:21:43.png](attachments/171214699/171223798.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 17:25:12.png](attachments/171214699/171223974.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 17:25:41.png](attachments/171214699/171223975.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 8:37:27.png](attachments/171214699/171224431.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 8:40:10.png](attachments/171214699/171224439.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [button-types.png](attachments/171214699/171224833.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [button-types2.png](attachments/171214699/171224931.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 12:10:56.png](attachments/171214699/171224946.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 12:11:14.png](attachments/171214699/171224947.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 12:11:37.png](attachments/171214699/171224950.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 14:40:32.png](attachments/171214699/171225238.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 15:3:48.png](attachments/171214699/171225286.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [button-types3.png](attachments/171214699/171225313.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-1-11 14:17:45.png](attachments/171214699/175014637.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-1-11 14:25:33.png](attachments/171214699/175014657.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-1-27 13:14:12.png](attachments/171214699/176921561.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 11:40:0.png](attachments/171214699/176930730.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 11:40:57.png](attachments/171214699/176930736.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 13:12:38.png](attachments/171214699/176930924.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-10 10:56:0.png](attachments/171214699/176939287.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-10 10:56:43.png](attachments/171214699/176939291.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 11:32:10.png](attachments/171214699/181085609.png) (image/png)
 
 Document generated by Confluence on Mar 07, 2016 12:06
 
