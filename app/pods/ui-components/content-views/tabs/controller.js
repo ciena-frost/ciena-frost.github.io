@@ -1,13 +1,6 @@
-import ApiController from 'frost-guide/utils/ApiController'
+import Ember from 'ember'
 
-export default ApiController.extend({
-  queryParams: ['selectedTab'],
-
-  selectedTab: 'controller',
-
-  actions: {
-    demoTabSelected (tab) {
-      this.set('demoTabSelected', tab)
-    }
-  }
+export default Ember.Controller.extend({
+  queryParams: ['section'],
+  section: null
 })

@@ -1,6 +1,5 @@
 import Ember from 'ember'
-import DemoRoute from './util/route'
-export default DemoRoute.extend({
+export default Ember.Route.extend({
   breadCrumb: {
     title: 'Notifications'
   },
