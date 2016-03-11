@@ -14,9 +14,15 @@ function flattenRoutes (flattenedRoutes, routes) {
 
 export function routeBreadcrumb ([route]) {
   let path = route.path.replace('.index', '')
-  return _.find(flattenRoutes([], config.APP.routingConfig), {
-    route: path
-  }).alias
+  var alias = ''
+  try {
+    alias = _.find(flattenRoutes([], config.APP.routingConfig), {
+      route: path
+    }).alias
+  } catch (err) {
+    console.log(err)
+  }
+  return alias
 }
 
 export default Ember.Helper.helper(routeBreadcrumb)

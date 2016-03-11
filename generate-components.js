@@ -66,18 +66,18 @@ body.forEach(function (repo) {
 
       })
     }
-    
-    if(typeof packageJSON.frostGuideDirectory === 'string')
+
+    if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
-    else if(packageJSON.frostGuideDirectory != undefined){
-      for(var i=0;i<packageJSON.frostGuideDirectory.length;i++){
+    else if (packageJSON.frostGuideDirectory != undefined) {
+      for (var i = 0; i < packageJSON.frostGuideDirectory.length; i++) {
         var demo = packageJSON.frostGuideDirectory[i];
-        for(var route in demo){
-            createContent(demo[route], repo, packageJSON, "/" + route)
+        for (var route in demo) {
+          createContent(demo[route], repo, packageJSON, "/" + route)
         }
       }
     }
-    
+
   }
 });
 
@@ -130,10 +130,21 @@ function getDemoRouting(url, routingConfig, demoParentDirectory) {
 }
 
 function mergeRouting(base, demo, demoParentDirectory) {
-  var demoId = demoParentDirectory.replace(/\//g, ".").toLowerCase()
+  var demoId = demoParentDirectory.replace(/\//g, ".") //.toLowerCase()
+  function mergeItems(items, parent) {
+    items.forEach(function (item) {
+      item.route = item.route.replace('demo.', parent + ".")
+      if (item.path !== undefined && item.path.path && item.path.path !== "/") {
+        item.path.path = demoParentDirectory + item.path.path
+      }
+      if (item.items !== undefined) {
+        mergeItems(item.items, parent + "." + item.id)
+      }
+    })
+  }
   base.forEach(function (routeConfig) {
     if (routeConfig.items === undefined) {
-      if (routeConfig.route.toLowerCase() === demoId) {
+      if (routeConfig.route === demoId) {
         console.log(chalk.blue("Found match for: " + demoId))
         console.log(routeConfig)
         console.log(demo)
@@ -142,6 +153,16 @@ function mergeRouting(base, demo, demoParentDirectory) {
           routeConfig.modalName = demo[0].modalName
           routeConfig.modal = demo[0].modal
         }
+
+        if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
+          routeConfig.path = demo[0].path
+        }
+        if (demo[0].items !== undefined) {
+          console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
+          mergeItems(demo[0].items, demoId)
+          routeConfig.items = demo[0].items
+        }
+
       }
     } else {
       routeConfig.items.forEach((item) => {
@@ -165,7 +186,7 @@ function addDedicatedContributor(user, repo) {
   }
 }
 
-function getDemoComponentHelpers(url) {
+function getDemoComponentHelpers(url, demoDirectory) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   var BreakException = {};
@@ -174,9 +195,11 @@ function getDemoComponentHelpers(url) {
     if (component.type === "dir") {
       var content = getFolder(component.url, component.name)
       var path = "app/pods/components/" + component.name;
-      mkdirpSync(path);
+      var isComponent = false
       content.forEach(function (value, key) {
         if (key.indexOf("component.js") > -1) {
+          mkdirpSync(path);
+          isComponent = true
           var parent = key.split('/')[0]
           content.forEach(function (value, key) {
             if (key.indexOf(parent) > -1) {
@@ -186,6 +209,20 @@ function getDemoComponentHelpers(url) {
         }
         //        fs.writeFileSync("app/pods/components/" + key, value)
       })
+      if (!isComponent && component.name !== "index") {
+        path = "app/pods/" + demoDirectory + "/" + component.name
+        console.log("Path: " + path)
+        mkdirpSync(path)
+          // Not a component helper. So it's a route
+        content.forEach(function (value, key) {
+
+          console.log("Write to: " + "app/pods/" + demoDirectory + "/" + key)
+          var writeTo = "app/pods/" + demoDirectory + "/" + key
+          mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0])
+          fs.writeFileSync(writeTo, value)
+
+        })
+      }
     }
   })
 }
@@ -267,213 +304,225 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
 
 function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
   if (demoParentDirectory === undefined) {
-      var componentContributors = getCienFrostRepoContributors(repo.name);
-      componentContributors.forEach(function (user) {
-        var userJSON = requestJSON(user.url);
-        addDedicatedContributor(userJSON, repo.name)
-      })
-      return;
+    var componentContributors = getCienFrostRepoContributors(repo.name);
+    componentContributors.forEach(function (user) {
+      var userJSON = requestJSON(user.url);
+      addDedicatedContributor(userJSON, repo.name)
+    })
+    return;
+  }
+
+  // demoParentDirectory = "ui-components/button-controls/button";
+  //console.log(packageJSON);
+
+  readme_url = repo.contents_url.replace("{+path}", "README.md");
+  readme_content = getFile(readme_url);
+
+  if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
+    var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
+    var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
+    var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
+    var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
+    var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
+    getDemoModels(demo_models_url);
+    getDemoMirage(demo_mirage_url, scenariosToImportMap, configstoImportMap, repo.name);
+    try {
+      var content = getDemoContent(demo_content_url);
+    } catch (err) {
+      console.log(err)
+      return
     }
+    var application_content = getDemoApplicationContent(demo_application_content_url);
+    var style = GetDemoStyle(demo_style_url);
 
-    // demoParentDirectory = "ui-components/button-controls/button";
-    //console.log(packageJSON);
 
-    readme_url = repo.contents_url.replace("{+path}", "README.md");
-    readme_content = getFile(readme_url);
-
-    if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
-      var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
-      var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
-      var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
-      var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
-      var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
-      getDemoModels(demo_models_url);
-      getDemoMirage(demo_mirage_url, scenariosToImportMap, configstoImportMap, repo.name);
+    if (content.template_hbs === undefined) {
+      console.log(chalk.blue("Demo template empty. Checking demo/index"))
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index" + "?ref=master");
       try {
         var content = getDemoContent(demo_content_url);
       } catch (err) {
         console.log(err)
         return
       }
-      var application_content = getDemoApplicationContent(demo_application_content_url);
-      var style = GetDemoStyle(demo_style_url);
+    }
 
-
-
-
-      //create route.js
-      if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/index")) {
-        mkdirpSync(("app/pods/" + demoParentDirectory + "/index").toLowerCase());
-      }
-      if (content.route_js !== undefined) {
-        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", content.route_js);
-      } else {
-        fs.writeFileSync("app/pods/" + demoParentDirectory + "/index/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})\n");
-      }
-      //import route and use
-      try {
-        var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
-      } catch (e) {
-        console.log(chalk.red.bold("route.js does not exist. This is probably because" +
-          " the markdown file for the description tab has not been created. Create one, run" +
-          " generate-pages-from-markdown.js to create route.js and then run this script again."));
-        throw e;
-      }
-      route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './index/route'\nexport default DemoRoute.extend")
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
-
-      //controller
-      if (content.controller_js !== undefined) {
-        if (occurrences(content.controller_js, "Ember") === 2) {
-          content.controller_js = content.controller_js.replace("import Ember from 'ember'\n", "");
-        }
-        fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
-          "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'")
-        );
-      }
-      else{
-        fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
-          "import ApiController from 'frost-guide/utils/ApiController'\n\n" +
-          "export default ApiController.extend({\n\n" +
-          "})");
-      }
-      //create template.hbs
-      //insert tabs
-      //need to redo this
-      var descriptionContent = "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " +
-        "markdown=(fr-markdown-file-strip-number-prefix '" +
-        demoParentDirectory +
-        "')}}";
-
-      if (!directoryExistsSync("public/api-markdown/" + demoParentDirectory)) {
-        mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
-      }
-      fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
-        readme_content.replace(/\s\*\s\[[a-z]+\]\(#[a-z]+\)/ig, "")
-      );
-
-      var template_content = ""
-      template_content += "<div class=\"md\">"
-      template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
-      template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
-      template_content += "\n\t\t" + descriptionContent
-      template_content += "\n\t{{/frost-tab}}"
-      template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
-      template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
-      template_content += demoParentDirectory + "/README')}}"
-      template_content += "\n\t{{/frost-tab}}"
-      template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs) + "</div>\n"
-      template_content += "\n\t{{/frost-tab}}"
-      template_content += "\n{{/frost-tabs}}"
-      template_content += "\n\t<div class='footer'>\n"
-      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span "
-      template_content += "class=\"footerHeading\">Contributors</span>";
-
-      var contributorsCount = 0;
-      var contributorDuplicates = 0;
-      var componentContributors = getCienFrostRepoContributors(repo.name);
-      if (packageJSON.contributors != undefined) {
-        packageJSON.contributors.forEach(function (user) {
-          contributorsCount++
-          //get user in (https://github.com/ewhite613)
-          var userIdRegex = /\/([a-z|0-9]+)\)/i
-          var userId = user.match(userIdRegex)
-          if (userId != undefined) {
-            var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
-            if (componentContributors.contains(userJSON) === false) {
-              if (userJSON.login === "travis-ci-ciena") {
-                return
-              }
-              if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
-                template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
-              } else {
-                template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
-              }
-            } else {
-              contributorDuplicates++
-            }
-          }
-
-        })
-      } else {
-        packageJSON.contributors = []
-      }
-      componentContributors.forEach(function (user) {
-        contributorsCount++;
-        if (user === "") {
-          return
-        }
-        var userJSON = requestJSON(user.url);
-        if (userJSON.login === "travis-ci-ciena") {
-          return
-        }
-        if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
-          template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
-        } else {
-          template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
-        }
-        addDedicatedContributor(userJSON, repo.name)
-      });
-
-
-      template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
-      template_content += "\n\t\t\t\t\t <a href=\"" + repo.html_url + "\" class=\"gh-button\"><img src=\"assets/images/gh-icon.png\" width='20' height='20'><span>View on Github</span></a> \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
-      template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
-      template_content += "\n</div>";
-
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs", template_content);
-
-      //styles.scss
-      var app_sass = fs.readFileSync("app/styles/app.scss").toString();
-      if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1) {
-        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
-        var arr_app_sass = app_sass.split('\n');
-        arr_app_sass.splice(9, 0, "@import './api-" + repo.name + "';");
-        var final_app_sass = arr_app_sass.join('\n');
-        fs.writeFileSync("app/styles/app.scss", final_app_sass);
-        //        console.log(final_app_sass);
-      } else if (style !== undefined) {
-        fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
-      }
-
+    //create route.js
+    if (!directoryExistsSync("app/pods/" + demoParentDirectory + "/util")) {
+      mkdirpSync(("app/pods/" + demoParentDirectory + "/util").toLowerCase());
+    }
+    if (content.route_js !== undefined) {
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/util/route.js", content.route_js);
     } else {
-      console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/util/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})\n");
+    }
+    //import route and use
+    try {
+      var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
+    } catch (e) {
+      console.log(chalk.red.bold("route.js does not exist. This is probably because" +
+        " the markdown file for the description tab has not been created. Create one, run" +
+        " generate-pages-from-markdown.js to create route.js and then run this script again."));
+      throw e;
+    }
+    route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './util/route'\nexport default DemoRoute.extend")
+    fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
+
+    //controller
+    if (content.controller_js !== undefined) {
+      if (occurrences(content.controller_js, "Ember") === 2) {
+        content.controller_js = content.controller_js.replace("import Ember from 'ember'\n", "");
+      }
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
+        "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'")
+      );
+    } else {
+      fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
+        "import ApiController from 'frost-guide/utils/ApiController'\n\n" +
+        "export default ApiController.extend({\n\n" +
+        "})\n");
+    }
+    //create template.hbs
+    //insert tabs
+    //need to redo this
+    var descriptionContent = "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " +
+      "markdown=(fr-markdown-file-strip-number-prefix '" +
+      demoParentDirectory +
+      "')}}";
+
+    if (!directoryExistsSync("public/api-markdown/" + demoParentDirectory)) {
+      mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
+    }
+    fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
+      readme_content.replace(/\s\*\s\[[a-z]+\]\(#[a-z]+\)/ig, "")
+    );
+
+    var template_content = ""
+    template_content += "<div class=\"md\">"
+    template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
+    template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
+    template_content += "\n\t\t" + descriptionContent
+    template_content += "\n\t{{/frost-tab}}"
+    template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
+    template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
+    template_content += demoParentDirectory + "/README')}}"
+    template_content += "\n\t{{/frost-tab}}"
+    template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
+     if (typeof packageJSON.frostGuideDirectory === 'string')
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'")) + "</div>\n"
+    else if (packageJSON.frostGuideDirectory != undefined) {
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
+    }
+    template_content += "\n\t{{/frost-tab}}"
+    template_content += "\n{{/frost-tabs}}"
+    template_content += "\n\t<div class='footer'>\n"
+    template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span "
+    template_content += "class=\"footerHeading\">Contributors</span>";
+
+    var contributorsCount = 0;
+    var contributorDuplicates = 0;
+    var componentContributors = getCienFrostRepoContributors(repo.name);
+    if (packageJSON.contributors != undefined) {
+      packageJSON.contributors.forEach(function (user) {
+        contributorsCount++
+        //get user in (https://github.com/ewhite613)
+        var userIdRegex = /\/([a-z|0-9]+)\)/i
+        var userId = user.match(userIdRegex)
+        if (userId != undefined) {
+          var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
+          if (componentContributors.contains(userJSON) === false) {
+            if (userJSON.login === "travis-ci-ciena") {
+              return
+            }
+            if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
+              template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
+            } else {
+              template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
+            }
+          } else {
+            contributorDuplicates++
+          }
+        }
+
+      })
+    } else {
+      packageJSON.contributors = []
+    }
+    componentContributors.forEach(function (user) {
+      contributorsCount++;
+      if (user === "") {
+        return
+      }
+      var userJSON = requestJSON(user.url);
+      if (userJSON.login === "travis-ci-ciena") {
+        return
+      }
+      if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
+        template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
+      } else {
+        template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
+      }
+      addDedicatedContributor(userJSON, repo.name)
+    });
+
+
+    template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
+    template_content += "\n\t\t\t\t\t <a href=\"" + repo.html_url + "\" class=\"gh-button\"><img src=\"assets/images/gh-icon.png\" width='20' height='20'><span>View on Github</span></a> \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+    template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
+    template_content += "\n</div>";
+
+    fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs", template_content);
+
+    //styles.scss
+    var app_sass = fs.readFileSync("app/styles/app.scss").toString();
+    if (style !== undefined && app_sass.search("@import './api-" + repo.name) === -1) {
+      fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
+      var arr_app_sass = app_sass.split('\n');
+      arr_app_sass.splice(9, 0, "@import './api-" + repo.name + "';");
+      var final_app_sass = arr_app_sass.join('\n');
+      fs.writeFileSync("app/styles/app.scss", final_app_sass);
+      //        console.log(final_app_sass);
+    } else if (style !== undefined) {
+      fs.writeFileSync("app/styles/_api-" + repo.name + ".scss", style);
     }
 
-    // Get Demo Component Helpers
-    try {
-      var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
-      getDemoComponentHelpers(components_url)
-    } catch (err) {
-      if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
-        console.log(chalk.red.bold("No demo component helpers to import"))
-      } else {
-        console.log(chalk.red.bold(err))
-      }
+  } else {
+    console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
+  }
+
+  // Get Demo Component Helpers
+  try {
+    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+    getDemoComponentHelpers(components_url, packageJSON.frostGuideDirectory)
+  } catch (err) {
+    if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
+      console.log(chalk.red.bold("No demo component helpers to import"))
+    } else {
+      console.log(chalk.red.bold(err))
     }
-    // Get Demo Components
-    try {
-      var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
-      getDemoComponents(components_url)
-    } catch (err) {
-      if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
-        console.log(chalk.red.bold("No demo components to import"))
-      } else {
-        console.log(chalk.red.bold(err))
-      }
+  }
+  // Get Demo Components
+  try {
+    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
+    getDemoComponents(components_url)
+  } catch (err) {
+    if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
+      console.log(chalk.red.bold("No demo components to import"))
+    } else {
+      console.log(chalk.red.bold(err))
     }
-    //Get Demo routing.js
-    try {
-      var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js?ref=master");
-      getDemoRouting(routing_url, routingConfig, demoParentDirectory)
-    } catch (err) {
-      if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
-        console.log(chalk.red.bold("No routing.js to import"))
-      } else {
-        throw err
-      }
+  }
+  //Get Demo routing.js
+  try {
+    var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js?ref=master");
+    getDemoRouting(routing_url, routingConfig, demoParentDirectory)
+  } catch (err) {
+    if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
+      console.log(chalk.red.bold("No routing.js to import"))
+    } else {
+      throw err
     }
+  }
 }
 
 function getPackageJSON(url) {
