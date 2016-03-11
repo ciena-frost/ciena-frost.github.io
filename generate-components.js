@@ -51,7 +51,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-    //    emberInstall(repo.name);
+    emberInstall(repo.name);
 
     if (packageJSON.contributors != undefined) {
       packageJSON.contributors.forEach(function (user) {
@@ -130,14 +130,14 @@ function getDemoRouting(url, routingConfig, demoParentDirectory) {
 }
 
 function mergeRouting(base, demo, demoParentDirectory) {
-  var demoId = demoParentDirectory.replace(/\//g, ".")//.toLowerCase()
-  function mergeItems (items, parent ){
-    items.forEach(function(item){
+  var demoId = demoParentDirectory.replace(/\//g, ".") //.toLowerCase()
+  function mergeItems(items, parent) {
+    items.forEach(function (item) {
       item.route = item.route.replace('demo.', parent + ".")
-      if (item.path !== undefined && item.path.path && item.path.path !== "/"){
-        item.path.path =  demoParentDirectory + item.path.path
+      if (item.path !== undefined && item.path.path && item.path.path !== "/") {
+        item.path.path = demoParentDirectory + item.path.path
       }
-      if (item.items !== undefined){
+      if (item.items !== undefined) {
         mergeItems(item.items, parent + "." + item.id)
       }
     })
@@ -157,7 +157,7 @@ function mergeRouting(base, demo, demoParentDirectory) {
         if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
           routeConfig.path = demo[0].path
         }
-        if (demo[0].items !== undefined){
+        if (demo[0].items !== undefined) {
           console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
           mergeItems(demo[0].items, demoId)
           routeConfig.items = demo[0].items
@@ -408,7 +408,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += demoParentDirectory + "/README')}}"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'" )) + "</div>\n"
+    template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'")) + "</div>\n"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n{{/frost-tabs}}"
     template_content += "\n\t<div class='footer'>\n"
