@@ -23,8 +23,8 @@ export default Ember.Controller.extend({
     })
   }.on('init'),
   actions: {
-    toggleCollapsed() {
-      this.get('frostSidebar').send('toggleCollapsed') //send action to frost-sidebar component
+    toggleCollapsed () {
+      this.get('frostSidebar').send('toggleCollapsed') // send action to frost-sidebar component
     }
   }
 })
