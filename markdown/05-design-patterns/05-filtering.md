@@ -21,7 +21,7 @@ UX/UI Components
 
 4.  **Scroll bar:** if contents are too long for the visible area
 
-<span style="line-height: 1.42857;color: rgb(255,0,255);"> <span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/183345125.png" class="confluence-embedded-image" width="850" /></span></span>
+<span style="line-height: 1.42857;color: rgb(255,0,255);"> <span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/183345125.png" class="confluence-embedded-image" width="850" /></span></span>
 
 <span style="line-height: 1.42857;color: rgb(0,0,0);">For detailed visual design, see <span style="color: rgb(0,0,255);">[Filter pane](https://confluence.ciena.com/display/blueplanet/Filter+pane+-+IP)</span>.</span>
 
@@ -48,14 +48,14 @@ Filters reflect the result set
 <span style="color: rgb(0,0,0);">
 </span>
 
-<span style="color: rgb(255,0,255);"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181079929.png" class="confluence-embedded-image" width="850" /></span></span>
+<span style="color: rgb(255,0,255);"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181079929.png" class="confluence-embedded-image" width="850" /></span></span>
 
 <span style="color: rgb(255,0,255);"><span style="color: rgb(0,0,0);">**
 **</span></span>
 
 <span style="color: rgb(255,0,255);"><span style="color: rgb(0,0,0);">**If the result set contains multiple categories, the set of displayed filters initially shows only filterable attributes that are common to all categories.**  For example, if a list of services contains both EVPL and OTN services, then only their common attributes (e.g. type, state, protection) are displayed.  Specialized attributes are only displayed once the user has selected a specific <span class="inline-comment-marker" data-ref="158d3f84-2c4b-42d5-9b5c-f58b3c943e84">category</span>.  </span></span>
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181086237.png" class="confluence-embedded-image" width="850" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181086237.png" class="confluence-embedded-image" width="850" /></span>
 
 **
 **
@@ -95,7 +95,7 @@ There are two major types of filters in a filter pane:  
 -   **Facet filters**<span style="line-height: 1.42857;"> are filterable attributes of the result set that are *broken down into discrete options based on *</span>*values*<span style="line-height: 1.42857;">* of the result set*.  For example, if an NE list only contains 6500 and 5430 NEs, then you can only filter on "6500" and "5430" values for the facet filter called "NE type" (and not 8700).</span>
 -   **<span class="inline-comment-marker" data-ref="fd263a22-13e0-469a-8bb7-20b0393c498f">Non-faceted</span> filters** are filterable attributes of the result set, but do not describe the actual values of the result set
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181087127.png" class="confluence-embedded-image" width="700" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181087127.png" class="confluence-embedded-image" width="700" /></span>
 <span style="color: rgb(0,0,0);">**
 **</span>
 
@@ -146,7 +146,7 @@ These filters act separately but are **NOT** mutually exclusive.
 
 If the user filters on Severity = (Critical, Major), the facet counts in the Alarm type filter adjust downwards to indicate the number that are also either Critical or Major.  Some may even go to zero/nil (as shown here).
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181081603.png" class="confluence-embedded-image" width="650" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181081603.png" class="confluence-embedded-image" width="650" /></span>
 
  
 
@@ -161,19 +161,19 @@ If the user filters on Severity = (Critical, Major), the facet counts in the 
 
 ****Use checkboxes w**hen a facet filter has less than <span class="inline-comment-marker" data-ref="95c6e878-cdeb-41c1-9c0a-db5c21345d7e">X</span> possible values.**  <span style="color: rgb(51,102,255);">[Checkboxes](Checkbox---RR_171214701.html)</span> are checked *upon user selection*<span style="color: rgb(0,0,0);">.  Values are ordered in their default sort order (see </span><span style="color: rgb(51,102,255);">Sorting</span><span style="color: rgb(0,0,0);">).</span>
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181081820.png" class="confluence-embedded-image confluence-thumbnail" width="220" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181081820.png" class="confluence-embedded-image confluence-thumbnail" width="220" /></span>
 
  
 
 **Use a simple <span style="color: rgb(51,102,255);">[drop-down](https://confluence.ciena.com/pages/viewpage.action?pageId=171214727)</span> when a facet filter has between <span class="inline-comment-marker" data-ref="5b87357c-565f-476a-94e5-d137624ffa75">X-Y possible values</span>.**  <span style="color: rgb(0,0,0);">Values are ordered in their default sort order (see </span><span style="color: rgb(51,102,255);">Sorting</span><span style="color: rgb(0,0,0);">).</span>
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181081822.png" class="confluence-embedded-image confluence-thumbnail" width="220" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181081822.png" class="confluence-embedded-image confluence-thumbnail" width="220" /></span>
 
  
 
 **Use an <span style="color: rgb(51,102,255);">[auto-complete text field](https://confluence.ciena.com/display/blueplanet/Auto-complete+text+field+-RR)</span> when a facet filter <span class="inline-comment-marker" data-ref="7483f260-d484-47e4-b284-fed1136564e8">has more than </span><span class="inline-comment-marker" data-ref="24a27f44-fa03-4838-93d4-66f5d1fd6299"><span class="inline-comment-marker" data-ref="7483f260-d484-47e4-b284-fed1136564e8">Y possible values</span></span>.  **Users first type directly into the text field to scope the values to the characters they've entered and then can select a value from a drop-down of matches.  An example where this might be used is for a filter on NE Name.
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181081833.png" class="confluence-embedded-image" width="850" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181081833.png" class="confluence-embedded-image" width="850" /></span>
 
  
 
@@ -184,7 +184,7 @@ Non-faceted filters
 
 Some possible examples of these types of filters are shown below.  These are for illustration only - visual design of these input types are described in separate design patterns/UI components such as [Date/time input (RR)](https://confluence.ciena.com/pages/viewpage.action?pageId=176923515) and [Slider - IP](https://confluence.ciena.com/display/blueplanet/Slider+-+IP).
 
-<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size">$assets/images/171214768/181087149.png" class="confluence-embedded-image" width="800" /></span>
+<span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214768/181087149.png" class="confluence-embedded-image" width="800" /></span>
 
  
 
@@ -195,52 +195,52 @@ Some possible examples of these types of filters are shown below.  These are fo
 Attachments:
 ------------
 
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-1 12:31:38.png](attachments/171214768/171214854.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:54:27.png](attachments/171214768/171220465.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:55:46.png](attachments/171214768/171220469.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:56:16.png](attachments/171214768/171220472.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:56:47.png](attachments/171214768/171220474.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 9:16:35.png](attachments/171214768/171223004.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 9:29:26.png](attachments/171214768/171223026.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 9:5:44.png](attachments/171214768/171224490.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 9:21:42.png](attachments/171214768/171224518.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:12:43.png](attachments/171214768/171225048.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:25:0.png](attachments/171214768/171225077.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:37:48.png](attachments/171214768/171225110.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:42:33.png](attachments/171214768/171225119.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:45:0.png](attachments/171214768/171225125.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:51:1.png](attachments/171214768/171225133.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 14:10:31.png](attachments/171214768/171225171.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 14:43:55.png](attachments/171214768/171225246.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-14 8:45:42.png](attachments/171214768/171227983.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-18 9:55:14.png](attachments/171214768/171233415.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-18 9:56:19.png](attachments/171214768/171233418.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-18 9:56:54.png](attachments/171214768/171233420.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 8:53:51.png](attachments/171214768/171234585.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 9:24:2.png](attachments/171214768/171234614.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 9:44:1.png](attachments/171214768/171234639.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 9:45:34.png](attachments/171214768/171234641.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:29:40.png](attachments/171214768/181079925.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:32:11.png](attachments/171214768/181079929.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:39:58.png](attachments/171214768/181079942.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:52:33.png](attachments/171214768/181079973.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:56:4.png](attachments/171214768/181079991.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:56:34.png](attachments/171214768/181079993.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:57:40.png](attachments/171214768/181079998.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 11:0:23.png](attachments/171214768/181080003.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 8:28:38.png](attachments/171214768/181081603.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:24:10.png](attachments/171214768/181081816.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:26:15.png](attachments/171214768/181081820.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:26:49.png](attachments/171214768/181081822.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:31:43.png](attachments/171214768/181081833.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 9:46:37.png](attachments/171214768/181085285.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 14:56:38.png](attachments/171214768/181086231.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 14:57:2.png](attachments/171214768/181086237.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 9:45:5.png](attachments/171214768/181087121.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 9:45:58.png](attachments/171214768/181087124.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 9:48:12.png](attachments/171214768/181087127.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 10:4:38.png](attachments/171214768/181087149.png) (image/png)
-$assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-4 15:2:1.png](attachments/171214768/183345125.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-1 12:31:38.png](attachments/171214768/171214854.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:54:27.png](attachments/171214768/171220465.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:55:46.png](attachments/171214768/171220469.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:56:16.png](attachments/171214768/171220472.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-7 13:56:47.png](attachments/171214768/171220474.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 9:16:35.png](attachments/171214768/171223004.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-9 9:29:26.png](attachments/171214768/171223026.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 9:5:44.png](attachments/171214768/171224490.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 9:21:42.png](attachments/171214768/171224518.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:12:43.png](attachments/171214768/171225048.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:25:0.png](attachments/171214768/171225077.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:37:48.png](attachments/171214768/171225110.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:42:33.png](attachments/171214768/171225119.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:45:0.png](attachments/171214768/171225125.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 13:51:1.png](attachments/171214768/171225133.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 14:10:31.png](attachments/171214768/171225171.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-10 14:43:55.png](attachments/171214768/171225246.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-14 8:45:42.png](attachments/171214768/171227983.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-18 9:55:14.png](attachments/171214768/171233415.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-18 9:56:19.png](attachments/171214768/171233418.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-18 9:56:54.png](attachments/171214768/171233420.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 8:53:51.png](attachments/171214768/171234585.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 9:24:2.png](attachments/171214768/171234614.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 9:44:1.png](attachments/171214768/171234639.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-21 9:45:34.png](attachments/171214768/171234641.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:29:40.png](attachments/171214768/181079925.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:32:11.png](attachments/171214768/181079929.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:39:58.png](attachments/171214768/181079942.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:52:33.png](attachments/171214768/181079973.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:56:4.png](attachments/171214768/181079991.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:56:34.png](attachments/171214768/181079993.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 10:57:40.png](attachments/171214768/181079998.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-22 11:0:23.png](attachments/171214768/181080003.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 8:28:38.png](attachments/171214768/181081603.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:24:10.png](attachments/171214768/181081816.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:26:15.png](attachments/171214768/181081820.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:26:49.png](attachments/171214768/181081822.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-23 10:31:43.png](attachments/171214768/181081833.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 9:46:37.png](attachments/171214768/181085285.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 14:56:38.png](attachments/171214768/181086231.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-25 14:57:2.png](attachments/171214768/181086237.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 9:45:5.png](attachments/171214768/181087121.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 9:45:58.png](attachments/171214768/181087124.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 9:48:12.png](attachments/171214768/181087127.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-26 10:4:38.png](attachments/171214768/181087149.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-4 15:2:1.png](attachments/171214768/183345125.png) (image/png)
 
 Document generated by Confluence on Mar 07, 2016 12:06
 
