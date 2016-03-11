@@ -1,21 +1,70 @@
+<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-controls/text-area')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='API' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-controls/text-area/README')}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' id='demo'}}
+		<div><div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+    {{notification-message notification=notification}}
+  {{/each}}
+</div>
 
-<div class="md">
-	<div class="content-col">
-		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'UI-components/input-controls/text-area')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-		</div>
-	</div>
+<div class="dummy-body">
+  <div class="dummy-content">
+    {{outlet}}<div class='dummy-header'>Basic</div>
+<div style="padding: 10px 20px;">
+    {{frost-textarea id="basic" autofocus=true}}
+</div>
+
+<div class='dummy-header'>Defined number of Columns + Rows</div>
+<div style="padding: 10px 20px;">
+    {{frost-textarea id="columns-rows" cols="80" rows="6"}}
+</div>
+
+<div class='dummy-header'>Action</div>
+<div style="padding: 10px 20px;">
+    {{frost-textarea id="action" on-input=(action "text") value='Default text'}}
+</div>
+
+<div class='dummy-header'>Attributes - e.g. Disabled</div>
+<div style="padding: 10px 20px;">
+    {{frost-textarea id="disabled" disabled=true}}
+</div>
+
+<div class='dummy-header'>Attributes - e.g. Error</div>
+<div style="padding: 10px 20px;display: flex;">
+    {{frost-textarea style="margin-right: 10px;" id="error" classNameBindings="error" }}
+    <div style="margin-left: 10px;"></div>
+    {{#frost-button on-click=(action "toggleError") class="small secondary"}}
+        <div class='text'>Toggle error</div>
+    {{/frost-button}}
+</div>
+
+<div class='dummy-header'>Attributes - e.g. Read only</div>
+<div style="padding: 10px 20px;">
+    {{frost-textarea id="read-only" readonly=true value="Read only textarea"}}
+</div>
+
+
+
+
+  </div>
+</div></div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Justin Lafleur
+					<span class="footerHeading">Contributors</span>Steven Glanzer - Roxanne - Gosia Hyndman - Gosia Hyndman - Matthew Dahl - Eric White
 			</div>
 			<div class='connect'>
-				<span class="footerHeading"></span>
-					 
+				<span class="footerHeading">Connect</span>
+					 <a href="https://github.com/ciena-frost/ember-frost-textarea" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
 				</div>
 			</div>
 			<br/>

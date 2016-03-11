@@ -31,8 +31,8 @@ ember install ember-frost-login
   {{#if section.form}}
   {{frost-bunsen-form
     model=loginFormModel
-    onChange=(action "loginFormValueChanged")
-    onValidation=(action 'onValidation')
+    on-change=(action "loginFormValueChanged")
+    on-validation=(action 'onValidation')
     value=loginFormValue
   }}
   {{/if}}

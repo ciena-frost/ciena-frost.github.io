@@ -1,5 +1,6 @@
 import Ember from 'ember'
-export default Ember.Route.extend({
+import DemoRoute from './util/route'
+export default DemoRoute.extend({
   breadCrumb: {
     title: 'Application Bar'
   },

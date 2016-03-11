@@ -3,6 +3,7 @@ import emberFrostSelect from './ember-frost-select-default'
 import emberFrostText from './ember-frost-text-default'
 import emberFrostCheckbox from './ember-frost-checkbox-default'
 import emberFrostList from './ember-frost-list-default'
+import emberFrostLink from './ember-frost-link-default'
 import emberFrostInfoBar from './ember-frost-info-bar-default'
 import emberFrostScroll from './ember-frost-scroll-default'
 import emberFrostTabs from './ember-frost-tabs-default'
@@ -22,6 +23,7 @@ export default function (server) {
 	emberFrostText(server)
 	emberFrostCheckbox(server)
 	emberFrostList(server)
+	emberFrostLink(server)
 	emberFrostInfoBar(server)
 	emberFrostScroll(server)
 	emberFrostTabs(server)
