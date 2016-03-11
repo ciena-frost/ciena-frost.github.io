@@ -311,7 +311,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     })
     return;
   }
-
+  var linuxCompatibleDemoParentDirectory = demoParentDirectory.toLowerCase()
   // demoParentDirectory = "ui-components/button-controls/button";
   //console.log(packageJSON);
 
@@ -352,13 +352,13 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
       mkdirpSync(("app/pods/" + demoParentDirectory + "/util").toLowerCase());
     }
     if (content.route_js !== undefined) {
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/util/route.js", content.route_js);
+      fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/util/route.js", content.route_js);
     } else {
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/util/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})\n");
+      fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/util/route.js", "import Ember from 'ember'\n\nexport default Ember.Route.extend({\n\n})\n");
     }
     //import route and use
     try {
-      var route_content = fs.readFileSync("app/pods/" + demoParentDirectory + "/route.js").toString()
+      var route_content = fs.readFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/route.js").toString()
     } catch (e) {
       console.log(chalk.red.bold("route.js does not exist. This is probably because" +
         " the markdown file for the description tab has not been created. Create one, run" +
@@ -366,18 +366,18 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
       throw e;
     }
     route_content = route_content.replace("export default Ember.Route.extend", "import DemoRoute from './util/route'\nexport default DemoRoute.extend")
-    fs.writeFileSync("app/pods/" + demoParentDirectory + "/route.js", route_content)
+    fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/route.js", route_content)
 
     //controller
     if (content.controller_js !== undefined) {
       if (occurrences(content.controller_js, "Ember") === 2) {
         content.controller_js = content.controller_js.replace("import Ember from 'ember'\n", "");
       }
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
+      fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/controller.js",
         "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'")
       );
     } else {
-      fs.writeFileSync("app/pods/" + demoParentDirectory + "/controller.js",
+      fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/controller.js",
         "import ApiController from 'frost-guide/utils/ApiController'\n\n" +
         "export default ApiController.extend({\n\n" +
         "})\n");
@@ -390,10 +390,10 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
       demoParentDirectory +
       "')}}";
 
-    if (!directoryExistsSync("public/api-markdown/" + demoParentDirectory)) {
-      mkdirpSync(("public/api-markdown/" + demoParentDirectory).toLowerCase());
+    if (!directoryExistsSync("public/api-markdown/" + linuxCompatibleDemoParentDirectory)) {
+      mkdirpSync(("public/api-markdown/" + linuxCompatibleDemoParentDirectory).toLowerCase());
     }
-    fs.writeFileSync("public/api-markdown/" + demoParentDirectory + "/README.md",
+    fs.writeFileSync("public/api-markdown/" + linuxCompatibleDemoParentDirectory + "/README.md",
       readme_content.replace(/\s\*\s\[[a-z]+\]\(#[a-z]+\)/ig, "")
     );
 
@@ -471,7 +471,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
     template_content += "\n</div>";
 
-    fs.writeFileSync("app/pods/" + demoParentDirectory + "/template.hbs", template_content);
+    fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/template.hbs", template_content);
 
     //styles.scss
     var app_sass = fs.readFileSync("app/styles/app.scss").toString();
