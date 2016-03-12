@@ -51,7 +51,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-    emberInstall(repo.name);
+//    emberInstall(repo.name);
 
     if (packageJSON.contributors != undefined) {
       packageJSON.contributors.forEach(function (user) {
@@ -133,12 +133,12 @@ function mergeRouting(base, demo, demoParentDirectory) {
   var demoId = demoParentDirectory.replace(/\//g, ".") //.toLowerCase()
   function mergeItems(items, parent) {
     items.forEach(function (item) {
-      item.route = item.route.replace('demo.', parent + ".")
+      item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
       if (item.path !== undefined && item.path.path && item.path.path !== "/") {
-        item.path.path = demoParentDirectory + item.path.path
+        item.path.path = demoParentDirectory.toLowerCase() + item.path.path
       }
       if (item.items !== undefined) {
-        mergeItems(item.items, parent + "." + item.id)
+        mergeItems(item.items, parent.toLowerCase() + "." + item.id)
       }
     })
   }
@@ -166,7 +166,7 @@ function mergeRouting(base, demo, demoParentDirectory) {
       }
     } else {
       routeConfig.items.forEach((item) => {
-        mergeRouting([item], demo, demoParentDirectory)
+        mergeRouting([item], demo, demoParentDirectory.toLowerCase())
       })
     }
   })
@@ -203,7 +203,7 @@ function getDemoComponentHelpers(url, demoDirectory) {
           var parent = key.split('/')[0]
           content.forEach(function (value, key) {
             if (key.indexOf(parent) > -1) {
-              fs.writeFileSync("app/pods/components/" + key, value)
+              fs.writeFileSync("app/pods/components/" + key.toLowerCase(), value)
             }
           })
         }
@@ -216,8 +216,10 @@ function getDemoComponentHelpers(url, demoDirectory) {
           // Not a component helper. So it's a route
         content.forEach(function (value, key) {
 
-          console.log("Write to: " + "app/pods/" + demoDirectory + "/" + key)
+
           var writeTo = "app/pods/" + demoDirectory + "/" + key
+          writeTo = writeTo.toLowerCase()
+          console.log("Write to: " + writeTo)
           mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0])
           fs.writeFileSync(writeTo, value)
 
