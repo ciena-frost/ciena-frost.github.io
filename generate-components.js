@@ -211,8 +211,8 @@ function getDemoComponentHelpers(url, demoDirectory) {
       })
       if (!isComponent && component.name !== "index") {
         path = "app/pods/" + demoDirectory + "/" + component.name
-        console.log("Path: " + path)
-        mkdirpSync(path)
+        console.log("Path: " + path.toLowerCase())
+        mkdirpSync(path.toLowerCase())
           // Not a component helper. So it's a route
         content.forEach(function (value, key) {
 
@@ -220,7 +220,7 @@ function getDemoComponentHelpers(url, demoDirectory) {
           var writeTo = "app/pods/" + demoDirectory + "/" + key
           writeTo = writeTo.toLowerCase()
           console.log("Write to: " + writeTo)
-          mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0])
+          mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0].toLowerCase())
           fs.writeFileSync(writeTo, value)
 
         })
