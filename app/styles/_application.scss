@@ -100,6 +100,10 @@
   @include display(flex);
 }
 
+.guide-content #demo .frost-application-bar{
+  position: relative !important;
+}
+
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
   /* IE10+ specific styles go here */
