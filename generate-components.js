@@ -225,7 +225,7 @@ function getDemoComponentHelpers(url, demoDirectory) {
           writeTo = writeTo.toLowerCase()
           console.log("Write to: " + writeTo)
           mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0].toLowerCase())
-          fs.writeFileSync(writeTo, value.replace(/route="demo\.([a-z|\.|-]+)[\'|\"]/ig, "route=\"" + demoDirectory.replace(/\//g, ".") + ".$1'"))
+          fs.writeFileSync(writeTo, value.replace(/route="demo\.([a-z|\.|-]+)[\'|\"]/ig, "route=\"" + demoDirectory.replace(/\//g, ".") + ".$1\""))
 
         })
       }
