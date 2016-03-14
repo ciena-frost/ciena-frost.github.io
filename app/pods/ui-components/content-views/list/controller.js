@@ -9,7 +9,7 @@ export default ApiController.extend({
       if (config.isFrostGuideDirectory) {
         return 'user-list-item'
       } else {
-        return 'demo/user-list-item'
+        return 'ui-components/content-views/list/user-list-item'
       }
     }
   }),

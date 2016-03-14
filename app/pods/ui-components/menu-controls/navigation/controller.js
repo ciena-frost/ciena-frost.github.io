@@ -2,9 +2,9 @@ import ApiController from 'frost-guide/utils/ApiController'
 
 export default ApiController.extend({
   fiberplantNav: false,
-  fiberplantNavTemplate: 'demo/nav-fiberplant',
+  fiberplantNavTemplate: 'ui-components/menu-controls/navigation/nav-fiberplant',
   adminNav: false,
-  adminNavTemplate: 'demo/nav-admin',
+  adminNavTemplate: 'ui-components/menu-controls/navigation/nav-admin',
   navigation: false,
 
   actions: {
