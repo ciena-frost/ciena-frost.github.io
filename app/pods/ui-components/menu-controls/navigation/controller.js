@@ -18,10 +18,6 @@ export default ApiController.extend({
 
     openRoute: function (route) {
       this.transitionToRoute(route)
-    },
-
-    tabSelected (tab) {
-      this.set('selectedTab', tab)
     }
   }
 })
