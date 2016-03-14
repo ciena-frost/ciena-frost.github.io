@@ -104,6 +104,14 @@
   position: relative !important;
 }
 
+.guide-content #demo .frost-application-bar + .liquid-modal .liquid-child .lm-container{
+  position: absolute !important;
+}
+
+.guide-content #demo .frost-application-bar + .liquid-modal .liquid-child .lm-container + .lf-overlay{
+  position: absolute !important;
+}
+
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
   /* IE10+ specific styles go here */
