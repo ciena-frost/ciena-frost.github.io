@@ -2,8 +2,8 @@ export default function () {
   var duration = 500
 
   this.transition(
-    this.fromRoute('contributing.contributors'),
-    this.toRoute('contributing.contributor'),
+    this.fromRoute('contributing.contributors.contributors'),
+    this.toRoute('contributing.contributors.contributor'),
     this.use('explode', {
       matchBy: 'data-contributor-id',
       use: ['flyTo', {
