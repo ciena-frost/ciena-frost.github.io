@@ -158,6 +158,7 @@
   width: 100%;
   font-size: 16px;
   line-height: 1.7;
+    transform: initial;
 }
 
 .md .content-col {
@@ -186,7 +187,7 @@
 #md-scrollspy {
   width: 100%;
   position: fixed;
-  transform: translate();
+
   margin-top: 20px;
   margin-left: 20px;
 }
