@@ -163,6 +163,10 @@ function mergeRouting(base, demo, demoParentDirectory) {
           routeConfig.items = demo[0].items
         }
 
+        if (demo[0].modals !== undefined){
+          routeConfig.modals = demo[0].modals
+        }
+
       }
     } else {
       routeConfig.items.forEach((item) => {
