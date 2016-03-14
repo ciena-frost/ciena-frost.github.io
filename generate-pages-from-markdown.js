@@ -63,7 +63,7 @@ function dive(dir) {
 
       dive(path);
       if (filename.replaceAll("[0-9][0-9][-]", "") === "contributing"){
-        routing_string += ",\n\t{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors'},\n\t{id: 'contributor', alias: 'Contributor', type: 'route', route: 'contributing.contributor'}"
+        routing_string += ",\n\t{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors.contributors'},\n\t{id: 'contributor', alias: 'Contributor', type: 'route', route: 'contributing.contributors.contributor'}"
       }
       routing_string += "\n]}, // " + filename + "\n"
       if (DirectoryDepth === 1) {
