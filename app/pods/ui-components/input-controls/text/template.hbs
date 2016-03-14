@@ -2,10 +2,10 @@
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-controls/text')}}
 	{{/frost-tab}}
-	{{#frost-tab alias='API' class='api' id='api'}}
+	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-controls/text/README')}}
 	{{/frost-tab}}
-	{{#frost-tab alias='Demo' class='demo' id='demo'}}
+	{{#frost-tab alias='Demo' id='demo'}}
 		<div><div class="dummy-notification-container">
   {{#each notifications as |notification|}}
       {{notification-message notification=notification}}
@@ -19,6 +19,7 @@
   <div style="padding: 10px 20px;">
     {{frost-text
       autofocus=true
+      placeholder='basic field'
     }}
   </div>
 
@@ -78,7 +79,7 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Gosia Hyndman - Adam Meadows - Matthew Dahl - Matthew Dahl - Eric White - Adam Meadows
+					<span class="footerHeading">Contributors</span>Roxanne - Gosia Hyndman - Adam Meadows - Matthew Dahl - Matthew Dahl - Roxanne - Justin Lafleur - Gosia Hyndman - Steven Glanzer - Eric White - Adam Meadows
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>

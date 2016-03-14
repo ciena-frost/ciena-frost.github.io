@@ -1,5 +1,5 @@
 import Ember from 'ember'
-import DemoRoute from './index/route'
+import DemoRoute from './util/route'
 export default DemoRoute.extend({
   breadCrumb: {
     title: 'Text Area'
