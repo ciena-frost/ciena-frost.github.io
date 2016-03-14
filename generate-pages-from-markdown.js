@@ -55,10 +55,10 @@ function dive(dir) {
       fileCount = fs.readdirSync(path).length;
       var filename = file.replace(".md", "");
 
-      routing_string += "{id: '" + filename.replaceAll("[0-9][0-9][-]", "") +
+      routing_string += "{id: '" + filename.replaceAll("[0-9][0-9][-]", "").toLowerCase() +
         "', alias: '" + toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
         "', type: 'category', route: '" +
-        path.replace(mark_dir + "/", "").replaceAll("/", ".").replaceAll("[0-9][0-9][-]", "") +
+        path.replace(mark_dir + "/", "").replaceAll("/", ".").replaceAll("[0-9][0-9][-]", "").toLowerCase() +
         "', items: [\n";
 
       dive(path);
@@ -81,17 +81,17 @@ function dive(dir) {
       var filename = file.replace(".md", "");
       if (fileCount >= list.length) {
         //last route
-        routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
+        routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "").toLowerCase() + "', alias: '" +
           toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
           "', type: 'route', route: '" +
-          path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
+          path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "").toLowerCase() +
           "'}";
       } else {
         //if not last route add comma
-        routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "") + "', alias: '" +
+        routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "").toLowerCase() + "', alias: '" +
           toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
           "', type: 'route', route: '" +
-          path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "") +
+          path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "").toLowerCase() +
           "'},\n";
 
       }
