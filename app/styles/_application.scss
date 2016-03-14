@@ -100,6 +100,18 @@
   @include display(flex);
 }
 
+.guide-content #demo .frost-application-bar{
+  position: relative !important;
+}
+
+.guide-content #demo .frost-application-bar + .liquid-modal .liquid-child .lm-container{
+  position: absolute !important;
+}
+
+.guide-content #demo .frost-application-bar + .liquid-modal .liquid-child .lm-container + .lf-overlay{
+  position: absolute !important;
+}
+
 @media screen and (-ms-high-contrast: active),
 (-ms-high-contrast: none) {
   /* IE10+ specific styles go here */
@@ -158,6 +170,7 @@
   width: 100%;
   font-size: 16px;
   line-height: 1.7;
+    transform: initial;
 }
 
 .md .content-col {
@@ -186,7 +199,7 @@
 #md-scrollspy {
   width: 100%;
   position: fixed;
-  transform: translate();
+
   margin-top: 20px;
   margin-left: 20px;
 }

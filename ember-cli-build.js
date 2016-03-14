@@ -7,6 +7,9 @@ module.exports = function (defaults) {
     'ember-cli-mocha': {
       useLintTree: false
     },
+    babel: {
+      optional: ['es7.decorators']
+    },
     sassOptions: {
       includePaths: [
         'bower_components/bourbon/app/assets/stylesheets',

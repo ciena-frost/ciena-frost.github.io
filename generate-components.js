@@ -163,6 +163,10 @@ function mergeRouting(base, demo, demoParentDirectory) {
           routeConfig.items = demo[0].items
         }
 
+        if (demo[0].modals !== undefined){
+          routeConfig.modals = demo[0].modals
+        }
+
       }
     } else {
       routeConfig.items.forEach((item) => {
@@ -221,7 +225,7 @@ function getDemoComponentHelpers(url, demoDirectory) {
           writeTo = writeTo.toLowerCase()
           console.log("Write to: " + writeTo)
           mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0].toLowerCase())
-          fs.writeFileSync(writeTo, value)
+          fs.writeFileSync(writeTo, value.replace(/route="demo\.([a-z|\.|-]+)[\'|\"]/ig, "route=\"" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'"))
 
         })
       }
@@ -376,7 +380,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
         content.controller_js = content.controller_js.replace("import Ember from 'ember'\n", "");
       }
       fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/controller.js",
-        "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'")
+        "import ApiController from 'frost-guide/utils/ApiController'\n" + content.controller_js.replace("Ember.Controller.extend", "ApiController.extend").replace(/import config from '[\.\.\/]*config\/environment'/i, "import config from 'frost-guide/config/environment'").replace(/[\'|\"]demo\/([a-z|\.|-]+)[\'|\"]/ig, "'" + packageJSON.frostGuideDirectory + "/$1'")
       );
     } else {
       fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/controller.js",

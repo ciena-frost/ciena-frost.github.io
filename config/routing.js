@@ -417,8 +417,8 @@ module.exports = [ { id:"overview",
       { id:"contributors",
         alias:"Contributors",
         type:"route",
-        route:"contributing.contributors" },
+        route:"contributing.contributors.contributors" },
       { id:"contributor",
         alias:"Contributor",
         type:"route",
-        route:"contributing.contributor" } ] } ]
+        route:"contributing.contributors.contributor" } ] } ]
