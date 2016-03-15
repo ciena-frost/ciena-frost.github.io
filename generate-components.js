@@ -130,7 +130,7 @@ function getDemoRouting(url, routingConfig, demoParentDirectory) {
 }
 
 function mergeRouting(base, demo, demoParentDirectory) {
-  var demoId = demoParentDirectory.replace(/\//g, ".") //.toLowerCase()
+  var demoId = demoParentDirectory.replace(/\//g, ".")
   function mergeItems(items, parent) {
     items.forEach(function (item) {
       item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
@@ -148,6 +148,7 @@ function mergeRouting(base, demo, demoParentDirectory) {
         console.log(chalk.blue("Found match for: " + demoId))
         console.log(routeConfig)
         console.log(demo)
+        routeConfig.route = demoId.toLowerCase()
           //        routeConfig.alias = "Found You"
         if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
           routeConfig.modalName = demo[0].modalName
@@ -415,7 +416,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
      if (typeof packageJSON.frostGuideDirectory === 'string')
-      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'").replace(/\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'")) + "</div>\n"
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(/\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
     else if (packageJSON.frostGuideDirectory != undefined) {
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
     }
