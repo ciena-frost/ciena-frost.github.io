@@ -6,28 +6,23 @@ App.ApiController = Ember.Controller.extend({
   queryParams: ['selectedTab'],
   selectedTab: 'description',
   initScrollspy: function () {
-    console.log("hello init")
     Ember.run.schedule('afterRender', this, function () {
-      if($(window).width() > 800){
-        $('.md-scrollspy').css('display', 'inline');
-        $('.md-scrollspy').css('top', '150px');
-        $('.md-scrollspy').css('left', $('.md-scrollspy').parent().width() + 200);
-      }
-      else{
-        console.log("none!!")
-        $('.md-scrollspy').css('display', 'none');
+      if ($(window).width() > 800) {
+        $('.md-scrollspy').css('display', 'inline')
+        $('.md-scrollspy').css('top', '150px')
+        $('.md-scrollspy').css('left', $('.md-scrollspy').parent().width() + 200)
+      } else {
+        $('.md-scrollspy').css('display', 'none')
       }
     })
     $(window).on('resize', function () {
-      console.log("hello window resize")
-      //reposition scrollspy
-      if($(window).width() > 800){
-        $('.md-scrollspy').css('display', 'inline');
-        $('.md-scrollspy').css('top', '150px');
-        $('.md-scrollspy').css('left', $('.md-scrollspy').parent().width() + 200);
-      }
-      else{
-        $('.md-scrollspy').css('display', 'none');
+      // reposition scrollspy
+      if ($(window).width() > 800) {
+        $('.md-scrollspy').css('display', 'inline')
+        $('.md-scrollspy').css('top', '150px')
+        $('.md-scrollspy').css('left', $('.md-scrollspy').parent().width() + 200)
+      } else {
+        $('.md-scrollspy').css('display', 'none')
       }
     })
   }.on('init'),
@@ -35,13 +30,12 @@ App.ApiController = Ember.Controller.extend({
     tabSelected (tab) {
       this.set('selectedTab', tab)
       Ember.run.schedule('afterRender', this, function () {
-        if($(window).width() > 800){
-          $('.md-scrollspy').css('display', 'inline');
-          $('.md-scrollspy').css('top', '150px');
-          $('.md-scrollspy').css('left', $('.md-scrollspy').parent().width() + 200);
-        }
-        else{
-          $('.md-scrollspy').css('display', 'none');
+        if ($(window).width() > 800) {
+          $('.md-scrollspy').css('display', 'inline')
+          $('.md-scrollspy').css('top', '150px')
+          $('.md-scrollspy').css('left', $('.md-scrollspy').parent().width() + 200)
+        } else {
+          $('.md-scrollspy').css('display', 'none')
         }
         if ($('.footer').length) {
           var docHeight = $(window).height()
