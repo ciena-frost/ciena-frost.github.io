@@ -327,7 +327,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
   readme_url = repo.contents_url.replace("{+path}", "README.md");
   readme_content = getFile(readme_url);
 
-  if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
+  if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory.toLowerCase())) {
     var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
     var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
     var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
@@ -642,17 +642,17 @@ function GetDemoStyle(url) {
 function getPrefixedMarkdownPath(noPrefixPath){
   var pathRegexStr = ""
   noPrefixPath.split('/').forEach(function (pathPart) {
-    pathRegexStr += '/[0-9][0-9]-' + pathPart 
+    pathRegexStr += '/[0-9][0-9]-' + pathPart
   })
   pathRegexStr += ".md"
 
   var markdownFiles = Finder.from('./markdown').find();
-  var markdownFilePath = "" 
+  var markdownFilePath = ""
   markdownFiles.forEach(function (file) {
     if(file.match(new RegExp(pathRegexStr, 'i')) != null)
       markdownFilePath = file
   })
-  
+
   return markdownFilePath
 }
 
