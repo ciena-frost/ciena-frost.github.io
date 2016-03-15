@@ -6,6 +6,8 @@ var request = require('sync-request');
 var chalk = require('chalk');
 var toSource = require('tosource')
 var exec = require('sync-exec');
+var Finder = require('fs-finder');
+
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
@@ -408,6 +410,42 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
     template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
     template_content += "\n\t\t" + descriptionContent
+    
+    template_content += "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>";
+
+    // Begin geting headers from markdown file
+    
+    var pathRegexStr = ""
+    demoParentDirectory.split('/').forEach(function (pathPart) {
+      pathRegexStr += '/[0-9][0-9]-' + pathPart 
+    })
+    pathRegexStr += ".md"
+    
+    var markdownFiles = Finder.from('./markdown').find();
+    var markdownFilePath = "" 
+    markdownFiles.forEach(function (file) {
+      if(file.match(new RegExp(pathRegexStr, 'i')) != null)
+        markdownFilePath = file
+    })
+    
+    var insideCodeSnippet = false;
+    fs.readFileSync(markdownFilePath).toString().split('\n').forEach(function (line) {
+      if(line.match('```') && !insideCodeSnippet)
+        insideCodeSnippet = true;
+      else if(line.match('```') && insideCodeSnippet)
+        insideCodeSnippet = false;
+      else if (line.match("^#") && !insideCodeSnippet) {
+        line = line.replaceAll("#", "");
+        var header = line;
+        var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
+        template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+      }
+    });
+    
+    // Done getting headers
+
+    template_content += "\n\t\t</div>";
+    
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
     template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
