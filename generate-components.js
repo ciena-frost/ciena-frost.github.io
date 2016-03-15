@@ -6,6 +6,8 @@ var request = require('sync-request');
 var chalk = require('chalk');
 var toSource = require('tosource')
 var exec = require('sync-exec');
+var Finder = require('fs-finder');
+
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
@@ -130,7 +132,7 @@ function getDemoRouting(url, routingConfig, demoParentDirectory) {
 }
 
 function mergeRouting(base, demo, demoParentDirectory) {
-  var demoId = demoParentDirectory.replace(/\//g, ".") //.toLowerCase()
+  var demoId = demoParentDirectory.replace(/\//g, ".")
   function mergeItems(items, parent) {
     items.forEach(function (item) {
       item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
@@ -148,6 +150,7 @@ function mergeRouting(base, demo, demoParentDirectory) {
         console.log(chalk.blue("Found match for: " + demoId))
         console.log(routeConfig)
         console.log(demo)
+        routeConfig.route = demoId.toLowerCase()
           //        routeConfig.alias = "Found You"
         if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
           routeConfig.modalName = demo[0].modalName
@@ -408,14 +411,50 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
     template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
     template_content += "\n\t\t" + descriptionContent
+
+    template_content += "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>";
+
+    // Begin geting headers from markdown file
+
+    var pathRegexStr = ""
+    demoParentDirectory.split('/').forEach(function (pathPart) {
+      pathRegexStr += '/[0-9][0-9]-' + pathPart
+    })
+    pathRegexStr += ".md"
+
+    var markdownFiles = Finder.from('./markdown').find();
+    var markdownFilePath = ""
+    markdownFiles.forEach(function (file) {
+      if(file.match(new RegExp(pathRegexStr, 'i')) != null)
+        markdownFilePath = file
+    })
+
+    var insideCodeSnippet = false;
+    fs.readFileSync(markdownFilePath).toString().split('\n').forEach(function (line) {
+      if(line.match('```') && !insideCodeSnippet)
+        insideCodeSnippet = true;
+      else if(line.match('```') && insideCodeSnippet)
+        insideCodeSnippet = false;
+      else if (line.match("^#") && !insideCodeSnippet) {
+        line = line.replaceAll("#", "");
+        var header = line;
+        var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
+        template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+      }
+    });
+
+    // Done getting headers
+
+    template_content += "\n\t\t</div>";
+
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
     template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
-    template_content += demoParentDirectory + "/README')}}"
+    template_content += demoParentDirectory.toLowerCase() + "/README')}}"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
      if (typeof packageJSON.frostGuideDirectory === 'string')
-      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'").replace(/\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".") + ".$1'")) + "</div>\n"
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(/\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
     else if (packageJSON.frostGuideDirectory != undefined) {
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
     }

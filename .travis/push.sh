@@ -26,6 +26,8 @@ commit_website_files() {
   npm install marked
   npm install highlight
   npm install tosource
+  npm install remove-markdown
+  npm install fs-finder
   npm install npm
   npm install && bower install
   ./generate-frost-guide-content.sh
