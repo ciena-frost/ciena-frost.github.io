@@ -168,12 +168,13 @@ export default Ember.Controller.extend({
           insideCodeSnippet = true;
         else if (line.match('```') && insideCodeSnippet)
           insideCodeSnippet = false;
-        else if (line.match("^#") && !insideCodeSnippet) {
+        else if (line.match("^#") && !insideCodeSnippet && line.length <= 50) {
+          var hlevel = line.substring(0, 3).match(/#/g).length
           line = line.replaceAll("#", "");
           var header = line;
           keywords.push(header)
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
-          template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+          template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
         }
       });
 

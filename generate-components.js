@@ -631,7 +631,6 @@ function getDemoApplicationContent(url) {
       template_hbs: "{{outlet}}"
     }
   }
-
 }
 
 function GetDemoStyle(url) {
@@ -665,11 +664,13 @@ function getScrollspyLinks(markdownPath){
       insideCodeSnippet = true;
     else if(line.match('```') && insideCodeSnippet)
       insideCodeSnippet = false;
-    else if (line.match("^#") && !insideCodeSnippet) {
+    else if (line.match("^#") && !insideCodeSnippet && line.length <= 50) {
+      var hlevel = line.substring(0, 3).match(/#/g).length
       line = line.replaceAll("#", "");
       var header = line;
       var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
-      template += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+      if(hlevel <= 3)
+        template += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
     }
   });
   return template + "\n\t\t</div>"
