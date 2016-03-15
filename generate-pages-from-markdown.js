@@ -100,7 +100,6 @@ function dive(dir, array) {
       route.alias = toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " "))
       route.type = 'route'
       route.route = path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "").toLowerCase()
-      array.push(route)
       var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
 
       //remove the order prefixes
@@ -198,8 +197,8 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t\t\t\t \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
-
-
+      route.keywords = keywords
+      array.push(route) // push route to routing.js array
 
       fs.writeFileSync(pagePath.toLowerCase() + "/template.hbs", template_content);
     }
