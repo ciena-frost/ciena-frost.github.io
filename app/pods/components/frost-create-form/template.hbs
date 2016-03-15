@@ -1,0 +1,18 @@
+{{#frost-modal-input title='Test title' subtitle='Subtitle'}}
+{{!#frost-modal-input titleComponent='myTitle'}}
+
+  {{frost-bunsen-form
+      model=userModel
+      view=userView
+      onChange=(action 'formValueChanged')
+      onValidation=(action 'onValidation')}}
+
+  <div class='actions'>
+    {{#frost-button on-click=(action 'cancel') class='text medium tertiary'}}
+      <div class='text'>Cancel</div>
+    {{/frost-button}}
+    {{#frost-button on-click=(action 'save') class='text medium primary'}}
+      <div class='text'>Save</div>
+    {{/frost-button}}
+  </div>
+{{/frost-modal-input}}

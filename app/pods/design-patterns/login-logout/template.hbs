@@ -2,10 +2,10 @@
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'design-patterns/login-logout')}}
 	{{/frost-tab}}
-	{{#frost-tab alias='API' class='api' id='api'}}
+	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'design-patterns/login-logout/README')}}
 	{{/frost-tab}}
-	{{#frost-tab alias='Demo' class='demo' id='demo'}}
+	{{#frost-tab alias='Demo' id='demo'}}
 		<div><div class="dummy-notification-container">
   {{#each notifications as |notification|}}
     {{notification-message notification=notification}}
@@ -30,7 +30,7 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Eric White
+					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Gosia Hyndman - Eric White - Steven Glanzer
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>

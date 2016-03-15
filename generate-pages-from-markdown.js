@@ -8,8 +8,8 @@ var fs = require('fs');
 var child_process = require('child_process');
 var chalk = require('chalk');
 var path = require('path');
+var toSource = require('tosource')
 var mark_dir = "markdown";
-var routing_string = "module.exports = [\n";
 
 var exec = require('sync-exec');
 var request = require('sync-request');
@@ -19,21 +19,24 @@ var options = {
     'Authorization': 'token ' + process.env.ghToken
   }
 };
-dive(mark_dir);
-
-routing_string += "];";
+var route_array = []
+dive(mark_dir, route_array);
+console.log("Routing:\n" + toSource(route_array));
 
 //debug console.log(routing_string);
-fs.writeFileSync("config/routing.js", routing_string);
+fs.writeFileSync("config/routing.js", "module.exports = \n" + toSource(route_array) + ";");
 //////////////////////////////////////////////////////////////
 
-function dive(dir) {
+function dive(dir, array) {
   var list = [];
   var stat = "";
   var fileCount = 0;
   // Read the directory
   list = fs.readdirSync(dir);
   list.forEach(function (file) {
+    var keywords = []
+    var route = {}; // build route than push to route array
+    var route2 = undefined
     if (file.charAt(2) != "-") {
       console.log("\nFile: " + file + " does not have a proper page order prefix in its name. " +
         "The page will not be generated.\n")
@@ -50,51 +53,53 @@ function dive(dir) {
     if (stat && stat.isDirectory()) {
       // Dive into the directory
       //debug
-//      console.log(chalk.red.bold("Directory: " + path))
+      //      console.log(chalk.red.bold("Directory: " + path))
       var DirectoryDepth = (path.match(/\//g) || []).length;
       fileCount = fs.readdirSync(path).length;
       var filename = file.replace(".md", "");
+      route.id = filename.replaceAll("[0-9][0-9][-]", "").toLowerCase()
+      route.alias = toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " "))
+      route.type = 'category'
+      route.route = path.replace(mark_dir + "/", "").replaceAll("/", ".").replaceAll("[0-9][0-9][-]", "").toLowerCase()
+      route.items = []
 
-      routing_string += "{id: '" + filename.replaceAll("[0-9][0-9][-]", "").toLowerCase() +
-        "', alias: '" + toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
-        "', type: 'category', route: '" +
-        path.replace(mark_dir + "/", "").replaceAll("/", ".").replaceAll("[0-9][0-9][-]", "").toLowerCase() +
-        "', items: [\n";
 
-      dive(path);
-      if (filename.replaceAll("[0-9][0-9][-]", "") === "contributing"){
-        routing_string += ",\n\t{id: 'contributors', alias: 'Contributors', type: 'route', route: 'contributing.contributors.contributors'},\n\t{id: 'contributor', alias: 'Contributor', type: 'route', route: 'contributing.contributors.contributor'}"
+      dive(path, route.items);
+      if (filename.replaceAll("[0-9][0-9][-]", "") === "contributing") {
+        var route2 = {
+          id: 'contributors',
+          alias: 'Contributors',
+          type: 'route',
+          route: 'contributing.contributors.contributors'
+        }
+        route.items.push(route2)
+
+        route.items.push({
+          id: 'contributor',
+          alias: 'Contributor',
+          type: 'route',
+          route: 'contributing.contributors.contributor'
+        })
+
       }
-      routing_string += "\n]}, // " + filename + "\n"
+      array.push(route)
       if (DirectoryDepth === 1) {
-        var flat_route = path.replace(mark_dir, "app/pods").replaceAll("[0-9][0-9][-]", "") +"/index"
+        var flat_route = path.replace(mark_dir, "app/pods").replaceAll("[0-9][0-9][-]", "") + "/index"
         if (!directoryExistsSync(flat_route.toLowerCase())) {
           mkdirpSync((flat_route).toLowerCase());
         }
 
         //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
         var flat_route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n})\n"
-         fs.writeFileSync(flat_route.toLowerCase() + "/route.js", flat_route_js_string);
+        fs.writeFileSync(flat_route.toLowerCase() + "/route.js", flat_route_js_string);
       }
     } else {
       fileCount++;
       var filename = file.replace(".md", "");
-      if (fileCount >= list.length) {
-        //last route
-        routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "").toLowerCase() + "', alias: '" +
-          toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
-          "', type: 'route', route: '" +
-          path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "").toLowerCase() +
-          "'}";
-      } else {
-        //if not last route add comma
-        routing_string += "\t{id: '" + filename.replaceAll("[0-9][0-9][-]", "").toLowerCase() + "', alias: '" +
-          toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " ")) +
-          "', type: 'route', route: '" +
-          path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "").toLowerCase() +
-          "'},\n";
-
-      }
+      route.id = filename.replaceAll("[0-9][0-9][-]", "").toLowerCase()
+      route.alias = toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " "))
+      route.type = 'route'
+      route.route = path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "").toLowerCase()
       var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
 
       //remove the order prefixes
@@ -109,7 +114,7 @@ function dive(dir) {
 
       //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
       var route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n  breadCrumb: {\n    title: '" +
-        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) +"'\n  },"
+        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  },"
       route_js_string += `
   actions: {
     didTransition: function () {
@@ -159,13 +164,14 @@ export default Ember.Controller.extend({
 
       var insideCodeSnippet = false;
       fs.readFileSync(path).toString().split('\n').forEach(function (line) {
-        if(line.match('```') && !insideCodeSnippet)
+        if (line.match('```') && !insideCodeSnippet)
           insideCodeSnippet = true;
-        else if(line.match('```') && insideCodeSnippet)
+        else if (line.match('```') && insideCodeSnippet)
           insideCodeSnippet = false;
         else if (line.match("^#") && !insideCodeSnippet) {
           line = line.replaceAll("#", "");
           var header = line;
+          keywords.push(header)
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
           template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
         }
@@ -174,14 +180,14 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
       template_content += "\n\t<div class='footer'>\n"
-      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span " +                                                                "class=\"footerHeading\">Contributors</span>";
+      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span " + "class=\"footerHeading\">Contributors</span>";
       var mapContributors = getContributorsOfFile(path);
       var mapCounter = 0;
-      mapContributors.forEach(function(value, key){
+      mapContributors.forEach(function (value, key) {
         mapCounter++;
-        if (mapCounter === mapContributors.size){
+        if (mapCounter === mapContributors.size) {
           template_content += key;
-        }else{
+        } else {
           template_content += key + " - ";
         }
 
@@ -191,12 +197,12 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t\t\t\t \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
-
-
+      route.keywords = keywords
+      array.push(route) // push route to routing.js array
 
       fs.writeFileSync(pagePath.toLowerCase() + "/template.hbs", template_content);
     }
-
+    console.log("KeyWords: " + JSON.stringify(keywords))
   });
 }
 
@@ -206,20 +212,20 @@ String.prototype.replaceAll = function (search, replacement) {
   return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-function getContributorsOfFile(filePath){
+function getContributorsOfFile(filePath) {
   var contributorMap = new Map();
   var log = exec('git log --numstat ' + filePath);
   var arr_log = log.stdout.split(/commit [0-9|a-z]+\s*/i);
   var authorRegexExp = /Author:\s([a-z|\s|,]*)/i;
   var linesAddedDeletedRegexExp = /([0-9]+)\s+([0-9]+)\s+markdown/i;
-  arr_log.forEach(function(commit){
+  arr_log.forEach(function (commit) {
     var author = commit.match(/Author: ([a-z|\s|,]*)/i);
-    if (author !== null  && author[1] !== "travis-ci-ciena"){
+    if (author !== null && author[1] !== "travis-ci-ciena") {
       var name = formatName(author[1]);
       var linesAddedDeletedMatches = commit.match(/([0-9]+)\s+([0-9]+)\s+markdown/i);
-      if (contributorMap.has(name)){
+      if (contributorMap.has(name)) {
         contributorMap.set(name, contributorMap.get(name) + parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
-      }else if(linesAddedDeletedMatches !== null){
+      } else if (linesAddedDeletedMatches !== null) {
         console.log(linesAddedDeletedMatches);
         contributorMap.set(name, parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
       }
@@ -244,16 +250,18 @@ function directoryExistsSync(filePath) {
     return false;
   }
 }
-function formatName(name){
+
+function formatName(name) {
   var match = name.match(/([a-z]+)[,\s|\s]*/ig);
-  if (name.indexOf(",") > -1){
-    return match[1].trim() + " " + match[0].replace(",","").trim();
-  }else if (match.length >= 2){
+  if (name.indexOf(",") > -1) {
+    return match[1].trim() + " " + match[0].replace(",", "").trim();
+  } else if (match.length >= 2) {
     return match[0].trim() + " " + match[1].trim();
-  }else{
+  } else {
     return name;
   }
 }
+
 function toTitleCase(str) {
   return str.replace(/\w\S*/g, function (txt) {
     return txt.charAt(0).toUpperCase() + txt.substr(1);

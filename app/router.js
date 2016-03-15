@@ -20,12 +20,12 @@ Router.map(function () {
 
     })
     this.route('contributors', function () {
-        this.route('contributors', {
-          path: '/'
-        })
-        this.route('contributor', {
-          path: '/:login'
-        })
+      this.route('contributors', {
+        path: '/'
+      })
+      this.route('contributor', {
+        path: '/:login'
+      })
     })
   })
 

@@ -1,3 +1,12 @@
+@import 'node_modules/ember-frost-css-core/scss/frost-core';
+
+// Everything larger than portrait phone
+@mixin phone-portrait-and-up {
+  @media only screen and (min-width: 425px + 1) {
+    @content;
+  }
+}
+
 .dummy-notification-container {
   position: fixed;
   top: 60px;
@@ -22,11 +31,9 @@
   font-weight: bold;
 }
 
-
 .dummy-padding {
   margin: 10px;
   padding: 10px 0 10px 20px;
-
   display: inline-flex;
   flex-direction: column;
 }
@@ -59,23 +66,39 @@
 }
 
 .dummy-style {
-  display: flex;
-  flex-direction: row;
+  @include phone-portrait-and-up {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .dummy-style-item {
   padding-right: 10px;
   padding-top: 10px;
-
 }
 
 .dummy-new-style {
-  display: inline-flex;
-  flex-direction: column;
+  @include phone-portrait-and-up {
+    display: inline-flex;
+    flex-direction: column;
+  }
 }
 
 .dummy-row {
   height: 90px;
   vertical-align: top;
   padding-bottom: 10px;
+}
+
+.outlet {
+  position: fixed;
+  bottom: 50%;
+  width: 80%;
+  margin-left: 10px;
+  left: 50%;
+  z-index: -1;
+}
+
+.demo-app {
+  width: 50%
 }
