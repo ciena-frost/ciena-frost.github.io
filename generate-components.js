@@ -411,24 +411,24 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
     template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
     template_content += "\n\t\t" + descriptionContent
-    
+
     template_content += "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>";
 
     // Begin geting headers from markdown file
-    
+
     var pathRegexStr = ""
     demoParentDirectory.split('/').forEach(function (pathPart) {
-      pathRegexStr += '/[0-9][0-9]-' + pathPart 
+      pathRegexStr += '/[0-9][0-9]-' + pathPart
     })
     pathRegexStr += ".md"
-    
+
     var markdownFiles = Finder.from('./markdown').find();
-    var markdownFilePath = "" 
+    var markdownFilePath = ""
     markdownFiles.forEach(function (file) {
       if(file.match(new RegExp(pathRegexStr, 'i')) != null)
         markdownFilePath = file
     })
-    
+
     var insideCodeSnippet = false;
     fs.readFileSync(markdownFilePath).toString().split('\n').forEach(function (line) {
       if(line.match('```') && !insideCodeSnippet)
@@ -442,15 +442,15 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
         template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
       }
     });
-    
+
     // Done getting headers
 
     template_content += "\n\t\t</div>";
-    
+
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
     template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
-    template_content += demoParentDirectory + "/README')}}"
+    template_content += demoParentDirectory.toLowerCase() + "/README')}}"
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
      if (typeof packageJSON.frostGuideDirectory === 'string')
