@@ -327,7 +327,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
   readme_url = repo.contents_url.replace("{+path}", "README.md");
   readme_content = getFile(readme_url);
 
-  if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory)) {
+  if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory.toLowerCase())) {
     var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
     var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
     var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
@@ -411,46 +411,13 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
     template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
     template_content += "\n\t\t" + descriptionContent
-
-    template_content += "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>";
-
-    // Begin geting headers from markdown file
-
-    var pathRegexStr = ""
-    demoParentDirectory.split('/').forEach(function (pathPart) {
-      pathRegexStr += '/[0-9][0-9]-' + pathPart
-    })
-    pathRegexStr += ".md"
-
-    var markdownFiles = Finder.from('./markdown').find();
-    var markdownFilePath = ""
-    markdownFiles.forEach(function (file) {
-      if(file.match(new RegExp(pathRegexStr, 'i')) != null)
-        markdownFilePath = file
-    })
-
-    var insideCodeSnippet = false;
-    fs.readFileSync(markdownFilePath).toString().split('\n').forEach(function (line) {
-      if(line.match('```') && !insideCodeSnippet)
-        insideCodeSnippet = true;
-      else if(line.match('```') && insideCodeSnippet)
-        insideCodeSnippet = false;
-      else if (line.match("^#") && !insideCodeSnippet) {
-        line = line.replaceAll("#", "");
-        var header = line;
-        var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
-        template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
-      }
-    });
-
-    // Done getting headers
-
-    template_content += "\n\t\t</div>";
-
+    template_content += getScrollspyLinks(getPrefixedMarkdownPath(demoParentDirectory))
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
     template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
     template_content += demoParentDirectory.toLowerCase() + "/README')}}"
+    template_content += getScrollspyLinks("public/api-markdown/" + demoParentDirectory + "/README.md")
+
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
      if (typeof packageJSON.frostGuideDirectory === 'string')
@@ -671,6 +638,41 @@ function GetDemoStyle(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   return new Buffer(body.content, body.encoding).toString();
+}
+
+function getPrefixedMarkdownPath(noPrefixPath){
+  var pathRegexStr = ""
+  noPrefixPath.split('/').forEach(function (pathPart) {
+    pathRegexStr += '/[0-9][0-9]-' + pathPart
+  })
+  pathRegexStr += ".md"
+
+  var markdownFiles = Finder.from('./markdown').find();
+  var markdownFilePath = ""
+  markdownFiles.forEach(function (file) {
+    if(file.match(new RegExp(pathRegexStr, 'i')) != null)
+      markdownFilePath = file
+  })
+
+  return markdownFilePath
+}
+
+function getScrollspyLinks(markdownPath){
+  var template = "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>"
+  var insideCodeSnippet = false;
+  fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
+    if(line.match('```') && !insideCodeSnippet)
+      insideCodeSnippet = true;
+    else if(line.match('```') && insideCodeSnippet)
+      insideCodeSnippet = false;
+    else if (line.match("^#") && !insideCodeSnippet) {
+      line = line.replaceAll("#", "");
+      var header = line;
+      var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
+      template += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+    }
+  });
+  return template + "\n\t\t</div>"
 }
 
 function npmInstall(repo) {
