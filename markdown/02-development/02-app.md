@@ -1,6 +1,3 @@
-Overview
---------
-
 Frost leverages a number of open source projects and Ciena built addons for app development.
 
 Functionality includes:
@@ -29,7 +26,7 @@ Functionality includes:
 - [Templating](https://guides.emberjs.com/v2.2.0/templates/handlebars-basics/)
 - [Testing](https://guides.emberjs.com/v2.2.0/testing/) with [Mocha](https://github.com/switchfly/ember-cli-mocha/)
 
-### Project structure
+## Project structure
 
 Most features in a Frost app (routes, controllers, template, components) are organized using
 [pods](http://ember-cli.com/user-guide/#pod-structure) (--pod with generators) with the exception
@@ -42,7 +39,7 @@ of the following top level entities:
 
 Until pods 2.0 is released, it's up to individuals to follow these conventions.
 
-### Running an existing project
+## Running an existing project
 ```bash
 git clone <project>
 cd <project>
@@ -68,10 +65,10 @@ ember server
 
 Open a browser to http://<server>:4200 to view the project.
 
-### Testing a project
+## Testing a project
 
 Run `ember test` or alternatively run `ember server` and open a browser to `<server>:4200/tests?coverage`
 
-### Deploying a project
+## Deploying a project
 
 http://ember-cli.com/user-guide/#deployments
