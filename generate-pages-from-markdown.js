@@ -10,7 +10,7 @@ var chalk = require('chalk');
 var path = require('path');
 var toSource = require('tosource')
 var removeMd = require('remove-markdown-and-html');
-// compile-modules convert -I BPlusTree.js -o lib BPlusTree.js --format commonjs
+// compile-modules convert -I app/utils/ -o lib BPlusTree.js --format commonjs
 // need npm install -g es6-module-transpiler
 var BPlusTree = require('./lib/BPlusTree')
 var mark_dir = "markdown";
@@ -165,7 +165,7 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t<div id='md-scrollspy'>";
 
       var insideCodeSnippet = false;
-      var test = fs.readFileSync(path).toString()
+
       fs.readFileSync(path).toString().split('\n').forEach(function (line) {
         if (line.match('```') && !insideCodeSnippet)
           insideCodeSnippet = true;
@@ -177,15 +177,21 @@ export default Ember.Controller.extend({
           var header = removeMd(line);
 
           keywords.push(header.trim())
-          BTree.insert(header.trim())
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
           template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
         }else {
           var header = removeMd(line);
           keywords.push(header.trim())
-          BTree.insert(header.trim())
         }
       });
+
+      var md_content = fs.readFileSync(path).toString()
+      md_content = removeMd(md_content)
+      md_content = md_content.match(/\w+/g)
+
+      md_content.forEach(function (word){
+        BTree.insert(word.toLowerCase())
+      })
 
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";

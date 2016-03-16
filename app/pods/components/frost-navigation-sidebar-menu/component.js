@@ -1,10 +1,18 @@
 import Ember from 'ember'
-
+import BPlusTree from 'frost-guide/utils/BPlusTree'
 let category = {}
 let keywordSearch = function (item, query) {
   let keywords = item.keywords ? item.keywords.join('').toLowerCase() : ''
+  var castBTree = null;
+
+  castBTree = new BPlusTree(item.BTree)
+//  if (castBTree.contains(query) == true) {
+//    console.log('Found query in ' + item.alias)
+//    console.log(castBTree)
+//  }
   let alias = (item.alias || '').toLowerCase()
-  if (keywords.includes(query) || alias.includes(query)) {
+  let lowerCaseQuery = query.toLowerCase()
+  if (keywords.includes(lowerCaseQuery) || alias.includes(lowerCaseQuery) || castBTree.contains(lowerCaseQuery)) {
     category[alias] = true
     return true
   }
@@ -26,7 +34,7 @@ let deepCopy = function (obj) {
     return out
   }
   if (typeof obj === 'object') {
-    if (obj.hidden){
+    if (obj.hidden) {
       return;
     }
     let out = {},
@@ -59,12 +67,15 @@ export default Ember.Component.extend({
     categorySelected(category, selected) {
         this.set('selectedCategory', selected ? category : null)
       },
-    toggleCollapsed() {
-      this.sendAction('toggleCollapsed') //send action to application controller
-    },
+      toggleCollapsed() {
+        this.sendAction('toggleCollapsed') //send action to application controller
+      },
       search(attrs) {
         let items = this.get('items')
-        let query = attrs.value.toLowerCase()
+        let query = attrs.value
+        console.log("Query: " + query)
+        console.log("Items: ")
+        console.log(items)
         if (!query.length) {
           this.set('filteredItems', items)
           return
