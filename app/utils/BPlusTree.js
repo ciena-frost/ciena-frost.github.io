@@ -4,11 +4,11 @@ var BTree = function (order) {
     this.order = order;
     this.values = [];
     this.children = [];
-  } else if (order === undefined){
-     this.order = 3;
+  } else if (order === undefined) {
+    this.order = 3;
     this.values = [];
     this.children = [];
-  }else {
+  } else {
     this.order = order.order;
     this.values = order.values;
     this.children = order.children;
@@ -90,45 +90,72 @@ BTree.prototype.contains = function (value) {
   this.traverse(function (node) {
     for (let i = 0; i < node.values.length; i++) {
       found = found || node.values[i].indexOf(value) > -1;
-      if (node.values[i].toLowerCase().indexOf(value) > -1) {
-      }
     }
   });
   return found;
 }
 
-//BTree.prototype.search = function (node, value) {
-//  if (node === null || node.values.length === 0) {
-//    return false
-//  }
-////  console.log("Searching: " + value)
-////  console.log(node)
-//  let lastNodeVal = node.values[node.values.length - 1]
-//  for (var i = 0; i < node.values.length; i++) {
-//    let nodeVal = node.values[i]
-//    if (nodeVal === value) {
-//      return true
-//    } else if (value < nodeVal) {
-//      if (node.children.length - 1 < i) {
-//        return false
-//      } else {
-//        this.search(new BTree(node.children[i]), value)
-//      }
-//    } else if (lastNodeVal > value) {
-//      if (node.children.length < i) {
-//        return false
-//      } else {
-//        this.search(new BTree(node.children[i + 1]), value)
-//      }
-//    }
-//  }
-//
-//}
 
-BTree.prototype.traverse = function (callback) {
+BTree.prototype.search = function (node, value) {
+  if (node === null || node.values.length === 0) {
+    return false
+  }
+  console.log("Searching: " + value)
+  console.log(node)
+  let lastNodeVal = node.values[node.values.length - 1]
+  for (var i = 0; i < node.values.length; i++) {
+    let nodeVal = node.values[i]
+    if (nodeVal.indexOf(value) > -1) {
+      console.log("Found")
+      return true
+    } else if (value < nodeVal) {
+      if (node.children.length - 1 < i) {
+        return false
+      } else {
+        this.search(new BTree(node.children[i]), value)
+      }
+    } else if (lastNodeVal > value) {
+      if (node.children.length < i) {
+        return false
+      } else {
+        this.search(new BTree(node.children[i + 1]), value)
+      }
+    }
+  }
+}
+
+BTree.prototype.searchMultiple = function (node, value) {
+  if (node === null || node.values.length === 0) {
+    return false
+  }
+  console.log("Searching: " + value)
+  console.log(node)
+  let lastNodeVal = node.values[node.values.length - 1]
+  for (var i = 0; i < node.values.length; i++) {
+    let nodeVal = node.values[i]
+    if (nodeVal.indexOf(value) > -1) {
+      console.log("Found")
+      return true
+    } else if (value < nodeVal) {
+      if (node.children.length - 1 < i) {
+        return false
+      } else {
+        this.search(new BTree(node.children[i]), value)
+      }
+    } else if (lastNodeVal > value) {
+      if (node.children.length < i) {
+        return false
+      } else {
+        this.search(new BTree(node.children[i + 1]), value)
+      }
+    }
+  }
+}
+
+BTree.prototype.traverse = function (callback, options) {
   callback(this);
   for (var i = 0; i < this.children.length; i++) {
-    this.traverse.call(new BTree(this.children[i]), callback);
+    this.traverse.call(new BTree(this.children[i]), callback, options);
   }
 };
 
