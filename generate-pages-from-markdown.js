@@ -137,7 +137,7 @@ function dive(dir, array) {
       })
     },
     willTransition: function () {
-      this.controller.set('section', '')
+      this.controller.set('section', null)
     }
   }`
 
