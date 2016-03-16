@@ -135,6 +135,9 @@ function dive(dir, array) {
         const controller = this.controllerFor('application')
         controller.get('target').send('beautify')
       })
+    },
+    willTransition: function () {
+      this.controller.set('section', '')
     }
   }`
 
