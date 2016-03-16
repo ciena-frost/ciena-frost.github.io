@@ -7,6 +7,7 @@ var chalk = require('chalk');
 var toSource = require('tosource')
 var exec = require('sync-exec');
 var Finder = require('fs-finder');
+var removeMd = require('remove-markdown-and-html');
 
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
@@ -667,7 +668,7 @@ function getScrollspyLinks(markdownPath){
     else if (line.match("^#") && !insideCodeSnippet && line.length <= 50) {
       var hlevel = line.substring(0, 3).match(/#/g).length
       line = line.replaceAll("#", "");
-      var header = line;
+      var header = removeMd(line);
       var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
       if(hlevel <= 3)
         template += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
