@@ -10,9 +10,6 @@ var chalk = require('chalk');
 var path = require('path');
 var toSource = require('tosource')
 var removeMd = require('remove-markdown-and-html');
-// compile-modules convert -I app/utils/ -o lib BPlusTree.js --format commonjs
-// need npm install -g es6-module-transpiler
-var BPlusTree = require('./lib/BPlusTree')
 var mark_dir = "markdown";
 var exec = require('sync-exec');
 var request = require('sync-request');
@@ -38,7 +35,6 @@ function dive(dir, array) {
   list = fs.readdirSync(dir);
   list.forEach(function (file) {
     var keywords = []
-    var BTree = new BPlusTree.default(3);
     var route = {}; // build route than push to route array
     var route2 = undefined
     if (file.charAt(2) != "-") {
@@ -123,7 +119,7 @@ function dive(dir, array) {
   actions: {
     didTransition: function () {
       Ember.run.schedule('afterRender', this, function () {
-        if (this.controller.get('section') != null) {
+        if (this.controller.get('section') != null || this.controller.get('section') === '') {
           try {
             $('html, body').animate({
               scrollTop: $('#' + this.controller.get('section')).offset().top - (0.125 * $(window).height())
@@ -137,7 +133,7 @@ function dive(dir, array) {
       })
     },
     willTransition: function () {
-      this.controller.set('section', null)
+      this.controller.set('section', '')
     }
   }`
 
@@ -188,13 +184,7 @@ export default Ember.Controller.extend({
         }
       });
 
-      var md_content = fs.readFileSync(path).toString()
-      md_content = removeMd(md_content)
-      md_content = md_content.match(/\w+/g)
 
-      md_content.forEach(function (word){
-        BTree.insert(word.toLowerCase())
-      })
 
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
@@ -217,14 +207,11 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
       route.keywords = keywords
-      route.BTree = BTree
       array.push(route) // push route to routing.js array
 
       fs.writeFileSync(pagePath.toLowerCase() + "/template.hbs", template_content);
     }
     console.log("KeyWords: " + JSON.stringify(keywords))
-    console.log(chalk.blue("BTREE:"))
-    console.log(BTree.print())
   });
 }
 
