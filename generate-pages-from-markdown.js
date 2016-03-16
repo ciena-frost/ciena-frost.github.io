@@ -154,6 +154,7 @@ export default Ember.Controller.extend({
       //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
       //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
 
+      var template_content = "";
       template_content += "\n<div class=\"md\">";
       template_content += "\n\t<div class=\"content-col\">";
       template_content += "\n\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true ";
