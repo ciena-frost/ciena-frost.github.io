@@ -13,8 +13,9 @@ export default Ember.Component.extend({
     toggleExpanded () {
       this.toggleProperty('isExpanded')
     },
-    toggleCollapsed () {
+    showView () {
       this.get('targetObject').send('toggleCollapsed') // sends action to parent component
+      window.scrollTo(0, 0) // needed because of js fixed sidebar
     }
   }
 })
