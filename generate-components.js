@@ -660,7 +660,7 @@ function getPrefixedMarkdownPath(noPrefixPath){
 function getScrollspyLinks(markdownPath){
   var template = "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>"
   var insideCodeSnippet = false;
-  fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
+  fs.readFileSync(markdownPath.toLowerCase()).toString().split('\n').forEach(function (line) {
     if(line.match('```') && !insideCodeSnippet)
       insideCodeSnippet = true;
     else if(line.match('```') && insideCodeSnippet)
