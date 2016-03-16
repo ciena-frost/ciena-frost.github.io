@@ -8,13 +8,25 @@ export default Ember.Route.extend({
       })
     },
     beautify: function () {
-      /*eslint-disable */
-      Prism.highlightAll()
-        /*eslint-enable */
+      Prism.highlightAll() //eslint-disable-line
+
       if (!this.get('media.isMobile')) {
         $('.guide-sidebar').height($("[class='content']").height())
       }
-        /* push footer to bottom of viewport if page has no y-overflow*/
+
+      if ($(window).width() > 800) {
+        $('.md-scrollspy').each(function () {
+          $(this).css('display', 'inline')
+          $(this).css('top', '150px')
+          $(this).css('left', $(this).parent().width() + 200)
+        })
+      } else {
+        $('.md-scrollspy').each(function () {
+          $(this).css('display', 'none')
+        })
+      }
+
+      /* push footer to bottom of viewport if page has no y-overflow*/
       if ($('.footer').length) {
         var docHeight = $(window).height()
         var footerHeight = $('.footer').height()

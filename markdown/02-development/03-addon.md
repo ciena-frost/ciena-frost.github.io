@@ -1,9 +1,6 @@
-Overview
---------
-
 All functionality from app development is available as well as a dummy application for development/testing.
 
-### Project structure
+## Project structure
 
 Addon projects consist of 4 main parts:
 - The `addon` directory: code for the addon
@@ -12,7 +9,7 @@ Addon projects consist of 4 main parts:
 - The `index.js` and `ember-cli-build.js` files: `index.js` manages the addon build for a consuming app while
 `ember-cli-build.js` manages the build for the dummy app
 
-#### Addon namespaces
+### Addon namespaces
 
 Addons are given a separate namespace within Ember apps.  For instance, the component in the frost-button project
 could be imported using `import Component from 'frost-button/pods/components/frost-button/component'`.  To add a
@@ -29,7 +26,7 @@ This re-export allows the component to be referenced in a consuming app's templa
 {{frost-button}}
 ```
 
-#### Addon conventions
+### Addon conventions
 
 Addon projects are generated with:
 - A component and template (e.g. `frost-button/addon/pods/components/frost-button/component.js + template.hbs`)
@@ -39,7 +36,7 @@ Addon projects are generated with:
 - Default routing for the demo (`/`)
 - Standard tooling, including SCSS compilation, mocha and mirage testing, jscs, etc.
 
-### Running an existing project
+## Running an existing project
 ```bash
 git clone <project>
 cd <project>
@@ -49,7 +46,7 @@ ember server
 
 Open a browser to http://<server>:4200 to view the project.
 
-### Creating an addon project
+## Creating an addon project
 
 ```bash
 ember addon <frost-addon>
@@ -63,11 +60,11 @@ ember server
 
 Open a browser to http://<server>:4200 to view the addon demo.
 
-### Testing an addon
+## Testing an addon
 
 Run `ember test` or alternatively run `ember server` and open a browser to `<server>:4200/tests?coverage`
 
-### Publishing an addon
+## Publishing an addon
 
 Frost addons are published internally to
 [Artifactory](https://artifactory.ciena.com/webapp/#/artifacts/browse/tree/General/blueplanet-npm-local).

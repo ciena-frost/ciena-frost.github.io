@@ -11,18 +11,22 @@
   4. Create a Pull Request.
 
 ## Editing Scrollspy Tabs
-The scrollspy is the table of contents on the right side of every page. Each one is automatically built from the Atx-style headers in the page's corresponding markdown file.
+The scrollspy is the table of contents on the right side of every page. Each one is automatically built from the level 1,2 and 3 Atx-style headers in the page's corresponding markdown file. Also note that the level of the header will affect the indentation and font-size of the text in the scrollspy. 
 
 ```markdown
-# This header would appear in the scrollspy
-## This header would appear in the scrollspy
+# This level 1 header would appear in the scrollspy
+## This level 2 header would appear in the scrollspy
+### This level 3 header would appear in the scrollspy
 ```
-If you wish to add a header that does not appear in the scrollspy, you can use Setext-style headers.
+If you wish to add a header that does not appear in the scrollspy, you can use Setext-style headers or level 4,5 and 6 Atx-style headers.
 ```markdown
 This header would not appear in the scrollspy
 =============================================
 This header would not appear in the scrollspy
 ---------------------------------------------
+#### This level 4 header would not appear in the scrollspy
+##### This level 5 header would not appear in the scrollspy
+###### This level 6 header would not appear in the scrollspy
 ```
 
 ## Creating Component Pages

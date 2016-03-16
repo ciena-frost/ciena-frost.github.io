@@ -1,10 +1,12 @@
 import Ember from 'ember'
-
 let category = {}
 let keywordSearch = function (item, query) {
-  let keywords = item.keywords ? item.keywords.join('').toLowerCase() : ''
+  let keywords = item.keywords ? item.keywords : ''
+  var castBTree = null;
+
   let alias = (item.alias || '').toLowerCase()
-  if (keywords.includes(query) || alias.includes(query)) {
+  let lowerCaseQuery = query.toLowerCase()
+  if (keywords.includes(lowerCaseQuery) || alias.includes(lowerCaseQuery)) {
     category[alias] = true
     return true
   }
@@ -26,7 +28,7 @@ let deepCopy = function (obj) {
     return out
   }
   if (typeof obj === 'object') {
-    if (obj.hidden){
+    if (obj.hidden) {
       return;
     }
     let out = {},
@@ -59,12 +61,13 @@ export default Ember.Component.extend({
     categorySelected(category, selected) {
         this.set('selectedCategory', selected ? category : null)
       },
-    toggleCollapsed() {
-      this.sendAction('toggleCollapsed') //send action to application controller
-    },
+      toggleCollapsed() {
+        this.sendAction('toggleCollapsed') //send action to application controller
+      },
       search(attrs) {
         let items = this.get('items')
-        let query = attrs.value.toLowerCase()
+        let query = attrs.value
+        console.log("Query: " + query)
         if (!query.length) {
           this.set('filteredItems', items)
           return
@@ -80,6 +83,7 @@ export default Ember.Component.extend({
             return keywordSearch(e, query)
           })
         }
+        console.log(filteredItems)
         this.set('filteredItems', filteredItems)
       }
   }

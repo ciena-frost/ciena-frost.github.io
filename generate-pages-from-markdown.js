@@ -9,8 +9,8 @@ var child_process = require('child_process');
 var chalk = require('chalk');
 var path = require('path');
 var toSource = require('tosource')
+var removeMd = require('remove-markdown-and-html');
 var mark_dir = "markdown";
-
 var exec = require('sync-exec');
 var request = require('sync-request');
 var options = {
@@ -34,7 +34,7 @@ function dive(dir, array) {
   // Read the directory
   list = fs.readdirSync(dir);
   list.forEach(function (file) {
-    var keywords = []
+    var keywords = ""
     var route = {}; // build route than push to route array
     var route2 = undefined
     if (file.charAt(2) != "-") {
@@ -119,7 +119,7 @@ function dive(dir, array) {
   actions: {
     didTransition: function () {
       Ember.run.schedule('afterRender', this, function () {
-        if (this.controller.get('section') != null) {
+        if (this.controller.get('section') != null || this.controller.get('section') === '') {
           try {
             $('html, body').animate({
               scrollTop: $('#' + this.controller.get('section')).offset().top - (0.125 * $(window).height())
@@ -131,6 +131,9 @@ function dive(dir, array) {
         const controller = this.controllerFor('application')
         controller.get('target').send('beautify')
       })
+    },
+    willTransition: function () {
+      this.controller.set('section', '')
     }
   }`
 
@@ -151,8 +154,6 @@ export default Ember.Controller.extend({
       //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
 
       var template_content = "";
-      var content = fs.readFileSync(path, 'utf8');
-
       template_content += "\n<div class=\"md\">";
       template_content += "\n\t<div class=\"content-col\">";
       template_content += "\n\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true ";
@@ -163,19 +164,34 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t<div id='md-scrollspy'>";
 
       var insideCodeSnippet = false;
+
       fs.readFileSync(path).toString().split('\n').forEach(function (line) {
         if (line.match('```') && !insideCodeSnippet)
           insideCodeSnippet = true;
         else if (line.match('```') && insideCodeSnippet)
           insideCodeSnippet = false;
-        else if (line.match("^#") && !insideCodeSnippet) {
+        else if (line.match("^#") && !insideCodeSnippet && line.length <= 50) {
+          var hlevel = line.substring(0, 3).match(/#/g).length
           line = line.replaceAll("#", "");
-          var header = line;
-          keywords.push(header)
+          var header = removeMd(line);
+
+          //          keywords.push(header.trim())
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
-          template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+          template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
         }
+        //        }else {
+        //          var header = removeMd(line);
+        //          keywords.push(header.trim())
+        //        }
       });
+
+      var md_content = fs.readFileSync(path).toString()
+      md_content = removeMd(md_content)
+      md_content = md_content.match(/\w+/g)
+
+      md_content.forEach(function (word) {
+        keywords += word.toLowerCase() + " "
+      })
 
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";
