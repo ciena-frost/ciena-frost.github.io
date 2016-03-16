@@ -34,7 +34,7 @@ function dive(dir, array) {
   // Read the directory
   list = fs.readdirSync(dir);
   list.forEach(function (file) {
-    var keywords = []
+    var keywords = ""
     var route = {}; // build route than push to route array
     var route2 = undefined
     if (file.charAt(2) != "-") {
@@ -175,16 +175,23 @@ export default Ember.Controller.extend({
           line = line.replaceAll("#", "");
           var header = removeMd(line);
 
-          keywords.push(header.trim())
+          //          keywords.push(header.trim())
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
           template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
-        }else {
-          var header = removeMd(line);
-          keywords.push(header.trim())
         }
+        //        }else {
+        //          var header = removeMd(line);
+        //          keywords.push(header.trim())
+        //        }
       });
 
+      var md_content = fs.readFileSync(path).toString()
+      md_content = removeMd(md_content)
+      md_content = md_content.match(/\w+/g)
 
+      md_content.forEach(function (word) {
+        keywords += word.toLowerCase() + " "
+      })
 
       template_content += "\n\t\t</div>";
       template_content += "\n\t</div>";

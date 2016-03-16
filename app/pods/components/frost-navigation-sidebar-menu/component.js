@@ -1,7 +1,7 @@
 import Ember from 'ember'
 let category = {}
 let keywordSearch = function (item, query) {
-  let keywords = item.keywords ? item.keywords.join('').toLowerCase() : ''
+  let keywords = item.keywords ? item.keywords : ''
   var castBTree = null;
 
   let alias = (item.alias || '').toLowerCase()
