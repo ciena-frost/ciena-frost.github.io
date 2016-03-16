@@ -9,8 +9,11 @@ var child_process = require('child_process');
 var chalk = require('chalk');
 var path = require('path');
 var toSource = require('tosource')
+var removeMd = require('remove-markdown-and-html');
+// compile-modules convert -I BPlusTree.js -o lib BPlusTree.js --format commonjs
+// need npm install -g es6-module-transpiler
+var BPlusTree = require('./lib/BPlusTree')
 var mark_dir = "markdown";
-
 var exec = require('sync-exec');
 var request = require('sync-request');
 var options = {
@@ -35,6 +38,7 @@ function dive(dir, array) {
   list = fs.readdirSync(dir);
   list.forEach(function (file) {
     var keywords = []
+    var BTree = new BPlusTree.default(3);
     var route = {}; // build route than push to route array
     var route2 = undefined
     if (file.charAt(2) != "-") {
@@ -150,9 +154,6 @@ export default Ember.Controller.extend({
       //debug console.log(chalk.blue.bold("Create controller: " + pagePath + "/controller.js"));
       //debug console.log(chalk.blue.bold("Create template: " + pagePath + "/template.hbs"));
 
-      var template_content = "";
-      var content = fs.readFileSync(path, 'utf8');
-
       template_content += "\n<div class=\"md\">";
       template_content += "\n\t<div class=\"content-col\">";
       template_content += "\n\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true ";
@@ -163,6 +164,7 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t<div id='md-scrollspy'>";
 
       var insideCodeSnippet = false;
+      var test = fs.readFileSync(path).toString()
       fs.readFileSync(path).toString().split('\n').forEach(function (line) {
         if (line.match('```') && !insideCodeSnippet)
           insideCodeSnippet = true;
@@ -170,10 +172,16 @@ export default Ember.Controller.extend({
           insideCodeSnippet = false;
         else if (line.match("^#") && !insideCodeSnippet) {
           line = line.replaceAll("#", "");
-          var header = line;
-          keywords.push(header)
+          var header = removeMd(line);
+
+          keywords.push(header.trim())
+          BTree.insert(header.trim())
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
           template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\"}}" + header + "{{/scroll-to}}";
+        }else {
+          var header = removeMd(line);
+          keywords.push(header.trim())
+          BTree.insert(header.trim())
         }
       });
 
@@ -198,11 +206,14 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
       route.keywords = keywords
+      route.BTree = BTree
       array.push(route) // push route to routing.js array
 
       fs.writeFileSync(pagePath.toLowerCase() + "/template.hbs", template_content);
     }
     console.log("KeyWords: " + JSON.stringify(keywords))
+    console.log(chalk.blue("BTREE:"))
+    console.log(BTree.print())
   });
 }
 
