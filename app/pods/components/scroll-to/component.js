@@ -1,6 +1,6 @@
 import Ember from 'ember'
-  
-function highlightElement(selector){
+
+function highlightElement (selector) {
   selector.parent().children().each(function () {
     $(this).css('font-weight', 'lighter')
     $(this).css('border-left', '2px solid white')
@@ -36,35 +36,39 @@ export default Ember.Component.extend({
   },
   click: function () {
     highlightElement($('#' + this.elementId))
-    $('html, body').animate({scrollTop: $(this.to).offset().top - (0.125 * $(window).height())}, 200)
+    $('html, body').animate({
+      scrollTop: $(this.to).offset().top - (0.125 * $(window).height())
+    }, 200)
     window.location.href = this.addQueryParam('section', this.to.replace('#', ''))
   },
   scrollspy: function () {
     var id = this.elementId
     var bottomOrTop = true
-    
+
     $(this.to).on('scrollSpy:enter', function () {
-      if(!bottomOrTop)
+      if (!bottomOrTop) {
         highlightElement($('#' + id))
+      }
     })
-    
+
     $(window).scroll(function (event) {
-      if($(window).scrollTop() + $(window).height() == $(document).height()) { // scrolling hit page bottom
+      if ($(window).scrollTop() + $(window).height() === $(document).height()) { // scrolling hit page bottom
         highlightElement($('#' + id).last())
         bottomOrTop = true
-      }
-      else if($(window).scrollTop() == 0){
+      } else if ($(window).scrollTop() === 0) {
         highlightElement($('#' + id).parent().children().first())
         bottomOrTop = true
-      }
-      else{
+      } else {
         bottomOrTop = false
       }
-    });
+    })
 
     var offsetBottom = -0.65 * $(window).height()
     var offsetTop = 0.05 * $(window).height()
 
-    $(this.to).scrollSpy({'offsetBottom': offsetBottom, 'offsetTop': offsetTop})
+    $(this.to).scrollSpy({
+      'offsetBottom': offsetBottom,
+      'offsetTop': offsetTop
+    })
   }.on('didInsertElement')
 })
