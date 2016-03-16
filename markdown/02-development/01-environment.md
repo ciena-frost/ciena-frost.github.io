@@ -1,6 +1,3 @@
-Overview
---------
-
 Frost uses [ember-cli](http://ember-cli.com/user-guide/) and ember-cli addons for tooling, builds and project conventions.
 
 Functionality includes:
@@ -17,7 +14,7 @@ Functionality includes:
 - [Subresource integrity](https://github.com/jonathanKingston/ember-cli-sri)
 - [Whitespace conventions](http://editorconfig.org/)
 
-### Mac
+## Mac
 ```bash
 ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)' // Install homebrew
 brew install nvm // Install nvm (node version manager) and nodejs
@@ -28,7 +25,7 @@ npm install -g bower
 ```
 Edit ~/.npmrc and add `registry=http://artifactory.ciena.com/api/npm/blueplanet-npm/`
 
-### Linux
+## Linux
 ```bash
 curl https://raw.githubusercontent.com/creationix/nvm/v0.11.1/install.sh | bash // Install nvm (node version manager) and nodejs
 source ~/.bash_profile
@@ -39,7 +36,7 @@ npm install -g bower
 ```
 Edit ~/.npmrc and add `registry=http://artifactory.ciena.com/api/npm/blueplanet-npm/`
 
-### Windows
+## Windows
 Vagrant with a linux variant is recommended, but if you feel adventurous [ember-cli-windows](https://github.com/felixrieseberg/ember-cli-windows) may help:
 
 Install [nvm-windows](https://github.com/coreybutler/nvm-windows/releases)

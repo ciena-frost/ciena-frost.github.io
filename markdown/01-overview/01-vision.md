@@ -16,15 +16,14 @@
 </div>
 
 What is Frost?
---------------
+==============
 
 An initiative to establish common styles, conventions and code for Ciena
 UIs using a collaborative approach inspired by open source projects.
 
-Goals
------
+#Goals
 
-### Consistency
+## Consistency
 
 Frost focuses on producing a consistent look and feel across the Ciena
 suite of UI products. Common UI elements and patterns are identified and
@@ -44,7 +43,7 @@ following benefits:
 -   **Increased robustness** - UIs are tested across multiple product
     bases
 
-### Community
+## Community
 
 A strong development community is able to accomplish far more than any
 individual could hope to accomplish. Cross-product collaboration
@@ -62,7 +61,7 @@ benefits of a large community are:
 -   **Cross-product development** - code bases are predictable,
     developers can ramp up quickly
 
-### Convention
+## Convention
 
 Common use cases should be easy to develop. Frost buys into a
 "convention over configuration" philosophy. Frost components and CSS are
@@ -75,7 +74,7 @@ many will be useful to the Frost community. Everyone is encouraged to
 contribute to the project and help is available for new community
 members.
 
-### Abstraction
+## Abstraction
 
 The web ecosystem evolves at a torrid pace. New standards, frameworks
 and components emerge on a weekly basis and tracking the flood of
