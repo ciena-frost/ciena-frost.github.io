@@ -417,7 +417,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "\n\t{{#frost-tab alias='API' id='api'}}"
     template_content += "\n\t\t  " + "{{markdown-to-html ghCodeBlocks=true tables=true class=\"guide-markdown\" " + "markdown=(fr-markdown-api-file '"
     template_content += demoParentDirectory.toLowerCase() + "/README')}}"
-    template_content += getScrollspyLinks("public/api-markdown/" + demoParentDirectory + "/README.md")
+    template_content += getScrollspyLinks("public/api-markdown/" + demoParentDirectory.toLowerCase() + "/README.md")
 
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
@@ -660,7 +660,7 @@ function getPrefixedMarkdownPath(noPrefixPath){
 function getScrollspyLinks(markdownPath){
   var template = "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>"
   var insideCodeSnippet = false;
-  fs.readFileSync(markdownPath.toLowerCase()).toString().split('\n').forEach(function (line) {
+  fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
     if(line.match('```') && !insideCodeSnippet)
       insideCodeSnippet = true;
     else if(line.match('```') && insideCodeSnippet)
