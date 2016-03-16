@@ -41,17 +41,24 @@ export default Ember.Component.extend({
   },
   scrollspy: function () {
     var id = this.elementId
+    var bottomOrTop = true
     
     $(this.to).on('scrollSpy:enter', function () {
-      highlightElement($('#' + id))
+      if(!bottomOrTop)
+        highlightElement($('#' + id))
     })
     
     $(window).scroll(function (event) {
       if($(window).scrollTop() + $(window).height() == $(document).height()) { // scrolling hit page bottom
         highlightElement($('#' + id).last())
+        bottomOrTop = true
       }
       else if($(window).scrollTop() == 0){
         highlightElement($('#' + id).parent().children().first())
+        bottomOrTop = true
+      }
+      else{
+        bottomOrTop = false
       }
     });
 
