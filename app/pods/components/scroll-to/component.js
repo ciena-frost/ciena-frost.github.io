@@ -1,4 +1,13 @@
 import Ember from 'ember'
+  
+function highlightElement(selector){
+  selector.parent().children().each(function () {
+    $(this).css('font-weight', 'lighter')
+    $(this).css('border-left', '2px solid white')
+  })
+  selector.css('font-weight', 'bold')
+  selector.css('border-left', '2px solid #009EEF')
+}
 
 export default Ember.Component.extend({
   tagName: 'button',
@@ -26,25 +35,25 @@ export default Ember.Component.extend({
     return myUrl
   },
   click: function () {
-    $('#' + this.elementId).parent().children().each(function () {
-      $(this).css('font-weight', 'lighter')
-      $(this).css('border-left', '2px solid white')
-    })
-    $('#' + this.elementId).css('font-weight', 'bold')
-    $('#' + this.elementId).css('border-left', '2px solid #009EEF')
+    highlightElement($('#' + this.elementId))
     $('html, body').animate({scrollTop: $(this.to).offset().top - (0.125 * $(window).height())}, 200)
     window.location.href = this.addQueryParam('section', this.to.replace('#', ''))
   },
   scrollspy: function () {
     var id = this.elementId
+    
     $(this.to).on('scrollSpy:enter', function () {
-      $('#' + id).parent().children().each(function () {
-        $(this).css('font-weight', 'lighter')
-        $(this).css('border-left', '2px solid white')
-      })
-      $('#' + id).css('font-weight', 'bold')
-      $('#' + id).css('border-left', '2px solid #009EEF')
+      highlightElement($('#' + id))
     })
+    
+    $(window).scroll(function (event) {
+      if($(window).scrollTop() + $(window).height() == $(document).height()) { // scrolling hit page bottom
+        highlightElement($('#' + id).last())
+      }
+      else if($(window).scrollTop() == 0){
+        highlightElement($('#' + id).parent().children().first())
+      }
+    });
 
     var offsetBottom = -0.65 * $(window).height()
     var offsetTop = 0.05 * $(window).height()
