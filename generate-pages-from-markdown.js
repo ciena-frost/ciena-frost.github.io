@@ -118,10 +118,7 @@ function dive(dir, array) {
       route_js_string += `
   resetController: function (controller, isExiting, transition) {
     if (isExiting){
-      var queryParams = controller.get('queryParams');
-      queryParams.forEach(function (param) {
-        controller.set(param, null);
-      });
+      controller.set('section', null);
     }
   },
   actions: {
