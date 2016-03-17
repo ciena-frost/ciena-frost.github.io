@@ -95,9 +95,9 @@ A text field are used to accept user-entered text. A text field can be a simple 
 
  
 
-**Normal: **This is the default state of the text field.
+**Normal:** This is the default state of the text field.
 
-<span class="s1">**Hover: **Use this state to show that the user is hovering over the text field with a mouse. </span>
+<span class="s1">**Hover:** Use this state to show that the user is hovering over the text field with a mouse. </span>
 
 <span class="s1">**Focus:** Use this state to show that the user has selected the text field either by tabbing to it or selecting it with the mouse.</span>
 
