@@ -435,32 +435,6 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     var contributorsCount = 0;
     var contributorDuplicates = 0;
     var componentContributors = getCienFrostRepoContributors(repo.name);
-    if (packageJSON.contributors != undefined) {
-      packageJSON.contributors.forEach(function (user) {
-        contributorsCount++
-        //get user in (https://github.com/ewhite613)
-        var userIdRegex = /\/([a-z|0-9]+)\)/i
-        var userId = user.match(userIdRegex)
-        if (userId != undefined) {
-          var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
-          if (componentContributors.contains(userJSON) === false) {
-            if (userJSON.login === "travis-ci-ciena") {
-              return
-            }
-            if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
-              template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
-            } else {
-              template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
-            }
-          } else {
-            contributorDuplicates++
-          }
-        }
-
-      })
-    } else {
-      packageJSON.contributors = []
-    }
     componentContributors.forEach(function (user) {
       contributorsCount++;
       if (user === "") {
@@ -470,7 +444,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
       if (userJSON.login === "travis-ci-ciena") {
         return
       }
-      if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
+      if (contributorsCount === componentContributors.length) {
         template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
       } else {
         template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
