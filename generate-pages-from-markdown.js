@@ -116,6 +116,14 @@ function dive(dir, array) {
       var route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n  breadCrumb: {\n    title: '" +
         toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  },"
       route_js_string += `
+  resetController: function (controller, isExiting, transition) {
+    if (isExiting){
+      var queryParams = controller.get('queryParams');
+      queryParams.forEach(function (param) {
+        controller.set(param, null);
+      });
+    }
+  },
   actions: {
     didTransition: function () {
       Ember.run.schedule('afterRender', this, function () {
@@ -131,9 +139,6 @@ function dive(dir, array) {
         const controller = this.controllerFor('application')
         controller.get('target').send('beautify')
       })
-    },
-    willTransition: function () {
-      this.controller.set('section', '')
     }
   }`
 
