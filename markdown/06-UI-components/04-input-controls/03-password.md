@@ -1,14 +1,17 @@
 1.  <span>[Blue Planet](index.html)</span>
 
-<span id="title-text"> Blue Planet : Password input field - VI </span>
+<span id="title-text"> Blue Planet : Password input field - RR </span>
 ======================================================================
 
-Created by <span class="author"> Brian Choi</span>, last modified by <span class="editor"> Sonya Thornley</span> on Mar 04, 2016
+Created by <span class="author"> Brian Choi</span>, last modified by <span class="editor"> Philippe Savignac</span> on Mar 16, 2016
+
+PORTED to <a href="https://github.com/ciena-frost/ciena-frost.github.io" class="uri" class="external-link">https://github.com/ciena-frost/ciena-frost.github.io</a>
+===================================================================================================================================================================
 
 Description
 -----------
 
-A password input box accepts the user-entered password. It differs from the text box in that it is a special component to allow the password to display an asterix for each character.
+A password input box accepts the user-entered input. It is a simple text field that can display asterisk for each character.
 
 <span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/171229672.png" class="confluence-embedded-image" /></span>
 
@@ -17,47 +20,41 @@ A password input box accepts the user-entered password. It differs from the text
 Behaviors
 ---------
 
--   <span style="color: rgb(0,0,0);">A password input field is a [text field](Text-field---VI_171214713.html) in which the user enters a password or modifies an existing password.  </span>
--   <span style="color: rgb(0,0,0);">By default, a password input field supports keyboard focus and password entry.</span>
--   <span style="color: rgb(0,0,0);">Use a password input field to allow a user to input a password or other text that needs to remain hidden as the user types.</span>
--   <span style="color: rgb(0,0,0);">By default, always hide the password text with asterixs unless stated by the user. </span><span style="color: rgb(0,0,0);">
+-   <span style="color: rgb(0,0,0);">A password input field is a simple [text field](Text-field---RR_171214713.html) in which the user enters a value or modifies a value.  </span>
+-   <span style="color: rgb(0,0,0);">Use a password input field to allow a user to input a value that needs to remain hidden as the user types.</span>
+-   <span style="color: rgb(0,0,0);">By default, always hide the text with asterisks unless stated by the user. </span><span style="color: rgb(0,0,0);">
     </span>
 -   <span style="color: rgb(0,0,0);">In appropriate circumstances, allow the user to show the characters that were typed by selecting "Show"</span>
--   <span style="color: rgb(0,0,0);">If the user has selected "Show", then the button changes to "Hide" to display the characters as asterixs again.</span>
+-   <span style="color: rgb(0,0,0);">If the user has selected "Show", then the button changes to "Hide" to display the characters as asterisks again.</span>
 -   <span style="color: rgb(0,0,0);">Display error messages below the password input field </span>
 -   <span style="color: rgb(0,0,0);">If error, display the error text and the border of the password input field in red (see visual specification).</span>
 -   <span style="color: rgb(0,0,0);">All text in the password input field should be left aligned.</span>
+-   <span style="color: rgb(0,0,0);">An indicator is visible when the caps lock key is on.</span>
+
+<span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/183360478.png" class="confluence-embedded-image" /></span></span>
 
 <span style="color: rgb(0,0,0);"><span style="color: rgb(0,0,0);">Usage guidelines</span></span>
 ------------------------------------------------------------------------------------------------
 
-<span style="color: rgb(0,0,0);">**Be sure to perform appropriate verification when you receive user input.** If the appropriate text is not provided, the field should display an error state and provide short appropriate text as to the cause of the error. <span style="color: rgb(0,0,0);">In most cases, the appropriate time to check the data in the field is when the user clicks outside the field or presses the Return, Enter, or Tab key.</span></span>
+<span style="color: rgb(0,0,0);">See [text field](Text-field---RR_171214713.html) for basic usage guidelines of the password input field.</span>
 
-<span style="color: rgb(0,0,0);"> </span>
+<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/183360482.png" class="confluence-embedded-image" /></span>
 
-<span style="color: rgb(255,0,255);"> </span><span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/171229671.png" class="confluence-embedded-image" /></span>
+In particular circumstances, **it might be appropriate to allow the user to see the characters they are typing**. If that is the case, provide the user with the ability to show the characters by selecting the "Show" button that would be displayed in the password input field. When the user selects "Show", the control then changes to "Hide" to hide the characters. For passwords, this would only be when creating a password such that you don't have to have double password entry.
 
-<span style="color: rgb(0,0,0);">
+<span style="color: rgb(255,0,255);"><span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/183360484.png" class="confluence-embedded-image" /></span></span>
+
+<span style="color: rgb(255,0,255);">
 </span>
 
-<span style="color: rgb(0,51,102);"><span style="color: rgb(0,0,0);">****In general, display an introductory label for the password input field** for example "Password". If not a password, then chose a label that helps the user understand what type of information they should enter.**</span></span>
+<span style="color: rgb(255,0,255);">
+</span>
 
-<span style="color: rgb(0,51,102);"><span style="color: rgb(0,0,0);">**In general, ensure that the length of a password input field comfortably accommodates the length of the expected input.** The length of a password input field helps users gauge whether they’re inputting the appropriate information.</span></span>
-
-<span style="color: rgb(0,51,102);"><span style="color: rgb(0,0,0);">
-</span></span>
-
-In particular circumstances, **it might be appropriate to allow the user to see the characters they are typing**. If that is the case, provide the user with the ability to show the characters by selecting the "Show" button that would be displayed in the password input field. When the user selects "Show", the control then changes to "Hide" to hide the characters.
-
-<span style="color: rgb(255,0,255);">VI - show the "Show" and "Hide" behaviours.</span>
-
-**A password input field has four states**:
-
-<span style="color: rgb(255,0,255);">VI - need hover as well</span>
+**A password input field has five states**:
 
  
 
-<span style="color: rgb(0,51,102);"><span style="color: rgb(0,0,0);"><span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/171214720/171229719.png" class="confluence-embedded-image" width="850" /></span> </span></span>
+<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/183354320.png" class="confluence-embedded-image" /></span>
 
 **Normal: **This is the default state of the password input field.
 
@@ -72,9 +69,9 @@ In particular circumstances, **it might be appropriate to allow the user to see
 Visual specification
 --------------------
 
-<span style="color: rgb(255,0,255);">VI - need hover and focus  separately.</span>
+ 
 
-<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/171243052.png" class="confluence-embedded-image" /></span>
+<span class="confluence-embedded-file-wrapper"><img src="assets/images/171214720/183354319.png" class="confluence-embedded-image" /></span>
 
 <span style="color: rgb(255,0,255);line-height: 1.42857;"> </span>
 
@@ -90,8 +87,17 @@ Attachments:
 <img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-15 13:43:26.png](attachments/171214720/171229719.png) (image/png)
 <img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-1-7 11:55:4.png](attachments/171214720/171243038.png) (image/png)
 <img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [password-input-box.png](attachments/171214720/171243052.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-11 13:29:53.png](attachments/171214720/183354317.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-11 13:30:54.png](attachments/171214720/183354319.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-11 13:31:37.png](attachments/171214720/183354320.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-11 13:32:41.png](attachments/171214720/183354323.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-11 13:33:55.png](attachments/171214720/183354325.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-16 18:54:24.png](attachments/171214720/183360478.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-16 18:54:50.png](attachments/171214720/183360480.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-16 18:55:35.png](attachments/171214720/183360482.png) (image/png)
+<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-3-16 18:56:45.png](attachments/171214720/183360484.png) (image/png)
 
-Document generated by Confluence on Mar 07, 2016 12:06
+Document generated by Confluence on Mar 17, 2016 10:04
 
 [Atlassian](http://www.atlassian.com/)
 
