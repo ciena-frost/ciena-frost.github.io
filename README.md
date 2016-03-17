@@ -24,6 +24,8 @@
 3. Set environment variable ghToken
   * [Create a github API personal access token](https://github.com/settings/tokens)
     * The token should have the following scopes: `public_repo, read:org, repo:status, repo_deployment, user:email`
+  * Once create run `export ghToken=<token>` in your terminal; replacing `<token>` with your generated token.
+    * The example above only creates the environment variable locally in the terminal. If you wish to make the environemt variable permanent you can follow these [steps](http://stackoverflow.com/questions/7501678/set-environment-variables-on-mac-os-x-lion)
 4. Run scripts
   * Run `./generate-frost-guide-content.sh`
   * Or optionally run `node generate-pages-from-markdown.js` or `node generate-components.js`
