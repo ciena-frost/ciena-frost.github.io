@@ -125,7 +125,7 @@ body {
 
 .footerHeading {
   display: block;
-  margin: 0 0 20px 0;
+  margin: 0 0 10px 0;
   padding: 10px;
   border: none;
   font-size: 29px;
@@ -149,6 +149,18 @@ body {
   padding-top: 10px;
 }
 
+.connect >:first-child{
+  float: right;
+}
+
+.connect .footerHeading{
+  text-align: right;
+}
+
+.connect .footerHeading + div{
+  padding: 10px;
+}
+
 .contributors table {
   font-size: 16px;
   width: 100%;
@@ -156,6 +168,10 @@ body {
 
 .contributors table td {
   width: 33%
+}
+
+.contributors .contributors-list{
+  padding-left: 10px;
 }
 
 .frost-tabs .tab-nav .tab {
