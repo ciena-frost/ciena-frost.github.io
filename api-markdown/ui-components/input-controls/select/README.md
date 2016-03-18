@@ -23,13 +23,15 @@ ember install ember-frost-select
 ```
 
 ## API
-| Attribute | Type | Value | Description |
-| --------- | ---- | ----- | ----------- |
-| `selected` | `number` or `array` | `1` or `[1, 2]` | The indices of the pre-selected values corresponding to values in the passed-in data. |
+| Attribute       | Type | Value | Description |
+| --------------- | ---- | ----- | ----------- |
+| `data`          | `array` | `[{"label: "foo", "value": "bar"}]` |  An array of "label"/"value" key/value pairs representing the rows in the select drop-down. |
+| `disabled`      | `boolean` | `true`/`false` | disable/enable the component |
+| `error`         | `boolean` | `true`/`false` | tell component to render an error styling |
+| `on-change`     | `string` | `<action-name>` | The action callback to call when the value of the select component changes |
+| `on-input`      | `string` | `<action-name>` | The action callback to call when the value of the filter changes as the user types |
+| `selected`      | `number` or `array` | `1` or `[1, 2]` | The indices of the pre-selected values corresponding to values in the passed-in data. |
 | `selectedValue` | `any` or `array`, if using multi-select | `'bar'` or `['bar', 'buzz']` | A value to choose in the drop down programmatically, or an array of values if using multi-select. Takes precedence over `selected` attribute. |
-| `data` | `array` | `[{"label: "foo", "value": "bar"}]` |  An array of "label"/"value" key/value pairs representing the rows in the select drop-down. |
-| `on-change` | `string` | `<action-name>` | The action callback to call when the value of the select component changes |
-| `on-input` | `string` | `<action-name>` | The action callback to call when the value of the filter changes as the user types |
 
 ## Examples
 Assuming the following data is available in the consuming context:
