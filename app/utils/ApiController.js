@@ -4,13 +4,13 @@ var App = window.App = Ember.Application.extend()
 
 function positionScrollSpy () {
   if ($(window).width() > 800) {
-    $('.md-scrollspy').each(function () {
+    $('.frost-tabs .md-scrollspy').each(function () {
       $(this).css('display', 'inline')
       $(this).css('top', '150px')
       $(this).css('left', $(this).parent().width() + 200)
     })
   } else {
-    $('.md-scrollspy').each(function () {
+    $('.frost-tabs .md-scrollspy').each(function () {
       $(this).css('display', 'none')
     })
   }

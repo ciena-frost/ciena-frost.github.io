@@ -56,20 +56,6 @@ body.forEach(function (repo) {
     //ember install this package
 //    emberInstall(repo.name);
 
-    if (packageJSON.contributors != undefined) {
-      packageJSON.contributors.forEach(function (user) {
-
-        //get user in (https://github.com/ewhite613)
-        var userIdRegex = /\/([a-z|0-9]+)\)/i
-        var userId = user.match(userIdRegex)
-        if (userId != undefined) {
-          var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
-          addDedicatedContributor(userJSON, repo.name)
-        }
-
-      })
-    }
-
     if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
     else if (packageJSON.frostGuideDirectory != undefined) {
@@ -430,37 +416,11 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     template_content += "\n{{/frost-tabs}}"
     template_content += "\n\t<div class='footer'>\n"
     template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span "
-    template_content += "class=\"footerHeading\">Contributors</span>";
+    template_content += "class=\"footerHeading\">Contributors</span><div class='contributors-list'>";
 
     var contributorsCount = 0;
     var contributorDuplicates = 0;
     var componentContributors = getCienFrostRepoContributors(repo.name);
-    if (packageJSON.contributors != undefined) {
-      packageJSON.contributors.forEach(function (user) {
-        contributorsCount++
-        //get user in (https://github.com/ewhite613)
-        var userIdRegex = /\/([a-z|0-9]+)\)/i
-        var userId = user.match(userIdRegex)
-        if (userId != undefined) {
-          var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
-          if (componentContributors.contains(userJSON) === false) {
-            if (userJSON.login === "travis-ci-ciena") {
-              return
-            }
-            if (contributorsCount === componentContributors.length + packageJSON.contributors.length) {
-              template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
-            } else {
-              template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
-            }
-          } else {
-            contributorDuplicates++
-          }
-        }
-
-      })
-    } else {
-      packageJSON.contributors = []
-    }
     componentContributors.forEach(function (user) {
       contributorsCount++;
       if (user === "") {
@@ -470,7 +430,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
       if (userJSON.login === "travis-ci-ciena") {
         return
       }
-      if (contributorsCount === componentContributors.length + packageJSON.contributors.length - contributorDuplicates) {
+      if (contributorsCount === componentContributors.length) {
         template_content += userJSON.name !== null ? userJSON.name : userJSON.login;
       } else {
         template_content += (userJSON.name !== null ? userJSON.name : userJSON.login) + " - ";
@@ -479,8 +439,8 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     });
 
 
-    template_content += "\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\">Connect</span>";
-    template_content += "\n\t\t\t\t\t <a href=\"" + repo.html_url + "\" class=\"gh-button\"><img src=\"assets/images/gh-icon.png\" width='20' height='20'><span>View on Github</span></a> \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
+    template_content += "</div>\n\t\t\t</div>\n\t\t\t<div class='connect'><div>\n\t\t\t\t<div class=\"footerHeading\">Connect</div>";
+    template_content += "\n\t\t\t\t\t <div><a href=\"" + repo.html_url + "\" class=\"gh-button\"><img src=\"assets/images/gh-icon.png\" width='20' height='20'><span>View on Github</span></a></div></div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
     template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
     template_content += "\n</div>";
 
@@ -658,7 +618,7 @@ function getPrefixedMarkdownPath(noPrefixPath){
 }
 
 function getScrollspyLinks(markdownPath){
-  var template = "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>"
+  var template = "\n\t\t{{#scroll-spy}}"
   var insideCodeSnippet = false;
   fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
     if(line.match('```') && !insideCodeSnippet)
@@ -671,10 +631,10 @@ function getScrollspyLinks(markdownPath){
       var header = removeMd(line);
       var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
       if(hlevel <= 3)
-        template += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
+        template += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
     }
   });
-  return template + "\n\t\t</div>"
+  return template + "\n\t\t{{/scroll-spy}}"
 }
 
 function npmInstall(repo) {
