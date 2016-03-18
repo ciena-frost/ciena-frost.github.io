@@ -1,6 +1,8 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/icons')}}
+		<div id='md-scrollspy' class='md-scrollspy'>
+		</div>
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/icons/README')}}
@@ -49,7 +51,7 @@ The &lt;icon-name&gt; above can be any of the names shown below, for instance:
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Gosia Hyndman - Adam Meadows - Chris Stoll - Adam Meadows - Matthew Dahl - Justin Lafleur - Gosia Hyndman - chrisstoll - Chris Stoll - Niko Skrypnik - Steven Glanzer
+					<span class="footerHeading">Contributors</span>Roxanne - Gosia Hyndman - Adam Meadows - Chris Stoll - Matthew Dahl - Matthew Dahl - Adam Meadows - Justin Lafleur - Gosia Hyndman - chrisstoll - Chris Stoll - Niko Skrypnik - Steven Glanzer
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>

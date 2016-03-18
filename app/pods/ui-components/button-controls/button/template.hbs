@@ -1,6 +1,13 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/button')}}
+		<div id='md-scrollspy' class='md-scrollspy'>
+			{{#scroll-to to="#basicprimarybutton"}} **Basic primary button**{{/scroll-to}}
+			{{#scroll-to to="#basicsecondarybutton"}} **Basic secondary button**{{/scroll-to}}
+			{{#scroll-to to="#spanstylecolorrgb000spanclassinlinecommentmarkerdataref72a40cba0d63465a8719e5e661c7b411basictertiarybuttonspanspan"}} <span style="color: rgb(0,0,0);"><span class="inline-comment-marker" data-ref="72a40cba-0d63-465a-8719-e5e661c7b411">Basic tertiary button</span></span>{{/scroll-to}}
+			{{#scroll-to to="#spanstylecolorrgb000placementofbuttonsspan"}} **<span style="color: rgb(0,0,0);">Placement of buttons</span>**{{/scroll-to}}
+			{{#scroll-to to="#specialbuttons"}} Special buttons{{/scroll-to}}
+		</div>
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/button-controls/button/README')}}
@@ -374,7 +381,7 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Adam Meadows - Matthew Dahl - Gosia Hyndman - Adam Meadows - Matthew Dahl - Eric White - Nagarajan - Justin Lafleur - Chris Stoll - Steven Glanzer - chrisstoll - Gosia Hyndman
+					<span class="footerHeading">Contributors</span>Roxanne - Adam Meadows - Matthew Dahl - Gosia Hyndman - Adam Meadows - Matthew Dahl - Eric White - Nagarajan - Justin Lafleur - Gosia Hyndman - Chris Stoll - chrisstoll - Steven Glanzer
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>

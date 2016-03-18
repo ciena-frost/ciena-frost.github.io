@@ -17,8 +17,9 @@ export default Ember.Component.extend({
 
     $(this.id).on('scrollSpy:enter', function () {
       if (!($(window).scrollTop() + $(window).height() === $(document).height()) && !($(window).scrollTop() === 0)) {
-        if(!window.clickScroll)
+        if (!window.clickScroll) {
           highlightElement(buttonSelector)
+        }
       }
     })
 

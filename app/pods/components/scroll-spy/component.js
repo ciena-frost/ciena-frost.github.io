@@ -1,5 +1,5 @@
 import Ember from 'ember'
-  
+
 function highlightElement (selector) {
   console.log(selector)
   selector.parent().children().each(function () {
@@ -24,10 +24,10 @@ export default Ember.Component.extend({
     function change () {
       myUrl = myUrl.replace(re, '$1' + encodeURIComponent(value))
     }
-    if (window.location.href.indexOf('#') === -1){
+    if (window.location.href.indexOf('#') === -1) {
       myUrl += '#/'
       add('?')
-    }else if (myUrl.indexOf('?') === -1) {
+    } else if (myUrl.indexOf('?') === -1) {
       add('?')
     } else {
       if (re.test(myUrl)) {
@@ -44,18 +44,19 @@ export default Ember.Component.extend({
       scrollTop: $(event.target.id).offset().top - (0.125 * $(window).height())
     }, 200)
     highlightElement($(event.target))
-    Ember.run.later((function() {
+    Ember.run.later(function () {
       window.clickScroll = false
-    }), 300)
+    }, 300)
     window.location.href = this.addQueryParam('section', event.target.id.replace('#', ''))
   },
   scrollspy: function () {
     var id = this.elementId
     window.clickScroll = false
-    
+
     $(window).scroll(function (event) {
-      if(window.clickScroll)
-        return;
+      if (window.clickScroll) {
+        return
+      }
       if ($(window).scrollTop() + $(window).height() === $(document).height()) { // scrolling hit page bottom
         highlightElement($('#' + id).children().last())
       } else if ($(window).scrollTop() === 0) {
