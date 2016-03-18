@@ -27,6 +27,7 @@
   * Once create run `export ghToken=<token>` in your terminal; replacing `<token>` with your generated token.
     * The example above only creates the environment variable locally in the terminal. If you wish to make the environemt variable permanent you can follow these [steps](http://stackoverflow.com/questions/7501678/set-environment-variables-on-mac-os-x-lion)
 4. Run scripts
+  * For now you must delete all pods `application, components, and contributing`, as these contain non-generated code. The reason for this is due to Mac and Linux compatability. And we have yet to rename all folders on Github to lowercase(Mac is case-insensitive).
   * Run `./generate-frost-guide-content.sh`
   * Or optionally run `node generate-pages-from-markdown.js` or `node generate-components.js`
     * `node generate-pages-from-markdown.js` generates the routing.js file and creates `pods` matching the folders/files within the markdown directory 
