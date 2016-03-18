@@ -56,20 +56,6 @@ body.forEach(function (repo) {
     //ember install this package
 //    emberInstall(repo.name);
 
-    if (packageJSON.contributors != undefined) {
-      packageJSON.contributors.forEach(function (user) {
-
-        //get user in (https://github.com/ewhite613)
-        var userIdRegex = /\/([a-z|0-9]+)\)/i
-        var userId = user.match(userIdRegex)
-        if (userId != undefined) {
-          var userJSON = requestJSON("https://api.github.com/users/" + user.match(userIdRegex)[1])
-          addDedicatedContributor(userJSON, repo.name)
-        }
-
-      })
-    }
-
     if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
     else if (packageJSON.frostGuideDirectory != undefined) {

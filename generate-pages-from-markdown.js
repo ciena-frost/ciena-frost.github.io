@@ -117,8 +117,8 @@ function dive(dir, array) {
         toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  },"
       route_js_string += `
   resetController: function (controller, isExiting, transition) {
-    if (isExiting){
-      controller.set('section', null);
+    if (isExiting) {
+      controller.set('section', null)
     }
   },
   actions: {
