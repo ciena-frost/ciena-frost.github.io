@@ -632,7 +632,7 @@ function getPrefixedMarkdownPath(noPrefixPath){
 }
 
 function getScrollspyLinks(markdownPath){
-  var template = "\n\t\t<div id='md-scrollspy' class='md-scrollspy'>"
+  var template = "\n\t\t{{#scroll-spy}}"
   var insideCodeSnippet = false;
   fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
     if(line.match('```') && !insideCodeSnippet)
@@ -645,10 +645,10 @@ function getScrollspyLinks(markdownPath){
       var header = removeMd(line);
       var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
       if(hlevel <= 3)
-        template += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
+        template += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
     }
   });
-  return template + "\n\t\t</div>"
+  return template + "\n\t\t{{/scroll-spy}}"
 }
 
 function npmInstall(repo) {

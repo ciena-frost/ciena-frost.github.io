@@ -163,7 +163,7 @@ export default Ember.Controller.extend({
       template_content += path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") + "')}} ";
       template_content += "\n\t</div>";
       template_content += "\n\t<div class='right-col'>";
-      template_content += "\n\t\t<div id='md-scrollspy'>";
+      template_content += "\n\t\t{{#scroll-spy}}";
 
       var insideCodeSnippet = false;
 
@@ -179,7 +179,7 @@ export default Ember.Controller.extend({
 
           //          keywords.push(header.trim())
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
-          template_content += "\n\t\t\t{{#scroll-to to=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
+          template_content += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
         }
         //        }else {
         //          var header = removeMd(line);
@@ -195,7 +195,7 @@ export default Ember.Controller.extend({
         keywords += word.toLowerCase() + " "
       })
 
-      template_content += "\n\t\t</div>";
+      template_content += "\n\t\t{{/scroll-spy}}";
       template_content += "\n\t</div>";
       template_content += "\n\t<div class='footer'>\n"
       template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span " + "class=\"footerHeading\">Contributors</span><div class='contributors-list'>";
