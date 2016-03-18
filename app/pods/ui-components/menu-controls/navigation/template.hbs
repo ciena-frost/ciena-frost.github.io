@@ -1,6 +1,8 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/menu-controls/navigation')}}
+		<div id='md-scrollspy' class='md-scrollspy'>
+		</div>
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/menu-controls/navigation/README')}}
@@ -44,7 +46,7 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Quincy Le - Matthew Dahl - Justin Lafleur - Eric White - Gosia Hyndman
+					<span class="footerHeading">Contributors</span>Matthew Dahl - Quincy Le - Justin Lafleur - Eric White - Gosia Hyndman - Steven Glanzer
 			</div>
 			<div class='connect'>
 				<span class="footerHeading">Connect</span>

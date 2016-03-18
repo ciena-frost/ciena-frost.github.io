@@ -1,6 +1,11 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-controls/text')}}
+		<div id='md-scrollspy' class='md-scrollspy'>
+			{{#scroll-to to="#simpletextfield"}} Simple text field:{{/scroll-to}}
+			{{#scroll-to to="#autocompletetextfield"}} Auto-complete text field:{{/scroll-to}}
+			{{#scroll-to to="#spanstylecolorrgb51510specificautocompletetextfieldbehavioursspan"}} <span style="color: rgb(51,51,0);">Specific auto-complete text field behaviours</span>{{/scroll-to}}
+		</div>
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-controls/text/README')}}
