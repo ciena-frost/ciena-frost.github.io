@@ -23,7 +23,10 @@ export default Ember.Component.extend({
     function change () {
       myUrl = myUrl.replace(re, '$1' + encodeURIComponent(value))
     }
-    if (myUrl.indexOf('?') === -1) {
+    if (window.location.href.indexOf('#') === -1){
+      myUrl += '#/'
+      add('?')
+    }else if (myUrl.indexOf('?') === -1) {
       add('?')
     } else {
       if (re.test(myUrl)) {
