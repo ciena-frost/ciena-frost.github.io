@@ -166,7 +166,7 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t{{#scroll-spy}}";
 
       var insideCodeSnippet = false;
-
+      var mapScorllSpyCounter = new Map();
       fs.readFileSync(path).toString().split('\n').forEach(function (line) {
         if (line.match('```') && !insideCodeSnippet)
           insideCodeSnippet = true;
@@ -179,6 +179,14 @@ export default Ember.Controller.extend({
 
           //          keywords.push(header.trim())
           var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
+          if (mapScorllSpyCounter.has(id)) {
+            var value = mapScorllSpyCounter.get(id)
+            value++
+            id += '-' + value
+            mapScorllSpyCounter.set(id, value)
+          } else {
+            mapScorllSpyCounter.set(id, 0)
+          }
           template_content += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
         }
         //        }else {

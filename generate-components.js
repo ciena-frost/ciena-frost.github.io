@@ -620,6 +620,7 @@ function getPrefixedMarkdownPath(noPrefixPath){
 function getScrollspyLinks(markdownPath){
   var template = "\n\t\t{{#scroll-spy}}"
   var insideCodeSnippet = false;
+  var mapCounter = new Map();
   fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
     if(line.match('```') && !insideCodeSnippet)
       insideCodeSnippet = true;
@@ -631,6 +632,14 @@ function getScrollspyLinks(markdownPath){
       var header = removeMd(line);
       var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
       if(hlevel <= 3)
+        if (mapCounter.has(id)){
+          var value = mapCounter.get(id)
+          value++
+          id += '-' + value
+          mapCounter.set(id, value)
+        }else {
+          mapCounter.set(id, 0)
+        }
         template += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
     }
   });
@@ -758,7 +767,7 @@ function emberInstall(repo) {
     return
   }
   console.log("Doing Ember Install of : " + repo);
-  var log = exec('ember install ' + repo);
+  var log = exec('ember install ' + repo + '@latest');
   if (log.status === 0) {
     console.log(chalk.green.bold(log.stdout));
   } else {
