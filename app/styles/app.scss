@@ -1,12 +1,10 @@
 @import 'bourbon';
-@import 'frost/variables';
-@import 'frost/app';
-@import 'frost/patterns';
 @import 'frost-core';
 @import 'frost-theme';
 @import 'whirly';
 @import './api-ember-frost-app-bar';
 @import './api-ember-frost-login';
+@import './api-ember-frost-date-picker';
 @import './api-ember-frost-bunsen';
 @import './api-ember-frost-navigation';
 @import './api-ember-frost-css-core';
