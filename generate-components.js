@@ -33,7 +33,7 @@ var options = {
   }
 };
 
-var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
+var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos?per_page=100', options);
 var body = JSON.parse(res.getBody());
 var contributorMap = new Map();
 
@@ -119,25 +119,37 @@ configImportsJS += "import config from '../config/environment'\n"
 fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
 /////////////////////////// FUNCTIONS ////////////////////////////////////
-function getDemoRouting(url, routingConfig, demoParentDirectory) {
+function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
   var demoRouting_string = getFile(url)
   var demoRouting = requireFromString(demoRouting_string)
-  var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory)
+  var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory, demoLocation)
 
   fs.writeFileSync("config/routing.js", "module.exports = " + toSource(result) + "\n")
 }
 
-function mergeRouting(base, demo, demoParentDirectory) {
+function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
   var demoId = demoParentDirectory.replace(/\//g, ".")
 
   function mergeItems(items, parent) {
     items.forEach(function (item) {
-      item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
-      if (item.path !== undefined && item.path.path && item.path.path !== "/") {
-        item.path.path = demoParentDirectory.toLowerCase() + item.path.path
-      }
-      if (item.items !== undefined) {
-        mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+      if (demoLocation === undefined || demoLocation === '') {
+        // single demo
+        item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
+        if (item.path !== undefined && item.path.path && item.path.path !== "/") {
+          item.path.path = demoParentDirectory.toLowerCase() + item.path.path
+        }
+        if (item.items !== undefined) {
+          mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+        }
+      } else {
+        //multiple demos
+        item.route = demoLocation + '.' + item.route
+        if (item.path !== undefined && item.path.path && item.path.path !== "/") {
+          item.path.path = demoParentDirectory.toLowerCase() + item.path.path
+        }
+        if (item.items !== undefined) {
+          mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+        }
       }
     })
   }
@@ -231,6 +243,10 @@ function getDemoComponentHelpers(url, demoDirectory) {
       }
     }
   })
+}
+
+function getPodsNestedRoutes (){
+
 }
 
 function getDemoComponents(url) {
@@ -432,9 +448,18 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-    if (typeof packageJSON.frostGuideDirectory === 'string')
-      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(/\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
-    else if (packageJSON.frostGuideDirectory != undefined) {
+    if (typeof packageJSON.frostGuideDirectory === 'string') {
+      var frostLinkRegex;
+      var linkToRegex;
+      if (multipleDemos === undefined) {
+        frostLinkRegex = new RegExp("\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]", "ig")
+        linkToRegex = new RegExp("\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]", "ig")
+      } else {
+        frostLinkRegex = new RegExp("\{\{#frost-link [\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
+        linkToRegex = new RegExp("\{\{#link-to [\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
+      }
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(frostLinkRegex, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(linkToRegex, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
+    } else if (packageJSON.frostGuideDirectory != undefined) {
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
     }
     template_content += "\n\t{{/frost-tab}}"
@@ -513,7 +538,12 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   //Get Demo routing.js
   try {
     var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js?ref=master");
-    getDemoRouting(routing_url, routingConfig, demoParentDirectory)
+    if (multipleDemos === undefined) {
+      getDemoRouting(routing_url, routingConfig, demoParentDirectory)
+    } else {
+      getDemoRouting(routing_url, routingConfig, demoParentDirectory, demoLocation)
+    }
+
   } catch (err) {
     if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
       console.log(chalk.red.bold("No routing.js to import"))
