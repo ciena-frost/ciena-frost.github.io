@@ -35,7 +35,7 @@ var options = {
 };
 
 //Call to ASANA
-var res = request('GET', 'https://app.asana.com/api/1.0/projects/83000150826277/tasks', options);
+var res = request('GET', 'https://app.asana.com/api/1.0/projects/83000150826277/tasks?completed_since=now', options);
 var body = JSON.parse(res.getBody());
 var roadmapMd = "Last update: " + lastUpdatePackageJSON;
 
