@@ -34,7 +34,7 @@
     * `node generate-components.js` generates the component pages with their respective demos. _This script can take a while. Which is why they're separated_
 
 
-1. Generating Asana Roadmap
+1. Generating the Asana Roadmap
   * Create a personal access token by going to the “apps” tab of your profile settings then click "Manage Developer Apps"
   * Set the environment variable `asanaToken` equal to your personal access token
 2. Run `node generate-roadmap.js`
