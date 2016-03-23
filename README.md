@@ -32,3 +32,9 @@
   * Or optionally run `node generate-pages-from-markdown.js` or `node generate-components.js`
     * `node generate-pages-from-markdown.js` generates the routing.js file and creates `pods` matching the folders/files within the markdown directory 
     * `node generate-components.js` generates the component pages with their respective demos. _This script can take a while. Which is why they're separated_
+
+
+1. Generating Asana Roadmap
+  * Create a personal access token by going to the “apps” tab of your profile settings then click "Manage Developer Apps"
+  * Set the environment variable `asanaToken` equal to your personal access token
+2. Run `node generate-roadmap.js`
