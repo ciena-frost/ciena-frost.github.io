@@ -37,4 +37,5 @@
 1. Generating the Asana Roadmap
   * Create a personal access token by going to the “apps” tab of your profile settings then click "Manage Developer Apps"
   * Set the environment variable `asanaToken` equal to your personal access token
-2. Run `node generate-roadmap.js`
+2. In the `package.json` change the value of `"roadmapLastUpdate": "2016-03-23",` to the current date
+3. Run `node generate-roadmap.js`
