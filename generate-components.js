@@ -45,7 +45,7 @@ var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
+  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets" && repo.name === "ember-frost-core") {
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
@@ -54,7 +54,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-//    emberInstall(repo.name);
+    //    emberInstall(repo.name);
 
     if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
@@ -64,6 +64,15 @@ body.forEach(function (repo) {
         for (var route in demo) {
           createContent(demo[route], repo, packageJSON, "/" + route)
         }
+      }
+    } else if (packageJSON.frostGuideDirectories !== undefined) {
+      for (var i = 0; i < packageJSON.frostGuideDirectories.length; i++) {
+        var demo = packageJSON.frostGuideDirectories[i];
+        demo.name = repo.name
+        demo.contents_url = repo.contents_url
+        demo.html_url = repo.html_url
+        packageJSON.frostGuideDirectory = demo.frostGuideDirectory
+        createContent(demo.frostGuideDirectory, demo, packageJSON, demo.demoName, true)
       }
     }
 
@@ -120,6 +129,7 @@ function getDemoRouting(url, routingConfig, demoParentDirectory) {
 
 function mergeRouting(base, demo, demoParentDirectory) {
   var demoId = demoParentDirectory.replace(/\//g, ".")
+
   function mergeItems(items, parent) {
     items.forEach(function (item) {
       item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
@@ -153,7 +163,7 @@ function mergeRouting(base, demo, demoParentDirectory) {
           routeConfig.items = demo[0].items
         }
 
-        if (demo[0].modals !== undefined){
+        if (demo[0].modals !== undefined) {
           routeConfig.modals = demo[0].modals
         }
 
@@ -298,7 +308,7 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
     //  }
 }
 
-function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
+function createContent(demoParentDirectory, repo, packageJSON, demoLocation, multipleDemos) {
   if (demoParentDirectory === undefined) {
     var componentContributors = getCienFrostRepoContributors(repo.name);
     componentContributors.forEach(function (user) {
@@ -308,14 +318,24 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     return;
   }
   var linuxCompatibleDemoParentDirectory = demoParentDirectory.toLowerCase()
-  // demoParentDirectory = "ui-components/button-controls/button";
-  //console.log(packageJSON);
+    // demoParentDirectory = "ui-components/button-controls/button";
+    //console.log(packageJSON);
+  if (multipleDemos === undefined) {
+    readme_url = repo.contents_url.replace("{+path}", "README.md");
+  } else {
+    readme_url = repo.contents_url.replace("{+path}", repo.readme);
+  }
 
-  readme_url = repo.contents_url.replace("{+path}", "README.md");
   readme_content = getFile(readme_url);
 
   if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory.toLowerCase())) {
-    var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
+    var demo_content_url;
+    if (multipleDemos === undefined) {
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
+    } else {
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+    }
+
     var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
     var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
     var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
@@ -334,7 +354,12 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
 
     if (content.template_hbs === undefined) {
       console.log(chalk.blue("Demo template empty. Checking demo/index"))
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index" + "?ref=master");
+      if (multipleDemos === undefined) {
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index" + "?ref=master");
+      } else {
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "/index" + "?ref=master");
+      }
+
       try {
         var content = getDemoContent(demo_content_url);
       } catch (err) {
@@ -407,7 +432,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
 
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-     if (typeof packageJSON.frostGuideDirectory === 'string')
+    if (typeof packageJSON.frostGuideDirectory === 'string')
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(/\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
     else if (packageJSON.frostGuideDirectory != undefined) {
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
@@ -600,7 +625,7 @@ function GetDemoStyle(url) {
   return new Buffer(body.content, body.encoding).toString();
 }
 
-function getPrefixedMarkdownPath(noPrefixPath){
+function getPrefixedMarkdownPath(noPrefixPath) {
   var pathRegexStr = ""
   noPrefixPath.split('/').forEach(function (pathPart) {
     pathRegexStr += '/[0-9][0-9]-' + pathPart
@@ -610,37 +635,37 @@ function getPrefixedMarkdownPath(noPrefixPath){
   var markdownFiles = Finder.from('./markdown').find();
   var markdownFilePath = ""
   markdownFiles.forEach(function (file) {
-    if(file.match(new RegExp(pathRegexStr, 'i')) != null)
+    if (file.match(new RegExp(pathRegexStr, 'i')) != null)
       markdownFilePath = file
   })
 
   return markdownFilePath
 }
 
-function getScrollspyLinks(markdownPath){
+function getScrollspyLinks(markdownPath) {
   var template = "\n\t\t{{#scroll-spy}}"
   var insideCodeSnippet = false;
   var mapCounter = new Map();
   fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
-    if(line.match('```') && !insideCodeSnippet)
+    if (line.match('```') && !insideCodeSnippet)
       insideCodeSnippet = true;
-    else if(line.match('```') && insideCodeSnippet)
+    else if (line.match('```') && insideCodeSnippet)
       insideCodeSnippet = false;
     else if (line.match("^#") && !insideCodeSnippet && line.length <= 50) {
       var hlevel = line.substring(0, 3).match(/#/g).length
       line = line.replaceAll("#", "");
       var header = removeMd(line);
       var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
-      if(hlevel <= 3)
-        if (mapCounter.has(id)){
+      if (hlevel <= 3)
+        if (mapCounter.has(id)) {
           var value = mapCounter.get(id)
           value++
           id += '-' + value
           mapCounter.set(id, value)
-        }else {
+        } else {
           mapCounter.set(id, 0)
         }
-        template += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
+      template += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
     }
   });
   return template + "\n\t\t{{/scroll-spy}}"
