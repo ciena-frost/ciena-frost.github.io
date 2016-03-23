@@ -45,7 +45,7 @@ var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets" && repo.name === "ember-frost-core") {
+  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
@@ -245,8 +245,31 @@ function getDemoComponentHelpers(url, demoDirectory) {
   })
 }
 
-function getPodsNestedRoutes (){
+function getPodsNestedRoutes(url, demoDirectory) {
+  console.log("Found multiple demos")
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  body.forEach(function (podItem) {
+    if (podItem.type === "dir" && !podItem.name.endsWith('index') ){
+      var path = "app/pods/" + demoDirectory + "/" + podItem.name
+      console.log("Path: " + path.toLowerCase())
+      mkdirpSync(path.toLowerCase())
 
+      var content = getFolder(podItem.url, podItem.name)
+      var path = "app/pods/components/" + podItem.name;
+      // Not a component helper. So it's a route
+      content.forEach(function (value, key) {
+
+
+        var writeTo = "app/pods/" + demoDirectory + "/" + key
+        writeTo = writeTo.toLowerCase()
+        console.log("Write to: " + writeTo)
+        mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0].toLowerCase())
+        fs.writeFileSync(writeTo, value.replace(/route="demo\.([a-z|\.|-]+)[\'|\"]/ig, "route=\"" + demoDirectory.replace(/\//g, ".") + ".$1\""))
+
+      })
+    }
+  })
 }
 
 function getDemoComponents(url) {
@@ -523,6 +546,11 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     } else {
       console.log(chalk.red.bold(err))
     }
+  }
+
+  if (multipleDemos === true) {
+    var pod_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+    getPodsNestedRoutes(pod_url, demoParentDirectory)
   }
   // Get Demo Components
   try {
