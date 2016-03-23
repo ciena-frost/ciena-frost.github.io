@@ -32,15 +32,16 @@ ember install ember-frost-button
 | `text` | `string` | `<button-text>` | text do display on the button |
 | `subtext` | `string` | `<button-subtext>` | subtext do display on the button underneath main `text` |
 | `size` | `string` | `small` | The smallest button you ever did see |
-| | | `medium` | **default**: Not quite as small as `small`, but not very big either |
+| | | `medium` | Not quite as small as `small`, but not very big either |
 | | | `large` | Now *that's* what I call a button! |
 | | | `extra-large` | My grandma, what a big button you have! <br /> Recommended when `icon`, `text`, and `subtext` are used together |
 | `priority` | `string` | `primary` | Call-to-action :telephone: |
-| | | `secondary` | **default**: Run of the mill, garden variety  |
+| | | `secondary` | Run of the mill, garden variety  |
 | | | `tertiary` | Low-key, subdued  |
 | | | `confirm` | An alias for `primary`  |
 | | | `normal` | An alias for `secondary`  |
 | | | `cancel` | An alias for `tertiary`  |
+| `design`| `string` | `tab` | Custom styling for applications that use buttons but don't follow the button styling.  Requires `text` or `icon` to be specified.  Should not be used with `priority` and `size`. |
 
 ## Examples
 
@@ -88,6 +89,13 @@ ember install ember-frost-button
   text='Main Text'
 }}
 ```
+
+### Design
+```handlebars
+{{frost-button
+  design='tab'
+  text='Tab'
+}}
 
 ## Development
 

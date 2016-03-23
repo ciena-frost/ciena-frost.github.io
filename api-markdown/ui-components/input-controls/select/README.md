@@ -31,7 +31,7 @@ ember install ember-frost-select
 | `on-change`     | `string` | `<action-name>` | The action callback to call when the value of the select component changes |
 | `on-input`      | `string` | `<action-name>` | The action callback to call when the value of the filter changes as the user types |
 | `selected`      | `number` or `array` | `1` or `[1, 2]` | The indices of the pre-selected values corresponding to values in the passed-in data. |
-| `selectedValue` | `any` or `array`, if using multi-select | `'bar'` or `['bar', 'buzz']` | A value to choose in the drop down programmatically, or an array of values if using multi-select. Takes precedence over `selected` attribute. |
+| `selectedValue` | `any`, `array` if using multi-select, `null` to clear | `'bar'` or `['bar', 'buzz']` | A value to choose in the drop down programmatically, or an array of values if using multi-select. Takes precedence over `selected` attribute. Passing `null` will clear the selected state. |
 
 ## Examples
 Assuming the following data is available in the consuming context:
@@ -103,7 +103,7 @@ var selectedValue = ["bar", "buzz"]
 
 will select both values `"bar"` and `"buzz"`.
 
-NOTE: Changing `selectedValue` will overwrite any previous selections. However, changing `selectedValue` to be undefined, or a value that can be evaluated to be equal to the previous value (using lodash's `isEqual` function) will not cause values to be overwritten.
+NOTE: Changing `selectedValue` will overwrite any previous selections. However, changing `selectedValue` to be undefined, or a value that can be evaluated to be equal to the previous value (using lodash's `isEqual` function) will not cause values to be overwritten. Setting `selectedValue` to `null` will clear the selection.
 
 ##Contributing
 This following outlines the details of collaborating on this Ember addon:

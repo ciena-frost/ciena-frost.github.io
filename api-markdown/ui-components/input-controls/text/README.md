@@ -22,7 +22,7 @@ ember install ember-frost-text
 | | | `true` | Look at me! |
 | `disabled` | `boolean` | `false` | **default**: Type to your heart's content |
 | | | `true` | :no_entry_sign: Can't update this! :notes: |
-| `on-input` | `string` | `<action-name>` | triggers associated action when the input value is changed |
+| `onInput` | `string` | `<action-name>` | triggers associated action when the input value is changed |
 | `value` | `string` | `<value-text>` | what text to put in input |
 
 ## Examples 
@@ -37,7 +37,7 @@ ember install ember-frost-text
 ### Handle Changes to Value
 ```handlebars
 {{frost-text
-  on-input=(action 'closure')
+  onInput=(action 'closure')
 }}
 ```
 
