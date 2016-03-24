@@ -56,7 +56,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-    npmInstall(repo.name);
+    emberInstall(repo.name);
 
     if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
@@ -855,7 +855,7 @@ function emberInstall(repo) {
     return
   }
   console.log("Doing Ember Install of : " + repo);
-  var log = exec('ember install ' + repo + '@latest');
+  var log = exec('ember install ' + repo) //+ '@latest');
   if (log.status === 0) {
     console.log(chalk.green.bold(log.stdout));
   } else {
