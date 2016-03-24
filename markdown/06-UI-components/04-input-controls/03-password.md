@@ -2,7 +2,7 @@
 
 A password input box accepts the user-entered input. It is a simple text field that can display asterisk for each character.
 
-<img src="assets/images/ui-components/input-controls/password/description.png" class="confluence-embedded-image"/>
+<img src="assets/images/ui-components/input-controls/password/summary.png" class="confluence-embedded-image"/>
 
 ## Behaviors
 
@@ -17,7 +17,7 @@ A password input box accepts the user-entered input. It is a simple text field t
 -   All text in the password input field should be left aligned.
 -   An indicator is visible when the caps lock key is on.
 
-## Usage guidelines
+## Guidelines
 
 See [text field](#/ui-components/input-controls/text) for basic usage guidelines of the password input field.
 
@@ -25,6 +25,6 @@ In particular circumstances, **it might be appropriate to allow the user to see
 
 <img src="assets/images/ui-components/input-controls/password/usage-guidelines.png" class="confluence-embedded-image"/>
 
-## Visual specification
+## Visual Specification
 
 <img src="assets/images/ui-components/input-controls/password/visual-specification.png" class="confluence-embedded-image"/>
