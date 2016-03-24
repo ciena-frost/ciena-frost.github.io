@@ -98,7 +98,6 @@ img {
 
 .guide-content #demo {
   position: relative;
-  margin-left: 20px;
   margin-right: 20px;
   overflow-x: auto;
   @include display(flex);
@@ -127,7 +126,6 @@ img {
 .guide-content #demo >:first-child {
   position: relative;
   width: 100%;
-  padding-top: 20px;
   min-height: 400px;
 }
 
@@ -147,21 +145,21 @@ img {
   &:nth-child(1) {
     display: inline-block;
     margin-bottom: 10px;
-    font-size: $frost-font-size-1;
+    font-size: $frost-font-s;
   }
   &:nth-child(2) {
     display: inline-block;
     margin: 0 0 10px 10px;
     padding-left: 10px;
     border-left: 1px solid $frost-color-lgrey-2;
-    font-size: $frost-font-size-1;
+    font-size: $frost-font-s;
   }
   &:last-child {
     display: block;
     margin: 0 0 20px 0;
     padding: 0;
     border: none;
-    font-size: $frost-font-size-4;
+    font-size: $frost-font-xl;
   }
 }
 

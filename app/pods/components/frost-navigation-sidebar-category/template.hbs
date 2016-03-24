@@ -9,7 +9,7 @@
       {{else if (eq item.type 'route')}}
         {{#if (eq item.alias 'Contributor')}}
         {{else}}
-          <span {{action "showView"}}>
+          <span {{action "toggleCollapsed"}}>
             {{#frost-link item.route class='route'}}
               {{item.alias}}
             {{/frost-link}}

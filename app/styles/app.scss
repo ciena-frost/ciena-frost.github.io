@@ -1,12 +1,10 @@
 @import 'bourbon';
-@import 'frost/variables';
-@import 'frost/app';
-@import 'frost/patterns';
 @import 'frost-core';
 @import 'frost-theme';
 @import 'whirly';
 @import './api-ember-frost-app-bar';
 @import './api-ember-frost-login';
+@import './api-ember-frost-date-picker';
 @import './api-ember-frost-bunsen';
 @import './api-ember-frost-navigation';
 @import './api-ember-frost-css-core';
@@ -34,7 +32,6 @@
 @import 'app/pods/components/frost-navigation-sidebar-category/styles';
 @import 'app/pods/components/frost-navigation-sidebar-menu/styles';
 @import 'app/pods/components/frost-sidebar/styles';
-@import 'app/pods/components/guide-coming-soon/styles';
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -198,7 +195,7 @@ body {
   font-weight: 500;
 }
 
-@media only screen and (max-width: 565px){
+@media only screen and (max-width: 600px){
   .gh-button span{
     display: none;
   } 
