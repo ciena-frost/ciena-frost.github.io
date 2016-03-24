@@ -26,6 +26,8 @@ Array.prototype.contains = function (obj) {
   return false;
 }
 
+var ignoreList = [ 'ember-frost-bunsen', 'ember-frost-checkbox', 'ember-frost-brackets-snippets']
+
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
@@ -33,7 +35,7 @@ var options = {
   }
 };
 
-var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos', options);
+var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos?per_page=100', options);
 var body = JSON.parse(res.getBody());
 var contributorMap = new Map();
 
@@ -45,7 +47,7 @@ var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
+  if (stringStartsWith(repo.name, "ember-") && ignoreList.indexOf(repo.name) === -1) {
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
@@ -54,7 +56,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-//    emberInstall(repo.name);
+    npmInstall(repo.name);
 
     if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
@@ -64,6 +66,15 @@ body.forEach(function (repo) {
         for (var route in demo) {
           createContent(demo[route], repo, packageJSON, "/" + route)
         }
+      }
+    } else if (packageJSON.frostGuideDirectories !== undefined) {
+      for (var i = 0; i < packageJSON.frostGuideDirectories.length; i++) {
+        var demo = packageJSON.frostGuideDirectories[i];
+        demo.name = repo.name
+        demo.contents_url = repo.contents_url
+        demo.html_url = repo.html_url
+        packageJSON.frostGuideDirectory = demo.frostGuideDirectory
+        createContent(demo.frostGuideDirectory, demo, packageJSON, demo.demoName, true)
       }
     }
 
@@ -110,24 +121,40 @@ configImportsJS += "import config from '../config/environment'\n"
 fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
 /////////////////////////// FUNCTIONS ////////////////////////////////////
-function getDemoRouting(url, routingConfig, demoParentDirectory) {
+function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
   var demoRouting_string = getFile(url)
   var demoRouting = requireFromString(demoRouting_string)
-  var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory)
+  if (demoRouting.length === 0){
+    return
+  }
+  var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory, demoLocation)
 
   fs.writeFileSync("config/routing.js", "module.exports = " + toSource(result) + "\n")
 }
 
-function mergeRouting(base, demo, demoParentDirectory) {
+function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
   var demoId = demoParentDirectory.replace(/\//g, ".")
+
   function mergeItems(items, parent) {
     items.forEach(function (item) {
-      item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
-      if (item.path !== undefined && item.path.path && item.path.path !== "/") {
-        item.path.path = demoParentDirectory.toLowerCase() + item.path.path
-      }
-      if (item.items !== undefined) {
-        mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+      if (demoLocation === undefined || demoLocation === '') {
+        // single demo
+        item.route = item.route.replace('demo.', parent.toLowerCase() + ".")
+        if (item.path !== undefined && item.path.path && item.path.path !== "/") {
+          item.path.path = demoParentDirectory.toLowerCase() + item.path.path
+        }
+        if (item.items !== undefined) {
+          mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+        }
+      } else {
+        //multiple demos
+        item.route = demoLocation + '.' + item.route
+        if (item.path !== undefined && item.path.path && item.path.path !== "/") {
+          item.path.path = demoParentDirectory.toLowerCase() + item.path.path
+        }
+        if (item.items !== undefined) {
+          mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+        }
       }
     })
   }
@@ -153,7 +180,7 @@ function mergeRouting(base, demo, demoParentDirectory) {
           routeConfig.items = demo[0].items
         }
 
-        if (demo[0].modals !== undefined){
+        if (demo[0].modals !== undefined) {
           routeConfig.modals = demo[0].modals
         }
 
@@ -219,6 +246,33 @@ function getDemoComponentHelpers(url, demoDirectory) {
 
         })
       }
+    }
+  })
+}
+
+function getPodsNestedRoutes(url, demoDirectory) {
+  console.log("Found multiple demos")
+  var res = request('GET', url, options);
+  var body = JSON.parse(res.getBody());
+  body.forEach(function (podItem) {
+    if (podItem.type === "dir" && !podItem.name.endsWith('index') ){
+      var path = "app/pods/" + demoDirectory + "/" + podItem.name
+      console.log("Path: " + path.toLowerCase())
+      mkdirpSync(path.toLowerCase())
+
+      var content = getFolder(podItem.url, podItem.name)
+      var path = "app/pods/components/" + podItem.name;
+      // Not a component helper. So it's a route
+      content.forEach(function (value, key) {
+
+
+        var writeTo = "app/pods/" + demoDirectory + "/" + key
+        writeTo = writeTo.toLowerCase()
+        console.log("Write to: " + writeTo)
+        mkdirpSync(writeTo.match(/([a-z|-]+\/)+/i)[0].toLowerCase())
+        fs.writeFileSync(writeTo, value.replace(/route="demo\.([a-z|\.|-]+)[\'|\"]/ig, "route=\"" + demoDirectory.replace(/\//g, ".") + ".$1\""))
+
+      })
     }
   })
 }
@@ -298,7 +352,7 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
     //  }
 }
 
-function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
+function createContent(demoParentDirectory, repo, packageJSON, demoLocation, multipleDemos) {
   if (demoParentDirectory === undefined) {
     var componentContributors = getCienFrostRepoContributors(repo.name);
     componentContributors.forEach(function (user) {
@@ -308,14 +362,24 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
     return;
   }
   var linuxCompatibleDemoParentDirectory = demoParentDirectory.toLowerCase()
-  // demoParentDirectory = "ui-components/button-controls/button";
-  //console.log(packageJSON);
+    // demoParentDirectory = "ui-components/button-controls/button";
+    //console.log(packageJSON);
+  if (multipleDemos === undefined) {
+    readme_url = repo.contents_url.replace("{+path}", "README.md");
+  } else {
+    readme_url = repo.contents_url.replace("{+path}", repo.readme);
+  }
 
-  readme_url = repo.contents_url.replace("{+path}", "README.md");
   readme_content = getFile(readme_url);
 
   if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory.toLowerCase())) {
-    var demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
+    var demo_content_url;
+    if (multipleDemos === undefined) {
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
+    } else {
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+    }
+
     var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
     var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
     var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
@@ -334,7 +398,12 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
 
     if (content.template_hbs === undefined) {
       console.log(chalk.blue("Demo template empty. Checking demo/index"))
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index" + "?ref=master");
+      if (multipleDemos === undefined) {
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index" + "?ref=master");
+      } else {
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "/index" + "?ref=master");
+      }
+
       try {
         var content = getDemoContent(demo_content_url);
       } catch (err) {
@@ -407,9 +476,18 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
 
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-     if (typeof packageJSON.frostGuideDirectory === 'string')
-      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(/\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(/\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]/ig, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
-    else if (packageJSON.frostGuideDirectory != undefined) {
+    if (typeof packageJSON.frostGuideDirectory === 'string') {
+      var frostLinkRegex;
+      var linkToRegex;
+      if (multipleDemos === undefined) {
+        frostLinkRegex = new RegExp("\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]", "ig")
+        linkToRegex = new RegExp("\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]", "ig")
+      } else {
+        frostLinkRegex = new RegExp("\{\{#frost-link [\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
+        linkToRegex = new RegExp("\{\{#link-to [\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
+      }
+      template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(frostLinkRegex, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(linkToRegex, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
+    } else if (packageJSON.frostGuideDirectory != undefined) {
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
     }
     template_content += "\n\t{{/frost-tab}}"
@@ -474,6 +552,11 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
       console.log(chalk.red.bold(err))
     }
   }
+
+  if (multipleDemos === true) {
+    var pod_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+    getPodsNestedRoutes(pod_url, demoParentDirectory)
+  }
   // Get Demo Components
   try {
     var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
@@ -488,7 +571,12 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation) {
   //Get Demo routing.js
   try {
     var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js?ref=master");
-    getDemoRouting(routing_url, routingConfig, demoParentDirectory)
+    if (multipleDemos === undefined) {
+      getDemoRouting(routing_url, routingConfig, demoParentDirectory)
+    } else {
+      getDemoRouting(routing_url, routingConfig, demoParentDirectory, demoLocation)
+    }
+
   } catch (err) {
     if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
       console.log(chalk.red.bold("No routing.js to import"))
@@ -600,7 +688,7 @@ function GetDemoStyle(url) {
   return new Buffer(body.content, body.encoding).toString();
 }
 
-function getPrefixedMarkdownPath(noPrefixPath){
+function getPrefixedMarkdownPath(noPrefixPath) {
   var pathRegexStr = ""
   noPrefixPath.split('/').forEach(function (pathPart) {
     pathRegexStr += '/[0-9][0-9]-' + pathPart
@@ -610,37 +698,37 @@ function getPrefixedMarkdownPath(noPrefixPath){
   var markdownFiles = Finder.from('./markdown').find();
   var markdownFilePath = ""
   markdownFiles.forEach(function (file) {
-    if(file.match(new RegExp(pathRegexStr, 'i')) != null)
+    if (file.match(new RegExp(pathRegexStr, 'i')) != null)
       markdownFilePath = file
   })
 
   return markdownFilePath
 }
 
-function getScrollspyLinks(markdownPath){
+function getScrollspyLinks(markdownPath) {
   var template = "\n\t\t{{#scroll-spy}}"
   var insideCodeSnippet = false;
   var mapCounter = new Map();
   fs.readFileSync(markdownPath).toString().split('\n').forEach(function (line) {
-    if(line.match('```') && !insideCodeSnippet)
+    if (line.match('```') && !insideCodeSnippet)
       insideCodeSnippet = true;
-    else if(line.match('```') && insideCodeSnippet)
+    else if (line.match('```') && insideCodeSnippet)
       insideCodeSnippet = false;
     else if (line.match("^#") && !insideCodeSnippet && line.length <= 50) {
       var hlevel = line.substring(0, 3).match(/#/g).length
       line = line.replaceAll("#", "");
       var header = removeMd(line);
       var id = "#" + line.replaceAll(" ", "").toLowerCase().replace(/\W+/g, '');
-      if(hlevel <= 3)
-        if (mapCounter.has(id)){
+      if (hlevel <= 3)
+        if (mapCounter.has(id)) {
           var value = mapCounter.get(id)
           value++
           id += '-' + value
           mapCounter.set(id, value)
-        }else {
+        } else {
           mapCounter.set(id, 0)
         }
-        template += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
+      template += "\n\t\t\t{{#scroll-to id=\"" + id + "\" class=\"h" + hlevel + "\"}}" + header + "{{/scroll-to}}";
     }
   });
   return template + "\n\t\t{{/scroll-spy}}"
