@@ -72,7 +72,7 @@ export default Ember.Component.extend({
     var id = this.elementId
     window.clickScroll = false
     positionScrollSpy('#' + id)
-    $(window).on('resize', function () {
+    $(window).on('resize hashchange', function () {
       positionScrollSpy('#' + id)
     })
     $(window).scroll(function (event) {
