@@ -1,8 +1,8 @@
 import emberFrostButton from './ember-frost-button-default'
 import emberFrostSelect from './ember-frost-select-default'
 import emberFrostText from './ember-frost-text-default'
-import emberFrostCheckbox from './ember-frost-checkbox-default'
 import emberFrostList from './ember-frost-list-default'
+import emberFrostLink from './ember-frost-link-default'
 import emberFrostInfoBar from './ember-frost-info-bar-default'
 import emberFrostScroll from './ember-frost-scroll-default'
 import emberFrostTabs from './ember-frost-tabs-default'
@@ -14,14 +14,15 @@ import emberFrostSort from './ember-frost-sort-default'
 import emberFrostLogin from './ember-frost-login-default'
 import emberFrostModalInput from './ember-frost-modal-input-default'
 import emberFrostNavigation from './ember-frost-navigation-default'
-import emberFrostBunsen from './ember-frost-bunsen-default'
 import emberFrostAppBar from './ember-frost-app-bar-default'
+import emberFrostDatePicker from './ember-frost-date-picker-default'
+import emberFrostCore from './ember-frost-core-default'
 export default function (server) {
 	emberFrostButton(server)
 	emberFrostSelect(server)
 	emberFrostText(server)
-	emberFrostCheckbox(server)
 	emberFrostList(server)
+	emberFrostLink(server)
 	emberFrostInfoBar(server)
 	emberFrostScroll(server)
 	emberFrostTabs(server)
@@ -33,6 +34,7 @@ export default function (server) {
 	emberFrostLogin(server)
 	emberFrostModalInput(server)
 	emberFrostNavigation(server)
-	emberFrostBunsen(server)
 	emberFrostAppBar(server)
+	emberFrostDatePicker(server)
+	emberFrostCore(server)
 }

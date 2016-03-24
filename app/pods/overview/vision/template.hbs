@@ -2,20 +2,19 @@
 <div class="md">
 	<div class="content-col">
 		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'overview/vision')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-			{{#scroll-to to="#consistency"}} Consistency{{/scroll-to}}
-			{{#scroll-to to="#community"}} Community{{/scroll-to}}
-			{{#scroll-to to="#convention"}} Convention{{/scroll-to}}
-			{{#scroll-to to="#abstraction"}} Abstraction{{/scroll-to}}
-		</div>
+		{{#scroll-spy}}
+			{{#scroll-to id="#goals" class="h1"}}Goals{{/scroll-to}}
+			{{#scroll-to id="#consistency" class="h2"}} Consistency{{/scroll-to}}
+			{{#scroll-to id="#community" class="h2"}} Community{{/scroll-to}}
+			{{#scroll-to id="#convention" class="h2"}} Convention{{/scroll-to}}
+			{{#scroll-to id="#abstraction" class="h2"}} Abstraction{{/scroll-to}}
+		{{/scroll-spy}}
 	</div>
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Justin Lafleur
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Justin Lafleur - Eric White</div>
 			</div>
 			<div class='connect'>
 				<span class="footerHeading"></span>

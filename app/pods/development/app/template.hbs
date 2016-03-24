@@ -2,21 +2,19 @@
 <div class="md">
 	<div class="content-col">
 		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'development/app')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-			{{#scroll-to to="#projectstructure"}} Project structure{{/scroll-to}}
-			{{#scroll-to to="#runninganexistingproject"}} Running an existing project{{/scroll-to}}
-			{{#scroll-to to="#creatinganewproject"}} Creating a new project{{/scroll-to}}
-			{{#scroll-to to="#testingaproject"}} Testing a project{{/scroll-to}}
-			{{#scroll-to to="#deployingaproject"}} Deploying a project{{/scroll-to}}
-		</div>
+		{{#scroll-spy}}
+			{{#scroll-to id="#projectstructure" class="h2"}} Project structure{{/scroll-to}}
+			{{#scroll-to id="#runninganexistingproject" class="h2"}} Running an existing project{{/scroll-to}}
+			{{#scroll-to id="#creatinganewproject" class="h3"}} Creating a new project{{/scroll-to}}
+			{{#scroll-to id="#testingaproject" class="h2"}} Testing a project{{/scroll-to}}
+			{{#scroll-to id="#deployingaproject" class="h2"}} Deploying a project{{/scroll-to}}
+		{{/scroll-spy}}
 	</div>
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Justin Lafleur
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Justin Lafleur</div>
 			</div>
 			<div class='connect'>
 				<span class="footerHeading"></span>

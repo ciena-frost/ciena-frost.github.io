@@ -2,18 +2,24 @@
 <div class="md">
 	<div class="content-col">
 		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'design-patterns/object-browser/overview')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-			{{#scroll-to to="#viewingchangedetails"}} Viewing change details{{/scroll-to}}
-			{{#scroll-to to="#freezingcontentstemporarily"}} Freezing contents temporarily{{/scroll-to}}
-		</div>
+		{{#scroll-spy}}
+			{{#scroll-to id="#whentouse" class="h1"}} When to use{{/scroll-to}}
+			{{#scroll-to id="#uxuicomponents" class="h1"}} UX/UI Components{{/scroll-to}}
+			{{#scroll-to id="#interactiondesign" class="h1"}} Interaction design{{/scroll-to}}
+			{{#scroll-to id="#openingtheobjectbrowser" class="h2"}} Opening the object browser{{/scroll-to}}
+			{{#scroll-to id="#sorting" class="h2"}} Sorting{{/scroll-to}}
+			{{#scroll-to id="#novisiblepaging" class="h2"}} No (visible) paging!{{/scroll-to}}
+			{{#scroll-to id="#dynamicupdates" class="h2"}} Dynamic updates{{/scroll-to}}
+			{{#scroll-to id="#viewingchangedetails" class="h3"}} Viewing change details{{/scroll-to}}
+			{{#scroll-to id="#freezingcontentstemporarily" class="h3"}} Freezing contents temporarily{{/scroll-to}}
+			{{#scroll-to id="#contextualactions" class="h2"}} Contextual actions{{/scroll-to}}
+		{{/scroll-spy}}
 	</div>
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Justin Lafleur
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Justin Lafleur</div>
 			</div>
 			<div class='connect'>
 				<span class="footerHeading"></span>

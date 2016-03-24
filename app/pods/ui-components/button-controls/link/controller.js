@@ -1,6 +1,8 @@
 import ApiController from 'frost-guide/utils/ApiController'
 
 export default ApiController.extend({
+
+  fontSize: 20,
   first: {
     id: 3,
     text: 'custom first'
@@ -18,6 +20,16 @@ export default ApiController.extend({
         autoClear: true,
         clearDuration: 2000
       })
+    },
+
+    increase (fontSize) {
+      this.set('fontSize', fontSize + 1)
+    },
+
+    decrease (fontSize) {
+      if (fontSize > 1) {
+        this.set('fontSize', fontSize - 1)
+      }
     }
   },
 

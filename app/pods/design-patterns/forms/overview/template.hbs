@@ -1,38 +1,24 @@
-<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
-	{{#frost-tab alias='Description' class='description' id='description'}}
-		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'design-patterns/forms/overview')}}
-		<div id='md-scrollspy' class='md-scrollspy'>
-		</div>
-	{{/frost-tab}}
-	{{#frost-tab alias='API' id='api'}}
-		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'design-patterns/forms/overview/README')}}
-	{{/frost-tab}}
-	{{#frost-tab alias='Demo' id='demo'}}
-		<div><h1 id="title">frost-bunsen</h1>
 
-<ul>
-  <li>{{#link-to 'design-patterns.forms.overview.form'}}Form{{/link-to}}</li>
-  <li>{{#link-to 'design-patterns.forms.overview.detail'}}Detail{{/link-to}}</li>
-  <li>{{#link-to 'design-patterns.forms.overview.detail-update'}}Updatable Detail{{/link-to}}</li>
-</ul>
-
-<div class="demo-container">
-  {{outlet}}
-</div>
-
-</div>
-
-	{{/frost-tab}}
-{{/frost-tabs}}
+<div class="md">
+	<div class="content-col">
+		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'design-patterns/forms/overview')}} 
+		{{#scroll-spy}}
+			{{#scroll-to id="#whentouse" class="h1"}} When to use{{/scroll-to}}
+			{{#scroll-to id="#uiuxcomponents" class="h1"}} UI/UX components{{/scroll-to}}
+			{{#scroll-to id="#interactiondesign" class="h1"}} Interaction design{{/scroll-to}}
+			{{#scroll-to id="#formlayout" class="h1"}} Form layout{{/scroll-to}}
+			{{#scroll-to id="#validatinginput" class="h1"}} Validating input{{/scroll-to}}
+		{{/scroll-spy}}
+	</div>
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Andres Gonzalez - Gosia Hyndman - Justin Lafleur - Niko Skrypnik - Peter Banka - Roxanne - Matthew Dahl - Roxanne - Gosia Hyndman - Justin Lafleur - Eric White - Peter Banka
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Justin Lafleur</div>
 			</div>
 			<div class='connect'>
-				<span class="footerHeading">Connect</span>
-					 <a href="https://github.com/ciena-frost/ember-frost-bunsen" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
+				<span class="footerHeading"></span>
+					 
 				</div>
 			</div>
 			<br/>

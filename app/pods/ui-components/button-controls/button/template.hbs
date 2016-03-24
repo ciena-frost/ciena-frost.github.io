@@ -1,19 +1,29 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/button')}}
-		<div id='md-scrollspy' class='md-scrollspy'>
-			{{#scroll-to to="#basicprimarybutton"}} **Basic primary button**{{/scroll-to}}
-			{{#scroll-to to="#basicsecondarybutton"}} **Basic secondary button**{{/scroll-to}}
-			{{#scroll-to to="#spanstylecolorrgb000spanclassinlinecommentmarkerdataref72a40cba0d63465a8719e5e661c7b411basictertiarybuttonspanspan"}} <span style="color: rgb(0,0,0);"><span class="inline-comment-marker" data-ref="72a40cba-0d63-465a-8719-e5e661c7b411">Basic tertiary button</span></span>{{/scroll-to}}
-			{{#scroll-to to="#spanstylecolorrgb000placementofbuttonsspan"}} **<span style="color: rgb(0,0,0);">Placement of buttons</span>**{{/scroll-to}}
-			{{#scroll-to to="#specialbuttons"}} Special buttons{{/scroll-to}}
-		</div>
+		{{#scroll-spy}}
+			{{#scroll-to id="#basicprimarybutton" class="h3"}} Basic primary button{{/scroll-to}}
+			{{#scroll-to id="#basicsecondarybutton" class="h3"}} Basic secondary button{{/scroll-to}}
+			{{#scroll-to id="#specialbuttons" class="h3"}} Special buttons{{/scroll-to}}
+		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/button-controls/button/README')}}
+		{{#scroll-spy}}
+			{{#scroll-to id="#installation" class="h2"}} Installation{{/scroll-to}}
+			{{#scroll-to id="#api" class="h2"}} API{{/scroll-to}}
+			{{#scroll-to id="#examples" class="h2"}} Examples{{/scroll-to}}
+			{{#scroll-to id="#text" class="h3"}} Text{{/scroll-to}}
+			{{#scroll-to id="#icon" class="h3"}} Icon{{/scroll-to}}
+			{{#scroll-to id="#icontext" class="h3"}} Icon Text{{/scroll-to}}
+			{{#scroll-to id="#info" class="h3"}} Info{{/scroll-to}}
+			{{#scroll-to id="#design" class="h3"}} Design{{/scroll-to}}
+		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='Demo' id='demo'}}
-		<div><div class="dummy-notification-container">
+		<div><div class="dummy-body">
+  <div class="dummy-content">
+    <div class="dummy-notification-container">
   {{#each notifications as |notification|}}
       {{notification-message notification=notification}}
   {{/each}}
@@ -314,6 +324,33 @@
       }}
     </div>
   </div>
+
+   <div class="example">
+    <div class="title">Design - tab</div>
+    <div class="code">
+      {{format-markdown "```handlebars
+{{frost-button
+  autofocus=true
+  on-click=(action 'click')
+  design='tab'
+  text='Design Tab'
+  vertical=vertical
+}}
+```"
+      }}
+    </div>
+    <div class="demo">
+      {{frost-button
+        autofocus=true
+        on-click=(action 'click')
+        design='tab'
+        text='Design Tab'
+        vertical=vertical
+      }}
+    </div>
+  </div>
+
+
 </div>
 
 <div class="section">
@@ -373,6 +410,9 @@
     </div>
   </div>
 </div>
+
+  </div>
+</div>
 </div>
 
 	{{/frost-tab}}
@@ -381,11 +421,11 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Adam Meadows - Matthew Dahl - Gosia Hyndman - Adam Meadows - Matthew Dahl - Eric White - Nagarajan - Justin Lafleur - Gosia Hyndman - Chris Stoll - chrisstoll - Steven Glanzer
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Adam Meadows - Matthew Dahl - Gosia Hyndman - Eric White - Nagarajan - Justin Lafleur - Chris Stoll - chrisstoll - Steven Glanzer</div>
 			</div>
-			<div class='connect'>
-				<span class="footerHeading">Connect</span>
-					 <a href="https://github.com/ciena-frost/ember-frost-button" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
+			<div class='connect'><div>
+				<div class="footerHeading">Connect</div>
+					 <div><a href="https://github.com/ciena-frost/ember-frost-button" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a></div></div>
 				</div>
 			</div>
 			<br/>

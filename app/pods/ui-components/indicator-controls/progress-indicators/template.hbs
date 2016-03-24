@@ -1,11 +1,23 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/indicator-controls/progress-indicators')}}
-		<div id='md-scrollspy' class='md-scrollspy'>
-		</div>
+		{{#scroll-spy}}
+		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/indicator-controls/progress-indicators/README')}}
+		{{#scroll-spy}}
+			{{#scroll-to id="#emberfrostloading" class="h1"}} ember-frost-loading{{/scroll-to}}
+			{{#scroll-to id="#installation" class="h2"}} Installation{{/scroll-to}}
+			{{#scroll-to id="#api" class="h2"}} API{{/scroll-to}}
+			{{#scroll-to id="#examples" class="h2"}} Examples{{/scroll-to}}
+			{{#scroll-to id="#ring" class="h3"}} Ring{{/scroll-to}}
+			{{#scroll-to id="#ripple" class="h3"}} Ripple{{/scroll-to}}
+			{{#scroll-to id="#development" class="h2"}} Development{{/scroll-to}}
+			{{#scroll-to id="#setup" class="h3"}} Setup{{/scroll-to}}
+			{{#scroll-to id="#developmentserver" class="h3"}} Development Server{{/scroll-to}}
+			{{#scroll-to id="#testing" class="h3"}} Testing{{/scroll-to}}
+		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='Demo' id='demo'}}
 		<div><div class="dummy-notification-container">
@@ -36,11 +48,11 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Roxanne - Matthew Dahl - Eric White - Steven Glanzer - Gosia Hyndman
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Roxanne Panthaky - Matthew Dahl - Eric White - Steven Glanzer - ember-tomster - Gosia Hyndman</div>
 			</div>
-			<div class='connect'>
-				<span class="footerHeading">Connect</span>
-					 <a href="https://github.com/ciena-frost/ember-frost-loading" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a> 
+			<div class='connect'><div>
+				<div class="footerHeading">Connect</div>
+					 <div><a href="https://github.com/ciena-frost/ember-frost-loading" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a></div></div>
 				</div>
 			</div>
 			<br/>
