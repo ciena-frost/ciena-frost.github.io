@@ -54,7 +54,7 @@ body.forEach(function (repo) {
       return;
     }
     //ember install this package
-    //    emberInstall(repo.name);
+    npmInstall(repo.name);
 
     if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
@@ -122,6 +122,9 @@ fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
   var demoRouting_string = getFile(url)
   var demoRouting = requireFromString(demoRouting_string)
+  if (demoRouting.length === 0){
+    return
+  }
   var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory, demoLocation)
 
   fs.writeFileSync("config/routing.js", "module.exports = " + toSource(result) + "\n")
