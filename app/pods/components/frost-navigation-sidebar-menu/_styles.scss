@@ -10,7 +10,7 @@
   @include align-items(center);
 }
 
-.frost-navigation-sidebar-menu .title .frost-svg {
+.frost-navigation-sidebar-menu .title .frost-icon {
   width: 80px;
   height: 80px;
 }
@@ -24,7 +24,7 @@
   width: 100%;
 }
 
-.frost-navigation-sidebar-menu .search .frost-svg {
+.frost-navigation-sidebar-menu .search .frost-icon {
   position: absolute;
   width: 30px;
   height: 30px;
@@ -32,7 +32,7 @@
   bottom: 0;
 }
 
-.frost-navigation-sidebar-menu .search .frost-svg .base {
+.frost-navigation-sidebar-menu .search .frost-icon .base {
   fill: $frost-color-grey-3;
   stroke: $frost-color-grey-3;
 }
@@ -48,7 +48,7 @@
   border-radius: 0;
   line-height: 40px;
   font-weight: 500;
-  font-size: $frost-font-size-1;
+  font-size: $frost-font-s;
   color: $frost-color-grey-1;
 }
 

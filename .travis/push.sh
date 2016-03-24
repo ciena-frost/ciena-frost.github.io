@@ -15,8 +15,6 @@ setup_git() {
 commit_website_files() {
   git checkout $branch
   ember install ember-cli-github-pages
-  npm install frost-components/frost-css
-  ember install frost-components/frost-svg
   npm install path-posix
   npm install walk-sync
   npm install chalk

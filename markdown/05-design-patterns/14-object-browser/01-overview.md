@@ -1,24 +1,4 @@
-1.  <span>[Blue Planet](index.html)</span>
-
-<span id="title-text"> Blue Planet : Object browser overview (RR) </span>
-=========================================================================
-
-Created by <span class="author"> Christiane Campbell</span>, last modified on Feb 22, 2016
-
--   [](#Objectbrowseroverview(RR)-)
--   [When to use](#Objectbrowseroverview(RR)-Whentouse)
--   [UX/UI Components](#Objectbrowseroverview(RR)-UX/UIComponents)
--   [Interaction design](#Objectbrowseroverview(RR)-Interactiondesign)
-    -   [Opening the object browser](#Objectbrowseroverview(RR)-Openingtheobjectbrowser)
-    -   [Sorting](#Objectbrowseroverview(RR)-Sorting)
-    -   [No (visible) paging!](#Objectbrowseroverview(RR)-No(visible)paging!)
-    -   [Dynamic updates ](#Objectbrowseroverview(RR)-Dynamicupdates)
-        -   [Viewing change details](#Objectbrowseroverview(RR)-Viewingchangedetails)
-        -   [Freezing contents temporarily](#Objectbrowseroverview(RR)-Freezingcontentstemporarily)
-    -   [Contextual actions](#Objectbrowseroverview(RR)-Contextualactions)
-
-When to use
-===========
+# When to use
 
 When users need to retrieve, display, act upon, or edit sets of similar objects, they do so via an object browser.  Main tasks:
 
@@ -39,8 +19,7 @@ There are two main formats of object browsers:
 
 Determine which to use based on the object type and the main usage scenarios for these objects.  The "When to use" sections for each browser type describe what you should consider in order to choose the most suitable format.
 
-UX/UI Components
-================
+# UX/UI Components
 
 1.  **Info Bar:** includes objects, list context description, list counts, and optional summary information for the objects in the list
 2.  **Keyword search box:** sets the initial context of the browser based on supplied keyword(s)
@@ -53,11 +32,9 @@ UX/UI Components
 
 <span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/167231067/171226249.png" class="confluence-embedded-image" width="700" /></span>
 
-Interaction design
-==================
+# Interaction design
 
-Opening the object browser
---------------------------
+## Opening the object browser
 
 **NMS users are typically very task-focused and searching for something in particular**, rather than browsing through *everything*.  So, even before opening an object browser, the user typically knows something about the objects for which they are searching.  Filtering is also a critical interaction pattern intended to help users narrow their results to find a specific object quickly, or a set of objects relevant to the task at hand.   
 
@@ -67,9 +44,6 @@ Users will be able to open an object browser, thus **setting its context** by:
 -   loading objects related to a set of other objects (e.g. select NE2, NE3, NE5, NE7 and "load equipment" for them)
 -   setting search criteria to focus in on a specific part of the overall search universe, or
 -   deliberately choosing to avoid setting limiting criteria in order to view ALL
-
-**
-**
 
 **Users can further refine the list by applying filters** once the result set is loaded.
 
@@ -107,8 +81,7 @@ Users will be able to open an object browser, thus **setting its context** by:
 
 <span class="confluence-embedded-file-wrapper confluence-embedded-manual-size"><img src="assets/images/167231067/176927128.png" class="confluence-embedded-image" width="850" /></span>
 
-Sorting
--------
+## Sorting
 
 NMS users sort objects as a technique to
 
@@ -173,8 +146,7 @@ NMS users sort objects as a technique to
 <span style="color: rgb(0,0,0);">
 </span>
 
-No (visible) paging!
---------------------
+## No (visible) paging!
 
 **No paging controls are visible to the user. **
 
@@ -187,10 +159,7 @@ As the user scrolls through an object browser, **implicit paging** is performe
 
 If the user jumps to another section of the result set by clicking directly in the scrollbar (e.g. far down the list), display an indeterminate progress indicator in the browser results window while the appropriate page is retrieved.  See <span style="color: rgb(51,102,255);">Progress indicators</span>.
 
- 
-
-Dynamic updates<span style="color: rgb(61,60,64);"> </span>
------------------------------------------------------------
+## Dynamic updates
 
 <span style="color: rgb(61,60,64);">**All changes are automatically reflected in the object browser.** <span>This way, </span><span>users have access to the latest state of the network at all times. </span>Possible changes are:</span>
 
@@ -257,8 +226,7 @@ When the content is "frozen", there is no need to keep track/display any changes
 
  
 
-Contextual actions
-------------------
+## Contextual actions
 
 Object browsers follow a basic *object select + action* workflow.  Upon selection of a row in an object browser, relevant actions for that object will appear in an actions panel at the bottom of the list.
 
@@ -289,34 +257,3 @@ Object browsers follow a basic *object select + action* workflow.  Upon selec
 </span>
 
 <span style="color: rgb(0,0,0);">**Double-click to open the selected object's details page.**  This is the primary action of the object browser.</span>
-
- 
-
-Attachments:
-------------
-
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [table\_list\_generic table.png](attachments/167231067/167231996.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [table\_list\_generic table.png](attachments/167231067/167231997.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [table\_list\_generic table.png](attachments/167231067/167231991.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-11 9:45:53.png](attachments/167231067/171226249.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-11 9:54:20.png](attachments/167231067/171226263.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-11 13:14:39.png](attachments/167231067/171226651.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2015-12-11 13:44:4.png](attachments/167231067/171226772.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-14 at 11.27.22 AM.png](attachments/167231067/175019548.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [Screen Shot 2016-01-15 at 8.13.49 AM.png](attachments/167231067/175020228.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-1 13:13:30.png](attachments/167231067/176927128.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 14:6:21.png](attachments/167231067/176931182.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 14:8:21.png](attachments/167231067/176931193.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-3 14:8:45.png](attachments/167231067/176931196.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-10 16:56:56.png](attachments/167231067/176939996.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-16 10:8:48.png](attachments/167231067/176944348.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-19 12:41:27.png](attachments/167231067/181078431.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-19 13:7:4.png](attachments/167231067/181078477.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-19 13:10:15.png](attachments/167231067/181078482.png) (image/png)
-<img src="assets/images/icons/bullet_blue.gif" width="8" height="8" /> [image2016-2-19 13:35:25.png](attachments/167231067/181078528.png) (image/png)
-
-Document generated by Confluence on Feb 25, 2016 11:36
-
-[Atlassian](http://www.atlassian.com/)
-
-

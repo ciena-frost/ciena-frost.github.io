@@ -1,14 +1,14 @@
 {{#liquid-if collapsed class='menu'}}
   <div class="menu collapsed">
       {{#frost-button class='icon large menu' on-click=(action 'toggleCollapsed')}}
-          {{frost-svg path='frost/menu'}}
+          {{frost-icon icon='frost/menu'}}
       {{/frost-button}}
   </div>
 {{else}}
   <div class="menu">
         <div class="pad-bottom-15">
           {{#frost-button class='icon large menu close' on-click=(action 'toggleCollapsed')}}
-              {{frost-svg class='close' path='frost/close'}}
+              {{frost-icon class='close' icon='frost/close'}}
           {{/frost-button}}
         </div>
     {{yield}}
