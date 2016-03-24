@@ -35,7 +35,7 @@ ember install ember-frost-textarea
 | `cols` | `integer` |`<num-of-cols>`| specifies the number of columns for the object |
 | `rows` | `integer` |`<num-of-rows>`| specifies the number of rows for the object |
 | `value` | `string` |`<textarea-text>`| default string that the object will display |
-| `on-click` | `string` |`<action-name>`| triggers associated action when text is entered |
+| `onInput` | `string` |`<action-name>`| triggers associated action when text is entered |
 
 ## Examples
 ### autofocus
@@ -63,9 +63,9 @@ ember install ember-frost-textarea
 {{frost-textarea id='columns-rows' cols='80' rows='6'}}
 ```
 
-### on-click
+### onInput
 ```handlebars
-{{frost-textarea id='action' on-input=(action 'update')}}
+{{frost-textarea id='action' onInput=(action 'update')}}
 ```
 
 ## Development
