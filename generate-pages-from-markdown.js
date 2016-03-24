@@ -161,8 +161,6 @@ export default Ember.Controller.extend({
       template_content += "\n\t\t{{markdown-to-html class=\"guide-markdown\" ghCodeBlocks=true ";
       template_content += "markdown=(fr-markdown-file-strip-number-prefix '";
       template_content += path.replace(".md", "").replace(mark_dir + "/", "").replaceAll("[0-9][0-9][-]", "") + "')}} ";
-      template_content += "\n\t</div>";
-      template_content += "\n\t<div class='right-col'>";
       template_content += "\n\t\t{{#scroll-spy}}";
 
       var insideCodeSnippet = false;
