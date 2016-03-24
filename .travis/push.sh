@@ -32,6 +32,7 @@ commit_website_files() {
   ./generate-frost-guide-content.sh
   git add --all
   git commit --message "[ci skip] Generating files/folders"
+  git push
 }
 
 publish_gh_pages() {
