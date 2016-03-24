@@ -13,19 +13,18 @@ function highlightElement (selector) {
 function positionScrollSpy (id) {
   console.log(id)
   if ($(window).width() > 800) {
-      $(id).css('display', 'inline')
-      if($(window).scrollTop() >= 150){
-        $('.md-scrollspy').css('position', 'fixed')
-        $(id).css('top', '0px')
-        $(id).css('left', $(id).parent().width() + 220)
-      }
-      else{
-        $('.md-scrollspy').css('position', 'absolute')
-        $(id).css('top', '150px')
-        $(id).css('left', $(id).parent().width())
-      }
+    $(id).css('display', 'inline')
+    if ($(window).scrollTop() >= 150) {
+      $('.md-scrollspy').css('position', 'fixed')
+      $(id).css('top', '0px')
+      $(id).css('left', $(id).parent().width() + 220)
+    } else {
+      $('.md-scrollspy').css('position', 'absolute')
+      $(id).css('top', '150px')
+      $(id).css('left', $(id).parent().width())
+    }
   } else {
-      $(id).css('display', 'none')
+    $(id).css('display', 'none')
   }
 }
 
