@@ -10,6 +10,24 @@ function highlightElement (selector) {
   selector.css('border-left', '2px solid #009EEF')
 }
 
+function positionScrollSpy (id) {
+  console.log(id)
+  if ($(window).width() > 800) {
+    $(id).css('display', 'inline')
+    if ($(window).scrollTop() >= 150) {
+      $('.md-scrollspy').css('position', 'fixed')
+      $(id).css('top', '0px')
+      $(id).css('left', $(id).parent().width() + 220)
+    } else {
+      $('.md-scrollspy').css('position', 'absolute')
+      $(id).css('top', '150px')
+      $(id).css('left', $(id).parent().width())
+    }
+  } else {
+    $(id).css('display', 'none')
+  }
+}
+
 export default Ember.Component.extend({
   tagName: 'div',
   classNames: ['md-scrollspy'],
@@ -52,8 +70,12 @@ export default Ember.Component.extend({
   scrollspy: function () {
     var id = this.elementId
     window.clickScroll = false
-
+    positionScrollSpy('#' + id)
+    $(window).on('resize hashchange', function () {
+      positionScrollSpy('#' + id)
+    })
     $(window).scroll(function (event) {
+      positionScrollSpy('#' + id)
       if (window.clickScroll) {
         return
       }

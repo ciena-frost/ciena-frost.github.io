@@ -14,18 +14,6 @@ export default Ember.Route.extend({
         $('.guide-sidebar').height($("[class='content']").height())
       }
 
-      if ($(window).width() > 800) {
-        $('.frost-tabs .md-scrollspy').each(function () {
-          $(this).css('display', 'inline')
-          $(this).css('top', '150px')
-          $(this).css('left', $(this).parent().width() + 200)
-        })
-      } else {
-        $('.frost-tabs .md-scrollspy').each(function () {
-          $(this).css('display', 'none')
-        })
-      }
-
       /* push footer to bottom of viewport if page has no y-overflow*/
       if ($('.footer').length) {
         var docHeight = $(window).height()

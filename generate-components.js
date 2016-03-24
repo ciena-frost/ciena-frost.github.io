@@ -26,6 +26,8 @@ Array.prototype.contains = function (obj) {
   return false;
 }
 
+var ignoreList = [ 'ember-frost-bunsen', 'ember-frost-checkbox', 'ember-frost-brackets-snippets']
+
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
@@ -45,7 +47,7 @@ var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
   console.log(repo.name);
-  if (stringStartsWith(repo.name, "ember-") && repo.name != "ember-frost-brackets-snippets") {
+  if (stringStartsWith(repo.name, "ember-") && ignoreList.indexOf(repo.name) === -1) {
 
     //get Package JSON un comment when needed
     var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
