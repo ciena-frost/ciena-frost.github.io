@@ -11,7 +11,7 @@ Checkboxes are used for multi selection, and to describe a state, action or valu
 
 **A checkbox is used to choose between *two* opposite states, actions or values**. A group of checkboxes together allows a user to choose multiple values.
 
-If you need to provide a set a choices from which a user can choose only ***one*** option, use radio buttons (<span style="color: rgb(0,0,255);">radio button</span>).
+If you need to provide a set a choices from which a user can choose only ***one*** option, use radio buttons ([radio button](#/ui-components/button-controls/radio-button)).
 
  
 
