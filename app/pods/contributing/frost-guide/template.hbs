@@ -2,22 +2,20 @@
 <div class="md">
 	<div class="content-col">
 		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'contributing/frost-guide')}} 
-	</div>
-	<div class='right-col'>
-		<div id='md-scrollspy'>
-			{{#scroll-to to="#editinganexistingpage"}} Editing an Existing Page{{/scroll-to}}
-			{{#scroll-to to="#addinganewpage"}} Adding a New Page{{/scroll-to}}
-			{{#scroll-to to="#editingscrollspytabs"}} Editing Scrollspy Tabs{{/scroll-to}}
-			{{#scroll-to to="#creatingcomponentpages"}} Creating Component Pages{{/scroll-to}}
-			{{#scroll-to to="#updatingcomponentpages"}} Updating Component Pages{{/scroll-to}}
-			{{#scroll-to to="#addingimages"}} Adding images{{/scroll-to}}
-		</div>
+		{{#scroll-spy}}
+			{{#scroll-to id="#editinganexistingpage" class="h2"}} Editing an Existing Page{{/scroll-to}}
+			{{#scroll-to id="#addinganewpage" class="h2"}} Adding a New Page{{/scroll-to}}
+			{{#scroll-to id="#editingscrollspytabs" class="h2"}} Editing Scrollspy Tabs{{/scroll-to}}
+			{{#scroll-to id="#creatingcomponentpages" class="h2"}} Creating Component Pages{{/scroll-to}}
+			{{#scroll-to id="#updatingcomponentpages" class="h2"}} Updating Component Pages{{/scroll-to}}
+			{{#scroll-to id="#addingimages" class="h2"}} Adding images{{/scroll-to}}
+		{{/scroll-spy}}
 	</div>
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span>Eric White - Justin Lafleur
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Justin Lafleur - Eric White</div>
 			</div>
 			<div class='connect'>
 				<span class="footerHeading"></span>

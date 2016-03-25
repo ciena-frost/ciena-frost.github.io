@@ -1,6 +1,6 @@
 import ApiController from 'frost-guide/utils/ApiController'
 import Ember from 'ember'
-import svgs from 'ember-frost-icons/svgs'
+import svgs from 'ember-frost-core/svgs'
 import _ from 'lodash/lodash'
 
 export default ApiController.extend({
@@ -22,6 +22,12 @@ export default ApiController.extend({
         return {
           icon,
           markdown: `\`${icon}\``
+        }
+      }).filter((entry) => {
+        // filter out objects when used on frost-guide as it picks up other svgs (folder in folder)
+        // these nested folders return as objects with its properties equal to folders inside
+        if (typeof Ember.get(svgs, entry.icon.replace(/\//g, '.')) === 'string') {
+          return true
         }
       }))
     }, [])

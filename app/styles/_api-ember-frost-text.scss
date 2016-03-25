@@ -1,9 +1,8 @@
 @import 'frost-theme';
 @import 'frost-core';
 
-html, body {
-  font-family: $frost-font-family;
-  color: rgb(102, 102, 102);
+.dummy-body{
+  margin-left: 20px;
 }
 
 .dummy-notification-container {
@@ -19,4 +18,36 @@ html, body {
 .dummy-header {
   padding: 20px 0 10px 20px;
   font-weight: bold;
+}
+
+.section {
+  float: left;
+  padding-right: 50px;
+
+  > .title {
+    font-size: $frost-font-xl;
+    padding-bottom: 20px;
+  }
+
+  .example {
+    padding-bottom: 10px;
+
+    > .title {
+      font-size: $frost-font-l;
+      padding-bottom: 10px;
+    }
+
+    .snippet {
+      display: inline-block;
+      font-size: $frost-font-s;
+      margin-right: 20px;
+      margin-top: -15px;
+      vertical-align: top;
+    }
+
+    .demo {
+      display: inline-block;
+      vertical-align: top;
+    }
+  }
 }

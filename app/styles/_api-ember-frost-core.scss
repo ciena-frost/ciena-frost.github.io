@@ -1,0 +1,216 @@
+@import 'addon';
+@import 'typography';
+@import 'layout';
+
+.dummy-notification-container {
+  position: fixed;
+  top: 60px;
+  right: 10px;
+  z-index: 999;
+  width: 80%;
+  max-width: 200px;
+  margin: auto;
+}
+.dummy-body {
+  padding: 0 20px;
+}
+.dummy-content {
+  width: 100%;
+}
+pre {
+  margin: 0;
+}
+
+.dummy-body.text-input.field {
+  .example .snippet {
+    width: 305px;
+    margin: 5px 0 10px 0;
+  }
+}
+
+.dummy-body.textarea {
+  .example .snippet {
+    width: 305px;
+    margin: 5px 0 10px 0;
+  }
+}
+
+.dummy-body.password {
+  .example .snippet {
+    width: 305px;
+    margin: 5px 0 10px 0;
+  }
+}
+
+.dummy-body.checkbox {
+  .example .snippet {
+    width: 310px;
+    margin: 5px 0 10px 0;
+  }
+}
+
+
+
+.title {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: $frost-font-family;
+  font-size: $frost-font-l;
+}
+
+.list-item {
+  padding-bottom: 5px;
+  padding-top: 10px;
+  font-family: $frost-font-family;
+  font-size: $frost-font-m;
+}
+
+
+.section {
+  display: flex;
+  flex-direction: row;
+  flex-flow: wrap;
+  width: calc(100vw - 250px);
+
+  > .title {
+    font-size: $frost-font-xl;
+    padding-bottom: 20px;
+  }
+
+  .example {
+    padding-right: 50px;
+    padding-bottom: 10px;
+
+    > .title {
+      font-size: $frost-font-l;
+      padding-bottom: 5px;
+    }
+
+    .snippet {
+      display: inline-block;
+      font-size: $frost-font-s;
+      margin-right: 20px;
+      margin-top: -5px;
+      vertical-align: top;
+    }
+
+    .demo {
+      display: block;
+      vertical-align: top;
+    }
+  }
+}
+
+
+.icon-demo {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 40px;
+
+  .entry {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+
+    .title {
+      margin-bottom: 5px;
+    }
+
+    .content {
+      background-color: yellow;
+      //background: repeating-linear-gradient(
+      //  45deg,
+      //  rgba(0, 97, 250, 0.5),
+      //  rgba(0, 33, 245, 0.55) 5px,
+      //  rgba(12, 0, 240, 0.6) 5px,
+      //  rgba(17, 0, 235, 0.65) 5px
+      //);
+
+    }
+
+    .frost-icon {
+      width: 250px;
+      height: 50px;
+      padding: 10px;
+    }
+  }
+}
+
+// TODO: replace these with some canonical sass variables
+.bg-main-button-color {
+  background-color: #009eef;
+}
+
+.bg-tile-color {
+  background-color: #404041;
+}
+
+.bg-content-color {
+  background-color: #666666;
+}
+
+.bg-info-color {
+  background-color: #929497;
+}
+
+.bg-hint-text-color {
+  background-color: #babcbe;
+}
+
+.bg-line-color {
+  background-color: #e8e8ef;
+}
+
+.background-chooser {
+  text-align: center;
+
+  button {
+    border: none;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    cursor: pointer;
+  }
+}
+
+@mixin selected-outline() {
+  outline: 5px auto rgb(59, 153, 252);
+}
+
+.bg-main-button-color-selected {
+  .bg-main-button-color {
+    @include selected-outline();
+  }
+}
+
+.bg-tile-color-selected {
+  .bg-tile-color {
+    @include selected-outline();
+  }
+}
+
+.bg-content-color-selected {
+  .bg-content-color {
+    @include selected-outline();
+  }
+}
+
+.bg-info-color-selected {
+  .bg-info-color {
+    @include selected-outline();
+  }
+}
+
+.bg-hint-text-color-selected {
+  .bg-hint-text-color {
+    @include selected-outline();
+  }
+}
+
+.bg-line-color-selected {
+  .bg-line-color {
+    @include selected-outline();
+  }
+}

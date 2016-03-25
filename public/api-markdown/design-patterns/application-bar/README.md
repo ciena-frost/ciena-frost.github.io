@@ -9,7 +9,6 @@
 
 # ember-frost-app-bar <br /> [![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
 
-# ember-frost-app-bar
 the drop-down select widget to rule them all
 
 
@@ -21,7 +20,6 @@ the drop-down select widget to rule them all
 ```
 ember install ember-frost-app-bar
 ```
-
 ## API
 Coming soon
 

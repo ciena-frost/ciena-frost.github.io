@@ -1,5 +1,9 @@
 @import 'node_modules/ember-frost-css-core/scss/frost-core';
 
+.dummy-body{
+  margin-left: 20px;
+}
+
 .demo {
   display: flex;
   flex-direction: row;
@@ -27,7 +31,7 @@
       //);
 
     }
-    
+
     .frost-icon {
       width: 250px;
       height: 50px;

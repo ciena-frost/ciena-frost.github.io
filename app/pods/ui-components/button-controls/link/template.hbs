@@ -1,20 +1,22 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'UI-components/button-controls/link')}}
-		<div id='md-scrollspy' class='md-scrollspy'>
-		</div>
+		{{#scroll-spy}}
+		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/button-controls/link/README')}}
-		<div id='md-scrollspy' class='md-scrollspy'>
-			{{#scroll-to to="#installation" class="h2"}} Installation{{/scroll-to}}
-			{{#scroll-to to="#api" class="h2"}} API{{/scroll-to}}
-			{{#scroll-to to="#examples" class="h2"}} Examples{{/scroll-to}}
-			{{#scroll-to to="#development" class="h2"}} Development{{/scroll-to}}
-			{{#scroll-to to="#setup" class="h3"}} Setup{{/scroll-to}}
-			{{#scroll-to to="#developmentserver" class="h3"}} Development Server{{/scroll-to}}
-			{{#scroll-to to="#testing" class="h3"}} Testing{{/scroll-to}}
-		</div>
+		{{#scroll-spy}}
+			{{#scroll-to id="#installation" class="h2"}} Installation{{/scroll-to}}
+			{{#scroll-to id="#api" class="h2"}} API{{/scroll-to}}
+			{{#scroll-to id="#examples" class="h2"}} Examples{{/scroll-to}}
+			{{#scroll-to id="#primarysmall" class="h3"}} Primary small{{/scroll-to}}
+			{{#scroll-to id="#fontbasedonsize" class="h3"}} Font based on size{{/scroll-to}}
+			{{#scroll-to id="#development" class="h2"}} Development{{/scroll-to}}
+			{{#scroll-to id="#setup" class="h3"}} Setup{{/scroll-to}}
+			{{#scroll-to id="#developmentserver" class="h3"}} Development Server{{/scroll-to}}
+			{{#scroll-to id="#testing" class="h3"}} Testing{{/scroll-to}}
+		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='Demo' id='demo'}}
 		<div><div class="dummy-notification-container">
@@ -25,395 +27,302 @@
 
 <div class="dummy-body">
   <div class="dummy-content">
-    <div class='demo-app'>
-    <div class='dummy-padding'>
-      <div class='dummy-header'>Basic</div>
-      {{#frost-link 'ui-components.button-controls.link.min' id='basic'}}Basic{{/frost-link}}
-
-      <div class='dummy-header'>Model - ID</div>
-      {{#frost-link 'ui-components.button-controls.link.first' 1 id='model-id'}}First : 1{{/frost-link}}
-
-      <div class='dummy-header'>Model - Object</div>
-      {{#frost-link 'ui-components.button-controls.link.first' first id='model-object'}}First : 'custom first'{{/frost-link}}
-
-      <div class='dummy-header'>Nested Model - ID</div>
-      {{#frost-link 'ui-components.button-controls.link.first.second' 1 2 id='nested-model-id'}}First : 1 / Second : 2{{/frost-link}}
-
-      <div class='dummy-header'>Nested Model - Object</div>
-      {{#frost-link 'ui-components.button-controls.link.first.second' first second id='nested-model-object'}}First : 'custom first' / Second :
-        'custom second'{{/frost-link}}
-
-      <div class='dummy-header'>Nested Model - Mixed ID/Object</div>
-      {{#frost-link 'ui-components.button-controls.link.first.second' first 2 id='nested-model-mixed'}}First : 'custom first' / Second :
-        2{{/frost-link}}
-
-      <div class='dummy-header'>Attributes - E.g. Disabled</div>
-      {{#frost-link 'ui-components.button-controls.link.min' disabled=true id='attributes-disabled'}}Disabled{{/frost-link}}
-
-    </div>
-    <div>
-
-    <div class='dummy-padding-link'>
-      {{#frost-link 'ui-components.button-controls.link.min' }}
-        <div class='icon-action'>
-          {{frost-icon icon='frost/infobar-find'}}
-          <div class='text'>Find NE</div>
-        </div>
-      {{/frost-link}}
-
-      {{#frost-link 'ui-components.button-controls.link.min' }}
-        <div class='icon-action'>
-          {{frost-icon icon='frost/infobar-find'}}
-          <div class='text'>Find NE<br>long text</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Text and Icon Link small Primary</div>
-      {{#frost-link 'ui-components.button-controls.link.min' class='small primary'}}
-        <div class='text-icon'>
-          <div class='text'>Small</div>
-          <div class='svg'>{{frost-icon icon='frost/new-tab'}}</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Text and Icon Link Small Secondary</div>
-      {{#frost-link 'ui-components.button-controls.link.min' class='small secondary'}}
-        <div class='text-icon'>
-          <div class='text'>Small</div>
-          <div class='svg'>{{frost-icon icon='frost/new-tab'}}</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Text and Icon Link Small Tertiary</div>
-      {{#frost-link 'ui-components.button-controls.link.min' class='small tertiary'}}
-        <div class='text-icon'>
-          <div class='text'>Small</div>
-          <div class='svg'>{{frost-icon icon='frost/new-tab'}}</div>
-        </div>
-      {{/frost-link}}
-
-
-      <div class='dummy-header'>Text and Icon Link Medium Primary</div>
-      {{#frost-link 'ui-components.button-controls.link.min' class='medium primary'}}
-        <div class='text-icon'>
-          <div class='text'>Medium</div>
-          <div class='svg'>{{frost-icon icon='frost/new-tab'}}</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Text and Icon Link Medium Secondary</div>
-      {{#frost-link 'ui-components.button-controls.link.min' class='medium secondary'}}
-        <div class='text-icon'>
-          <div class='text'>Medium</div>
-          <div class='svg'>{{frost-icon icon='frost/new-tab'}}</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Text and Icon Link Medium Tertiary</div>
-      {{#frost-link 'ui-components.button-controls.link.min' class='medium tertiary'}}
-        <div class='text-icon'>
-          <div class='text'>Medium</div>
-          <div class='svg'>{{frost-icon icon='frost/new-tab'}}</div>
-        </div>
-      {{/frost-link}}
-      </div>
-
-      <div class='dummy-header'>Link - Small</div>
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='small primary'}}
-        <div class='content'>
-          <div class='text'>Primary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='small secondary'}}
-        <div class='content'>
-          <div class='text'>Secondary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='small tertiary'}}
-        <div class='content'>
-          <div class='text'>Tertiary</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Link - Medium</div>
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='medium primary'}}
-        <div class='content'>
-          <div class='text'>Primary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='medium secondary'}}
-        <div class='content'>
-          <div class='text'>Secondary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='medium tertiary'}}
-        <div class='content'>
-          <div class='text'>Tertiary</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Link - Large</div>
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='large primary'}}
-        <div class='content'>
-          <div class='text'>Primary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='large secondary'}}
-        <div class='content'>
-          <div class='text'>Secondary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='large tertiary'}}
-        <div class='content'>
-          <div class='text'>Tertiary</div>
-        </div>
-      {{/frost-link}}
-
-      <div class='dummy-header'>Link - Extra Large</div>
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='extra-large primary'}}
-        <div class='content'>
-          <div class='text'>Primary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='extra-large secondary'}}
-        <div class='content'>
-          <div class='text'>Secondary</div>
-        </div>
-      {{/frost-link}}
-      {{frost-link '' class='space'}}
-      {{#frost-link 'ui-components.button-controls.link.min' class='extra-large tertiary'}}
-        <div class='content'>
-          <div class='text'>Tertiary</div>
-        </div>
-      {{/frost-link}}
-
-    </div>
-
-    <div class="dummy-text">
-      Due to issues with flexbox and button in Firefox, button styling has been updated.
-      Going forward, 'text', 'icon', 'info' and 'text+icon' styles need to be defined in a separate div.
-      <p><strong>Note: For backward compatibility, text and icon styles are still supported,
-        but it is recommended to update to the new pattern.</strong></p>
-      Below, there are two examples of old and new styling for various buttons.
-    </div>
-
-    <div class='dummy-padding'>
-      <div class="dummy-style">
-        <div class='dummy-old-style'>
-          <div class='dummy-header'>Old Style</div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='text small primary' id='primary' }}Link{{/frost-link}}
-            <div class="dummy-info">frost-link class='text small primary'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='text small secondary' id='secondary' }}Link{{/frost-link}}
-            <div class="dummy-info">frost-link class='text medium primary'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='text small tertiary' id='tertiary' }}Link{{/frost-link}}
-            <div class="dummy-info">frost-link class='text small tertiary'</div>
-          </div>
-
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='text small primary' id='small' }}Link{{/frost-link}}
-            <div class="dummy-info">frost-link class='text small primary'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='text medium primary' id='medium' }}Link{{/frost-link}}
-            <div class="dummy-info">frost-link class='text medium secondary'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='text large primary' id='large' }}Link{{/frost-link}}
-            <div class="dummy-info">frost-link class='text small tertiary'</div>
-          </div>
-
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="text small primary" disabled=true id="disabled"}}Link{{/frost-link}}
-            <div class="dummy-info">frost-link class='text small primary'</div>
-          </div>
-
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="icon small primary" id="icon-small"}}
-              {{frost-icon icon="frost/add"}}
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='icon small primary'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="icon medium primary" id="icon-medium"}}
-              {{frost-icon icon="frost/add"}}
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='icon medium primary'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="icon large primary" id="icon-large"}}
-              {{frost-icon icon="frost/add"}}
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='icon large primary'</div>
-          </div>
-
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="info extra-large primary" id="info"}}
-              {{frost-icon icon="frost/add"}}
-              <div class="content">
-                <div class="alias">Info alias</div>
-                <div class="details">Info details</div>
-              </div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='info extra-large primary'</div>
-          </div>
-
-        </div>
-
-
-        <div class='dummy-new-style'>
-          <div class='dummy-header'>New Style</div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='small primary' id='primary1'}}
-              <div class='text'>Link</div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='small primary'</div>
-            <div class="dummy-info">div class='text'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='small secondary' id='secondary1' }}
-              <div class='text'>Link</div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='small secondary'</div>
-            <div class="dummy-info">div class='text'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='small tertiary' id='tertiary1' }}
-              <div class='text'>Link</div>
-            {{/frost-link}}
-             <div class="dummy-info">frost-link class='small tertiary'</div>
-            <div class="dummy-info">div class='text'</div>
-          </div>
-
-
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='small primary' id='small1' }}
-              <div class='text'>Link</div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='small primary'</div>
-            <div class="dummy-info">div class='text'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='medium primary' id='medium1' }}
-              <div class='text'>Link</div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='medium primary'</div>
-            <div class="dummy-info">div class='text'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='large primary' id='large1' }}
-              <div class='text'>Link</div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='large primary'</div>
-            <div class="dummy-info">div class='text'</div>
-          </div>
-
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="small primary" disabled=true id="disabled1"}}
-              <div class='text'>Link (disabled)</div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='small primary'</div>
-            <div class="dummy-info">div class='text'</div>
-          </div>
-
-
-        <div class='dummy-row'>
-          {{#frost-link 'ui-components.button-controls.link.min' class="small primary" id="icon-small1"}}
-          <div class="icon">
-            {{frost-icon icon="frost/add"}}
-          </div>
-          {{/frost-link}}
-          <div class="dummy-info">frost-link class='small primary'</div>
-          <div class="dummy-info">div class='icon'</div>
-        </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="medium primary" id="icon-medium1"}}
-              <div class="icon">
-                {{frost-icon icon="frost/add"}}
-              </div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='medium primary'</div>
-            <div class="dummy-info">div class='icon'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="large primary" id="icon-large1"}}
-              <div class="icon">
-                {{frost-icon icon="frost/add"}}
-              </div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='large primary'</div>
-            <div class="dummy-info">div class='icon'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class="extra-large primary" id="info1"}}
-            <div class="info">
-              {{frost-icon icon="frost/add"}}
-              <div class="content">
-                <div class="alias">Info alias</div>
-                <div class="details">Info details</div>
-              </div>
+    <div class="dummy-body link">
+    <div class="section-title">Primary</div>
+    <div class="section">
+        <div class="example">
+            <div class="title">Disabled</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='primary'
+              size='small'
+              disabled=true
+              }}
+                  <div class='text'>Primary</div>
+              {{/frost-link}}
             </div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='extra-large primary'</div>
-            <div class="dummy-info">div class='info'</div>
-          </div>
-
-          <div class='dummy-row'>
-            {{#frost-link 'ui-components.button-controls.link.min' class='medium primary'}}
-              <div class="icon-text">
-                {{frost-icon icon='frost/add'}}
-                <div class="text">Text</div>
-              </div>
-            {{/frost-link}}
-            <div class="dummy-info">frost-link class='medium primary'</div>
-            <div class="dummy-info">div class='icon-text'</div>
-          </div>
-
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='primary'
+  size='small'
+  disabled=true
+}}
+  <div class='text'>Primary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
         </div>
 
-      </div>
+        <div class="example">
+            <div class="title">Small</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='primary'
+              size='small'
+              }}
+                  <div class='text'>Primary</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='primary'
+  size='small'
+}}
+  <div class='text'>Primary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+
+        <div class="example">
+            <div class="title">Medium</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='primary'
+              size='medium'
+              }}
+                  <div class='text'>Primary</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='primary'
+  size='medium'
+}}
+  <div class='text'>Primary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+
+        <div class="example">
+            <div class="title">Large</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='primary'
+              size='large'
+              }}
+                  <div class='text'>Primary</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='primary'
+  size='large'
+}}
+  <div class='text'>Primary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="section-title">Secondary</div>
+
+    <div class="section">
+        <div class="example">
+            <div class="title">Disabled</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='secondary'
+              size='small'
+              disabled=true
+              }}
+                  <div class='text'>Secondary</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='secondary'
+  size='small'
+  disabled=true
+}}
+  <div class='text'>Secondary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+
+        <div class="example">
+            <div class="title">Small</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='secondary'
+              size='small'
+              }}
+                  <div class='text'>Secondary</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='secondary'
+  size='small'
+}}
+  <div class='text'>Secondary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+
+        <div class="example">
+            <div class="title">Medium</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='secondary'
+              size='medium'
+              }}
+                  <div class='text'>Secondary</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='secondary'
+  size='medium'
+}}
+  <div class='text'>Secondary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+
+        <div class="example">
+            <div class="title">Large</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='secondary'
+              size='large'
+              }}
+                  <div class='text'>Secondary</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='secondary'
+  size='large'
+}}
+  <div class='text'>Secondary</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="section-title">Tertiary</div>
+
+    <div class="section">
+        <div class="example">
+            <div class="title">Font based on size</div>
+            <div class="demo">
+                <div>
+                    <span style="font-size: {{fontSize}}px">
+                        Lorem
+                      {{#frost-link
+                      'demo.min'
+                      priority='tertiary'
+                      }}
+                          <div class='text'>Link one</div>
+                      {{/frost-link}}
+                        Ipsum
+                    </span>
+                </div>
+                <div class="actions">
+                  {{frost-button
+                  on-click=(action 'increase' fontSize)
+                  priority='primary'
+                  size='medium'
+                  text='Increase font'
+                  vertical=vertical
+                  }}
+
+                  {{frost-button
+                  on-click=(action 'decrease' fontSize)
+                  priority='primary'
+                  size='medium'
+                  text='Decrease font'
+                  vertical=vertical
+                  }}
+                </div>
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='tertiary'
+}}
+  <div class='text'>Link one</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+
+        <div class="example">
+            <div class="title">Disabled</div>
+            <div class="demo">
+              {{#frost-link
+              'demo.min'
+              priority='tertiary'
+              disabled=true
+              }}
+                  <div class='text'>Link one</div>
+              {{/frost-link}}
+            </div>
+            <div class="snippet">
+              {{format-markdown "```handlebars
+{{#frost-link
+  'demo.min'
+  priority='tertiary'
+  disabled=true
+}}
+  <div class='text'>Link one</div>
+{{/frost-link}}
+```"
+              }}
+            </div>
+        </div>
+    </div>
+
+    <div class='outlet'>
+      {{outlet}}
     </div>
 </div>
-<div class='outlet'>
 
-  {{outlet}}
-</div>
+
 
   </div>
 </div></div>
@@ -424,7 +333,7 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span><div class='contributors-list'>Matthew Dahl - Eric White - Gosia Hyndman - Steven Glanzer - Justin Lafleur</div>
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Eric White - Matthew Dahl - Gosia Hyndman - Quincy Le - Steven Glanzer - Justin Lafleur</div>
 			</div>
 			<div class='connect'><div>
 				<div class="footerHeading">Connect</div>

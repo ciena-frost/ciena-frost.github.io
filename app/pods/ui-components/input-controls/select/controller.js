@@ -7,7 +7,7 @@ export default ApiController.extend({
     let result = this.model.map((record) => {
       return {
         label: record.get('label'),
-        value: record.id
+        value: record.get('value')
       }
     })
     if (this.get('search')) {
@@ -18,8 +18,12 @@ export default ApiController.extend({
     }
     return result
   }),
-  singlePreSelected: 1,
-  multiplePreSelected: [1, 2],
+
+  selectedIndex: 1,
+  selectedIndices: [1, 2],
+  preSelectedValue: 'Arthur Curry',
+  selectedValues: ['Arthur Curry', 'Adam Meadows'],
+
   actions: {
     onChange (values) {
       console.log('User selected: ' + values)
