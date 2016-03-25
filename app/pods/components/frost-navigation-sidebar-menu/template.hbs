@@ -7,7 +7,7 @@
 </div>
 {{#each filteredItems as |item|}}
   {{#if (eq item.type 'category')}}
-    {{frost-navigation-sidebar-category category=item selectedCategory=selectedCategory on-click=(action 'categorySelected' item.route)}}
+    {{frost-navigation-sidebar-category category=item selectedCategory=selectedCategory onClick=(action 'categorySelected' item.route)}}
   {{else if (eq item.type 'route')}}
         {{#if (eq item.alias 'Contributor')}}
         {{else}}

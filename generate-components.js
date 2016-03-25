@@ -26,7 +26,7 @@ Array.prototype.contains = function (obj) {
   return false;
 }
 
-var ignoreList = [ 'ember-frost-bunsen', 'ember-frost-checkbox', 'ember-frost-brackets-snippets']
+var ignoreList = ['ember-frost-bunsen', 'ember-frost-checkbox', 'ember-frost-brackets-snippets']
 
 var options = {
   'headers': {
@@ -124,7 +124,7 @@ fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
   var demoRouting_string = getFile(url)
   var demoRouting = requireFromString(demoRouting_string)
-  if (demoRouting.length === 0){
+  if (demoRouting.length === 0) {
     return
   }
   var result = mergeRouting(routingConfig, demoRouting, demoParentDirectory, demoLocation)
@@ -135,7 +135,7 @@ function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
 function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
   var demoId = demoParentDirectory.replace(/\//g, ".")
 
-  function mergeItems(items, parent) {
+  function mergeItems(items, parent, demoLocation) {
     items.forEach(function (item) {
       if (demoLocation === undefined || demoLocation === '') {
         // single demo
@@ -144,23 +144,58 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
           item.path.path = demoParentDirectory.toLowerCase() + item.path.path
         }
         if (item.items !== undefined) {
-          mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+          mergeItems(item.items, parent.toLowerCase() + "." + item.id, demoLocation)
         }
       } else {
         //multiple demos
-        item.route = demoLocation + '.' + item.route
+
+        item.route = item.route.replace(demoLocation + '.', parent.toLowerCase() + ".")
+        console.log( chalk.red("Merging items: " + item.route))
         if (item.path !== undefined && item.path.path && item.path.path !== "/") {
           item.path.path = demoParentDirectory.toLowerCase() + item.path.path
         }
         if (item.items !== undefined) {
-          mergeItems(item.items, parent.toLowerCase() + "." + item.id)
+          mergeItems(item.items, parent.toLowerCase() + "." + item.id, demoLocation)
         }
       }
     })
   }
   base.forEach(function (routeConfig) {
     if (routeConfig.items === undefined) {
-      if (routeConfig.route === demoId) {
+      if (demoLocation === undefined || demoLocation === '') {
+        // single demo
+        if (routeConfig.route === demoId) {
+          console.log(chalk.blue("Found match for: " + demoId))
+          console.log(routeConfig)
+          console.log(demo)
+          routeConfig.route = demoId.toLowerCase()
+            //        routeConfig.alias = "Found You"
+          if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
+            routeConfig.modalName = demo[0].modalName
+            routeConfig.modal = demo[0].modal
+          }
+
+          if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
+            routeConfig.path = demo[0].path
+          }
+          if (demo[0].items !== undefined) {
+            console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
+            mergeItems(demo[0].items, demoId)
+            routeConfig.items = demo[0].items
+          }
+
+          if (demo[0].modals !== undefined) {
+            routeConfig.modals = demo[0].modals
+          }
+
+        }
+      }else {
+        // multiple demos
+        console.log( "Multiple demos merge")
+        console.log(routeConfig.route)
+        console.log(demoId)
+        console.log(demoLocation)
+        if (routeConfig.route === demoId) {
         console.log(chalk.blue("Found match for: " + demoId))
         console.log(routeConfig)
         console.log(demo)
@@ -176,7 +211,7 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
         }
         if (demo[0].items !== undefined) {
           console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
-          mergeItems(demo[0].items, demoId)
+          mergeItems(demo[0].items, demoId, demoLocation)
           routeConfig.items = demo[0].items
         }
 
@@ -185,9 +220,11 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
         }
 
       }
+      }
+
     } else {
       routeConfig.items.forEach((item) => {
-        mergeRouting([item], demo, demoParentDirectory.toLowerCase())
+        mergeRouting([item], demo, demoParentDirectory.toLowerCase(), demoLocation)
       })
     }
   })
@@ -255,7 +292,7 @@ function getPodsNestedRoutes(url, demoDirectory) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   body.forEach(function (podItem) {
-    if (podItem.type === "dir" && !podItem.name.endsWith('index') ){
+    if (podItem.type === "dir" && !podItem.name.endsWith('index')) {
       var path = "app/pods/" + demoDirectory + "/" + podItem.name
       console.log("Path: " + path.toLowerCase())
       mkdirpSync(path.toLowerCase())
@@ -381,6 +418,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     }
 
     var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
+    var demo_style_folder_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles?ref=master")
     var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
     var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
     var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
@@ -393,8 +431,8 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
       return
     }
     var application_content = getDemoApplicationContent(demo_application_content_url);
-    var style = GetDemoStyle(demo_style_url);
-
+    var style = GetDemoStyle(demo_style_url).replace("@import 'frost-app';", "@import 'frost-core';");
+    GetDemoStyleFolder(demo_style_folder_url)
 
     if (content.template_hbs === undefined) {
       console.log(chalk.blue("Demo template empty. Checking demo/index"))
@@ -476,16 +514,20 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n\t{{#frost-tab alias='Demo' id='demo'}}"
-    if (typeof packageJSON.frostGuideDirectory === 'string') {
+    if (typeof packageJSON.frostGuideDirectory === 'string' || multipleDemos === true) {
       var frostLinkRegex;
       var linkToRegex;
       if (multipleDemos === undefined) {
         frostLinkRegex = new RegExp("\{\{#frost-link [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]", "ig")
         linkToRegex = new RegExp("\{\{#link-to [\'|\"]demo\.([a-z|\.|-]+)[\'|\"]", "ig")
       } else {
-        frostLinkRegex = new RegExp("\{\{#frost-link [\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
-        linkToRegex = new RegExp("\{\{#link-to [\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
+        frostLinkRegex = new RegExp("\{\{#frost-link[ |\\n|\\t]+[\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
+        linkToRegex = new RegExp("\{\{#link-to[ |\\n|\\t]+[\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
       }
+      console.log(" Using regex: ")
+      console.log(frostLinkRegex)
+      console.log(linkToRegex)
+      console.log(content.template_hbs)
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(frostLinkRegex, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(linkToRegex, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
     } else if (packageJSON.frostGuideDirectory != undefined) {
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
@@ -620,7 +662,12 @@ function getFolder(url, parent) {
       }())
     } else if (item.type === "file") {
       var fileContent = getFile(item.url);
-      contents.set(parent + "/" + item.name, fileContent)
+      if (parent === '') {
+        contents.set(item.name, fileContent)
+      } else {
+        contents.set(parent + "/" + item.name, fileContent)
+      }
+
     }
   })
   return contents
@@ -686,6 +733,16 @@ function GetDemoStyle(url) {
   var res = request('GET', url, options);
   var body = JSON.parse(res.getBody());
   return new Buffer(body.content, body.encoding).toString();
+}
+
+function GetDemoStyleFolder(url) {
+  var content = getFolder(url, "");
+  content.forEach(function (value, key) {
+    if (key != 'app.scss') {
+      console.log("Writing Style: " + "app/pods/styles/" + key)
+      fs.writeFileSync("app/styles/" + key, value)
+    }
+  })
 }
 
 function getPrefixedMarkdownPath(noPrefixPath) {

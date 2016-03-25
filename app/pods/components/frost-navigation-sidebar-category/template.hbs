@@ -1,4 +1,4 @@
-{{#frost-button class='category' priority='cancel' classNameBindings='isExpanded:expanded' on-click=(action 'toggleExpanded')}}
+{{#frost-button class='category' priority='cancel' classNameBindings='isExpanded:expanded' onClick=(action 'toggleExpanded')}}
   {{category.alias}}
 {{/frost-button}}
 {{#liquid-if isExpanded}}
