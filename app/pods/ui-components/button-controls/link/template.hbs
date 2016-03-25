@@ -1,21 +1,17 @@
 <div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
 	{{#frost-tab alias='Description' class='description' id='description'}}
-		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'UI-components/button-controls/link')}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/button-controls/link')}}
 		{{#scroll-spy}}
 		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
 		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/button-controls/link/README')}}
 		{{#scroll-spy}}
-			{{#scroll-to id="#installation" class="h2"}} Installation{{/scroll-to}}
+			{{#scroll-to id="#emberfrostlinkbr" class="h1"}} ember-frost-link {{/scroll-to}}
 			{{#scroll-to id="#api" class="h2"}} API{{/scroll-to}}
 			{{#scroll-to id="#examples" class="h2"}} Examples{{/scroll-to}}
 			{{#scroll-to id="#primarysmall" class="h3"}} Primary small{{/scroll-to}}
 			{{#scroll-to id="#fontbasedonsize" class="h3"}} Font based on size{{/scroll-to}}
-			{{#scroll-to id="#development" class="h2"}} Development{{/scroll-to}}
-			{{#scroll-to id="#setup" class="h3"}} Setup{{/scroll-to}}
-			{{#scroll-to id="#developmentserver" class="h3"}} Development Server{{/scroll-to}}
-			{{#scroll-to id="#testing" class="h3"}} Testing{{/scroll-to}}
 		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='Demo' id='demo'}}
@@ -33,8 +29,7 @@
         <div class="example">
             <div class="title">Disabled</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
+              {{#frost-link 'ui-components.button-controls.link.min'
               priority='primary'
               size='small'
               disabled=true
@@ -44,8 +39,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='primary'
   size='small'
   disabled=true
@@ -60,18 +54,16 @@
         <div class="example">
             <div class="title">Small</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
-              priority='primary'
-              size='small'
+              {{#frost-link 'ui-components.button-controls.link.min'
+                priority='primary'
+                size='small'
               }}
                   <div class='text'>Primary</div>
               {{/frost-link}}
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='primary'
   size='small'
 }}
@@ -85,18 +77,16 @@
         <div class="example">
             <div class="title">Medium</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
-              priority='primary'
-              size='medium'
+              {{#frost-link 'ui-components.button-controls.link.min'
+                priority='primary'
+                size='medium'
               }}
                   <div class='text'>Primary</div>
               {{/frost-link}}
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='primary'
   size='medium'
 }}
@@ -110,8 +100,7 @@
         <div class="example">
             <div class="title">Large</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
+              {{#frost-link 'ui-components.button-controls.link.min'
               priority='primary'
               size='large'
               }}
@@ -120,8 +109,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='primary'
   size='large'
 }}
@@ -141,8 +129,7 @@
         <div class="example">
             <div class="title">Disabled</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
+              {{#frost-link 'ui-components.button-controls.link.min'
               priority='secondary'
               size='small'
               disabled=true
@@ -152,8 +139,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='secondary'
   size='small'
   disabled=true
@@ -168,8 +154,7 @@
         <div class="example">
             <div class="title">Small</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
+              {{#frost-link 'ui-components.button-controls.link.min'
               priority='secondary'
               size='small'
               }}
@@ -178,8 +163,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='secondary'
   size='small'
 }}
@@ -193,8 +177,7 @@
         <div class="example">
             <div class="title">Medium</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
+              {{#frost-link 'ui-components.button-controls.link.min'
               priority='secondary'
               size='medium'
               }}
@@ -203,8 +186,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='secondary'
   size='medium'
 }}
@@ -218,8 +200,7 @@
         <div class="example">
             <div class="title">Large</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
+              {{#frost-link 'ui-components.button-controls.link.min'
               priority='secondary'
               size='large'
               }}
@@ -228,8 +209,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='secondary'
   size='large'
 }}
@@ -251,8 +231,7 @@
                 <div>
                     <span style="font-size: {{fontSize}}px">
                         Lorem
-                      {{#frost-link
-                      'demo.min'
+                      {{#frost-link 'ui-components.button-controls.link.min'
                       priority='tertiary'
                       }}
                           <div class='text'>Link one</div>
@@ -280,8 +259,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='tertiary'
 }}
   <div class='text'>Link one</div>
@@ -294,8 +272,7 @@
         <div class="example">
             <div class="title">Disabled</div>
             <div class="demo">
-              {{#frost-link
-              'demo.min'
+              {{#frost-link 'ui-components.button-controls.link.min'
               priority='tertiary'
               disabled=true
               }}
@@ -304,8 +281,7 @@
             </div>
             <div class="snippet">
               {{format-markdown "```handlebars
-{{#frost-link
-  'demo.min'
+{{#frost-link 'ui-components.button-controls.link.min'
   priority='tertiary'
   disabled=true
 }}
@@ -316,13 +292,9 @@
             </div>
         </div>
     </div>
+    {{outlet}}
 
-    <div class='outlet'>
-      {{outlet}}
-    </div>
 </div>
-
-
 
   </div>
 </div></div>
@@ -333,11 +305,11 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span><div class='contributors-list'>Eric White - Matthew Dahl - Gosia Hyndman - Quincy Le - Steven Glanzer - Justin Lafleur</div>
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Roxanne Panthaky - Gosia Hyndman - Eric White - Steven Glanzer - ember-tomster</div>
 			</div>
 			<div class='connect'><div>
 				<div class="footerHeading">Connect</div>
-					 <div><a href="https://github.com/ciena-frost/ember-frost-link" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a></div></div>
+					 <div><a href="https://github.com/ciena-frost/ember-frost-core" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a></div></div>
 				</div>
 			</div>
 			<br/>

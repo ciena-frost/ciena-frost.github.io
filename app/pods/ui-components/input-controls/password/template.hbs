@@ -2,6 +2,10 @@
 	{{#frost-tab alias='Description' class='description' id='description'}}
 		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-controls/password')}}
 		{{#scroll-spy}}
+			{{#scroll-to id="#summary" class="h2"}} Summary{{/scroll-to}}
+			{{#scroll-to id="#behaviors" class="h2"}} Behaviors{{/scroll-to}}
+			{{#scroll-to id="#guidelines" class="h2"}} Guidelines{{/scroll-to}}
+			{{#scroll-to id="#visualspecification" class="h2"}} Visual Specification{{/scroll-to}}
 		{{/scroll-spy}}
 	{{/frost-tab}}
 	{{#frost-tab alias='API' id='api'}}
@@ -124,7 +128,7 @@
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span><div class='contributors-list'>Roxanne Panthaky - Eric White - Gosia Hyndman - Steven Glanzer - ember-tomster</div>
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Roxanne Panthaky - Gosia Hyndman - Eric White - Steven Glanzer - ember-tomster</div>
 			</div>
 			<div class='connect'><div>
 				<div class="footerHeading">Connect</div>

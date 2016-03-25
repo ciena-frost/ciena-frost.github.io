@@ -1,4 +1,3 @@
-import emberFrostButton from './ember-frost-button-config'
 import emberFrostSelect from './ember-frost-select-config'
 import emberFrostText from './ember-frost-text-config'
 import emberFrostList from './ember-frost-list-config'
@@ -20,7 +19,6 @@ import emberFrostCore from './ember-frost-core-config'
 import config from '../config/environment'
 export default function () {
 	this.namespace = config.mirageNamespace
-	emberFrostButton.call(this)
 	emberFrostSelect.call(this)
 	emberFrostText.call(this)
 	emberFrostList.call(this)

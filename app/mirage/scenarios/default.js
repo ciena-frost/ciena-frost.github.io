@@ -1,4 +1,3 @@
-import emberFrostButton from './ember-frost-button-default'
 import emberFrostSelect from './ember-frost-select-default'
 import emberFrostText from './ember-frost-text-default'
 import emberFrostList from './ember-frost-list-default'
@@ -18,7 +17,6 @@ import emberFrostAppBar from './ember-frost-app-bar-default'
 import emberFrostDatePicker from './ember-frost-date-picker-default'
 import emberFrostCore from './ember-frost-core-default'
 export default function (server) {
-	emberFrostButton(server)
 	emberFrostSelect(server)
 	emberFrostText(server)
 	emberFrostList(server)
