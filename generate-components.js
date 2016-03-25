@@ -26,7 +26,7 @@ Array.prototype.contains = function (obj) {
   return false;
 }
 
-var ignoreList = ['ember-frost-bunsen', 'ember-frost-checkbox', 'ember-frost-brackets-snippets']
+var ignoreList = ['ember-frost-bunsen', 'ember-frost-checkbox', 'ember-frost-brackets-snippets', 'ember-frost-button']
 
 var options = {
   'headers': {
