@@ -1,7 +1,6 @@
 import Ember from 'ember'
 
 function highlightElement (selector) {
-  console.log(selector)
   selector.parent().children().each(function () {
     $(this).css('font-weight', 'lighter')
     $(this).css('border-left', '2px solid white')
@@ -11,7 +10,6 @@ function highlightElement (selector) {
 }
 
 function positionScrollSpy (id) {
-  console.log(id)
   if ($(window).width() > 800) {
     $(id).css('display', 'inline')
     if ($(window).scrollTop() >= 150) {
