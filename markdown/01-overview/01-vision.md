@@ -10,78 +10,57 @@
   </svg>
 
   <span class="project">
-    <div class="title"> Frost </div>
-    <div class="sub-title"> UI styles, conventions, patterns and code for Ciena </div>
+    <div class="title">Frost</div>
+    <div class="sub-title">Ciena design conventions, styles, components, patterns and tools for Ember</div>
   </span>
 </div>
 
-What is Frost?
-==============
 
-An initiative to establish common styles, conventions and code for Ciena
-UIs using a collaborative approach inspired by open source projects.
+# What is Frost?
 
-#Goals
+The common Ember platform for Ciena web development teams, with dedicated UX and visual design teams and a large community of contributing developers.  Frost is also a major step forward in Ciena's evolution as a software organization as the majority of this platform will be open source.
 
-## Consistency
+### General tools
 
-Frost focuses on producing a consistent look and feel across the Ciena
-suite of UI products. Common UI elements and patterns are identified and
-standardized for use in all Ciena UIs. Consistency provides the
-following benefits:
+[ember-cli-blanket](https://github.com/sglanzer/ember-cli-blanket)  
+[ember-prop-types]()  
+[ember-pollboy]()  
+[ember-block-slots]()  
+[webdriverio]()  
+See [ciena-blueplanet]() for additional projects
 
--   **Professional styling** - UI often drives perception of a product,
-    shared use of Visual Interaction Designers
--   **User experience** - Well-designed workflow and user interaction
-    patterns for common Ciena user personas
--   **User experience/productivity** - one UI paradigm; learned once,
-    used everywhere
--   **Brand awareness** - all UIs across the Ciena suite are easily
-    identified as Ciena UIs
--   **Lower development costs** - common UI decisions and development
-    are done once for all products
--   **Increased robustness** - UIs are tested across multiple product
-    bases
+### App components and patterns
 
-## Community
+[ember-frost-core]()
+[ember-frost-bunsen]()
+[ember-frost-object-browser]()
+[ember-frost-object-details]()
+See [ciena-frost]() for additional projects
 
-A strong development community is able to accomplish far more than any
-individual could hope to accomplish. Cross-product collaboration
-strengthens the bonds between developers and broadens perspectives. Some
-benefits of a large community are:
 
--   **Faster development** - solutions to standard problems are provided
-    so that more time can be spent building unique product features
--   **More experience** - more angles are considered when developing
-    common components
--   **Shared responsibility** - the weight of research and development
-    is distributed
--   **Better support** - solutions to issues are usually in the
-    community, more people are available for questions
--   **Cross-product development** - code bases are predictable,
-    developers can ramp up quickly
+# Where is Frost going?
 
-## Convention
+As with software development in general, Frost is a journey not a destination.  We're constantly refining our designs and technical skills and Frost is a reflection of this progression.  We want to collaborate as a community, have our ideas challenged and continually evolve the platform.
 
-Common use cases should be easy to develop. Frost buys into a
-"convention over configuration" philosophy. Frost components and CSS are
-developed with a focus on strong defaults; **less boilerplate, faster
-features**.
+That said, no platform can be all things to all people, so Frost focuses on the following key concepts:
 
-When defaults don't suffice, Frost allows granular control of
-presentation and logic. Some custom solutions will be completely unique,
-many will be useful to the Frost community. Everyone is encouraged to
-contribute to the project and help is available for new community
-members.
+### Visual design conventions
 
-## Abstraction
+Frost backs large, data-driven tools and we believe that a single high-quality visual design is more valuable to the building of these tools than visual customization.  We aren't intending on competing with the excellent existing products focused on customization, such as Bootstrap or Foundation.  Instead, we intend to make the construction of complex visual patterns a more accessible process by allowing developers to focus less on visuals and more on solving use cases.  Frost allows customization of color themes, but will be fairly proscriptive over the look and behavior of components.
 
-The web ecosystem evolves at a torrid pace. New standards, frameworks
-and components emerge on a weekly basis and tracking the flood of
-information can be a full time job.
+### Language conventions
 
-To avoid being left behind while simultaneously keeping products stable
-Frost abstracts the implementation of solutions behind a stable Frost
-**component interface**, allowing the implementation to evolve while the
-usage remains stable. When interfaces change, Frost makes use of
-**semantic versioning** to avoid breaking existing products.
+We love the Ember community and all of the addons available are incredibly inspiring; however, addons often have different interface conventions and remembering the conventions can be challenging.  All of the components in Frost will present a consistent style of interface, whether the component is original to Frost or an interface shim around a community addon.
+
+### Extending beyond core components
+
+This is where the benefits of following conventions comes into play.  Beyond the core of Frost is an ecosystem of complex components that build off  of the core.  Data driven forms, filter/sort/list browsers, component based svg visualizations, geo-map overlays; a constantly expanding list of solutions with accessible designs ready to be plugged into Frost based applications.  
+
+### Robustness and developer support
+
+None of these concepts are any good unless they can be relied on.  Frost projects will contain comprehensive behavioral and visual tests for each component and tool, backed by useful measures of coverage and complexity.  We have passionate developers that focus on making these standards easy to scaffold and maintain - stay tuned for open source releases and blogs that make these tools and processes accessible to the community.
+
+
+# Suggestions? Ideas?
+
+Does any of this sound appealing?  Want to participate?  We're always open to ideas and we love talking about designs.  Propose a component, work with us to build something, tell us we've got it all wrong - we want to collaborate with and be challenged by you.

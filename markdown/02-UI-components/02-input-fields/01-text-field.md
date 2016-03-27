@@ -2,15 +2,14 @@
 
 Accept and display input text
 
-<img src="assets/images/ui-components/input-controls/text/sample.png" class="confluence-embedded-image" />
+<img src="assets/images/ui-components/input-controls/text/sample.png" />
 
 
 ## Related topics
 
-- [Auto-Complete Text Field](#/ui-components/input-controls/auto-complete-text-field) - suggestions based on a data source
-- [Forms](#/design-patterns/forms/overview) - usage in form contexts
+- [Auto-complete text field](#/ui-components/input-controls/auto-complete-text-field) - suggestions based on a data source
 - [Password](#/ui-components/input-controls/password) - masked input to hide characters
-- [Text Area](#/ui-components/input-controls/text-area) - text input with multiple rows
+- [Text area](#/ui-components/input-controls/text-area) - text input with multiple rows
 
 
 ## Behaviors
@@ -26,7 +25,7 @@ Accept and display input text
 
 ## Guidelines
 
-- **Validate input** when the text field value has an expected format.  If invalid input text is provided the text field should indicate an error state when the text field loses focus.
+- **Validate input** when possible.  If invalid input text is provided the text field indicates an error state when the text field loses focus.  See [forms](#/design-patterns/forms/overview) for standard error text positioning.
 
   <img src="assets/images/ui-components/input-controls/text/error.png" class="confluence-embedded-image" />
 
@@ -36,9 +35,3 @@ Accept and display input text
   <img src="assets/images/ui-components/input-controls/text/prompt.png" class="confluence-embedded-image" />
 
 - **Avoid overflow** when possible by sizing text fields to comfortably accomodate the expected input length
-
-<!--
-## Visual specification
-
-<img src="assets/images/ui-components/input-controls/text/visual-design.png" class="confluence-embedded-image" />
--->
