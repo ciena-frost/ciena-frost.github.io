@@ -1,6 +1,6 @@
 ## Summary
 
-The text area field [text field](#/ui-components/input-controls/text) that supports the input of multiple rows of text.
+Accept and display multiple rows of input text
 
 <img src="assets/images/ui-components/input-controls/text-area/summary.png" class="confluence-embedded-image"/>
 
