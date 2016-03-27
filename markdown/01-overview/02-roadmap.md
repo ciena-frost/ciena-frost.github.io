@@ -1,3 +1,5 @@
 # Coming soon ;)
 
-Seriously though, this guide is a work in progress - we have a lot of content and components that need to be incorporated - hosting the rest of the existing content is next in the queue.
+Seriously though, the Roadmap is a work in progress
+
+Next up, documenting everything in <a href="https://github.com/ciena-frost" target="_blank">ciena-frost</a> and <a href="https://github.com/ciena-blueplanet" target="_blank">ciena-blueplanet</a>

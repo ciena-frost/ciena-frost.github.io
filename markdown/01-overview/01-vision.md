@@ -22,20 +22,20 @@ The common Ember platform for Ciena web development teams, with dedicated UX and
 
 ### General tools
 
-[ember-cli-blanket](https://github.com/sglanzer/ember-cli-blanket)  
-[ember-prop-types]()  
-[ember-pollboy]()  
-[ember-block-slots]()  
-[webdriverio]()  
-See [ciena-blueplanet]() for additional projects
+<a href="https://github.com/sglanzer/ember-cli-blanket" target="_blank">ember-cli-blanket</a><br>
+<a href="https://github.com/ciena-blueplanet/ember-prop-types" target="_blank">ember-prop-types</a><br>
+<a href="https://github.com/ciena-blueplanet/ember-pollboy" target="_blank">ember-pollboy</a><br>
+<a href="https://github.com/ciena-blueplanet/ember-block-slots" target="_blank">ember-block-slots</a><br>
+<a href="https://github.com/ciena-blueplanet/webdriverio-server" target="_blank">webdriverio</a><br>
+See <a href="https://github.com/ciena-blueplanet" target="_blank">ciena-blueplanet</a> for additional projects
 
 ### App components and patterns
 
-[ember-frost-core]()
-[ember-frost-bunsen]()
-[ember-frost-object-browser]()
-[ember-frost-object-details]()
-See [ciena-frost]() for additional projects
+<a href="https://github.com/ciena-frost/ember-frost-core" target="_blank">ember-frost-core</a><br>
+<a href="https://github.com/ciena-frost/ember-frost-bunsen" target="_blank">ember-frost-bunsen</a><br>
+<a href="https://github.com/ciena-frost/ember-frost-object-browser" target="_blank">ember-frost-object-browser</a><br>
+<a href="https://github.com/ciena-frost/ember-frost-object-details" target="_blank">ember-frost-object-details</a><br>
+See <a href="https://github.com/ciena-frost" target="_blank">ciena-frost</a> for additional projects
 
 
 # Where is Frost going?
