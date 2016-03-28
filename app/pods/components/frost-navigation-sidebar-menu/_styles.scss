@@ -2,6 +2,11 @@
   min-width: 220px;
 }
 
+.frost-navigation-sidebar-menu .frost-button.tab .text {
+  font-size: $frost-font-s;
+  color: $frost-color-grey-1;
+}
+
 .frost-navigation-sidebar-menu .title {
   padding: 28px 0 20px 0;
   @include display(flex);
@@ -50,6 +55,7 @@
   font-weight: 500;
   font-size: $frost-font-s;
   color: $frost-color-grey-1;
+  cursor: pointer;
 }
 
 .frost-navigation-sidebar-menu .frost-link.route {
