@@ -73,6 +73,7 @@ body.forEach(function (repo) {
         demo.name = repo.name
         demo.contents_url = repo.contents_url
         demo.html_url = repo.html_url
+        demo.clone_url = repo.clone_url
         packageJSON.frostGuideDirectory = demo.frostGuideDirectory
         createContent(demo.frostGuideDirectory, demo, packageJSON, demo.demoName, true)
       }
@@ -150,7 +151,7 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
         //multiple demos
 
         item.route = item.route.replace(demoLocation + '.', parent.toLowerCase() + ".")
-        console.log( chalk.red("Merging items: " + item.route))
+        console.log(chalk.red("Merging items: " + item.route))
         if (item.path !== undefined && item.path.path && item.path.path !== "/") {
           item.path.path = demoParentDirectory.toLowerCase() + item.path.path
         }
@@ -189,37 +190,33 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
           }
 
         }
-      }else {
+      } else {
         // multiple demos
-        console.log( "Multiple demos merge")
-        console.log(routeConfig.route)
-        console.log(demoId)
-        console.log(demoLocation)
         if (routeConfig.route === demoId) {
-        console.log(chalk.blue("Found match for: " + demoId))
-        console.log(routeConfig)
-        console.log(demo)
-        routeConfig.route = demoId.toLowerCase()
-          //        routeConfig.alias = "Found You"
-        if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
-          routeConfig.modalName = demo[0].modalName
-          routeConfig.modal = demo[0].modal
-        }
+          console.log(chalk.blue("Found match for: " + demoId))
+          console.log(routeConfig)
+          console.log(demo)
+          routeConfig.route = demoId.toLowerCase()
+            //        routeConfig.alias = "Found You"
+          if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
+            routeConfig.modalName = demo[0].modalName
+            routeConfig.modal = demo[0].modal
+          }
 
-        if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
-          routeConfig.path = demo[0].path
-        }
-        if (demo[0].items !== undefined) {
-          console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
-          mergeItems(demo[0].items, demoId, demoLocation)
-          routeConfig.items = demo[0].items
-        }
+          if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
+            routeConfig.path = demo[0].path
+          }
+          if (demo[0].items !== undefined) {
+            console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
+            mergeItems(demo[0].items, demoId, demoLocation)
+            routeConfig.items = demo[0].items
+          }
 
-        if (demo[0].modals !== undefined) {
-          routeConfig.modals = demo[0].modals
-        }
+          if (demo[0].modals !== undefined) {
+            routeConfig.modals = demo[0].modals
+          }
 
-      }
+        }
       }
 
     } else {
@@ -416,14 +413,18 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
       //ember install this package
       emberInstall(repo.name);
     }
+
+    // clone here
+    cloneRepo(repo.clone_url, repo.name)
+    repo.contents_url = 'clones/' + repo.name + '/{+path}'
     var demo_content_url;
     if (multipleDemos === undefined) {
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation);
     } else {
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation);
     }
 
-    var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
+    var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss")
     var demo_style_folder_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles?ref=master")
     var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
     var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
@@ -915,6 +916,10 @@ function npmInstall(repo) {
     console.log(chalk.red.bold(log.stderr));
   }
 }
+
+function cloneRepo(clone_url, repoName) {
+  console.log("Cloning: " + clone_url)
+  var log = exec('git clone ' + clone_url + ' clones/' + repoName)
   if (log.status === 0) {
     console.log(chalk.green.bold(log.stdout));
   } else {
@@ -924,4 +929,21 @@ function npmInstall(repo) {
 
 function stringStartsWith(string, prefix) {
   return string.slice(0, prefix.length) == prefix;
+}
+
+function rmDir(dirPath) {
+  try {
+    var files = fs.readdirSync(dirPath)
+  } catch (e) {
+    return;
+  }
+  if (files.length > 0)
+    for (var i = 0; i < files.length; i++) {
+      var filePath = dirPath + '/' + files[i]
+      if (fs.statSync(filePath).isFile())
+        fs.unlinkSync(filePath)
+      else
+        rmDir(filePath)
+    }
+  fs.rmdirSync(dirPath)
 }
