@@ -1,42 +1,5 @@
-Last update: 2016-02-25
-- Streamline the addon porting process (frost-cli)
-- Publish ember-frost-info-bar
-- Publish ember-frost-link
-- Publish ember-frost-list
-- Publish ember-frost-radio
-- Publish ember-frost-application-bar
-- Add autoprefixer to ember-frost-css-core
-- Document addon philosophy / best practices
-- Create an internal svg project to extend ember-frost-icons
-- Publish ember-frost-checkbox
-- Publish ember-frost-theme (CSS variables)
-- Publish ember-frost-css
-- Support basic documentation contribution
-- Publish eslint-config-frost-standard
-- Publish pr-bumper
-- Capture the dependency graph for the transition to OSS components
-- Publish ember-frost-icons (SVGs)
-- Publish ember-frost-button
-- Publish ember-frost-text
-- Can we create Frost as an interface library?
-- Publish ember-frost-bunsen
-- Publish ember-frost-checkbox
-- Publish ember-frost-select
-- Publish ember-frost-sort
-- Publish ember-frost-loading
-- Publish ember-frost-badge
-- Publish ember-frost-object-browser
-- Publish ember-frost-about-dialog
-- Publish ember-frost-password
-- Publish ember-frost-modal-input
-- Publish ember-frost-login
-- Publish ember-frost-navigation
-- Publish ember-frost-text-area
-- Publish ember-frost-date-picker
-- Publish ember-frost-slider
-- Publish ember-frost-object-details
-- Update the ember-frost-theme demo
-- ember-frost-svg modular svgs
-- Update the frost org page to include the sub-org leads
-- Draw the OSS line for March
-- Send out Frost welcome email
+# Coming soon ;)
+
+Seriously though, the Roadmap is a work in progress
+
+Next up, documenting everything in <a href="https://github.com/ciena-frost" target="_blank">ciena-frost</a> and <a href="https://github.com/ciena-blueplanet" target="_blank">ciena-blueplanet</a>
