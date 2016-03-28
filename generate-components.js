@@ -915,12 +915,6 @@ function npmInstall(repo) {
     console.log(chalk.red.bold(log.stderr));
   }
 }
-  if (log.status === 0) {
-    console.log(chalk.green.bold(log.stdout));
-  } else {
-    console.log(chalk.red.bold(log.stderr));
-  }
-}
 
 function stringStartsWith(string, prefix) {
   return string.slice(0, prefix.length) == prefix;
