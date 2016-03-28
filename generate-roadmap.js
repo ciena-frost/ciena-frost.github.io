@@ -19,14 +19,6 @@ findOverview.forEach(function (fileOrFolder1) {
   }
 });
 
-var lastUpdatePackageJSON = JSON.parse(fs.readFileSync("./package.json")).roadmapLastUpdate;
-var lastUpdateRoadmapMd = fs.readFileSync(pathToRoadmap).toString().match(/\d{4}[-]\d{2}[-]\d{2}/)[0];
-
-if(lastUpdatePackageJSON === lastUpdateRoadmapMd){
-  console.log("The roadmapLastUpdate attribute in package.json has not changed, the roadmap will not be updated, exiting...");
-  return;
-}
-
 //Set Up Header for call to ASANA
 var options = {
   'headers': {
@@ -37,7 +29,7 @@ var options = {
 //Call to ASANA
 var res = request('GET', 'https://app.asana.com/api/1.0/projects/83000150826277/tasks?completed_since=now', options);
 var body = JSON.parse(res.getBody());
-var roadmapMd = "Last update: " + lastUpdatePackageJSON;
+var roadmapMd = ""
 
 //Create markdown content from response
 body.data.forEach(function(task) {

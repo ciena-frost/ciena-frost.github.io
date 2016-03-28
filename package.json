@@ -1,7 +1,6 @@
 {
   "name": "frost-guide",
   "version": "0.0.0",
-  "roadmapLastUpdate": "2016-02-25",
   "description": "Frost guide",
   "private": true,
   "directories": {
@@ -64,7 +63,7 @@
     "ember-frost-button": "1.4.3",
     "ember-frost-checkbox": "1.2.2",
     "ember-frost-component": "1.0.3",
-    "ember-frost-core": "0.0.10",
+    "ember-frost-core": "0.0.11",
     "ember-frost-css-core": "1.1.3",
     "ember-frost-date-picker": "0.0.5",
     "ember-frost-icons": "1.5.3",

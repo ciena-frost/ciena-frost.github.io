@@ -8,6 +8,7 @@ var toSource = require('tosource')
 var exec = require('sync-exec');
 var Finder = require('fs-finder');
 var removeMd = require('remove-markdown-and-html');
+var pjson = require('./package.json');
 
 String.prototype.replaceAll = function (search, replacement) {
   var target = this;
@@ -55,8 +56,7 @@ body.forEach(function (repo) {
     if (packageJSON === undefined) {
       return;
     }
-    //ember install this package
-    emberInstall(repo.name);
+
 
     if (typeof packageJSON.frostGuideDirectory === 'string')
       createContent(packageJSON.frostGuideDirectory, repo, packageJSON, "")
@@ -410,6 +410,12 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   readme_content = getFile(readme_url);
 
   if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory.toLowerCase())) {
+    if (pjson.devDependencies.hasOwnProperty(repo.name)) {
+      npmInstall(repo.name)
+    } else {
+      //ember install this package
+      emberInstall(repo.name);
+    }
     var demo_content_url;
     if (multipleDemos === undefined) {
       demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
@@ -792,23 +798,6 @@ function getScrollspyLinks(markdownPath) {
   return template + "\n\t\t{{/scroll-spy}}"
 }
 
-function npmInstall(repo) {
-  console.log("Doing NPM Install of : " + repo);
-  npm.load({
-    loaded: false
-  }, function (err) {
-    // catch errors
-    npm.commands.install([repo], function (er, data) {
-      if (er !== null)
-        console.log("Npm install error: " + er);
-    });
-    npm.on("log", function (message) {
-      // log the progress of the installation
-      console.log(message);
-    });
-  });
-}
-
 function directoryExistsSync(filePath) {
   try {
     return fs.statSync(filePath).isDirectory();
@@ -908,12 +897,18 @@ function requireFromString(src, filename) {
 }
 
 function emberInstall(repo) {
-  if (repo === "ember-frost-notifier") {
-    //until issue is resolved
-    return
-  }
   console.log("Doing Ember Install of : " + repo);
-  var log = exec('ember install ' + repo) //+ '@latest');
+  var log = exec('ember install ' + repo + '@latest');
+  if (log.status === 0) {
+    console.log(chalk.green.bold(log.stdout));
+  } else {
+    console.log(chalk.red.bold(log.stderr));
+  }
+}
+
+function npmInstall(repo) {
+  console.log("Doing NPM Install of : " + repo);
+  var log = exec('npm install ' + repo + '@latest --save-dev');
   if (log.status === 0) {
     console.log(chalk.green.bold(log.stdout));
   } else {
