@@ -2,7 +2,7 @@
   <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" heigth="400px" width="400px" x="0px" y="0px"
    viewBox="0 0 350 260" enable-background="new 0 0 350 260" xml:space="preserve">
 <g>
   <path fill="#43C9F7" d="M174,13.5c1,0,1.9,0.2,2.6,0.6l65,35.9c1.4,0.8,2.4,2.8,2.4,4.4v71.5c0,1.6-1,3.7-2.4,4.4l-65.1,35.9
