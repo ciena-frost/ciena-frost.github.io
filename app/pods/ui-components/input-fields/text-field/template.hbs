@@ -1,23 +1,193 @@
-
-<div class="md">
-	<div class="content-col">
-		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'UI-components/input-fields/text-field')}} 
+<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-fields/text-field')}}
 		{{#scroll-spy}}
 			{{#scroll-to id="#summary" class="h2"}} Summary{{/scroll-to}}
 			{{#scroll-to id="#relatedtopics" class="h2"}} Related topics{{/scroll-to}}
 			{{#scroll-to id="#behaviors" class="h2"}} Behaviors{{/scroll-to}}
 			{{#scroll-to id="#guidelines" class="h2"}} Guidelines{{/scroll-to}}
 		{{/scroll-spy}}
-	</div>
+	{{/frost-tab}}
+	{{#frost-tab alias='API' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-fields/text-field/README')}}
+		{{#scroll-spy}}
+			{{#scroll-to id="#emberfrosttext" class="h1"}} ember-frost-text{{/scroll-to}}
+			{{#scroll-to id="#api" class="h2"}} API{{/scroll-to}}
+			{{#scroll-to id="#examples" class="h2"}} Examples{{/scroll-to}}
+			{{#scroll-to id="#focusoninput" class="h3"}} Focus on Input{{/scroll-to}}
+			{{#scroll-to id="#aligntext" class="h3"}} Align text{{/scroll-to}}
+			{{#scroll-to id="#handlechangestovalue" class="h3"}} Handle Changes to Value{{/scroll-to}}
+			{{#scroll-to id="#bindvalue" class="h3"}} Bind Value{{/scroll-to}}
+			{{#scroll-to id="#disableinput" class="h3"}} Disable Input{{/scroll-to}}
+			{{#scroll-to id="#makeinputreadonly" class="h3"}} Make Input Read Only{{/scroll-to}}
+		{{/scroll-spy}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' id='demo'}}
+		<div><div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+    {{notification-message notification=notification}}
+  {{/each}}
+</div>
+
+<div class="dummy-body">
+  <div class="dummy-content">
+    <div class="dummy-notification-container">
+{{#each notifications as |notification|}}
+  {{notification-message notification=notification}}
+{{/each}}
+</div>
+
+<div class="dummy-body text-input field">
+    <div class="section">
+      <div class="example">
+        <div class="title">Basic</div>
+                <div class="demo">
+          {{frost-text}}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text}}
+  ```"
+          }}
+        </div>
+      </div>
+      <div class="example">
+          <div class="title">Autofocus</div>
+        <div class="demo">
+            {{frost-text
+              autofocus=true
+            }}
+          </div>
+        <div class="snippet">
+            {{format-markdown "```handlebars
+{{frost-text
+  autofocus=true
+}}
+    ```"
+            }}
+          </div>
+      </div>
+      <div class="example">
+        <div class="title">Placeholder</div>
+         <div class="demo">
+          {{frost-text
+            placeholder='basic field'
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  placeholder='basic field'
+}}
+    ```"
+          }}
+        </div>
+      </div>
+      <div class="example">
+        <div class="title">Error</div>
+         <div class="demo">
+            {{frost-text
+              class="error"
+            }}
+          </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  class='error'
+}}
+  ```"
+          }}
+          </div>
+      </div>
+      <div class="example">
+        <div class="title">Disabled - no text</div>
+        <div class="demo">
+          {{frost-text
+            disabled=true
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  disabled=true
+}}
+  ```"
+          }}
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="title">Disabled - prefilled</div>
+        <div class="demo">
+          {{frost-text
+            disabled=true
+            value="Read only text"
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  disabled=true
+  value='Read only text'
+}}
+    ```"
+}}
+        </div>
+      </div>
+      <div class="example">
+        <div class="title">Align</div>
+        <div class="demo">
+          {{frost-text
+            align='right'
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  align='right'
+}}
+    ```"
+          }}
+        </div>
+      </div>
+  </div>
+
+  <hr>
+
+  <div class='section'>
+    <div class="example">
+      <div class="title">Events: onInput</div>
+      <div class="demo">
+        {{frost-text
+          onInput=(action 'onInputHandler')
+        }}
+      </div>
+      <div class="snippet">
+        {{format-markdown "```handlebars
+{{frost-text
+  onInput=(action 'onInputHandler')
+}}
+```"
+        }}
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div></div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span><div class='contributors-list'>Steven Glanzer</div>
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Roxanne Panthaky - Gosia Hyndman - Eric White - Steven Glanzer - ember-tomster</div>
 			</div>
-			<div class='connect'>
-				<span class="footerHeading"></span>
-					 
+			<div class='connect'><div>
+				<div class="footerHeading">Connect</div>
+					 <div><a href="https://github.com/ciena-frost/ember-frost-core" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a></div></div>
 				</div>
 			</div>
 			<br/>

@@ -1,6 +1,15 @@
-import Ember from 'ember'
+import ApiController from 'frost-guide/utils/ApiController'
 
-export default Ember.Controller.extend({
-  queryParams: ['section'],
-  section: null
+export default ApiController.extend({
+
+  actions: {
+    onInputHandler (attrs) {
+      this.notifications.addNotification({
+        message: "value: '" + attrs.value + "'",
+        type: 'success',
+        autoClear: true,
+        clearDuration: 2000
+      })
+    }
+  }
 })
