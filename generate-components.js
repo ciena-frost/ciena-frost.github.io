@@ -920,12 +920,6 @@ function npmInstall(repo) {
 function cloneRepo(clone_url, repoName) {
   console.log("Cloning: " + clone_url)
   var log = exec('git clone ' + clone_url + ' clones/' + repoName)
-  if (log.status === 0) {
-    console.log(chalk.green.bold(log.stdout));
-  } else {
-    console.log(chalk.red.bold(log.stderr));
-  }
-}
 
 function stringStartsWith(string, prefix) {
   return string.slice(0, prefix.length) == prefix;

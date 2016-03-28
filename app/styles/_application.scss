@@ -199,7 +199,7 @@ img {
 }
 
 .md-scrollspy {
-  width: 100%;
+  min-width: 120px;
   position: absolute;
   background-color: white;
   margin-top: 20px;
