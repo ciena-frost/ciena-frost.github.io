@@ -2,32 +2,28 @@
 
 Accept and display multiple rows of input text
 
-<img src="assets/images/ui-components/input-controls/text-area/summary.png" class="confluence-embedded-image"/>
+<img src="assets/images/ui-components/input-controls/text-area/summary.png"/>
+
+## Related topics
+
+- [Auto-complete text field](#/ui-components/input-fields/auto-complete-text-field) - suggestions based on a data source
+- [Password](#/ui-components/input-fields/password) - masked text input to hide characters
+- [Text field](#/ui-components/input-fields/text-field) - basic text input
 
 ## Behaviors
 
--   A text area field is a rectangular area in which the user enters text or modifies existing text. It is multiple lines in height as opposed to being a single line.
--   Text will wrap within the text area field
--   If the inputted characters are more than can be displayed, a scroll bar will be displayed.
--   If disabled text is displayed, the scroll bar is still operational.
--   There is no option to display hidden characters for a text area field.
--   There is no option for auto-completion in the text area field.
--   A text area field can be validated to provide error state and error text below the text area field.
--   For a text area field that is already populated with text, selecting in the text field will highlight the whole contents.
--   An X is displayed at the bottom right corner of the text area field to clear the inputted characters.
+- Accepts and displays multiple rows of input text
+- Displays a minimum of 2 rows
+- Text input will wrap on x-overflow and scroll on y-overflow
+- Focusing the component selects any existing input text
+- Focusing the component displays a clear button which can remove all input text
+- Scroll is still operational when the text area is disabled
+- May conditionally indicate an error state
 
 ## Guidelines
 
-**Text areas are typically used to collect more lengthy textual input from a user.** An example where the text area field would be used is a note, where free form text that can vary from several characters to sentences.
+- **Use for free form text on the scale of one or more sentences**, e.g. notes or descriptions
 
-See [text field](#/ui-components/input-controls/text) usage guidelines. The same usage guidelines apply, but might not be as relevant.
+- **Validate input** when possible.  If invalid input text is provided the text area indicates an error state when the text area loses focus.  See [forms](#/design-patterns/forms/overview) for standard error text positioning.
 
-**Text area field should be at least 2 lines in height.**
-
-**The length of the text area field will depend on the the context it is being used in**. General rule is 50% of the expected content. It needs to be a reasonable size so it is long enough to accept input. Seek professional help. 
-
-**A scroll bar is displayed when text is longer than the text area field**.
-
-## Visual Specification
-
-<img src="assets/images/ui-components/input-controls/text-area/visual-specification.png" class="confluence-embedded-image"/>
+- **Minimize overflow** when possible by sizing text areas to accomodate at least 50% of the expected input length

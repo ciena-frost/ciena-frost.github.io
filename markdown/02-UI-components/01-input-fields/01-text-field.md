@@ -7,9 +7,9 @@ Accept and display input text
 
 ## Related topics
 
-- [Auto-complete text field](#/ui-components/input-controls/auto-complete-text-field) - suggestions based on a data source
-- [Password](#/ui-components/input-controls/password) - masked input to hide characters
-- [Text area](#/ui-components/input-controls/text-area) - text input with multiple rows
+- [Auto-complete text field](#/ui-components/input-fields/auto-complete-text-field) - suggestions based on a data source
+- [Password](#/ui-components/input-fields/password) - masked text input to hide characters
+- [Text area](#/ui-components/input-fields/text-area) - text input with multiple rows
 
 
 ## Behaviors

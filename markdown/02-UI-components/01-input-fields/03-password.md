@@ -2,7 +2,13 @@
 
 A password input box accepts the user-entered input. It is a simple text field that can display asterisk for each character.
 
-<img src="assets/images/ui-components/input-controls/password/summary.png" class="confluence-embedded-image"/>
+<img src="assets/images/ui-components/input-controls/password/summary.png"/>
+
+## Related topics
+
+- [Auto-complete text field](#/ui-components/input-fields/auto-complete-text-field) - suggestions based on a data source
+- [Text area](#/ui-components/input-fields/text-area) - text input with multiple rows
+- [Text field](#/ui-components/input-fields/text-field) - basic text input
 
 ## Behaviors
 

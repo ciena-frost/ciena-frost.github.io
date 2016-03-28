@@ -1,11 +1,11 @@
 ## Summary
 Checkboxes are used for multi selection, and to describe a state, action or value.
 
-<span style="line-height: 1.42857;"><span class="confluence-embedded-file-wrapper"><img src="assets/images/ui-components/input-controls/checkbox/checkbox.png" class="confluence-embedded-image" /></span></span>
+<img src="assets/images/ui-components/input-controls/checkbox/checkbox.png"/>
 
-### Behaviors
+## Behaviors
 
--   Selecting and deselecting the checkbox will display the checkmark or hide the checkmark.
+- Selecting and deselecting the checkbox will display the checkmark or hide the checkmark.
 
 ## Usage guidelines
 
