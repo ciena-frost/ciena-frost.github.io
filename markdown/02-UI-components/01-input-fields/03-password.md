@@ -1,6 +1,6 @@
 ## Summary
 
-A password input box accepts the user-entered input. It is a simple text field that can display asterisk for each character.
+Accept and display masked input text
 
 <img src="assets/images/ui-components/input-controls/password/summary.png"/>
 
@@ -12,25 +12,21 @@ A password input box accepts the user-entered input. It is a simple text field t
 
 ## Behaviors
 
--   A password input field is a [text field](#/ui-components/input-controls/text) in which the user enters a value or modifies a value. 
--   Use a password input field to allow a user to input a value that needs to remain hidden as the user types.
--   By default, always hide the text with asterisks unless stated by the user.
--   In appropriate circumstances, allow the user to show the characters that were typed by selecting the show indicator.
--   If the user has selected the show indicator the icon changes to the hide indicator.
--   If the user has selected the hide indicator, the icon changes to the show indicator and displays the characters as asterisks.
--   Display error messages below the password input field.
--   If error, display the error text and the border of the password input field in red (see visual specification).
--   All text in the password input field should be left aligned.
--   An indicator is visible when the caps lock key is on.
+- Accepts and displays masked input text
+- Input text is left-aligned
+- Focusing the component selects any existing input text
+- Focusing the component displays a clear button which can remove all input text
+- Indicates when caps lock is on
+- May conditionally indicate an error state
+- Can toggle between masked and unmasked input text when required
+- Can display a prompt when required
 
 ## Guidelines
 
-See [text field](#/ui-components/input-controls/text) for basic usage guidelines of the password input field.
+- **Validate input** when possible.  If invalid input text is provided the text field indicates an error state when the text field loses focus.  See [forms](#/design-patterns/forms/overview) for standard error text positioning.
+- **When appropriate allow the masked input text to be revealable**, e.g. to avoid entering a duplicate confirmation password when setting a new password
 
-In particular circumstances, **it might be appropriate to allow the user to see the characters they are typing**. If that is the case, provide the user with the ability to show the characters by selecting the show indicator button that would be displayed in the password input field. When the user selects show indicator, the control then changes to hide indicator to hide the characters. For passwords, this would be used when creating a password such that you don't have to have double password entry.
+<img src="assets/images/ui-components/input-controls/password/usage-guidelines.png"/>
 
-<img src="assets/images/ui-components/input-controls/password/usage-guidelines.png" class="confluence-embedded-image"/>
-
-## Visual Specification
-
-<img src="assets/images/ui-components/input-controls/password/visual-specification.png" class="confluence-embedded-image"/>
+- **Use prompt text as a last resort** to supplement context, labels and instructions
+- **Avoid overflow** when possible by sizing text fields to comfortably accomodate the expected input length

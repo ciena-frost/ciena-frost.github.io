@@ -30,7 +30,7 @@ Accept and display input text
   <img src="assets/images/ui-components/input-controls/text/error.png" class="confluence-embedded-image" />
 
 - **Display appropriate units of measure** when the text field value will be interpreted according to a unit of measure (e.g. GB, MB, kB).
-- **Use prompt text as a last-resort** to supplement context, labels and instructions
+- **Use prompt text as a last resort** to supplement context, labels and instructions
 
   <img src="assets/images/ui-components/input-controls/text/prompt.png" class="confluence-embedded-image" />
 
