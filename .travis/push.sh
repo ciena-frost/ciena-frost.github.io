@@ -29,6 +29,10 @@ commit_website_files() {
   npm install remove-markdown-and-html
   npm install fs-finder
   npm install npm
+  npm install eslint@2.2.0
+  npm install eslint-config-standard
+  npm install eslint-config-frost-standard
+  npm install babel-eslint
   npm install && bower install
   ./generate-frost-guide-content.sh
   git add --all

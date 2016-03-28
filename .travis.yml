@@ -7,6 +7,10 @@ before_install:
 - npm config set spin false
 - npm set progress=false
 - npm install -g npm@^2
+- npm install eslint@2.2.0
+- npm install eslint-config-standard
+- npm install eslint-config-frost-standard
+- npm install babel-eslint
 install:
 - npm install -g bower
 - npm install && bower install
