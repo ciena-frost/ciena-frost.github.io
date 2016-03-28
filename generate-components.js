@@ -581,6 +581,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 
   } else {
     console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
+    return;
   }
 
   // Get Demo Component Helpers
