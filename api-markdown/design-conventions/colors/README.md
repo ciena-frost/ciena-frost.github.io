@@ -1,8 +1,21 @@
-# ember-frost-theme
+[ci-img]: https://travis-ci.org/ciena-frost/ember-frost-theme.svg "Build Status"
+[ci-url]: https://travis-ci.org/ciena-frost/ember-frost-theme
 
-SASS based normalization and default theme variables for Frost projects
+[cov-img]: https://coveralls.io/repos/github/ciena-frost/ember-frost-theme/badge.svg?branch=master "Code Coverage"
+[cov-url]: https://coveralls.io/github/ciena-frost/ember-frost-theme
+
+[npm-img]: https://img.shields.io/npm/v/ember-frost-theme.svg "NPM Version"
+[npm-url]: https://www.npmjs.com/package/ember-frost-theme
+
+# ember-frost-theme <br /> [![Travis][ci-img]][ci-url] [![Coveralls][cov-img]][cov-url] [![NPM][npm-img]][npm-url]
+SASS based default theme variables for Frost projects
 
 # Usage
+
+
+```
+ember install ember-frost-theme
+```
 
 
 Modify your `ember-cli-build.js` to include:
@@ -12,7 +25,7 @@ Modify your `ember-cli-build.js` to include:
 const app = new EmberAddon(defaults, {
     sassOptions: {
       includePaths: [
-        'node_modules/ember-frost-core/styles'
+        'node_modules/ember-frost-theme/scss'
       ]
     }
   })
@@ -23,10 +36,9 @@ Modify your `app.scss` to include
 
 ```sass
 @import 'frost-theme';
-@import 'frost-core';
 ```
 
-You now have access to the theme and core variables
+You now have access to the theme variables
 
 e.g.
 
@@ -34,4 +46,5 @@ e.g.
 
 # Contribution
 
-All uses of color in frost components must be aliased and included in the default frost theme with the appropriate palette reference
+All uses of color in frost components must be aliased and included in the default frost theme with the appropriate
+palette reference
