@@ -328,12 +328,13 @@ function getDemoComponents(url) {
 
 function getDemoModels(url) {
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
+//    var res = request('GET', url, options);
+    var body =  fs.readdirSync(url)
+//    var body = JSON.parse(res.getBody());
     body.forEach(function (model) {
-      if (model.name.endsWith('.js')) {
-        var contents = getFile(model.url)
-        fs.writeFileSync("app/models/" + model.name, contents)
+      if (model.endsWith('.js')) {
+        var contents = fs.readFileSync(model, 'utf8');
+        fs.writeFileSync("app/models/" + model, contents)
       }
     })
   } catch (err) {
@@ -341,22 +342,51 @@ function getDemoModels(url) {
   }
 }
 
+function getDirectories(srcpath) {
+  return fs.readdirSync(srcpath).filter(function(file) {
+    return fs.statSync(path.join(srcpath, file)).isDirectory();
+  });
+}
+/*
+* Get directory folder and files
+*/
+function walkSync(dir, parent) {
+  parent = typeof parent !== 'undefined' ? parent : '';
+  var fs = fs || require('fs');
+  var files = fs.readdirSync(dir);
+  var filelist = [];
+  files.forEach(function(file) {
+    if (fs.statSync(dir + '/' + file).isDirectory()) {
+      filelist.push({
+        folder: parent + file,
+        items: walkSync(dir + '/' + file, parent + file + '/')
+      });
+    } else {
+      filelist.push(parent + file);
+    }
+  });
+  return filelist;
+};
+
 function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) {
   //  try {
   mkdirpSync("app/mirage/fixtures")
   mkdirpSync("app/mirage/factories")
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
+//    var res = request('GET', url, options);
+//    var body = JSON.parse(res.getBody());
+      var body = walkSync(url)
   } catch (err) {
     console.log(chalk.red.bold(err))
     return;
   }
   body.forEach(function (mirage) {
-      if (mirage.type === "dir") {
-        var folderContent = getFolder(mirage.url, mirage.name)
+      if (typeof mirage === 'object') {
+        //found directory
+        var folderContent = mirage.items
           //        console.log(folderContent)
-        folderContent.forEach(function (value, key) {
+        folderContent.forEach(function (key) {
+          var value = fs.readFileSync(key, 'utf8');
           if (key.indexOf("fixtures/") > -1 || key.indexOf("factories/") > -1) {
             fs.writeFileSync("app/mirage/" + key, value)
           } else if (key.indexOf("scenarios/default.js") > -1) {
@@ -398,13 +428,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   var linuxCompatibleDemoParentDirectory = demoParentDirectory.toLowerCase()
     // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
-  if (multipleDemos === undefined) {
-    readme_url = repo.contents_url.replace("{+path}", "README.md");
-  } else {
-    readme_url = repo.contents_url.replace("{+path}", repo.readme);
-  }
 
-  readme_content = getFile(readme_url);
 
   if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory.toLowerCase())) {
     if (pjson.devDependencies.hasOwnProperty(repo.name)) {
@@ -417,6 +441,15 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     // clone here
     cloneRepo(repo.clone_url, repo.name)
     repo.contents_url = 'clones/' + repo.name + '/{+path}'
+
+    if (multipleDemos === undefined) {
+      readme_url = repo.contents_url.replace("{+path}", "README.md");
+    } else {
+      readme_url = repo.contents_url.replace("{+path}", repo.readme);
+    }
+
+    readme_content = getFile(readme_url);
+
     var demo_content_url;
     if (multipleDemos === undefined) {
       demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation);
@@ -425,10 +458,10 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     }
 
     var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss")
-    var demo_style_folder_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles?ref=master")
-    var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
-    var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
-    var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
+    var demo_style_folder_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles")
+    var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application");
+    var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models")
+    var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage")
     getDemoModels(demo_models_url);
     getDemoMirage(demo_mirage_url, scenariosToImportMap, configstoImportMap, repo.name);
     try {
@@ -444,9 +477,9 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     if (content.template_hbs === undefined) {
       console.log(chalk.blue("Demo template empty. Checking demo/index"))
       if (multipleDemos === undefined) {
-        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index" + "?ref=master");
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index");
       } else {
-        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "/index" + "?ref=master");
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "/index");
       }
 
       try {
@@ -604,12 +637,12 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   }
 
   if (multipleDemos === true) {
-    var pod_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+    var pod_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation);
     getPodsNestedRoutes(pod_url, demoParentDirectory)
   }
   // Get Demo Components
   try {
-    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
+    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components");
     getDemoComponents(components_url)
   } catch (err) {
     if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
@@ -620,7 +653,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   }
   //Get Demo routing.js
   try {
-    var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js?ref=master");
+    var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js");
     if (multipleDemos === undefined) {
       getDemoRouting(routing_url, routingConfig, demoParentDirectory)
     } else {
@@ -920,6 +953,12 @@ function npmInstall(repo) {
 function cloneRepo(clone_url, repoName) {
   console.log("Cloning: " + clone_url)
   var log = exec('git clone ' + clone_url + ' clones/' + repoName)
+  if (log.status === 0) {
+    console.log(chalk.green.bold(log.stdout));
+  } else {
+    console.log(chalk.red.bold(log.stderr));
+  }
+}
 
 function stringStartsWith(string, prefix) {
   return string.slice(0, prefix.length) == prefix;
