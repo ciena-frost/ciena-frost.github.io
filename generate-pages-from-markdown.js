@@ -58,6 +58,7 @@ function dive(dir, array) {
     // Full path of that file
     var path = dir + "/" + file;
 
+    console.log("Reading Path: " + path)
     // Get the file's stats
     stat = fs.statSync(path);
 
@@ -77,7 +78,7 @@ function dive(dir, array) {
 
 
       dive(path, route.items);
-      
+
       array.push(route)
       if (DirectoryDepth === 1) {
         var flat_route = path.replace(mark_dir, "app/pods").replaceAll("[0-9][0-9][-]", "") + "/index"
@@ -192,10 +193,14 @@ export default Ember.Controller.extend({
       var md_content = fs.readFileSync(path).toString()
       md_content = removeMd(md_content)
       md_content = md_content.match(/\w+/g)
-
-      md_content.forEach(function (word) {
+      if (md_content === null){
+        keywords = ''
+      }else {
+        md_content.forEach(function (word) {
         keywords += word.toLowerCase() + " "
       })
+
+      }
 
       template_content += "\n\t\t{{/scroll-spy}}";
       template_content += "\n\t</div>";
@@ -210,7 +215,6 @@ export default Ember.Controller.extend({
 
       fs.writeFileSync(pagePath.toLowerCase() + "/template.hbs", template_content);
     }
-    console.log("KeyWords: " + JSON.stringify(keywords))
   });
 }
 
