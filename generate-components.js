@@ -386,7 +386,7 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
         var folderContent = mirage.items
           //        console.log(folderContent)
         folderContent.forEach(function (key) {
-          var value = fs.readFileSync(key, 'utf8');
+          var value = fs.readFileSync(url + '/' + key, 'utf8');
           if (key.indexOf("fixtures/") > -1 || key.indexOf("factories/") > -1) {
             fs.writeFileSync("app/mirage/" + key, value)
           } else if (key.indexOf("scenarios/default.js") > -1) {
@@ -448,7 +448,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
       readme_url = repo.contents_url.replace("{+path}", repo.readme);
     }
 
-    readme_content = getFile(readme_url);
+    readme_content = fs.readFileSync(readme_url)
 
     var demo_content_url;
     if (multipleDemos === undefined) {
@@ -729,21 +729,22 @@ function getFolder(url, parent) {
 }
 
 function getDemoContent(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+//  var res = request('GET', url, options);
+//  var body = JSON.parse(res.getBody());
+  var body = fs.readdirSync(url)
   var template_hbs;
   var route_js;
   var controller_js;
 
   body.forEach(function (item) {
     if (item.name == 'template.hbs') {
-      template_hbs = getFile(item.url);
+      template_hbs = fs.readFileSync(url + '/' + item)
       //      console.log(template_hbs);
       //      console.log("Template file: " + item.url );
     } else if (item.name == 'route.js') {
-      route_js = getFile(item.url);
+      route_js = fs.readFileSync(url + '/' + item)
     } else if (item.name == 'controller.js') {
-      controller_js = getFile(item.url);
+      controller_js = fs.readFileSync(url + '/' + item)
     }
   });
   return {
