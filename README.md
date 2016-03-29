@@ -2,7 +2,7 @@
 
 ## Development Environment
 
-### Markdown pages
+### Markdown Pages
 
 1. npm install
 2. bower install
@@ -20,6 +20,9 @@
     * The example above only creates the environment variable locally in the terminal. If you wish to make the environemt variable permanent you can follow these [steps](http://stackoverflow.com/questions/7501678/set-environment-variables-on-mac-os-x-lion)
 4. Run `./generate-frost-guide-content.sh` to generate all of the guide's content.
   * The following 3 scripts will run sequentially.
-    * `node generate-roadmap.js` makes api calls to the Frost OSS:Kickoff Asana project to get the list of incomplete tasks and writes it in the appropriate markdown file.
-    * `node generate-pages-from-markdown.js` generates config/routing.js and creates `pods` matching the folders/files within the markdown directory.
-    * `node generate-components.js` adds the Component APIs and Demos to the pods at the path indicated by the imported repo's frostGuideDirectory package.json variable.
+    * `generate-roadmap.js` makes api calls to the Frost OSS:Kickoff Asana project to get the list of incomplete tasks and writes it in the appropriate markdown file.
+    * `generate-pages-from-markdown.js` generates config/routing.js and creates `pods` matching the folders/files within the markdown directory.
+    * `generate-components.js` adds the component APIs and Demos to the pods at the path indicated by the imported repo's frostGuideDirectory package.json variable.
+
+  * Note that the scripts can be run individually with `node script-name.js`. However, one should remember that `generate-components.js` requires `generate-pages-from-markdown.js` to have run once. It should also be noted that running `generate-pages-from-markdown.js` removes the component's APIs and Demos.
+
