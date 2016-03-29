@@ -51,7 +51,12 @@ body.forEach(function (repo) {
   if (stringStartsWith(repo.name, "ember-") && ignoreList.indexOf(repo.name) === -1) {
 
     //get Package JSON un comment when needed
-    var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
+    // clone here
+    cloneRepo(repo.clone_url, repo.name)
+
+    repo.contents_url = 'clones/' + repo.name + '/{+path}'
+
+    var package_url = repo.contents_url.replace("{+path}", "package.json");
     var packageJSON = getPackageJSON(package_url);
     if (packageJSON === undefined) {
       return;
@@ -123,7 +128,7 @@ fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
 /////////////////////////// FUNCTIONS ////////////////////////////////////
 function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
-  var demoRouting_string = getFile(url)
+  var demoRouting_string = fs.readFileSync(url,'utf8')
   var demoRouting = requireFromString(demoRouting_string)
   if (demoRouting.length === 0) {
     return
@@ -242,16 +247,18 @@ function addDedicatedContributor(user, repo) {
 }
 
 function getDemoComponentHelpers(url, demoDirectory) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+//  var res = request('GET', url, options);
+//  var body = JSON.parse(res.getBody());
+  var body = walkSync(url)
   var BreakException = {};
 
   body.forEach(function (component) {
-    if (component.type === "dir") {
-      var content = getFolder(component.url, component.name)
-      var path = "app/pods/components/" + component.name;
+    if (typeof component === 'object') {
+      var content = component.items
+      var path = "app/pods/components/" + component.folder;
       var isComponent = false
-      content.forEach(function (value, key) {
+      content.forEach(function (key) {
+        var value = fs.readFileSync(url + '/' + key, 'utf8')
         if (key.indexOf("component.js") > -1) {
           mkdirpSync(path);
           isComponent = true
@@ -264,14 +271,13 @@ function getDemoComponentHelpers(url, demoDirectory) {
         }
         //        fs.writeFileSync("app/pods/components/" + key, value)
       })
-      if (!isComponent && component.name !== "index") {
-        path = "app/pods/" + demoDirectory + "/" + component.name
+      if (!isComponent && component !== "index") {
+        path = "app/pods/" + demoDirectory + "/" + component
         console.log("Path: " + path.toLowerCase())
         mkdirpSync(path.toLowerCase())
           // Not a component helper. So it's a route
-        content.forEach(function (value, key) {
-
-
+        content.forEach(function (key) {
+          var value = fs.readFileSync(url + '/' + key)
           var writeTo = "app/pods/" + demoDirectory + "/" + key
           writeTo = writeTo.toLowerCase()
           console.log("Write to: " + writeTo)
@@ -286,20 +292,20 @@ function getDemoComponentHelpers(url, demoDirectory) {
 
 function getPodsNestedRoutes(url, demoDirectory) {
   console.log("Found multiple demos")
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+//  var res = request('GET', url, options);
+//  var body = JSON.parse(res.getBody());
+  var body = walkSync(url)
   body.forEach(function (podItem) {
-    if (podItem.type === "dir" && !podItem.name.endsWith('index')) {
-      var path = "app/pods/" + demoDirectory + "/" + podItem.name
+    if (typeof podItem === 'object' && !podItem.folder.endsWith('index')) {
+      var path = "app/pods/" + demoDirectory + "/" + podItem.folder
       console.log("Path: " + path.toLowerCase())
       mkdirpSync(path.toLowerCase())
 
-      var content = getFolder(podItem.url, podItem.name)
-      var path = "app/pods/components/" + podItem.name;
+      var content = podItem.items
+      var path = "app/pods/components/" + podItem.folder;
       // Not a component helper. So it's a route
-      content.forEach(function (value, key) {
-
-
+      content.forEach(function (key) {
+        var value = fs.readFileSync(url + '/' + key)
         var writeTo = "app/pods/" + demoDirectory + "/" + key
         writeTo = writeTo.toLowerCase()
         console.log("Write to: " + writeTo)
@@ -312,14 +318,16 @@ function getPodsNestedRoutes(url, demoDirectory) {
 }
 
 function getDemoComponents(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+//  var res = request('GET', url, options);
+//  var body = JSON.parse(res.getBody());
+  var body = walkSync(url)
   body.forEach(function (component) {
-    if (component.type === "dir") {
-      var content = getFolder(component.url, component.name)
-      var path = "app/pods/components/" + component.name;
+    if (typeof component === 'object') {
+      var content = component.items
+      var path = "app/pods/components/" + component.folder;
       mkdirpSync(path);
-      content.forEach(function (value, key) {
+      content.forEach(function (key) {
+        var value = fs.readFileSync(url + '/' + key, 'utf8')
         fs.writeFileSync("app/pods/components/" + key, value)
       })
     }
@@ -439,7 +447,6 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     }
 
     // clone here
-    cloneRepo(repo.clone_url, repo.name)
     repo.contents_url = 'clones/' + repo.name + '/{+path}'
 
     if (multipleDemos === undefined) {
@@ -448,7 +455,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
       readme_url = repo.contents_url.replace("{+path}", repo.readme);
     }
 
-    readme_content = fs.readFileSync(readme_url)
+    readme_content = fs.readFileSync(readme_url, 'utf8')
 
     var demo_content_url;
     if (multipleDemos === undefined) {
@@ -640,7 +647,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 
   // Get Demo Component Helpers
   try {
-    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo");
     getDemoComponentHelpers(components_url, packageJSON.frostGuideDirectory)
   } catch (err) {
     if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
@@ -686,12 +693,14 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 function getPackageJSON(url) {
   //get api file request
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
-    res = request('GET', body.download_url, options);
-    return JSON.parse(res.getBody());
+//    var res = request('GET', url, options);
+//    var body = JSON.parse(res.getBody());
+//    res = request('GET', body.download_url, options);
+
+    return JSON.parse(fs.readFileSync(url,'utf8'));
     //get download url
   } catch (err) {
+    console.log(chalk.red(err))
     return undefined;
   }
 }
@@ -735,16 +744,13 @@ function getDemoContent(url) {
   var template_hbs;
   var route_js;
   var controller_js;
-
   body.forEach(function (item) {
-    if (item.name == 'template.hbs') {
-      template_hbs = fs.readFileSync(url + '/' + item)
-      //      console.log(template_hbs);
-      //      console.log("Template file: " + item.url );
-    } else if (item.name == 'route.js') {
-      route_js = fs.readFileSync(url + '/' + item)
-    } else if (item.name == 'controller.js') {
-      controller_js = fs.readFileSync(url + '/' + item)
+    if (item == 'template.hbs') {
+      template_hbs = fs.readFileSync(url + '/' + item, 'utf8')
+    } else if (item == 'route.js') {
+      route_js = fs.readFileSync(url + '/' + item, 'utf8')
+    } else if (item == 'controller.js') {
+      controller_js = fs.readFileSync(url + '/' + item, 'utf8')
     }
   });
   return {
@@ -756,21 +762,22 @@ function getDemoContent(url) {
 
 function getDemoApplicationContent(url) {
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
+//    var res = request('GET', url, options);
+//    var body = JSON.parse(res.getBody());
+    var body = fs.readdirSync(url)
     var template_hbs;
     var route_js;
     var controller_js;
 
     body.forEach(function (item) {
-      if (item.name == 'template.hbs') {
-        template_hbs = getFile(item.url);
+      if (item == 'template.hbs') {
+        template_hbs = fs.readFileSync(url + '/' + item, 'utf8')
         //      console.log(template_hbs);
         //      console.log("Template file: " + item.url );
-      } else if (item.name == 'route.js') {
-        route_js = getFile(item.url);
-      } else if (item.name == 'controller.js') {
-        controller_js = getFile(item.url);
+      } else if (item == 'route.js') {
+        route_js = fs.readFileSync(url + '/' + item, 'utf8')
+      } else if (item == 'controller.js') {
+        controller_js = fs.readFileSync(url + '/' + item, 'utf8')
       }
     });
     return {
@@ -786,15 +793,16 @@ function getDemoApplicationContent(url) {
 }
 
 function GetDemoStyle(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
-  return new Buffer(body.content, body.encoding).toString();
+//  var res = request('GET', url, options);
+//  var body = JSON.parse(res.getBody());
+  return fs.readFileSync(url, 'utf8');
 }
 
 function GetDemoStyleFolder(url) {
-  var content = getFolder(url, "");
-  content.forEach(function (value, key) {
+  var content = fs.readdirSync(url)
+  content.forEach(function (key) {
     if (key != 'app.scss') {
+      var value = fs.readFileSync(url + '/' + key, 'utf8')
       console.log("Writing Style: " + "app/pods/styles/" + key)
       fs.writeFileSync("app/styles/" + key, value)
     }
