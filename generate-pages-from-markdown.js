@@ -22,7 +22,19 @@ var options = {
 var route_array = []
 dive(mark_dir, route_array);
 console.log("Routing:\n" + toSource(route_array));
-
+var contributors_route = { id:"contributing",
+    alias:"Contributors",
+    type:"route",
+    route:"contributors",
+    items:[ { id:"contributors",
+        alias:"Contributors",
+        type:"route",
+        route:"contributors.contributors" },
+      { id:"contributor",
+        alias:"Contributor",
+        type:"route",
+        route:"contributors.contributor" } ] }
+route_array.push(contributors_route)
 //debug console.log(routing_string);
 fs.writeFileSync("config/routing.js", "module.exports = \n" + toSource(route_array) + ";");
 //////////////////////////////////////////////////////////////
@@ -65,23 +77,7 @@ function dive(dir, array) {
 
 
       dive(path, route.items);
-      if (filename.replaceAll("[0-9][0-9][-]", "") === "contributing") {
-        var route2 = {
-          id: 'contributors',
-          alias: 'Contributors',
-          type: 'route',
-          route: 'contributing.contributors.contributors'
-        }
-        route.items.push(route2)
-
-        route.items.push({
-          id: 'contributor',
-          alias: 'Contributor',
-          type: 'route',
-          route: 'contributing.contributors.contributor'
-        })
-
-      }
+      
       array.push(route)
       if (DirectoryDepth === 1) {
         var flat_route = path.replace(mark_dir, "app/pods").replaceAll("[0-9][0-9][-]", "") + "/index"

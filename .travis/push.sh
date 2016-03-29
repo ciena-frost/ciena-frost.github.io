@@ -16,18 +16,6 @@ setup_git() {
 commit_website_files() {
   git checkout $branch
   ember install ember-cli-github-pages
-  npm install path-posix
-  npm install walk-sync
-  npm install chalk
-  npm install path
-  npm install bower
-  npm install sync-request
-  npm install sync-exec
-  npm install marked
-  npm install highlight
-  npm install tosource
-  npm install remove-markdown-and-html
-  npm install fs-finder
   npm install npm
   npm install eslint@2.2.0
   npm install eslint-config-standard

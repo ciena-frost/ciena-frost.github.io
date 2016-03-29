@@ -1,23 +1,138 @@
-
-<div class="md">
-	<div class="content-col">
-		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'UI-components/input-fields/password')}} 
+<div class="md">{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-fields/password')}}
 		{{#scroll-spy}}
 			{{#scroll-to id="#summary" class="h2"}} Summary{{/scroll-to}}
 			{{#scroll-to id="#relatedtopics" class="h2"}} Related topics{{/scroll-to}}
 			{{#scroll-to id="#behaviors" class="h2"}} Behaviors{{/scroll-to}}
 			{{#scroll-to id="#guidelines" class="h2"}} Guidelines{{/scroll-to}}
 		{{/scroll-spy}}
-	</div>
+	{{/frost-tab}}
+	{{#frost-tab alias='API' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-fields/password/README')}}
+		{{#scroll-spy}}
+			{{#scroll-to id="#emberfrostpassword" class="h1"}} ember-frost-password{{/scroll-to}}
+			{{#scroll-to id="#api" class="h2"}} API{{/scroll-to}}
+			{{#scroll-to id="#examples" class="h2"}} Examples{{/scroll-to}}
+			{{#scroll-to id="#handlechangestovalue" class="h3"}} Handle Changes to Value{{/scroll-to}}
+			{{#scroll-to id="#makepasswordrevealable" class="h3"}} Make Password Revealable{{/scroll-to}}
+			{{#scroll-to id="#disableinput" class="h3"}} Disable Input{{/scroll-to}}
+			{{#scroll-to id="#makeinputreadonlyinput" class="h3"}} Make Input Read Only Input{{/scroll-to}}
+		{{/scroll-spy}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' id='demo'}}
+		<div><div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+    {{notification-message notification=notification}}
+  {{/each}}
+</div>
+
+<div class="dummy-body">
+  <div class="dummy-content">
+    <div class="dummy-body password">
+  <div class="section">
+  <div class="example">
+      <div class="title">Basic</div>
+      <div class="demo">
+        {{frost-password}}
+      </div>
+      <div class="snippet">
+        {{format-markdown "```handlebars
+{{frost-password}}
+```"
+        }}
+      </div>
+  </div>
+
+  <div class="example">
+      <div class="title">Errored</div>
+      <div class="demo">
+        {{frost-password
+          class="error"
+        }}
+      </div>
+      <div class="snippet">
+        {{format-markdown "```handlebars
+{{frost-password
+  class='error'
+}}
+```"
+        }}
+      </div>
+  </div>
+
+  <div class="example">
+      <div class="title">Disabled</div>
+      <div class="demo">
+        {{frost-password
+          disabled=true
+        }}
+      </div>
+      <div class="snippet">
+        {{format-markdown "```handlebars
+{{frost-password
+  disabled=true
+}}
+```"
+        }}
+      </div>
+  </div>
+
+  <div class="example">
+    <div class="title">Revealable</div>
+    <div class="demo">
+      {{frost-password
+        revealable=true
+      }}
+    </div>
+    <div class="snippet">
+      {{format-markdown "```handlebars
+{{frost-password
+  revealable=true
+}}
+```"
+      }}
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class='section'>
+  <div class="example">
+      <div class="title">Event: onInput</div>
+      <div class="demo">
+        {{frost-password
+          id='action'
+          onInput=(action 'onInputHandler')
+        }}
+      </div>
+      <div class="snippet">
+        {{format-markdown "```handlebars
+{{frost-password
+  onInput=(action 'onInputHandler')
+}}
+```"
+        }}
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div></div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
 	<div class='footer'>
 		<div class='info'>
 			<div>
 				<div class='contributors'>
-					<span class="footerHeading">Contributors</span><div class='contributors-list'>Steven Glanzer</div>
+					<span class="footerHeading">Contributors</span><div class='contributors-list'>Roxanne Panthaky - Gosia Hyndman - Eric White - Steven Glanzer - Justin Lafleur - ember-tomster</div>
 			</div>
-			<div class='connect'>
-				<span class="footerHeading"></span>
-					 
+			<div class='connect'><div>
+				<div class="footerHeading">Connect</div>
+					 <div><a href="https://github.com/ciena-frost/ember-frost-core" class="gh-button"><img src="assets/images/gh-icon.png" width='20' height='20'><span>View on Github</span></a></div></div>
 				</div>
 			</div>
 			<br/>

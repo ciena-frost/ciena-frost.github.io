@@ -28,7 +28,7 @@ Array.prototype.contains = function (obj) {
 }
 
 var ignoreList = ['ember-frost-bunsen', 'ember-frost-checkbox', 'ember-frost-brackets-snippets', 'ember-frost-button']
-
+var contributorIgnoreList = ['chrisstoll', 'travis-ci-ciena', 'agonzalez-cyan']
 var options = {
   'headers': {
     'user-agent': 'ciena-frost',
@@ -93,7 +93,7 @@ frostGuideContributors.forEach(function (user) {
 var template_content = "<div class='md'>\n\t";
 var contributorJSON = []
 contributorMap.forEach(function (value, key) {
-  if (value.login === "travis-ci-ciena") {
+  if (contributorIgnoreList.indexOf(value.login) !== -1) {
     return;
   }
   contributorJSON.push(value);
@@ -587,7 +587,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
         return
       }
       var userJSON = requestJSON(user.url);
-      if (userJSON.login === "travis-ci-ciena") {
+      if (contributorIgnoreList.indexOf(userJSON.login) !== -1) {
         return
       }
       if (contributorsCount === componentContributors.length) {
@@ -621,6 +621,20 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 
   } else {
     console.log(chalk.red.bold("Directory: " + "/app/pods/" + demoParentDirectory + " does not exist. Skipping repo demo generation"));
+    var contributorsCount = 0;
+    var contributorDuplicates = 0;
+    var componentContributors = getCienFrostRepoContributors(repo.name);
+    componentContributors.forEach(function (user) {
+      contributorsCount++;
+      if (user === "") {
+        return
+      }
+      var userJSON = requestJSON(user.url);
+      if (contributorIgnoreList.indexOf(userJSON.login) !== -1) {
+        return
+      }
+      addDedicatedContributor(userJSON, repo.name)
+    });
     return;
   }
 

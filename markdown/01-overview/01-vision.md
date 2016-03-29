@@ -1,7 +1,5 @@
 <div class="guide-introduction header">
-<img src="svgs/guide/frost-cube-only.svg" alt="Kiwi standing on oval">
-
-
+  <img src="svgs/guide/frost.svg" height="400" width="400">
   <span class="project">
     <div class="title">Frost</div>
     <div class="sub-title">Ciena design conventions, styles, components, patterns and tools for Ember</div>
