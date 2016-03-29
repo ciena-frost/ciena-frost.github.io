@@ -30,7 +30,7 @@ commit_website_files() {
 
 publish_gh_pages() {
   npm install && bower install
-  dev=nothing ember github-pages:commit --message "[ci skip] Update gh-pages" --branch master
+  ember github-pages:commit --message "[ci skip] Update gh-pages" --branch master
   git push
 }
 if [ "${ghToken:-false}" != "false" ]; then

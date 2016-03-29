@@ -9,7 +9,7 @@
   },
   "scripts": {
     "lint": "eslint *.js addon app config tests",
-    "start": "ember server",
+    "start": "node generate-pages-from-markdown.js && ember server",
     "build": "ember build",
     "test": "npm run-script lint"
   },
