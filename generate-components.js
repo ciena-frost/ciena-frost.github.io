@@ -36,6 +36,9 @@ var options = {
   }
 };
 
+// Clear clones directory
+rmDir('clones',false)
+
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos?per_page=100', options);
 var body = JSON.parse(res.getBody());
 var contributorMap = new Map();
@@ -128,7 +131,7 @@ fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
 /////////////////////////// FUNCTIONS ////////////////////////////////////
 function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
-  var demoRouting_string = fs.readFileSync(url,'utf8')
+  var demoRouting_string = fs.readFileSync(url, 'utf8')
   var demoRouting = requireFromString(demoRouting_string)
   if (demoRouting.length === 0) {
     return
@@ -247,8 +250,8 @@ function addDedicatedContributor(user, repo) {
 }
 
 function getDemoComponentHelpers(url, demoDirectory) {
-//  var res = request('GET', url, options);
-//  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
   var body = walkSync(url)
   var BreakException = {};
 
@@ -292,8 +295,8 @@ function getDemoComponentHelpers(url, demoDirectory) {
 
 function getPodsNestedRoutes(url, demoDirectory) {
   console.log("Found multiple demos")
-//  var res = request('GET', url, options);
-//  var body = JSON.parse(res.getBody());
+    //  var res = request('GET', url, options);
+    //  var body = JSON.parse(res.getBody());
   var body = walkSync(url)
   body.forEach(function (podItem) {
     if (typeof podItem === 'object' && !podItem.folder.endsWith('index')) {
@@ -318,8 +321,8 @@ function getPodsNestedRoutes(url, demoDirectory) {
 }
 
 function getDemoComponents(url) {
-//  var res = request('GET', url, options);
-//  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
   var body = walkSync(url)
   body.forEach(function (component) {
     if (typeof component === 'object') {
@@ -336,9 +339,9 @@ function getDemoComponents(url) {
 
 function getDemoModels(url) {
   try {
-//    var res = request('GET', url, options);
-    var body =  fs.readdirSync(url)
-//    var body = JSON.parse(res.getBody());
+    //    var res = request('GET', url, options);
+    var body = fs.readdirSync(url)
+      //    var body = JSON.parse(res.getBody());
     body.forEach(function (model) {
       if (model.endsWith('.js')) {
         var contents = fs.readFileSync(model, 'utf8');
@@ -351,19 +354,19 @@ function getDemoModels(url) {
 }
 
 function getDirectories(srcpath) {
-  return fs.readdirSync(srcpath).filter(function(file) {
+  return fs.readdirSync(srcpath).filter(function (file) {
     return fs.statSync(path.join(srcpath, file)).isDirectory();
   });
 }
 /*
-* Get directory folder and files
-*/
+ * Get directory folder and files
+ */
 function walkSync(dir, parent) {
   parent = typeof parent !== 'undefined' ? parent : '';
   var fs = fs || require('fs');
   var files = fs.readdirSync(dir);
   var filelist = [];
-  files.forEach(function(file) {
+  files.forEach(function (file) {
     if (fs.statSync(dir + '/' + file).isDirectory()) {
       filelist.push({
         folder: parent + file,
@@ -381,9 +384,9 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
   mkdirpSync("app/mirage/fixtures")
   mkdirpSync("app/mirage/factories")
   try {
-//    var res = request('GET', url, options);
-//    var body = JSON.parse(res.getBody());
-      var body = walkSync(url)
+    //    var res = request('GET', url, options);
+    //    var body = JSON.parse(res.getBody());
+    var body = walkSync(url)
   } catch (err) {
     console.log(chalk.red.bold(err))
     return;
@@ -693,11 +696,11 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 function getPackageJSON(url) {
   //get api file request
   try {
-//    var res = request('GET', url, options);
-//    var body = JSON.parse(res.getBody());
-//    res = request('GET', body.download_url, options);
+    //    var res = request('GET', url, options);
+    //    var body = JSON.parse(res.getBody());
+    //    res = request('GET', body.download_url, options);
 
-    return JSON.parse(fs.readFileSync(url,'utf8'));
+    return JSON.parse(fs.readFileSync(url, 'utf8'));
     //get download url
   } catch (err) {
     console.log(chalk.red(err))
@@ -738,8 +741,8 @@ function getFolder(url, parent) {
 }
 
 function getDemoContent(url) {
-//  var res = request('GET', url, options);
-//  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
   var body = fs.readdirSync(url)
   var template_hbs;
   var route_js;
@@ -762,8 +765,8 @@ function getDemoContent(url) {
 
 function getDemoApplicationContent(url) {
   try {
-//    var res = request('GET', url, options);
-//    var body = JSON.parse(res.getBody());
+    //    var res = request('GET', url, options);
+    //    var body = JSON.parse(res.getBody());
     var body = fs.readdirSync(url)
     var template_hbs;
     var route_js;
@@ -772,8 +775,8 @@ function getDemoApplicationContent(url) {
     body.forEach(function (item) {
       if (item == 'template.hbs') {
         template_hbs = fs.readFileSync(url + '/' + item, 'utf8')
-        //      console.log(template_hbs);
-        //      console.log("Template file: " + item.url );
+          //      console.log(template_hbs);
+          //      console.log("Template file: " + item.url );
       } else if (item == 'route.js') {
         route_js = fs.readFileSync(url + '/' + item, 'utf8')
       } else if (item == 'controller.js') {
@@ -793,8 +796,8 @@ function getDemoApplicationContent(url) {
 }
 
 function GetDemoStyle(url) {
-//  var res = request('GET', url, options);
-//  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
   return fs.readFileSync(url, 'utf8');
 }
 
@@ -987,19 +990,22 @@ function stringStartsWith(string, prefix) {
   return string.slice(0, prefix.length) == prefix;
 }
 
-function rmDir(dirPath) {
+function rmDir(dirPath, removeSelf) {
+  if (removeSelf === undefined)
+    removeSelf = true;
   try {
-    var files = fs.readdirSync(dirPath)
+    var files = fs.readdirSync(dirPath);
   } catch (e) {
     return;
   }
   if (files.length > 0)
     for (var i = 0; i < files.length; i++) {
-      var filePath = dirPath + '/' + files[i]
+      var filePath = dirPath + '/' + files[i];
       if (fs.statSync(filePath).isFile())
-        fs.unlinkSync(filePath)
+        fs.unlinkSync(filePath);
       else
-        rmDir(filePath)
+        rmDir(filePath);
     }
-  fs.rmdirSync(dirPath)
-}
+  if (removeSelf)
+    fs.rmdirSync(dirPath);
+};
