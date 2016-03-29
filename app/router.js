@@ -12,17 +12,12 @@ Router.map(function () {
     addRoute.call(this, item)
   })
 
-  this.route('contributing', function () {
-    this.route('frost-guide', function () {
-
+  this.route('contributors', function () {
+    this.route('contributors', {
+      path: '/'
     })
-    this.route('contributors', function () {
-      this.route('contributors', {
-        path: '/'
-      })
-      this.route('contributor', {
-        path: '/:login'
-      })
+    this.route('contributor', {
+      path: '/:login'
     })
   })
 

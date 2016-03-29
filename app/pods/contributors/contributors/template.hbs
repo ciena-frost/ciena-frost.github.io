@@ -2,7 +2,7 @@
 {{#liquid-with model as |currentModel|}}
     {{#each currentModel as |contributor|}}
 <div class='card'>
-    {{#link-to "contributing.contributors.contributor" contributor}}
+    {{#link-to "contributors.contributor" contributor}}
     <img class="contributor-image-small" alt="{{contributor.name}}"
              src="{{contributor.avatar_url}}" data-contributor-id={{contributor.login}} >
     {{/link-to}}

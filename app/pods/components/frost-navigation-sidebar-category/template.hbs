@@ -1,6 +1,4 @@
-{{#frost-button class='category' priority='cancel' classNameBindings='isExpanded:expanded' onClick=(action 'toggleExpanded')}}
-  {{category.alias}}
-{{/frost-button}}
+{{frost-button design='tab' class='category' classNameBindings='isExpanded:expanded' onClick=(action 'toggleExpanded') text=category.alias}}
 {{#liquid-if isExpanded}}
   <div class='sub-category-items'>
     {{#each category.items as |item|}}
