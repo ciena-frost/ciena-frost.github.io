@@ -103,6 +103,11 @@ img {
   @include display(flex);
 }
 
+pre[class*="language-"]:before,
+pre[class*="language-"]:after {
+    display: none;
+}
+
 .guide-content #demo .frost-application-bar{
   position: relative !important;
 }
