@@ -99,7 +99,7 @@ img {
 
 .md .content-col {
   float: left;
-  max-width: 65%;
+  width: 65%;
   min-width: 400px;
   line-height: 1.7;
 }
@@ -151,12 +151,6 @@ pre[class*="language-"]:after {
   .guide-content #demo {
     overflow-x: visible;
   }
-}
-
-.guide-content #demo >:first-child {
-  position: relative;
-  width: 100%;
-  min-height: 400px;
 }
 
 .tabs__bar--justified {
