@@ -34,13 +34,13 @@ module.exports = function (defaults) {
   app.import('vendor/jquery-scrollspy/scrollspy.js')
   app.import('vendor/jquery-mobile-touch-events/jquery.mobile.custom.min.js')
 
-  if (process.env.dev === 'all'){
+  if (process.env.dev === 'all') {
     cp.fork('generate-roadmap')
     cp.fork('generate-pages-from-markdown')
     cp.fork('generate-components')
-  }else if (process.env.dev){
+  } else if (process.env.dev) {
     // do nothing
-  }else{
+  } else {
     cp.fork('generate-pages-from-markdown')
   }
 
