@@ -1,5 +1,40 @@
-# Coming soon ;)
 
-Seriously though, the Roadmap is a work in progress
-
-Next up, documenting everything in <a href="https://github.com/ciena-frost" target="_blank">ciena-frost</a> and <a href="https://github.com/ciena-blueplanet" target="_blank">ciena-blueplanet</a>
+- Design conventions - Text
+- Design conventions - Typography
+- Design conventions - Icons
+- [BPSO-14308] Streamline the addon porting process (frost-cli)
+- [BPSO-14370] Document addon philosophy / best practices
+- [BPSO-14373] Add infinite scroll to ember-frost-list
+- [BPSO-14369] Implement named yields (ember-block-slots)
+- [BPSO-14378] Add autoprefixer to ember-frost-css-core
+###Finalize published components:
+- [BPSO-14374] UI Components - Button
+- [BPSO-14586] UI Components - Static Text
+- [BPSO-14349] UI Components - Text field
+- [BPSO-14377] UI Components - Password field
+- [BPSO-14388] UI Components - Checkbox
+- [BPSO-14389] UI Components - Links
+- [BPSO-14359] UI Components - Text area
+- [BPSO-14357] UI Components - Select (Dropdown)
+- [BPSO-14375] Design pattern - Application bar
+- [BPSO-14354] Design patterns - Info bar
+- [BPSO-14364] Menu controls - Navigation menu
+- [BPSO-14360] Content views - Scrollbar
+- [BPSO-14344] Content views - Tabs
+- [BPSO-14398] Content views - Sort
+- [BPSO-14399] Design patterns - Error page
+- [BPSO-14400] Content views - Dialog
+- [BPSO-14401] UI Components - Radio buttons
+- [BPSO-14402] UI Components - Badges
+- [BPSO-14403] UI Components - Progress indicators
+- [BPSO-14404] UI Components - Transient messages
+- [BPSO-14405] Content views - Forms
+- [BPSO-14406] Content views - Collapsible sections
+- [BPSO-14407] Design patterns - Object browser
+- [BPSO-14408] Content views - Filter pane
+- [BPSO-14409] Design patterns - Filtering
+- [BPSO-14410] Content views - List card
+- [BPSO-14411] Design patterns - Object details
+###Scrub out:
+- [BPSO-14412] Publish ember-frost-slider
+- [BPSO-14413] Publish ember-frost-date-picker
