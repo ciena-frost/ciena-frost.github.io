@@ -1,6 +1,7 @@
 /* global require, module */
 var EmberApp = require('ember-cli/lib/broccoli/ember-app')
 var Funnel = require('broccoli-funnel')
+var cp = require('child_process')
 
 module.exports = function (defaults) {
   var app = new EmberApp(defaults, {
@@ -32,6 +33,16 @@ module.exports = function (defaults) {
 
   app.import('vendor/jquery-scrollspy/scrollspy.js')
   app.import('vendor/jquery-mobile-touch-events/jquery.mobile.custom.min.js')
+
+  if (process.env.dev === 'all') {
+    cp.fork('generate-roadmap')
+    cp.fork('generate-pages-from-markdown')
+    cp.fork('generate-components')
+  } else if (process.env.dev) {
+    // do nothing
+  } else {
+    cp.fork('generate-pages-from-markdown')
+  }
 
   return app.toTree(font)
 }
