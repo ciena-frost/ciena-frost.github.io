@@ -36,6 +36,9 @@ var options = {
   }
 };
 
+// Clear clones directory
+rmDir('clones',false)
+
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos?per_page=100', options);
 var body = JSON.parse(res.getBody());
 var contributorMap = new Map();
@@ -51,7 +54,12 @@ body.forEach(function (repo) {
   if (stringStartsWith(repo.name, "ember-") && ignoreList.indexOf(repo.name) === -1) {
 
     //get Package JSON un comment when needed
-    var package_url = repo.contents_url.replace("{+path}", "package.json?ref=master");
+    // clone here
+    cloneRepo(repo.clone_url, repo.name)
+
+    repo.contents_url = 'clones/' + repo.name + '/{+path}'
+
+    var package_url = repo.contents_url.replace("{+path}", "package.json");
     var packageJSON = getPackageJSON(package_url);
     if (packageJSON === undefined) {
       return;
@@ -73,6 +81,7 @@ body.forEach(function (repo) {
         demo.name = repo.name
         demo.contents_url = repo.contents_url
         demo.html_url = repo.html_url
+        demo.clone_url = repo.clone_url
         packageJSON.frostGuideDirectory = demo.frostGuideDirectory
         createContent(demo.frostGuideDirectory, demo, packageJSON, demo.demoName, true)
       }
@@ -122,7 +131,7 @@ fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
 /////////////////////////// FUNCTIONS ////////////////////////////////////
 function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
-  var demoRouting_string = getFile(url)
+  var demoRouting_string = fs.readFileSync(url, 'utf8')
   var demoRouting = requireFromString(demoRouting_string)
   if (demoRouting.length === 0) {
     return
@@ -150,7 +159,7 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
         //multiple demos
 
         item.route = item.route.replace(demoLocation + '.', parent.toLowerCase() + ".")
-        console.log( chalk.red("Merging items: " + item.route))
+        console.log(chalk.red("Merging items: " + item.route))
         if (item.path !== undefined && item.path.path && item.path.path !== "/") {
           item.path.path = demoParentDirectory.toLowerCase() + item.path.path
         }
@@ -189,37 +198,33 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
           }
 
         }
-      }else {
+      } else {
         // multiple demos
-        console.log( "Multiple demos merge")
-        console.log(routeConfig.route)
-        console.log(demoId)
-        console.log(demoLocation)
         if (routeConfig.route === demoId) {
-        console.log(chalk.blue("Found match for: " + demoId))
-        console.log(routeConfig)
-        console.log(demo)
-        routeConfig.route = demoId.toLowerCase()
-          //        routeConfig.alias = "Found You"
-        if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
-          routeConfig.modalName = demo[0].modalName
-          routeConfig.modal = demo[0].modal
-        }
+          console.log(chalk.blue("Found match for: " + demoId))
+          console.log(routeConfig)
+          console.log(demo)
+          routeConfig.route = demoId.toLowerCase()
+            //        routeConfig.alias = "Found You"
+          if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
+            routeConfig.modalName = demo[0].modalName
+            routeConfig.modal = demo[0].modal
+          }
 
-        if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
-          routeConfig.path = demo[0].path
-        }
-        if (demo[0].items !== undefined) {
-          console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
-          mergeItems(demo[0].items, demoId, demoLocation)
-          routeConfig.items = demo[0].items
-        }
+          if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
+            routeConfig.path = demo[0].path
+          }
+          if (demo[0].items !== undefined) {
+            console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
+            mergeItems(demo[0].items, demoId, demoLocation)
+            routeConfig.items = demo[0].items
+          }
 
-        if (demo[0].modals !== undefined) {
-          routeConfig.modals = demo[0].modals
-        }
+          if (demo[0].modals !== undefined) {
+            routeConfig.modals = demo[0].modals
+          }
 
-      }
+        }
       }
 
     } else {
@@ -245,16 +250,18 @@ function addDedicatedContributor(user, repo) {
 }
 
 function getDemoComponentHelpers(url, demoDirectory) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
+  var body = walkSync(url)
   var BreakException = {};
 
   body.forEach(function (component) {
-    if (component.type === "dir") {
-      var content = getFolder(component.url, component.name)
-      var path = "app/pods/components/" + component.name;
+    if (typeof component === 'object') {
+      var content = component.items
+      var path = "app/pods/components/" + component.folder;
       var isComponent = false
-      content.forEach(function (value, key) {
+      content.forEach(function (key) {
+        var value = fs.readFileSync(url + '/' + key, 'utf8')
         if (key.indexOf("component.js") > -1) {
           mkdirpSync(path);
           isComponent = true
@@ -267,14 +274,13 @@ function getDemoComponentHelpers(url, demoDirectory) {
         }
         //        fs.writeFileSync("app/pods/components/" + key, value)
       })
-      if (!isComponent && component.name !== "index") {
-        path = "app/pods/" + demoDirectory + "/" + component.name
+      if (!isComponent && component !== "index") {
+        path = "app/pods/" + demoDirectory + "/" + component
         console.log("Path: " + path.toLowerCase())
         mkdirpSync(path.toLowerCase())
           // Not a component helper. So it's a route
-        content.forEach(function (value, key) {
-
-
+        content.forEach(function (key) {
+          var value = fs.readFileSync(url + '/' + key)
           var writeTo = "app/pods/" + demoDirectory + "/" + key
           writeTo = writeTo.toLowerCase()
           console.log("Write to: " + writeTo)
@@ -289,20 +295,20 @@ function getDemoComponentHelpers(url, demoDirectory) {
 
 function getPodsNestedRoutes(url, demoDirectory) {
   console.log("Found multiple demos")
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+    //  var res = request('GET', url, options);
+    //  var body = JSON.parse(res.getBody());
+  var body = walkSync(url)
   body.forEach(function (podItem) {
-    if (podItem.type === "dir" && !podItem.name.endsWith('index')) {
-      var path = "app/pods/" + demoDirectory + "/" + podItem.name
+    if (typeof podItem === 'object' && !podItem.folder.endsWith('index')) {
+      var path = "app/pods/" + demoDirectory + "/" + podItem.folder
       console.log("Path: " + path.toLowerCase())
       mkdirpSync(path.toLowerCase())
 
-      var content = getFolder(podItem.url, podItem.name)
-      var path = "app/pods/components/" + podItem.name;
+      var content = podItem.items
+      var path = "app/pods/components/" + podItem.folder;
       // Not a component helper. So it's a route
-      content.forEach(function (value, key) {
-
-
+      content.forEach(function (key) {
+        var value = fs.readFileSync(url + '/' + key)
         var writeTo = "app/pods/" + demoDirectory + "/" + key
         writeTo = writeTo.toLowerCase()
         console.log("Write to: " + writeTo)
@@ -315,14 +321,16 @@ function getPodsNestedRoutes(url, demoDirectory) {
 }
 
 function getDemoComponents(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
+  var body = walkSync(url)
   body.forEach(function (component) {
-    if (component.type === "dir") {
-      var content = getFolder(component.url, component.name)
-      var path = "app/pods/components/" + component.name;
+    if (typeof component === 'object') {
+      var content = component.items
+      var path = "app/pods/components/" + component.folder;
       mkdirpSync(path);
-      content.forEach(function (value, key) {
+      content.forEach(function (key) {
+        var value = fs.readFileSync(url + '/' + key, 'utf8')
         fs.writeFileSync("app/pods/components/" + key, value)
       })
     }
@@ -331,12 +339,13 @@ function getDemoComponents(url) {
 
 function getDemoModels(url) {
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
+    //    var res = request('GET', url, options);
+    var body = fs.readdirSync(url)
+      //    var body = JSON.parse(res.getBody());
     body.forEach(function (model) {
-      if (model.name.endsWith('.js')) {
-        var contents = getFile(model.url)
-        fs.writeFileSync("app/models/" + model.name, contents)
+      if (model.endsWith('.js')) {
+        var contents = fs.readFileSync(model, 'utf8');
+        fs.writeFileSync("app/models/" + model, contents)
       }
     })
   } catch (err) {
@@ -344,22 +353,51 @@ function getDemoModels(url) {
   }
 }
 
+function getDirectories(srcpath) {
+  return fs.readdirSync(srcpath).filter(function (file) {
+    return fs.statSync(path.join(srcpath, file)).isDirectory();
+  });
+}
+/*
+ * Get directory folder and files
+ */
+function walkSync(dir, parent) {
+  parent = typeof parent !== 'undefined' ? parent : '';
+  var fs = fs || require('fs');
+  var files = fs.readdirSync(dir);
+  var filelist = [];
+  files.forEach(function (file) {
+    if (fs.statSync(dir + '/' + file).isDirectory()) {
+      filelist.push({
+        folder: parent + file,
+        items: walkSync(dir + '/' + file, parent + file + '/')
+      });
+    } else {
+      filelist.push(parent + file);
+    }
+  });
+  return filelist;
+};
+
 function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) {
   //  try {
   mkdirpSync("app/mirage/fixtures")
   mkdirpSync("app/mirage/factories")
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
+    //    var res = request('GET', url, options);
+    //    var body = JSON.parse(res.getBody());
+    var body = walkSync(url)
   } catch (err) {
     console.log(chalk.red.bold(err))
     return;
   }
   body.forEach(function (mirage) {
-      if (mirage.type === "dir") {
-        var folderContent = getFolder(mirage.url, mirage.name)
+      if (typeof mirage === 'object') {
+        //found directory
+        var folderContent = mirage.items
           //        console.log(folderContent)
-        folderContent.forEach(function (value, key) {
+        folderContent.forEach(function (key) {
+          var value = fs.readFileSync(url + '/' + key, 'utf8');
           if (key.indexOf("fixtures/") > -1 || key.indexOf("factories/") > -1) {
             fs.writeFileSync("app/mirage/" + key, value)
           } else if (key.indexOf("scenarios/default.js") > -1) {
@@ -373,7 +411,7 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
         })
       } else {
         if (mirage.name === "config.js") {
-          var config_Content = getFile(mirage.url)
+          var config_Content = fs.readFileSync(mirage.url, 'utf8')
           var path = "app/mirage/" + repoName + "-config.js"
           fs.writeFileSync(path, config_Content)
           var val = repoName.replace(/-(.)/g, function (m, $1) {
@@ -401,13 +439,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   var linuxCompatibleDemoParentDirectory = demoParentDirectory.toLowerCase()
     // demoParentDirectory = "ui-components/button-controls/button";
     //console.log(packageJSON);
-  if (multipleDemos === undefined) {
-    readme_url = repo.contents_url.replace("{+path}", "README.md");
-  } else {
-    readme_url = repo.contents_url.replace("{+path}", repo.readme);
-  }
 
-  readme_content = getFile(readme_url);
 
   if (demoParentDirectory !== undefined && directoryExistsSync("app/pods/" + demoParentDirectory.toLowerCase())) {
     if (pjson.devDependencies.hasOwnProperty(repo.name)) {
@@ -416,18 +448,30 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
       //ember install this package
       emberInstall(repo.name);
     }
-    var demo_content_url;
+
+    // clone here
+    repo.contents_url = 'clones/' + repo.name + '/{+path}'
+
     if (multipleDemos === undefined) {
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation + "?ref=master");
+      readme_url = repo.contents_url.replace("{+path}", "README.md");
     } else {
-      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+      readme_url = repo.contents_url.replace("{+path}", repo.readme);
     }
 
-    var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss?ref=master")
-    var demo_style_folder_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles?ref=master")
-    var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application?ref=master");
-    var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models?ref=master")
-    var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage?ref=master")
+    readme_content = fs.readFileSync(readme_url, 'utf8')
+
+    var demo_content_url;
+    if (multipleDemos === undefined) {
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo" + demoLocation);
+    } else {
+      demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation);
+    }
+
+    var demo_style_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles/app.scss")
+    var demo_style_folder_url = repo.contents_url.replace("{+path}", "tests/dummy/app/styles")
+    var demo_application_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/application");
+    var demo_models_url = repo.contents_url.replace("{+path}", "tests/dummy/app/models")
+    var demo_mirage_url = repo.contents_url.replace("{+path}", "tests/dummy/app/mirage")
     getDemoModels(demo_models_url);
     getDemoMirage(demo_mirage_url, scenariosToImportMap, configstoImportMap, repo.name);
     try {
@@ -443,9 +487,9 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     if (content.template_hbs === undefined) {
       console.log(chalk.blue("Demo template empty. Checking demo/index"))
       if (multipleDemos === undefined) {
-        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index" + "?ref=master");
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo/" + demoLocation + "index");
       } else {
-        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "/index" + "?ref=master");
+        demo_content_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "/index");
       }
 
       try {
@@ -606,7 +650,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 
   // Get Demo Component Helpers
   try {
-    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo?ref=master");
+    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/demo");
     getDemoComponentHelpers(components_url, packageJSON.frostGuideDirectory)
   } catch (err) {
     if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
@@ -617,12 +661,12 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   }
 
   if (multipleDemos === true) {
-    var pod_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation + "?ref=master");
+    var pod_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/" + demoLocation);
     getPodsNestedRoutes(pod_url, demoParentDirectory)
   }
   // Get Demo Components
   try {
-    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components?ref=master");
+    var components_url = repo.contents_url.replace("{+path}", "tests/dummy/app/pods/components");
     getDemoComponents(components_url)
   } catch (err) {
     if (err.toString().indexOf("Error: Server responded with status code 404:") > -1) {
@@ -633,7 +677,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
   }
   //Get Demo routing.js
   try {
-    var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js?ref=master");
+    var routing_url = repo.contents_url.replace("{+path}", "tests/dummy/config/routing.js");
     if (multipleDemos === undefined) {
       getDemoRouting(routing_url, routingConfig, demoParentDirectory)
     } else {
@@ -652,12 +696,14 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 function getPackageJSON(url) {
   //get api file request
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
-    res = request('GET', body.download_url, options);
-    return JSON.parse(res.getBody());
+    //    var res = request('GET', url, options);
+    //    var body = JSON.parse(res.getBody());
+    //    res = request('GET', body.download_url, options);
+
+    return JSON.parse(fs.readFileSync(url, 'utf8'));
     //get download url
   } catch (err) {
+    console.log(chalk.red(err))
     return undefined;
   }
 }
@@ -695,21 +741,19 @@ function getFolder(url, parent) {
 }
 
 function getDemoContent(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
+  var body = fs.readdirSync(url)
   var template_hbs;
   var route_js;
   var controller_js;
-
   body.forEach(function (item) {
-    if (item.name == 'template.hbs') {
-      template_hbs = getFile(item.url);
-      //      console.log(template_hbs);
-      //      console.log("Template file: " + item.url );
-    } else if (item.name == 'route.js') {
-      route_js = getFile(item.url);
-    } else if (item.name == 'controller.js') {
-      controller_js = getFile(item.url);
+    if (item == 'template.hbs') {
+      template_hbs = fs.readFileSync(url + '/' + item, 'utf8')
+    } else if (item == 'route.js') {
+      route_js = fs.readFileSync(url + '/' + item, 'utf8')
+    } else if (item == 'controller.js') {
+      controller_js = fs.readFileSync(url + '/' + item, 'utf8')
     }
   });
   return {
@@ -721,21 +765,22 @@ function getDemoContent(url) {
 
 function getDemoApplicationContent(url) {
   try {
-    var res = request('GET', url, options);
-    var body = JSON.parse(res.getBody());
+    //    var res = request('GET', url, options);
+    //    var body = JSON.parse(res.getBody());
+    var body = fs.readdirSync(url)
     var template_hbs;
     var route_js;
     var controller_js;
 
     body.forEach(function (item) {
-      if (item.name == 'template.hbs') {
-        template_hbs = getFile(item.url);
-        //      console.log(template_hbs);
-        //      console.log("Template file: " + item.url );
-      } else if (item.name == 'route.js') {
-        route_js = getFile(item.url);
-      } else if (item.name == 'controller.js') {
-        controller_js = getFile(item.url);
+      if (item == 'template.hbs') {
+        template_hbs = fs.readFileSync(url + '/' + item, 'utf8')
+          //      console.log(template_hbs);
+          //      console.log("Template file: " + item.url );
+      } else if (item == 'route.js') {
+        route_js = fs.readFileSync(url + '/' + item, 'utf8')
+      } else if (item == 'controller.js') {
+        controller_js = fs.readFileSync(url + '/' + item, 'utf8')
       }
     });
     return {
@@ -751,15 +796,16 @@ function getDemoApplicationContent(url) {
 }
 
 function GetDemoStyle(url) {
-  var res = request('GET', url, options);
-  var body = JSON.parse(res.getBody());
-  return new Buffer(body.content, body.encoding).toString();
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
+  return fs.readFileSync(url, 'utf8');
 }
 
 function GetDemoStyleFolder(url) {
-  var content = getFolder(url, "");
-  content.forEach(function (value, key) {
+  var content = fs.readdirSync(url)
+  content.forEach(function (key) {
     if (key != 'app.scss') {
+      var value = fs.readFileSync(url + '/' + key, 'utf8')
       console.log("Writing Style: " + "app/pods/styles/" + key)
       fs.writeFileSync("app/styles/" + key, value)
     }
@@ -930,6 +976,36 @@ function npmInstall(repo) {
   }
 }
 
+function cloneRepo(clone_url, repoName) {
+  console.log("Cloning: " + clone_url)
+  var log = exec('git clone ' + clone_url + ' clones/' + repoName)
+  if (log.status === 0) {
+    console.log(chalk.green.bold(log.stdout));
+  } else {
+    console.log(chalk.red.bold(log.stderr));
+  }
+}
+
 function stringStartsWith(string, prefix) {
   return string.slice(0, prefix.length) == prefix;
 }
+
+function rmDir(dirPath, removeSelf) {
+  if (removeSelf === undefined)
+    removeSelf = true;
+  try {
+    var files = fs.readdirSync(dirPath);
+  } catch (e) {
+    return;
+  }
+  if (files.length > 0)
+    for (var i = 0; i < files.length; i++) {
+      var filePath = dirPath + '/' + files[i];
+      if (fs.statSync(filePath).isFile())
+        fs.unlinkSync(filePath);
+      else
+        rmDir(filePath);
+    }
+  if (removeSelf)
+    fs.rmdirSync(dirPath);
+};

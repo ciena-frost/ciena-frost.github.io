@@ -14,7 +14,6 @@ export default Ember.Component.extend({
       this.toggleProperty('isExpanded')
     },
     toggleCollapsed () {
-      window.scrollTo(0, 0)
       this.get('targetObject').send('toggleCollapsed') // sends action to parent component
     }
   }

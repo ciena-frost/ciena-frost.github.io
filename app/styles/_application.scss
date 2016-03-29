@@ -85,9 +85,34 @@ img {
   max-width: 1000px;
 }
 
-.md .tab-nav ~ div {
+.md {
+  float: left;
+  width: 100%;
+  font-size: 16px;
+}
+
+@media (max-width: 600px) {
+  .md .content-col {
+    width: 100%;
+  }
+}
+
+.md .content-col {
+  float: left;
+  max-width: 65%;
+  min-width: 400px;
+  line-height: 1.7;
+}
+
+.md .tab-nav ~ #description {
   min-width: 400px;
   max-width: 65%;
+  line-height: 1.7;
+}
+.md .tab-nav ~ #api {
+  min-width: 400px;
+  max-width: 65%;
+  line-height: 1.7;
 }
 
 .guide-content .guide-markdown {
@@ -101,6 +126,11 @@ img {
   margin-right: 20px;
   overflow-x: auto;
   @include display(flex);
+}
+
+pre[class*="language-"]:before,
+pre[class*="language-"]:after {
+    display: none;
 }
 
 .guide-content #demo .frost-application-bar{
@@ -165,33 +195,6 @@ img {
 
 .frost-tabs--active {
   min-height: 500px;
-}
-
-.md {
-  float: left;
-  width: 100%;
-  font-size: 16px;
-  line-height: 1.7;
-    transform: initial;
-}
-
-.md .content-col {
-  float: left;
-  width: 65%;
-}
-
-.md .right-col {
-  float: left;
-  width: 35%;
-}
-
-@media (max-width: 600px) {
-  .md .right-col {
-    display: none;
-  }
-  .md .content-col {
-    width: 100%;
-  }
 }
 
 .frost-button > .text {
