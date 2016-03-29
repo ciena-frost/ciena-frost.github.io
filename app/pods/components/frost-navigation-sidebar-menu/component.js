@@ -62,6 +62,7 @@ export default Ember.Component.extend({
         this.set('selectedCategory', selected ? category : null)
       },
       toggleCollapsed() {
+        window.scrollTo(0, 0) // patches bad sidebar behavior when route change from scrolled position
         this.sendAction('toggleCollapsed') //send action to application controller
       },
       search(attrs) {
