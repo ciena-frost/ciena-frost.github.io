@@ -37,7 +37,7 @@ var options = {
 };
 
 // Clear clones directory
-rmDir('clones',false)
+rmDir('clones', false)
 
 var res = request('GET', 'https://api.github.com/orgs/ciena-frost/repos?per_page=100', options);
 var body = JSON.parse(res.getBody());
@@ -130,7 +130,7 @@ configImportsJS += "import config from '../config/environment'\n"
 fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
 // Clear clones directory
-rmDir('clones',false)
+rmDir('clones', false)
 
 /////////////////////////// FUNCTIONS ////////////////////////////////////
 function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
@@ -1004,10 +1004,12 @@ function rmDir(dirPath, removeSelf) {
   if (files.length > 0)
     for (var i = 0; i < files.length; i++) {
       var filePath = dirPath + '/' + files[i];
-      if (fs.statSync(filePath).isFile())
-        fs.unlinkSync(filePath);
-      else
-        rmDir(filePath);
+      if (filePath !== 'clones/.gitkeep') {
+        if (fs.statSync(filePath).isFile())
+          fs.unlinkSync(filePath);
+        else
+          rmDir(filePath);
+      }
     }
   if (removeSelf)
     fs.rmdirSync(dirPath);
