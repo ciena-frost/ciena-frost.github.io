@@ -4,15 +4,15 @@
 
 ### Markdown Pages
 
-1. npm install
-2. bower install
-3. npm start
+1. `npm install`
+2. `bower install`
+3. `npm start`
   * This command first runs `node generate-pages-from-markdown.js` which generates config/routing.js and creates `pods` matching the folders/files within the markdown directory. It then serves the frost-guide.
 
 ### Component APIs and Demos 
 
-1. npm install
-2. bower install
+1. `npm install`
+2. `bower install`
 3. Set environment variable ghToken
   * [Create a github API personal access token](https://github.com/settings/tokens)
     * The token should have the following scopes: `public_repo, read:org, repo:status, repo_deployment, user:email`

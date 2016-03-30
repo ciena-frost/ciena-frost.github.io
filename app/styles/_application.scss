@@ -195,50 +195,6 @@ pre[class*="language-"]:after {
   min-width: 0px !important;
 }
 
-.md-scrollspy {
-  min-width: 120px;
-  position: absolute;
-  background-color: white;
-  margin-top: 20px;
-  margin-left: 20px;
-}
-
-.md-scrollspy button {
-  width: 100%;
-  text-align: left;
-  background-color: white;
-  border: none;
-  outline: 0;
-  white-space: normal;
-  border-left: 2px solid white;
-  padding: 5px;
-}
-
-.md-scrollspy .h1 {
-  padding-left: 10px;
-  font-size: 18px;
-}
-
-.md-scrollspy .h2 {
-  padding-left: 20px;
-  font-size: 16px;
-}
-
-.md-scrollspy .h3 {
-  padding-left: 30px;
-  font-size: 14px;
-}
-
-.md-scrollspy button:first-child {
-  font-weight: bold;
-  border-left: 2px solid #009EEF;
-}
-
-.md-scrollspy button:hover {
-  font-weight: bold;
-  border-left: 2px solid #009EEF !important;
-}
-
 .frost-link {
   text-align: left !important;
 }
