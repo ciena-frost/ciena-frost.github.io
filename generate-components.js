@@ -129,6 +129,9 @@ configBodyJS += "}\n"
 configImportsJS += "import config from '../config/environment'\n"
 fs.writeFileSync("app/mirage/config.js", configImportsJS + configBodyJS)
 
+// Clear clones directory
+rmDir('clones',false)
+
 /////////////////////////// FUNCTIONS ////////////////////////////////////
 function getDemoRouting(url, routingConfig, demoParentDirectory, demoLocation) {
   var demoRouting_string = fs.readFileSync(url, 'utf8')
