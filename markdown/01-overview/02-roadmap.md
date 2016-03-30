@@ -1,12 +1,12 @@
 
 ###Publishing - up for review:
-- Publish component documentation: button
 - Publish component documentation: checkbox
-- Publish component documentation: links
 - Publish component documentation: password field
 - Publish component documentation: text field
 - Publish component documentation: text area
 ###Publishing - prioritized:
+- Publish component documentation: links
+- Publish component documentation: button
 - Publish design conventions: icons
 - Publish design conventions: typography
 - Publish design conventions: text/writing
@@ -33,24 +33,22 @@
 - ember-block-slots: effortless named yields
 - ember-frost-icon-pack: icon pack extensions to frost-icon
 - ember-frost-list: infinite scroll
-- ember-frost-core: add ember-cli-autoprefixer as an opinionated install
 - ember-addon-snippets: addon provided snippets for editors
+- ember-frost-core: add ember-cli-autoprefixer as an opinionated install
 - ember-frost-list: range selection
 - ember-frost-slider: base slider component
 - ember-frost-date-picker: base date-picker component
 - ember-frost-task-hub: task logs and monitoring
 - ember-frost-grid: a full-featured grid library shim
 - ember-frost-toggle-button: competition for checkboxes
-- [BPSO-14368] Publish ember-frost-collapsible-container
-- [BPSO-14371] Publish ember-frost-autocomplete-textfield
-- [BPSO-14327] Publish ember-frost-upload
-- [BPSO-14323] Publish ember-frost-popover
-- [BPSO-14396] Publish ember-frost-modal-message
-- [BPSO-14324] Publish ember-frost-utils
-- [BPSO-14335] Publish ember-frost-helpers
-- [BPSO-14325] Publish ember-frost-color-picker
-- [BPSO-14333] Publish ember-frost-tooltip
-- [BPSO-14320] Publish ember-frost-sidebar
+- ember-frost-collapsible-container: as per the name
+- ember-frost-auto-complete-text: text field suggestions
+- ember-frost-upload: file upload with drag and drop
+- ember-frost-popover: anchored popover container
+- ember-frost-modal-message: standard modal messages
+- ember-frost-color-picker: fixed palette color choices
+- ember-frost-tooltip: tooltips, if that's your thing
+- ember-frost-sidebar: off-screen revealable container
 ###Robustness - prioritized:
 - Visual regression tests in all projects
 ###Blogs - prioritized:
@@ -58,7 +56,7 @@
 ###Demos - prioritized:
 - A demo app for key frost concepts: frost-sports
 ###Tools - prioritized:
-- [BPSO-14380] Publish ember-brackets-parser
-- [BPSO-14340] Publish ember-brackets-theme
-- Publish atom/brackets snippets using ember-addon-snippets
-- [BPSO-14326] Publish ember-frost-brackets-docs
+- Publish atom snippets using ember-addon-snippets
+- ember-frost-atom-syntax: syntax highlighter for atom
+- ember-frost-atom-language: hbs tokens for atom
+- ember-frost-atom-docs: contextual help for atom
