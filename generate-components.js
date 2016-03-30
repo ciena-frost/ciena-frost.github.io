@@ -413,8 +413,8 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
           }
         })
       } else {
-        if (mirage.name === "config.js") {
-          var config_Content = fs.readFileSync(mirage.url, 'utf8')
+        if (mirage === "config.js") {
+          var config_Content = fs.readFileSync(url +  '/' + mirage, 'utf8')
           var path = "app/mirage/" + repoName + "-config.js"
           fs.writeFileSync(path, config_Content)
           var val = repoName.replace(/-(.)/g, function (m, $1) {
