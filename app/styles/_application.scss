@@ -125,7 +125,7 @@ img {
   position: relative;
   margin-right: 20px;
   overflow-x: auto;
-  @include display(flex);
+  display: inline;
 }
 
 pre[class*="language-"]:before,
