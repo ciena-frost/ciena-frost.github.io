@@ -56,7 +56,14 @@ export default Ember.Component.extend({
   didReceiveAttrs() {
     this.set('selectedCategory', this.get('routeCategory'))
   },
-
+  didInsertElement() {
+    $(window).scroll(function () {
+      if(($(window).scrollTop() + $(window).height() <= $(document).height())){
+        $('.guide-sidebar').css('top', $(this).scrollTop() + 'px')
+        $('.guide-sidebar-mobile').css('top', $(this).scrollTop() + 'px')
+      }
+    })
+  },
   actions: {
     categorySelected(category, selected) {
         this.set('selectedCategory', selected ? category : null)
