@@ -16,14 +16,6 @@ export default Ember.Controller.extend({
       }
     })
   }.on('init'),
-  windowScroll: function () {
-    $(window).scroll(function () {
-      if(($(window).scrollTop() + $(window).height() <= $(document).height())){
-        $('.guide-sidebar').css('top', $(this).scrollTop() + 'px')
-        $('.guide-sidebar-mobile').css('top', $(this).scrollTop() + 'px')
-      }
-    })
-  }.on('init'),
   actions: {
     toggleCollapsed () {
       this.get('frostSidebar').send('toggleCollapsed') // send action to frost-sidebar component

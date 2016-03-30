@@ -58,9 +58,15 @@ export default Ember.Component.extend({
   },
   didInsertElement() {
     $(window).scroll(function () {
-      if(($(window).scrollTop() + $(window).height() <= $(document).height())){
+      if(($(window).scrollTop() + $(window).height() <= $(document).height())){ // protect against scrolling passed page bottom
         $('.guide-sidebar').css('top', $(this).scrollTop() + 'px')
         $('.guide-sidebar-mobile').css('top', $(this).scrollTop() + 'px')
+      }
+    })
+    $(window).on('resize', function () { // when the document height is reduced, ensure that the sidebar moves up with the rest
+      if($('.guide-sidebar').offset().top + $('.guide-sidebar').height() > $('.footer').offset().top + $('.footer').height()){
+        // the bottom of the sidebar is lower than the bottom of the footer
+        $('.guide-sidebar').css('top', $('.footer').offset().top + $('.footer').height() - $('.guide-sidebar').height())    
       }
     })
   },
