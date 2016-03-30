@@ -13,11 +13,11 @@ function positionScrollSpy (id) {
   if ($(window).width() > 800) {
     $(id).css('display', 'inline')
     if ($(window).scrollTop() >= $('.frost-info-bar').height() + $('.tab-nav').height()) {
-      $('.md-scrollspy').css('position', 'fixed')
+      $('.scroll-spy').css('position', 'fixed')
       $(id).css('top', '0px')
       $(id).css('left', $(id).parent().width() + 220)
     } else {
-      $('.md-scrollspy').css('position', 'absolute')
+      $('.scroll-spy').css('position', 'absolute')
       $(id).css('top', $('.frost-info-bar').height() + $('.tab-nav').height())
       $(id).css('left', $(id).parent().width())
     }
@@ -28,7 +28,7 @@ function positionScrollSpy (id) {
 
 export default Ember.Component.extend({
   tagName: 'div',
-  classNames: ['md-scrollspy'],
+  classNames: ['scroll-spy'],
   addQueryParam: function (name, value) {
     var myUrl = window.location.href
     var re = new RegExp('([?&]' + name + '=)[^&]+', '')
