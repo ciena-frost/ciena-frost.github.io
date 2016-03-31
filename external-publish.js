@@ -17,7 +17,12 @@ if (unMark) {
       putFileBack(item)
     }
   })
+  fs.unlinkSync('deleted.json');
 } else {
+  if (fs.accessSync('deleted.json') !== fs.F_OK){
+    console.log('Already existing deleted.json . Did you forget to run `node external-publish unMark`?')
+    return
+  }
   // images
   var markedForDeletion = []
   var images = walkSync('public/assets/images', '', markedForDeletion)

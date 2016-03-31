@@ -8,4 +8,3 @@
   echo -en 'travis_fold:start:GenerateComponents\\r'
   node generate-components.js
   echo -en 'travis_fold:end:GenerateComponents\\r'
-  node external-publish.js unMark

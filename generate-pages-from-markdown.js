@@ -22,29 +22,34 @@ var options = {
 
 var doNotRemovePods = ['application', 'components', 'contributors']
 var pods = fs.readdirSync('app/pods');
-pods.forEach(function (folder){
-  if (doNotRemovePods.indexOf(folder) === -1){
+pods.forEach(function (folder) {
+  if (doNotRemovePods.indexOf(folder) === -1) {
     rmDir('app/pods/' + folder, true)
   }
 })
 
 var route_array = []
 dive(mark_dir, route_array);
-console.log("Routing:\n" + toSource(route_array));
-var contributors_route = { id:"contributing",
-    alias:"Contributors",
-    type:"route",
-    route:"contributors",
-    items:[ { id:"contributors",
-        alias:"Contributors",
-        type:"route",
-        route:"contributors.contributors" },
-      { id:"contributor",
-        alias:"Contributor",
-        type:"route",
-        route:"contributors.contributor" } ] }
+var contributors_route = {
+  id: "contributing",
+  alias: "Contributors",
+  type: "route",
+  route: "contributors",
+  items: [{
+      id: "contributors",
+      alias: "Contributors",
+      type: "route",
+      route: "contributors.contributors"
+    },
+    {
+      id: "contributor",
+      alias: "Contributor",
+      type: "route",
+      route: "contributors.contributor"
+    }]
+}
 route_array.push(contributors_route)
-//debug console.log(routing_string);
+  //debug console.log(routing_string);
 fs.writeFileSync("config/routing.js", "module.exports = \n" + toSource(route_array) + ";");
 //////////////////////////////////////////////////////////////
 
@@ -68,7 +73,7 @@ function dive(dir, array) {
     var path = dir + "/" + file;
 
     console.log("Reading Path: " + path)
-    // Get the file's stats
+      // Get the file's stats
     stat = fs.statSync(path);
 
     // If the file is a directory
@@ -80,7 +85,7 @@ function dive(dir, array) {
       fileCount = fs.readdirSync(path).length;
       var filename = file.replace(".md", "");
       route.id = filename.replaceAll("[0-9][0-9][-]", "").toLowerCase()
-      route.alias = toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " "))
+      route.alias = toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replace('-private','').replaceAll("-", " "))
       route.type = 'category'
       route.route = path.replace(mark_dir + "/", "").replaceAll("/", ".").replaceAll("[0-9][0-9][-]", "").toLowerCase()
       route.items = []
@@ -103,7 +108,7 @@ function dive(dir, array) {
       fileCount++;
       var filename = file.replace(".md", "");
       route.id = filename.replaceAll("[0-9][0-9][-]", "").toLowerCase()
-      route.alias = toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("-", " "))
+      route.alias = toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replace('-private','').replaceAll("-", " "))
       route.type = 'route'
       route.route = path.replace(mark_dir + "/", "").replaceAll("/", ".").replace(".md", "").replaceAll("[0-9][0-9][-]", "").toLowerCase()
       var pagePath = dir.replace(mark_dir, "app/pods") + "/" + file.replace(".md", "");
@@ -120,7 +125,7 @@ function dive(dir, array) {
 
       //debug console.log(chalk.blue.bold("Create route.js: " + pagePath + "/index" + "/route.js"));
       var route_js_string = "import Ember from 'ember'\nexport default Ember.Route.extend({\n  breadCrumb: {\n    title: '" +
-        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replaceAll("[-]", " ")) + "'\n  },"
+        toTitleCase(filename.replaceAll("[0-9][0-9][-]", "").replace('-private','').replaceAll("[-]", " ")) + "'\n  },"
       route_js_string += `
   resetController: function (controller, isExiting, transition) {
     if (isExiting) {
@@ -200,14 +205,18 @@ export default Ember.Controller.extend({
       });
 
       var md_content = fs.readFileSync(path).toString()
+      md_content = md_content.replace(/<private>[ |\n|\t|\w|<|=|\/|\>.|\-|\.|\"|\"]+<\/private>/ig, "");
+      if (md_content.indexOf("<private>") > -1) {
+        md_content = 'aborted \n content still contained private tag after regex'
+      }
       md_content = removeMd(md_content)
       md_content = md_content.match(/\w+/g)
-      if (md_content === null){
+      if (md_content === null) {
         keywords = ''
-      }else {
+      } else {
         md_content.forEach(function (word) {
-        keywords += word.toLowerCase() + " "
-      })
+          keywords += word.toLowerCase() + " "
+        })
 
       }
 
@@ -247,12 +256,10 @@ function getContributorsOfFile(filePath) {
       if (contributorMap.has(name)) {
         contributorMap.set(name, contributorMap.get(name) + parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
       } else if (linesAddedDeletedMatches !== null) {
-        console.log(linesAddedDeletedMatches);
         contributorMap.set(name, parseInt(linesAddedDeletedMatches[1]) + parseInt(linesAddedDeletedMatches[2]));
       }
     }
   })
-  console.log(contributorMap)
   return contributorMap;
 }
 
