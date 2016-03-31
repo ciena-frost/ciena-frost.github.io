@@ -584,9 +584,9 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     }
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n{{/frost-tabs}}"
-    template_content += "\n\t<div class='footer'>\n"
-    template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span "
-    template_content += "class=\"footerHeading\">Contributors</span><div class='contributors-list'>";
+    
+    
+    template_content += "\n\t<div class='contributors-list-data'>"
 
     var contributorsCount = 0;
     var contributorDuplicates = 0;
@@ -607,11 +607,14 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
       }
       addDedicatedContributor(userJSON, repo.name)
     });
-
-
-    template_content += "</div>\n\t\t\t</div>\n\t\t\t<div class='connect'><div>\n\t\t\t\t<div class=\"footerHeading\">Connect</div>";
-    template_content += "\n\t\t\t\t\t <div><a href=\"" + repo.html_url + "\" class=\"gh-button\"><img src=\"assets/images/gh-icon.png\" width='20' height='20'><span>View on Github</span></a></div></div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
-    template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
+    
+    template_content += "\n\t</div>";
+    template_content += "\n\t<div class='gh-link-data'>"
+    template_content += "\n\t\t <a href=\"" + repo.html_url + "\" class=\"gh-button\">"
+    template_content += "\n\t\t\t <img src=\"assets/images/gh-icon.png\" width='20' height='20'>"
+    template_content += "\n\t\t\t <span>View on Github</span>"
+    template_content += "\n\t\t </a>"
+    template_content += "\n\t</div>";
     template_content += "\n</div>";
 
     fs.writeFileSync("app/pods/" + linuxCompatibleDemoParentDirectory + "/template.hbs", template_content);

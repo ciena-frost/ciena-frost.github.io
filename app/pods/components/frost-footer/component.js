@@ -20,19 +20,28 @@ function positionFooter () {
 }
 
 function fillFooterContent () {
+  $('.ember-application').unbind("DOMSubtreeModified", fillFooterContent);
+  
   if($('#description').length && $('#api').length && $('#demo').length){
     // this is a component page
     $('.contributors .footerHeading').html('Contributors')
+    $('.contributors .contributors-list').html($('.contributors-list-data').html())
     $('.connect .footerHeading').html('Connect')
+    $('.connect .gh-link').html($('.gh-link-data').html())
   }
   else{
     $('.contributors .footerHeading').html('')
+    $('.contributors .contributors-list').html('')
     $('.connect .footerHeading').html('')
+    $('.connect .gh-link').html('')
   }
+  
+  $('.ember-application').bind("DOMSubtreeModified", fillFooterContent);
 }
   
 export default Ember.Component.extend({
   contributors: [],
+  githubRepoLink: "",
   didInsertElement () {
     positionFooter()
     fillFooterContent()
