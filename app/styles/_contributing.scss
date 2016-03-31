@@ -48,23 +48,6 @@
   border-bottom: 2px solid #eee;
 }
 
-.show-more {
-  position: relative;
-  background-color: white;
-}
-
-.more-button {
-  cursor: pointer;
-  text-align: center;
-  padding: 0 .5em;
-  color: #666;
-  font-size: .9em;
-  line-height: 2;
-  border: 1px solid #ddd;
-  border-radius: .25em;
-  margin-top: 5px;
-}
-
 .contributor-image-large {
     width: 12.5em;
     height: 12.5em;
@@ -132,6 +115,11 @@
     input, textarea {
         line-height: 36px;
     }
+}
+
+.contributors-outlet {
+  min-height: calc(100vh - 200px);
+  display: table;
 }
 
 .contributor-profile {

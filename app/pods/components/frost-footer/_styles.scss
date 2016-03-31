@@ -1,0 +1,100 @@
+.footer {
+  background-color: $frost-color-blue-1;
+  width: 100%;
+  min-width: 400px;
+  color: $frost-color-white;
+  clear: both;
+  visibility: hidden;
+  line-height: 20px;
+}
+
+.footer .info {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 20px;
+  padding-bottom: 10px;
+  font-size: 18px;
+  background-color:
+  $frost-color-blue-1;
+}
+
+.footer .info br {
+  clear: left;
+}
+
+.footer .copyright {
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  background-color: darken($frost-color-blue-1, 4%);
+}
+
+.footerHeading {
+  display: block;
+  margin: 0 0 10px 0;
+  padding: 10px;
+  border: none;
+  font-size: 29px;
+}
+
+.contributors {
+  @media (min-width: 400px) {
+    float: left;
+    width: 60%;
+    padding-right: 15px;
+  }
+  padding-top: 10px;
+}
+
+.contributors .contributors-list{
+  padding-left: 10px;
+}
+
+.contributors-list-data {
+  display: none;
+}
+
+.gh-link-data {
+  display: none;
+}
+
+.gh-button{
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #e5e5e5;
+  background-color: #f5f5f5;
+  text-decoration : none;
+}
+
+.gh-button img{
+  vertical-align: middle;
+}
+
+.gh-button span{
+  vertical-align: middle;
+  padding-left: 5px;
+  font-size: 18px;
+  color: #404041;
+  font-weight: 500;
+}
+
+.connect {
+  @media (min-width: 400px) {
+    padding-left: 15px;
+    float: left;
+    width: 40%;
+  }
+  padding-top: 10px;
+}
+
+.connect >:first-child{
+  float: right;
+}
+
+.connect .footerHeading{
+  text-align: right;
+}
+
+.connect .footerHeading + div{
+  padding: 10px;
+}
