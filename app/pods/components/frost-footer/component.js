@@ -1,6 +1,30 @@
 import Ember from 'ember'
 
-function positionFooter () {    
+MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+var posInProgress = false;
+var fillInProgress = false;
+  
+var observePositionFooter = new MutationObserver ( function() {
+  if(!posInProgress){
+    posInProgress = true;
+    positionFooter()
+    setTimeout(function(){
+      posInProgress = false;
+    }, 50);
+  }
+})
+
+var observeFillFooterContent = new MutationObserver ( function() {
+  if(!fillInProgress){
+    fillInProgress = true;
+    fillFooterContent()
+    setTimeout(function(){
+      fillInProgress = false;
+    }, 50);
+  }
+})
+
+function positionFooter () {
   $('.footer').css('visibility', 'hidden')
   $('.footer').css('margin-top', '')
   var docHeight = $(window).height()
@@ -20,9 +44,7 @@ function positionFooter () {
 }
 
 function fillFooterContent () {
-  $('.ember-application').unbind("DOMSubtreeModified", fillFooterContent);
-  
-  if($('#description').length && $('#api').length && $('#demo').length){
+ if($('#description').length && $('#api').length && $('#demo').length){
     // this is a component page
     $('.contributors .footerHeading').html('Contributors')
     $('.contributors .contributors-list').html($('.contributors-list-data').html())
@@ -35,23 +57,26 @@ function fillFooterContent () {
     $('.connect .footerHeading').html('')
     $('.connect .gh-link').html('')
   }
-  
-  $('.ember-application').bind("DOMSubtreeModified", fillFooterContent);
 }
   
 export default Ember.Component.extend({
   didInsertElement () {
     positionFooter()
     fillFooterContent()
+    
     $(window).on('resize', function () {
       positionFooter()
     })
-    $('.ember-application').bind("DOMSubtreeModified", positionFooter);
-    $('.ember-application').bind("DOMSubtreeModified", fillFooterContent);
-  },
-  actions: {
-    positionFooter () {
-      positionFooter()
-    }
+    
+    observePositionFooter.observe(document, {
+      childList: true,
+      subtree: true
+    });
+    
+    observeFillFooterContent.observe(document, {
+      childList: true,
+      subtree: true
+    });
+  
   }
 })
