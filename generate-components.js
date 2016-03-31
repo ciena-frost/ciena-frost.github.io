@@ -50,7 +50,6 @@ var configstoImportMap = new Map();
 var routingConfig = require('./config/routing')
 
 body.forEach(function (repo) {
-  console.log(repo.name);
   if (stringStartsWith(repo.name, "ember-") && ignoreList.indexOf(repo.name) === -1) {
 
     //get Package JSON un comment when needed
@@ -177,9 +176,9 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
       if (demoLocation === undefined || demoLocation === '') {
         // single demo
         if (routeConfig.route === demoId) {
-          console.log(chalk.blue("Found match for: " + demoId))
-          console.log(routeConfig)
-          console.log(demo)
+//          console.log(chalk.blue("Found match for: " + demoId))
+//          console.log(demoParentDirectory)
+//          console.log(demoLocation)
           routeConfig.route = demoId.toLowerCase()
             //        routeConfig.alias = "Found You"
           if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
@@ -203,30 +202,33 @@ function mergeRouting(base, demo, demoParentDirectory, demoLocation) {
         }
       } else {
         // multiple demos
-        if (routeConfig.route === demoId) {
-          console.log(chalk.blue("Found match for: " + demoId))
-          console.log(routeConfig)
-          console.log(demo)
-          routeConfig.route = demoId.toLowerCase()
-            //        routeConfig.alias = "Found You"
-          if (demo[0].modalName !== undefined && demo[0].modal !== undefined) {
-            routeConfig.modalName = demo[0].modalName
-            routeConfig.modal = demo[0].modal
-          }
+        for (var i = 0; i < demo.length; i++) {
+          if (routeConfig.route === demoId && demo[i].id === demoLocation) {
+            //          console.log(chalk.blue("Found match for: " + demoId))
+            //          console.log(demoParentDirectory)
+            //          console.log(demoLocation)
+            //          console.log(JSON.stringify(demo[0]))
+            routeConfig.route = demoId.toLowerCase()
+              //        routeConfig.alias = "Found You"
+            if (demo[i].modalName !== undefined && demo[i].modal !== undefined) {
+              routeConfig.modalName = demo[i].modalName
+              routeConfig.modal = demo[i].modal
+            }
 
-          if (demo[0].path !== undefined && demo[0].path.path && demo[0].path.path !== "/") {
-            routeConfig.path = demo[0].path
-          }
-          if (demo[0].items !== undefined) {
-            console.log(chalk.blue("Found items: " + toSource(demo[0].items)))
-            mergeItems(demo[0].items, demoId, demoLocation)
-            routeConfig.items = demo[0].items
-          }
+            if (demo[i].path !== undefined && demo[i].path.path && demo[i].path.path !== "/") {
+              routeConfig.path = demo[i].path
+            }
+            if (demo[i].items !== undefined) {
+              console.log(chalk.blue("Found items: " + toSource(demo[i].items)))
+              mergeItems(demo[i].items, demoId, demoLocation)
+              routeConfig.items = demo[i].items
+            }
 
-          if (demo[0].modals !== undefined) {
-            routeConfig.modals = demo[0].modals
-          }
+            if (demo[i].modals !== undefined) {
+              routeConfig.modals = demo[i].modals
+            }
 
+          }
         }
       }
 
@@ -297,9 +299,8 @@ function getDemoComponentHelpers(url, demoDirectory) {
 }
 
 function getPodsNestedRoutes(url, demoDirectory) {
-  console.log("Found multiple demos")
-    //  var res = request('GET', url, options);
-    //  var body = JSON.parse(res.getBody());
+  //  var res = request('GET', url, options);
+  //  var body = JSON.parse(res.getBody());
   var body = walkSync(url)
   body.forEach(function (podItem) {
     if (typeof podItem === 'object' && !podItem.folder.endsWith('index')) {
@@ -414,7 +415,7 @@ function getDemoMirage(url, scenariosToImportMap, configstoImportMap, repoName) 
         })
       } else {
         if (mirage === "config.js") {
-          var config_Content = fs.readFileSync(url +  '/' + mirage, 'utf8')
+          var config_Content = fs.readFileSync(url + '/' + mirage, 'utf8')
           var path = "app/mirage/" + repoName + "-config.js"
           fs.writeFileSync(path, config_Content)
           var val = repoName.replace(/-(.)/g, function (m, $1) {
@@ -577,10 +578,6 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
         frostLinkRegex = new RegExp("\{\{#frost-link[ |\\n|\\t]+[\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
         linkToRegex = new RegExp("\{\{#link-to[ |\\n|\\t]+[\'|\"]" + demoLocation + "\.([a-z|\.|-]+)[\'|\"]", "ig")
       }
-      console.log(" Using regex: ")
-      console.log(frostLinkRegex)
-      console.log(linkToRegex)
-      console.log(content.template_hbs)
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', content.template_hbs.replace(frostLinkRegex, "{{#frost-link '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'").replace(linkToRegex, "{{#link-to '" + packageJSON.frostGuideDirectory.replace(/\//g, ".").toLowerCase() + ".$1'")) + "</div>\n"
     } else if (packageJSON.frostGuideDirectory != undefined) {
       template_content += "\n\t\t<div>" + application_content.template_hbs.replace('{{outlet}}', '{{outlet}}' + content.template_hbs) + "</div>\n"
@@ -879,12 +876,9 @@ function get(url) {
 }
 
 function getRepo(url) {
-  console.log(url);
-  debugger;
   requestify.get(url).then(function (response) {
     var body = respone.getBody();
     //    console.log(respone);
-    console.log("Hello");
   }, function (err) {
     console.log(err);
   });
