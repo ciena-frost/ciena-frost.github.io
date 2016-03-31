@@ -115,17 +115,15 @@ img {
   line-height: 1.7;
 }
 
+.md .tab-nav ~ #demo {
+  min-width: 400px;
+  max-width: 100%;
+}
+
 .guide-content .guide-markdown {
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
-}
-
-.guide-content #demo {
-  position: relative;
-  margin-right: 20px;
-  overflow-x: auto;
-  @include display(flex);
 }
 
 pre[class*="language-"]:before,
