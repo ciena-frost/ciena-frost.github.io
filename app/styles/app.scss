@@ -117,7 +117,8 @@ body {
 }
 
 .contributors-outlet {
-  height: calc(100vh - 160px);
+  min-height: calc(100vh - 180px);
+  display: table;
 }
 
 .connect {
