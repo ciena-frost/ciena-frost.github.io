@@ -4,12 +4,10 @@ var path = require('path');
 var args = process.argv.slice(2);
 var unMark = false;
 if (args.length >= 1) {
-  console.log('found param')
   unMark = args[0] === 'unMark' ? true : false
 }
 if (unMark) {
   var unMarkedFilesAndFolders = require('./deleted.json')
-  console.log('Putting back shit ')
   unMarkedFilesAndFolders.forEach(function (item) {
     if (Array.isArray(item.content)) {
       putFolderBack(item)
@@ -19,7 +17,7 @@ if (unMark) {
   })
   fs.unlinkSync('deleted.json');
 } else {
-  if (fs.accessSync('deleted.json') !== fs.F_OK){
+  if (existsSync('deleted.json') === true){
     console.log('Already existing deleted.json . Did you forget to run `node external-publish unMark`?')
     return
   }
@@ -156,3 +154,11 @@ function rmDir(dirPath, removeSelf) {
     fs.rmdirSync(dirPath);
 };
 
+function existsSync(filePath){
+  try{
+    fs.statSync(filePath);
+  }catch(err){
+    if(err.code == 'ENOENT') return false;
+  }
+  return true;
+};
