@@ -6,6 +6,7 @@
 
 .card-large{
   height: 70vh;
+  width: 100%;
 }
 
 .card .card-block {
@@ -118,6 +119,7 @@
 }
 
 .contributors-outlet {
+  width: 100%;
   min-height: calc(100vh - 200px);
   display: table;
 }
