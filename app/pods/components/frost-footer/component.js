@@ -25,14 +25,13 @@ function fillFooterContent () {
   if($('#description').length && $('#api').length && $('#demo').length){
     // this is a component page
     $('.contributors .footerHeading').html('Contributors')
+    $('.contributors .contributors-list').html($('.contributors-list-data').html())
     $('.connect .footerHeading').html('Connect')
-    $('.connect .gh-link').html("<a href='https://github.com/ciena-frost/ember-frost-core' class='gh-button'>" +
-            "<img src='assets/images/gh-icon.png' width='20' height='20'>" +
-            "<span>View on Github</span>" +
-            "</a>")
+    $('.connect .gh-link').html($('.gh-link-data').html())
   }
   else{
     $('.contributors .footerHeading').html('')
+    $('.contributors .contributors-list').html('')
     $('.connect .footerHeading').html('')
     $('.connect .gh-link').html('')
   }
@@ -42,6 +41,7 @@ function fillFooterContent () {
   
 export default Ember.Component.extend({
   contributors: [],
+  githubRepoLink: "",
   didInsertElement () {
     positionFooter()
     fillFooterContent()
