@@ -18,9 +18,10 @@ if (unMark) {
     }
   })
 } else {
+  // images
   var markedForDeletion = []
   var images = walkSync('public/assets/images', '', markedForDeletion)
-
+  var markdown = walkSync('markdown', '', markedForDeletion)
   for (var i = 0; i < markedForDeletion.length; i++) {
     var value = markedForDeletion[i]
     if (value.content === 'folder') {
@@ -31,6 +32,8 @@ if (unMark) {
       fs.unlinkSync(value.name);
     }
   }
+
+
   fs.writeFileSync('deleted.json', JSON.stringify(markedForDeletion))
 }
 

@@ -19,6 +19,15 @@ var options = {
     'Authorization': 'token ' + process.env.ghToken
   }
 };
+
+var doNotRemovePods = ['application', 'components', 'contributors']
+var pods = fs.readdirSync('app/pods');
+pods.forEach(function (folder){
+  if (doNotRemovePods.indexOf(folder) === -1){
+    rmDir('app/pods/' + folder, true)
+  }
+})
+
 var route_array = []
 dive(mark_dir, route_array);
 console.log("Routing:\n" + toSource(route_array));
@@ -294,3 +303,25 @@ function mkdirpSync(dirpath) {
     mkdirSync(path.join.apply(null, parts.slice(0, i)));
   }
 }
+
+function rmDir(dirPath, removeSelf) {
+  if (removeSelf === undefined)
+    removeSelf = true;
+  try {
+    var files = fs.readdirSync(dirPath);
+  } catch (e) {
+    return;
+  }
+  if (files.length > 0)
+    for (var i = 0; i < files.length; i++) {
+      var filePath = dirPath + '/' + files[i];
+      if (filePath !== 'clones/.gitkeep') {
+        if (fs.statSync(filePath).isFile())
+          fs.unlinkSync(filePath);
+        else
+          rmDir(filePath);
+      }
+    }
+  if (removeSelf)
+    fs.rmdirSync(dirPath);
+};
