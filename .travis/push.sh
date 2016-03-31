@@ -25,12 +25,16 @@ commit_website_files() {
   ./generate-frost-guide-content.sh
   git add --all
   git commit --message "[ci skip] Generating files/folders"
-  git push
 }
 
 publish_gh_pages() {
   npm install && bower install
-  ember github-pages:commit --message "[ci skip] Update gh-pages" --branch master
+  external=true ember github-pages:commit --message "[ci skip] Update gh-pages" --branch master
+  git push
+  git checkout dev
+  node external-publish.js unMark
+  git add --all
+  git commit --message "[ci skip] Put back internal content"
   git push
 }
 if [ "${ghToken:-false}" != "false" ]; then
