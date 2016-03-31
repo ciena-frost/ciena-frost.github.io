@@ -40,8 +40,6 @@ function fillFooterContent () {
 }
   
 export default Ember.Component.extend({
-  contributors: [],
-  githubRepoLink: "",
   didInsertElement () {
     positionFooter()
     fillFooterContent()
