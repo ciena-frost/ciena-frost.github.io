@@ -197,7 +197,10 @@ pre[class*="language-"]:after {
   text-align: left !important;
 }
 
-
+td, th {
+    padding-right: 10px;
+    text-align: left;
+}
 /*
 Max width before this PARTICULAR table gets nasty
 This query will take effect for any screen smaller than 760px
