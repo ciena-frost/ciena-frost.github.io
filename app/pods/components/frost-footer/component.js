@@ -20,15 +20,24 @@ function positionFooter () {
 }
 
 function fillFooterContent () {
+  $('.ember-application').unbind("DOMSubtreeModified", fillFooterContent);
+  
   if($('#description').length && $('#api').length && $('#demo').length){
     // this is a component page
     $('.contributors .footerHeading').html('Contributors')
     $('.connect .footerHeading').html('Connect')
+    $('.connect .gh-link').html("<a href='https://github.com/ciena-frost/ember-frost-core' class='gh-button'>" +
+            "<img src='assets/images/gh-icon.png' width='20' height='20'>" +
+            "<span>View on Github</span>" +
+            "</a>")
   }
   else{
     $('.contributors .footerHeading').html('')
     $('.connect .footerHeading').html('')
+    $('.connect .gh-link').html('')
   }
+  
+  $('.ember-application').bind("DOMSubtreeModified", fillFooterContent);
 }
   
 export default Ember.Component.extend({
