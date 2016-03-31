@@ -116,6 +116,10 @@ body {
   padding-top: 10px;
 }
 
+.contributors-outlet {
+  height: calc(100vh - 160px);
+}
+
 .connect {
   @media (min-width: 400px) {
     padding-left: 15px;

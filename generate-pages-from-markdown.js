@@ -204,11 +204,6 @@ export default Ember.Controller.extend({
 
       template_content += "\n\t\t{{/scroll-spy}}";
       template_content += "\n\t</div>";
-      template_content += "\n\t<div class='footer'>\n"
-      template_content += "\t\t<div class='info'>\n\t\t\t<div>\n\t\t\t\t<div class='contributors'>\n\t\t\t\t\t<span " + "class=\"footerHeading\"></span><div class='contributors-list'>";
-      template_content += "</div>\n\t\t\t</div>\n\t\t\t<div class='connect'>\n\t\t\t\t<span class=\"footerHeading\"></span>";
-      template_content += "\n\t\t\t\t\t \n\t\t\t\t</div>\n\t\t\t</div>\n\t\t\t<br/>\n\t\t</div>";
-      template_content += "\n\t\t<div class='copyright'>\n\t\t\t\n\t\t</div>\n\t</div>";
       template_content += "\n</div>";
       route.keywords = keywords
       array.push(route) // push route to routing.js array
