@@ -13,6 +13,10 @@ function positionFooter () {
                                                  + $('.footer').height())))
   }
   $('.footer').css('visibility', 'visible')
+  if($('.guide-sidebar').offset().top + $('.guide-sidebar').height() > $('.footer').offset().top + $('.footer').height()){
+    // the bottom of the sidebar is lower than the bottom of the footer
+    $('.guide-sidebar').css('top', $('.footer').offset().top + $('.footer').height() - $('.guide-sidebar').height())    
+  }
 }
 
 function fillFooterContent () {
