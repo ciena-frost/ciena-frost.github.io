@@ -2,7 +2,7 @@
   echo -en 'travis_fold:start:GenerateRoadmap\\r'
   node generate-roadmap.js
   echo -en 'travis_fold:end:GenerateRoadmap\\r'
-  echo -en 'travis_fold:start:Generate-PagesFromMarkdown\\r'
+  echo -en 'travis_fold:start:GeneratePagesFromMarkdown\\r'
   node generate-pages-from-markdown.js
   echo -en 'travis_fold:end:GeneratePagesFromMarkdown\\r'
   echo -en 'travis_fold:start:GenerateComponents\\r'
