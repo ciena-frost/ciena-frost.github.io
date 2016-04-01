@@ -556,7 +556,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
 
     var template_content = ""
     template_content += "<div class=\"md\">"
-    template_content += "{{#frost-tabs on-change=(action 'tabSelected') selection=selectedTab}}"
+    template_content += "{{#frost-tabs onChange=(action 'tabSelected') selection=selectedTab}}"
     template_content += "\n\t{{#frost-tab alias='Description' class='description' id='description'}}"
     template_content += "\n\t\t" + descriptionContent
     template_content += getScrollspyLinks(getPrefixedMarkdownPath(demoParentDirectory))
@@ -584,8 +584,8 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
     }
     template_content += "\n\t{{/frost-tab}}"
     template_content += "\n{{/frost-tabs}}"
-    
-    
+
+
     template_content += "\n\t<div class='contributors-list-data'>"
 
     var contributorsCount = 0;
@@ -607,7 +607,7 @@ function createContent(demoParentDirectory, repo, packageJSON, demoLocation, mul
       }
       addDedicatedContributor(userJSON, repo.name)
     });
-    
+
     template_content += "\n\t</div>";
     template_content += "\n\t<div class='gh-link-data'>"
     template_content += "\n\t\t <a href=\"" + repo.html_url + "\" class=\"gh-button\">"
