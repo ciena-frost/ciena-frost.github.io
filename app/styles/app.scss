@@ -12,6 +12,10 @@
 @import 'app/pods/components/frost-footer/styles';
 @import 'app/pods/components/scroll-spy/styles';
 
+html{
+  min-height: 100%;
+  height: auto;
+}
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
