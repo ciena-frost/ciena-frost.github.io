@@ -25,3 +25,5 @@ app/pods/*
 !app/pods/contributors/*
 
 config/routing.js
+
+deleted.json
