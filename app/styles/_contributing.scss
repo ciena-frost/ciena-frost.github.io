@@ -5,7 +5,8 @@
 }
 
 .card-large{
-  height: 100vh;
+  height: 70vh;
+  width: 100%;
 }
 
 .card .card-block {
@@ -46,23 +47,6 @@
   margin-bottom: 5px;
   padding-bottom: 5px;
   border-bottom: 2px solid #eee;
-}
-
-.show-more {
-  position: relative;
-  background-color: white;
-}
-
-.more-button {
-  cursor: pointer;
-  text-align: center;
-  padding: 0 .5em;
-  color: #666;
-  font-size: .9em;
-  line-height: 2;
-  border: 1px solid #ddd;
-  border-radius: .25em;
-  margin-top: 5px;
 }
 
 .contributor-image-large {
@@ -132,6 +116,12 @@
     input, textarea {
         line-height: 36px;
     }
+}
+
+.contributors-outlet {
+  width: 100%;
+  min-height: calc(100vh - 200px);
+  display: table;
 }
 
 .contributor-profile {
