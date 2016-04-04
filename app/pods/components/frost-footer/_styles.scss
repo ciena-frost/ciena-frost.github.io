@@ -79,6 +79,9 @@
 }
 
 .connect {
+  @media (max-width: 399px) {
+    display: flex;
+  }
   @media (min-width: 400px) {
     padding-left: 15px;
     float: left;

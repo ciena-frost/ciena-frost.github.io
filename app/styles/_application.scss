@@ -11,8 +11,8 @@
 }
 
 .guide-sidebar {
-  min-height: 100%;
-  height: 1px;
+  height: 100vh;
+  max-width: 220px;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   > .liquid-child {
     height: 100%;
@@ -99,19 +99,19 @@ img {
 
 .md .content-col {
   float: left;
-  width: 65%;
+  width: 60vw;
   min-width: 400px;
   line-height: 1.7;
 }
 
 .md .tab-nav ~ #description {
   min-width: 400px;
-  max-width: 65%;
+  max-width: 60vw;
   line-height: 1.7;
 }
 .md .tab-nav ~ #api {
   min-width: 400px;
-  max-width: 65%;
+  max-width: 60vw;
   line-height: 1.7;
 }
 
@@ -199,6 +199,7 @@ pre[class*="language-"]:after {
 
 td, th {
     padding-right: 10px;
+    padding-bottom: 10px;
     text-align: left;
 }
 /*
