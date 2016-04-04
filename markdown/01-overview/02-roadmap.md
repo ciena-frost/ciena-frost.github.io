@@ -30,8 +30,10 @@
 - Publish component documentation: tabs
 - Publish component documentation: transient messages
 - Publish component documentation: radio buttons
+- Publish component documentation: toggle buttons
 - Publish component documentation: progress indicators
 ###Extensions - prioritized:
+- Align all ember-frost repos to use frost-core
 - ember-block-slots: effortless named yields
 - ember-frost-icon-pack: icon pack extensions to frost-icon
 - ember-frost-list: standard list item styles
