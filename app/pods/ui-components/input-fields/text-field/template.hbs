@@ -1,0 +1,194 @@
+<div class="md">{{#frost-tabs onChange=(action 'tabSelected') selection=selectedTab}}
+	{{#frost-tab alias='Description' class='description' id='description'}}
+		{{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-file-strip-number-prefix 'ui-components/input-fields/text-field')}}
+		{{#scroll-spy}}
+			{{#scroll-to id="#summary" class="h2"}} Summary{{/scroll-to}}
+			{{#scroll-to id="#relatedtopics" class="h2"}} Related topics{{/scroll-to}}
+			{{#scroll-to id="#behaviors" class="h2"}} Behaviors{{/scroll-to}}
+			{{#scroll-to id="#guidelines" class="h2"}} Guidelines{{/scroll-to}}
+		{{/scroll-spy}}
+	{{/frost-tab}}
+	{{#frost-tab alias='API' id='api'}}
+		  {{markdown-to-html ghCodeBlocks=true tables=true class="guide-markdown" markdown=(fr-markdown-api-file 'ui-components/input-fields/text-field/README')}}
+		{{#scroll-spy}}
+			{{#scroll-to id="#frosttext" class="h1"}} frost-text{{/scroll-to}}
+			{{#scroll-to id="#api" class="h2"}} API{{/scroll-to}}
+			{{#scroll-to id="#examples" class="h2"}} Examples{{/scroll-to}}
+			{{#scroll-to id="#default" class="h3"}} Default{{/scroll-to}}
+			{{#scroll-to id="#error" class="h3"}} Error{{/scroll-to}}
+			{{#scroll-to id="#disabled" class="h3"}} Disabled{{/scroll-to}}
+			{{#scroll-to id="#focus" class="h3"}} Focus{{/scroll-to}}
+			{{#scroll-to id="#textalignment" class="h3"}} Text alignment{{/scroll-to}}
+			{{#scroll-to id="#textplaceholder" class="h3"}} Text placeholder{{/scroll-to}}
+			{{#scroll-to id="#eventsoninput" class="h3"}} Events - onInput{{/scroll-to}}
+		{{/scroll-spy}}
+	{{/frost-tab}}
+	{{#frost-tab alias='Demo' id='demo'}}
+		<div><div class="dummy-notification-container">
+  {{#each notifications as |notification|}}
+    {{notification-message notification=notification}}
+  {{/each}}
+</div>
+
+<div class="dummy-body">
+  <div class="dummy-content">
+    <div class="dummy-notification-container">
+{{#each notifications as |notification|}}
+  {{notification-message notification=notification}}
+{{/each}}
+</div>
+
+<div class="dummy-body text-input field">
+
+  <div class="section-title">Default</div>
+  <hr>
+
+    <div class="section">
+      <div class="example">
+        <div class="demo">
+          {{frost-text}}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text}}
+  ```"
+          }}
+        </div>
+      </div>
+    </div>
+
+
+  <div class="section-title">State</div>
+  <hr>
+    <div class="section">
+      <div class="example">
+        <div class="title">error</div>
+        <div class="demo">
+          {{frost-text
+            class="error"
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  class='error'
+}}
+  ```"
+          }}
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="title">disabled</div>
+        <div class="demo">
+          {{frost-text
+            disabled=true
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  disabled=true
+}}
+  ```"
+          }}
+        </div>
+      </div>
+
+      <div class="example">
+        <div class="title">disabled value</div>
+        <div class="demo">
+          {{frost-text
+            disabled=true
+            value="Read only text"
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  disabled=true
+  value='Read only text'
+}}
+    ```"
+}}
+        </div>
+      </div>
+
+  </div>
+
+  <div class="section-title">Options</div>
+  <hr>
+
+  <div class="section">
+      <div class="example">
+        <div class="title">placeholder</div>
+         <div class="demo">
+          {{frost-text
+            placeholder='basic field'
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  placeholder='basic field'
+}}
+    ```"
+          }}
+        </div>
+      </div>
+
+
+      <div class="example">
+        <div class="title">align</div>
+        <div class="demo">
+          {{frost-text
+            align='right'
+          }}
+        </div>
+        <div class="snippet">
+          {{format-markdown "```handlebars
+{{frost-text
+  align='right'
+}}
+    ```"
+          }}
+        </div>
+      </div>
+  </div>
+
+  <div class="section-title">Events</div>
+  <hr>
+  <div class='section'>
+    <div class="example">
+      <div class="title">onInput</div>
+      <div class="demo">
+        {{frost-text
+          onInput=(action 'onInputHandler')
+        }}
+      </div>
+      <div class="snippet">
+        {{format-markdown "```handlebars
+{{frost-text
+  onInput=(action 'onInputHandler')
+}}
+```"
+        }}
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div></div>
+
+	{{/frost-tab}}
+{{/frost-tabs}}
+	<div class='contributors-list-data'>Roxanne Panthaky - Gosia Hyndman - Eric White - Matthew Dahl - Steven Glanzer - Justin Lafleur - Peter Banka - ember-tomster
+	</div>
+	<div class='gh-link-data'>
+		 <a href="https://github.com/ciena-frost/ember-frost-core" class="gh-button">
+			 <img src="assets/images/gh-icon.png" width='20' height='20'>
+			 <span>View on Github</span>
+		 </a>
+	</div>
+</div>

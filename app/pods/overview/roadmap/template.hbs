@@ -1,0 +1,15 @@
+
+<div class="md">
+	<div class="content-col">
+		{{markdown-to-html class="guide-markdown" ghCodeBlocks=true markdown=(fr-markdown-file-strip-number-prefix 'overview/roadmap')}} 
+		{{#scroll-spy}}
+			{{#scroll-to id="#publishingupforreview" class="h3"}}Publishing - up for review:{{/scroll-to}}
+			{{#scroll-to id="#publishingprioritized" class="h3"}}Publishing - prioritized:{{/scroll-to}}
+			{{#scroll-to id="#extensionsprioritized" class="h3"}}Extensions - prioritized:{{/scroll-to}}
+			{{#scroll-to id="#robustnessprioritized" class="h3"}}Robustness - prioritized:{{/scroll-to}}
+			{{#scroll-to id="#blogsprioritized" class="h3"}}Blogs - prioritized:{{/scroll-to}}
+			{{#scroll-to id="#demosprioritized" class="h3"}}Demos - prioritized:{{/scroll-to}}
+			{{#scroll-to id="#toolsprioritized" class="h3"}}Tools - prioritized:{{/scroll-to}}
+		{{/scroll-spy}}
+	</div>
+</div>
