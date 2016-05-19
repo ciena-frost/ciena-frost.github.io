@@ -1,6 +1,6 @@
 # Frost Guide
 
-# Moved to https://bitbucket.ciena.com/projects/BP_FROST/repos/frost-guide/browse . Keeping only for gh-pages branch
+# This branch is outdated. The repo has been moved to the internal bitbucket site. Keeping only for gh-pages branch
 
 ## Development Environment
 
