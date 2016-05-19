@@ -1,5 +1,7 @@
 # Frost Guide
 
+# Moved to https://bitbucket.ciena.com/projects/BP_FROST/repos/frost-guide/browse . Keeping only for gh-pages branch
+
 ## Development Environment
 
 ### Markdown Pages
